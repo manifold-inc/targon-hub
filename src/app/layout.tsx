@@ -47,7 +47,7 @@ export default function RootLayout({
         <WithGlobalProvider>
           <ThemeProvider attribute="class">
             <Header />
-            <main className="relative z-30">{children}</main>
+            <main>{children}</main>
             <div className="fixed bottom-5 right-5 z-40">
               <ToggleTheme />
             </div>

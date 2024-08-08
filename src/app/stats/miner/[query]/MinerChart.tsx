@@ -186,7 +186,7 @@ const MinerChart: React.FC<MinerChartProps> = ({ query, block }) => {
           </dl>
 
           <div className="pt-8">
-            <div className={`${cardStyles} w-full`}>
+            <div className="flex w-full flex-grow flex-col items-center rounded-2xl bg-white p-8 text-center shadow-md transition-all hover:shadow-lg dark:bg-neutral-800">
               <h3 className="pb-4 text-center text-2xl font-semibold text-gray-800 dark:text-gray-50">
                 Viewing Stats For: {query}
               </h3>

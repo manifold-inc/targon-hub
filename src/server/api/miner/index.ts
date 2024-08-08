@@ -79,6 +79,8 @@ export const minerRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       const { query, block } = input;
 
+      const actualBlock = Math.min(block!, 360);
+
       const eqs =
         query.length < 5
           ? [eq(MinerResponse.uid, parseInt(query))]
@@ -115,7 +117,7 @@ export const minerRouter = createTRPCRouter({
           ValidatorRequest,
           eq(ValidatorRequest.r_nanoid, MinerResponse.r_nanoid),
         )
-        .where(and(gte(ValidatorRequest.block, block ?? 360), or(...eqs)))
+        .where(and(gte(ValidatorRequest.block, actualBlock ?? 360), or(...eqs)))
         .orderBy(ValidatorRequest.block);
 
       return stats;

@@ -59,7 +59,7 @@ const MinerInputForm: React.FC<MinerInputFormProps> = ({
             <div className="flex justify-center space-x-4">
               <button
                 type="submit"
-                className="mt-4 w-2/3 rounded bg-slate-600 px-4 py-2 font-bold text-white hover:bg-slate-400"
+                className="mt-4 w-2/3 rounded bg-slate-800 px-4 py-2 font-bold text-white hover:bg-slate-600 dark:bg-neutral-800 dark:hover:bg-gray-800"
               >
                 Submit
               </button>

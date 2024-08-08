@@ -312,7 +312,7 @@ const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
         >
           <DialogBackdrop
             transition
-            className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+            className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity dark:bg-neutral-800"
           />
           <div className="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto">
             <div className="flex h-4/5 w-4/5 items-center justify-center p-6 text-center sm:p-0">

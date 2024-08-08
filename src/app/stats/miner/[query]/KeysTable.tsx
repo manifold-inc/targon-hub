@@ -58,8 +58,8 @@ const KeysTable: React.FC<KeysTableProps> = ({ miners }) => {
           </div>
           <div className="mt-8 flow-root">
             <div className="-mx-4 -my-2 px-8 sm:-mx-6 lg:-mx-8">
-              <div className="inline-block max-h-60 min-w-full overflow-y-auto rounded border border-gray-200 align-middle shadow">
-                <div className="overflow-y-auto">
+              <div className="inline-block max-h-96 min-w-full overflow-y-auto rounded border border-gray-200 align-middle shadow">
+                <div className="relative">
                   <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
                     <thead className="sticky top-0 bg-gray-50 dark:bg-neutral-800">
                       <tr>
@@ -84,7 +84,7 @@ const KeysTable: React.FC<KeysTableProps> = ({ miners }) => {
                           <td className="px-6 py-4 text-right text-sm text-gray-500 dark:text-gray-300">
                             <Link
                               href={`/stats/miner/${key.hotkey}?block=360`}
-                              className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-600"
+                              className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-200 dark:hover:text-blue-100"
                             >
                               Go To Hotkey
                             </Link>
