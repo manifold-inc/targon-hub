@@ -1,7 +1,7 @@
 import { count, sql } from "drizzle-orm";
 
 import { db } from "@/schema/db";
-import { Models } from "@/schema/schema";
+import { Model } from "@/schema/schema";
 
 const models = [
   {
@@ -11,13 +11,13 @@ const models = [
 ];
 
 const main = async () => {
-  const [res] = await db.select({ count: count(Models.id) }).from(Models);
+  const [res] = await db.select({ count: count(Model.id) }).from(Model);
   if (res?.count === models.length) {
     console.log("Records already in db");
     return;
   }
-  await db.delete(Models).where(sql`true`);
-  await db.insert(Models).values(models);
+  await db.delete(Model).where(sql`true`);
+  await db.insert(Model).values(models);
   console.log("Bootstrap complete");
   return;
 };
