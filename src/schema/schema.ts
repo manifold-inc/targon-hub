@@ -5,6 +5,7 @@ import {
   json,
   jsonb,
   pgTable,
+  real,
   serial,
   text,
   timestamp,
@@ -81,6 +82,8 @@ export const OrganicRequest = pgTable("organic_request", {
   minerAddress: varchar("miner_address"),
   attempt: varchar("attempt"),
   metadata: jsonb("metadata"),
+  scored: boolean("scored").default(false),
+  jaro: real("jaro"),
 });
 
 export const ApiKey = pgTable("api_key", {
