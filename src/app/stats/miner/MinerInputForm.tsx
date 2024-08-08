@@ -23,7 +23,7 @@ const MinerInputForm: React.FC<MinerInputFormProps> = ({
 
   return (
     <>
-      <div className="py-4 flex w-full items-center justify-center">
+      <div className="flex w-full items-center justify-center py-4">
         <div className="w-1/2">
           <form onSubmit={handleSubmit}>
             <div className="mb-4">

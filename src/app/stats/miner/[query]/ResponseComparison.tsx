@@ -74,7 +74,7 @@ const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
         </div>
       </div>
       <div className="pt-8">
-        <div className="flow-root rounded overflow-x-auto border border-gray-200 shadow">
+        <div className="flow-root overflow-x-auto rounded border border-gray-200 shadow">
           <div className="inline-block min-w-full align-middle">
             <div>
               <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
@@ -340,11 +340,11 @@ const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
                       [
                         "Hotkey",
                         selectedResponse.hotkey.substring(0, 5) +
-                        "..." +
-                        selectedResponse.hotkey.substring(
-                          selectedResponse.hotkey.length - 5,
-                          selectedResponse.hotkey.length,
-                        ),
+                          "..." +
+                          selectedResponse.hotkey.substring(
+                            selectedResponse.hotkey.length - 5,
+                            selectedResponse.hotkey.length,
+                          ),
                       ],
                       ["Jaro Score", selectedResponse.jaro_score.toFixed(2)],
                       [

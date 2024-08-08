@@ -57,8 +57,8 @@ const KeysTable: React.FC<KeysTableProps> = ({ miners }) => {
             </button>
           </div>
           <div className="mt-8 flow-root">
-            <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8 px-8">
-              <div className="inline-block min-w-full max-h-60 overflow-y-auto align-middle border border-gray-200 shadow rounded">
+            <div className="-mx-4 -my-2 px-8 sm:-mx-6 lg:-mx-8">
+              <div className="inline-block max-h-60 min-w-full overflow-y-auto rounded border border-gray-200 align-middle shadow">
                 <div className="overflow-y-auto">
                   <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
                     <thead className="sticky top-0 bg-gray-50 dark:bg-neutral-800">
