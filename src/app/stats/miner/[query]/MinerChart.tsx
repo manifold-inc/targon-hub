@@ -19,7 +19,7 @@ export interface Keys {
 
 const MinerChart: React.FC<MinerChartProps> = ({ query, block }) => {
   const cardStyles =
-    "flex flex-col flex-grow bg-gray-500/5 p-8 shadow-md rounded-2xl hover:shadow-lg transition-all dark:hover:bg-gray-800 text-center items-center";
+    "flex flex-col flex-grow bg-white p-8 shadow-md rounded-2xl hover:shadow-lg transition-all dark:hover:bg-gray-800 text-center items-center";
   const [visibleCategories, setVisibleCategories] = useState<string[]>([
     "jaro_score",
     "total_time",

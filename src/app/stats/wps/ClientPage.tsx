@@ -7,7 +7,7 @@ import { type RowList } from "postgres";
 
 const ClientPage = ({ data }: { data: RowList<Record<string, unknown>[]> }) => {
   const cardStyles =
-    "flex flex-col flex-grow bg-gray-500/5 p-8 shadow-md rounded-2xl hover:shadow-lg transition-all dark:hover:bg-gray-800";
+    "flex flex-col flex-grow bg-white p-8 shadow-md rounded-2xl hover:shadow-lg transition-all dark:hover:bg-gray-800";
   const [visibleCategories, setVisibleCategories] = useState<string[]>([
     "Peak_WPS",
     "Competitive_Min_WPS",
@@ -117,7 +117,7 @@ const ClientPage = ({ data }: { data: RowList<Record<string, unknown>[]> }) => {
             </dl>
           </div>
           <div className="pt-8">
-            <div className="flex w-full flex-1 flex-col rounded-2xl bg-gray-500/5 p-8 shadow-md">
+            <div className="flex w-full flex-1 flex-col rounded-2xl bg-white p-8 shadow-md">
               <h3 className="pb-4 text-center text-2xl font-semibold text-gray-800 dark:text-gray-50">
                 Stats for Targon V2
               </h3>

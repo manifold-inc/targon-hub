@@ -8,7 +8,7 @@ export const Header = () => {
   const auth = useAuth();
   return (
     <header>
-      <nav className="fixed right-5 top-5 flex gap-8">
+      <nav className="fixed right-5 top-5 z-40 flex gap-8">
         <Link href="/">Homepage</Link>
         <Link href="/stats">Stats</Link>
         <Link href="/stats/miner">Miners</Link>
