@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 
 const Page = () => {
   const cardStyles =
-    "flex flex-col flex-grow bg-white p-8 shadow-md rounded-2xl hover:shadow-lg transition-all dark:hover:bg-gray-800 items-center text-center justify-center";
+    "flex flex-col flex-grow bg-white dark:bg-neutral-800 p-8 shadow-md rounded-2xl hover:shadow-lg transition-all dark:hover:bg-gray-800 items-center text-center justify-center";
   const [verified, setVerified] = useState(true);
   const [visibleCategories, setVisibleCategories] = useState<string[]>([
     "avg_jaro",
@@ -142,7 +142,7 @@ const Page = () => {
           </div>
           <div className="pt-8">
             <div
-              className={`flex w-full flex-1 flex-col rounded-2xl bg-white p-8 shadow-md sm:w-full`}
+              className={`flex w-full flex-1 flex-col rounded-2xl bg-white p-8 shadow-md dark:bg-neutral-800 sm:w-full`}
             >
               <h3 className="pb-4 text-center text-2xl font-semibold text-gray-800 dark:text-gray-50">
                 Avg stats last 2 hours
