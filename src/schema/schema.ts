@@ -66,7 +66,7 @@ export const OrganicRequest = pgTable("organic_request", {
     .references(() => User.id, { onDelete: "cascade" }),
   creditsUsed: integer("credits_used").notNull().default(0),
   tokens: integer("tokens").notNull().default(0),
-  request: json("request").notNull(),
+  request: jsonb("request").notNull(),
   response: text("response"),
   model: varchar("model_id", {
     length: 128,
