@@ -30,6 +30,7 @@ interface Response {
   top_n_tokens: string;
   max_n_tokens: string;
   repetition_penalty: string;
+  prompt: string;
 }
 
 const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
@@ -184,7 +185,7 @@ const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
                     </th>
                     <th
                       scope="col"
-                      className="whitespace-nowrap px-3 py-3.5 text-right font-semibold text-gray-900 dark:text-gray-200 sm:pr-6"
+                      className="whitespace-nowrap px-3 py-3.5 text-right text-sm font-semibold text-gray-900 dark:text-gray-200 sm:pr-6"
                     >
                       Actions
                     </th>
@@ -397,6 +398,26 @@ const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
                       </div>
                     ))}
                   </dl>
+                </div>
+                <div className="border-t border-gray-300 p-4 sm:col-span-2 sm:px-0">
+                  <dt className="flex justify-between pb-2 pr-4 text-sm font-semibold leading-6 text-gray-900 dark:text-white">
+                    Prompt
+                    <button
+                      className="ml-2 cursor-pointer"
+                      onClick={() =>
+                        handleCopyClipboard(
+                          JSON.stringify(selectedResponse.prompt, null, 2),
+                        )
+                      }
+                    >
+                      <Copy className="z-10 h-4 w-4 text-gray-500 dark:text-gray-300" />
+                    </button>
+                  </dt>
+                  <pre className="max-w-full overflow-auto">
+                    <code className="inline-block items-center space-x-4 break-words text-left text-sm text-gray-700 dark:text-gray-400">
+                      {JSON.stringify(selectedResponse.prompt, null, 2)}
+                    </code>
+                  </pre>
                 </div>
                 <div className="border-t border-gray-300 p-4 sm:col-span-2 sm:px-0">
                   <dt className="flex justify-between pb-2 pr-4 text-sm font-semibold leading-6 text-gray-900 dark:text-white">

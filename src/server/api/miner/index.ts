@@ -139,6 +139,7 @@ export const minerRouter = createTRPCRouter({
         .select({
           response: sql<string>`${MinerResponse.stats}->'response'`,
           ground_truth: sql<string>`${ValidatorRequest.ground_truth}->'ground_truth'`,
+          prompt: sql<string>`${ValidatorRequest.ground_truth}->'messages'`,
           hotkey: MinerResponse.hotkey,
           seed: sql<string>`${ValidatorRequest.sampling_params}->'seed'`,
           top_k: sql<string>`${ValidatorRequest.sampling_params}->'top_k'`,
