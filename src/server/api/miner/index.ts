@@ -86,7 +86,7 @@ export const minerRouter = createTRPCRouter({
           ? [eq(MinerResponse.uid, parseInt(query))]
           : [eq(MinerResponse.hotkey, query), eq(MinerResponse.coldkey, query)];
       const stats = await ctx.db
-        .select({
+        .selectDistinctOn([ValidatorRequest.block], {
           jaro_score:
             sql<number>`CAST(${MinerResponse.stats}->'jaro_score' AS DECIMAL)`.mapWith(
               Number,
@@ -117,10 +117,16 @@ export const minerRouter = createTRPCRouter({
           ValidatorRequest,
           eq(ValidatorRequest.r_nanoid, MinerResponse.r_nanoid),
         )
-        .where(and(gte(ValidatorRequest.block, actualBlock ?? 360), or(...eqs)))
-        .orderBy(ValidatorRequest.block);
+        .where(or(...eqs))
+        .orderBy(desc(ValidatorRequest.block), desc(ValidatorRequest.timestamp))
+        .limit(actualBlock);
 
-      return stats;
+        console.log("Stats: ", stats)
+
+        const orderedStats = stats.reverse()
+        console.log("Ordered Stats: ", orderedStats)
+
+      return orderedStats;
     }),
   getResponses: publicProcedure
     .input(
