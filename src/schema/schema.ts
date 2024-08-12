@@ -24,7 +24,7 @@ export const genId = {
 
 export const ValidatorRequest = pgTable("validator_request", {
   r_nanoid: varchar("r_nanoid", { length: 48 }).primaryKey(),
-  block: integer("block").notNull().unique(),
+  block: integer("block").notNull(),
   timestamp: timestamp("timestamp"),
   sampling_params: jsonb("sampling_params"),
   ground_truth: jsonb("ground_truth"),
