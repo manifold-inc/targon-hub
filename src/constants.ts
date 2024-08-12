@@ -1,5 +1,5 @@
 // make sure this is the same as your stripe product name
-export const CREDIT_PER_DOLLAR = 1000;
+export const CREDIT_PER_DOLLAR = 25000000;
 
 // Minimum credit purchase in dollars
 export const MIN_PURCHASE_IN_DOLLARS = 5;
