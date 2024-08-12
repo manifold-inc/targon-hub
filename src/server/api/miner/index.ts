@@ -79,14 +79,23 @@ export const minerRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       const { query, block } = input;
 
-      const actualBlock = Math.min(block!, 360);
+      const latestBlock = await ctx.db
+        .select({ maxBlock: sql<number>`MAX(${ValidatorRequest.block})` })
+        .from(ValidatorRequest)
+        .then((result) => result[0]?.maxBlock ?? 0);
+
+      console.log("Latest Block: ", latestBlock);
+
+      const startBlock = latestBlock - Math.min(block!, 360);
+
+      console.log("Start Block: ", startBlock);
 
       const eqs =
         query.length < 5
           ? [eq(MinerResponse.uid, parseInt(query))]
           : [eq(MinerResponse.hotkey, query), eq(MinerResponse.coldkey, query)];
       const stats = await ctx.db
-        .selectDistinctOn([ValidatorRequest.block], {
+        .select({
           jaro_score:
             sql<number>`CAST(${MinerResponse.stats}->'jaro_score' AS DECIMAL)`.mapWith(
               Number,
@@ -117,9 +126,8 @@ export const minerRouter = createTRPCRouter({
           ValidatorRequest,
           eq(ValidatorRequest.r_nanoid, MinerResponse.r_nanoid),
         )
-        .where(or(...eqs))
-        .orderBy(desc(ValidatorRequest.block), desc(ValidatorRequest.timestamp))
-        .limit(actualBlock);
+        .where(and(gte(ValidatorRequest.block, startBlock), or(...eqs)))
+        .orderBy(desc(ValidatorRequest.block))
 
         console.log("Stats: ", stats)
 
