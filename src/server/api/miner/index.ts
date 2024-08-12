@@ -79,7 +79,16 @@ export const minerRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       const { query, block } = input;
 
-      const actualBlock = Math.min(block!, 360);
+      const latestBlock = await ctx.db
+        .select({ maxBlock: sql<number>`MAX(${ValidatorRequest.block})` })
+        .from(ValidatorRequest)
+        .then((result) => result[0]?.maxBlock ?? 0);
+
+      console.log("Latest Block: ", latestBlock);
+
+      const startBlock = latestBlock - Math.min(block!, 360);
+
+      console.log("Start Block: ", startBlock);
 
       const eqs =
         query.length < 5
@@ -117,10 +126,15 @@ export const minerRouter = createTRPCRouter({
           ValidatorRequest,
           eq(ValidatorRequest.r_nanoid, MinerResponse.r_nanoid),
         )
-        .where(and(gte(ValidatorRequest.block, actualBlock ?? 360), or(...eqs)))
-        .orderBy(ValidatorRequest.block);
+        .where(and(gte(ValidatorRequest.block, startBlock), or(...eqs)))
+        .orderBy(desc(ValidatorRequest.block))
 
-      return stats;
+        console.log("Stats: ", stats)
+
+        const orderedStats = stats.reverse()
+        console.log("Ordered Stats: ", orderedStats)
+
+      return orderedStats;
     }),
   getResponses: publicProcedure
     .input(
