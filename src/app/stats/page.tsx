@@ -43,6 +43,7 @@ const Page = () => {
       ? color
       : "text-gray-400 dark:text-gray-600";
   };
+
   return (
     <div className="mx-auto max-w-7xl px-12 pb-12">
       <div className="py-24 sm:py-24">

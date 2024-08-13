@@ -4,7 +4,7 @@ import { z } from "zod";
 import { MinerResponse, ValidatorRequest } from "@/schema/schema";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
-function getStatsSchema(version: number): z.ZodSchema {
+function getStatsSchema(version: number) {
   switch (true) {
     case version > 204050:
       return z.object({
@@ -28,7 +28,6 @@ function getStatsSchema(version: number): z.ZodSchema {
       });
   }
 }
-type StatsType = z.infer<ReturnType<typeof getStatsSchema>>;
 
 export const minerRouter = createTRPCRouter({
   globalAvgStats: publicProcedure
@@ -58,15 +57,11 @@ export const minerRouter = createTRPCRouter({
               },
             ),
           avg_jaro:
-            latestVersion > 204050
-              ? sql<number>`
+             sql<number>`
                 AVG(
-                  (SELECT AVG((value::numeric)::float) 
+                  (SELECT AVG(value::float) 
                    FROM jsonb_array_elements(${MinerResponse.stats}->'jaros'))
-                )`.mapWith(Number)
-              : sql<number>`AVG(CAST(${MinerResponse.stats}->'jaro_score' AS DECIMAL))`.mapWith(
-                  Number,
-                ),
+                )`.mapWith(Number),
           avg_wps:
             sql<number>`AVG(CAST(${MinerResponse.stats}->'wps' AS DECIMAL))`.mapWith(
               Number,
@@ -92,7 +87,7 @@ export const minerRouter = createTRPCRouter({
         .where(
           and(
             gte(ValidatorRequest.timestamp, sql`NOW() - INTERVAL '2 hours'`),
-            gte(ValidatorRequest.version, 22040),
+            gte(ValidatorRequest.version, 204070),
             ...(input.verified
               ? [
                   eq(
@@ -104,7 +99,8 @@ export const minerRouter = createTRPCRouter({
           ),
         )
         .groupBy(sql`DATE_TRUNC('MINUTES', ${ValidatorRequest.timestamp})`)
-        .orderBy(sql`DATE_TRUNC('MINUTES', ${ValidatorRequest.timestamp})`);
+        .orderBy(desc(sql`DATE_TRUNC('MINUTES', ${ValidatorRequest.timestamp})`));
+
 
       return stats;
     }),
@@ -140,7 +136,7 @@ export const minerRouter = createTRPCRouter({
           ? [eq(MinerResponse.uid, parseInt(query))]
           : [eq(MinerResponse.hotkey, query), eq(MinerResponse.coldkey, query)];
 
-      const stats: StatsType[] = await ctx.db
+      const stats: typeof schema[] = await ctx.db
         .select({
           uid: MinerResponse.uid,
           hotkey: MinerResponse.hotkey,
@@ -150,7 +146,7 @@ export const minerRouter = createTRPCRouter({
             (CASE
               WHEN ${MinerResponse.stats}->'jaros' IS NOT NULL
               THEN
-                (SELECT AVG((value::numeric)::float) 
+                (SELECT AVG(value::float) 
                 FROM jsonb_array_elements(${MinerResponse.stats}->'jaros'))
               ELSE 0
             END)`.mapWith(Number),
@@ -178,9 +174,8 @@ export const minerRouter = createTRPCRouter({
         .where(and(gte(ValidatorRequest.block, startBlock), or(...eqs)))
         .orderBy(desc(ValidatorRequest.block));
 
-      const validatedStats = stats.map((stat) => schema.parse(stat));
+      return stats.reverse();
 
-      return validatedStats.reverse();
     }),
 
   getResponses: publicProcedure
