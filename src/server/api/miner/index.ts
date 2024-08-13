@@ -127,12 +127,12 @@ export const minerRouter = createTRPCRouter({
           eq(ValidatorRequest.r_nanoid, MinerResponse.r_nanoid),
         )
         .where(and(gte(ValidatorRequest.block, startBlock), or(...eqs)))
-        .orderBy(desc(ValidatorRequest.block))
+        .orderBy(desc(ValidatorRequest.block));
 
-        console.log("Stats: ", stats)
+      console.log("Stats: ", stats);
 
-        const orderedStats = stats.reverse()
-        console.log("Ordered Stats: ", orderedStats)
+      const orderedStats = stats.reverse();
+      console.log("Ordered Stats: ", orderedStats);
 
       return orderedStats;
     }),

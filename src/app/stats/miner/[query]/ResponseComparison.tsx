@@ -31,7 +31,7 @@ interface Response {
   max_n_tokens: string;
   repetition_penalty: string;
   prompt: string;
-  verified: boolean,
+  verified: boolean;
 }
 
 const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
