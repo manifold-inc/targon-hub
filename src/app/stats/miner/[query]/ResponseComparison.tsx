@@ -16,7 +16,8 @@ interface Response {
   hotkey: string;
   ground_truth: string;
   response: string;
-  jaro_score: number;
+  avg_jaro_score: number;
+  jaros: number[];
   words_per_second: number;
   time_for_all_tokens: number;
   total_time: number;
@@ -110,7 +111,7 @@ const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
                       scope="col"
                       className="whitespace-nowrap px-3  py-3.5 text-sm font-semibold text-gray-900 dark:text-gray-200"
                     >
-                      Jaro Score
+                      Avg Jaro Score
                     </th>
                     <th
                       scope="col"
@@ -257,7 +258,7 @@ const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
                         </div>
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">
-                        {response.jaro_score.toFixed(2)}
+                        {response.avg_jaro_score.toFixed(2)}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">
                         {response.words_per_second.toFixed(2)}
@@ -357,7 +358,10 @@ const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
                             selectedResponse.hotkey.length,
                           ),
                       ],
-                      ["Jaro Score", selectedResponse.jaro_score.toFixed(2)],
+                      [
+                        "Avg Jaro Score",
+                        selectedResponse.avg_jaro_score.toFixed(2),
+                      ],
                       [
                         "Words Per Second",
                         selectedResponse.words_per_second.toFixed(2),
@@ -408,6 +412,26 @@ const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
                       </div>
                     ))}
                   </dl>
+                </div>
+
+                <div className="border-t border-gray-300 p-4 sm:col-span-2 sm:px-0">
+                  <dt className="flex justify-between pb-2 pr-4 text-sm font-semibold leading-6 text-gray-900 dark:text-white">
+                    Jaro Scores
+                  </dt>
+                  <dd className="mt-1 font-mono text-sm leading-6 text-gray-700 dark:text-gray-400">
+                    {selectedResponse.jaros &&
+                    selectedResponse.jaros.length > 0 ? (
+                      <span>
+                        [
+                        {selectedResponse.jaros
+                          .map((score) => score.toFixed(4)) // Formats the scores to 4 decimal places
+                          .join(", ")}
+                        ]
+                      </span>
+                    ) : (
+                      <span>No Jaro scores available.</span>
+                    )}
+                  </dd>
                 </div>
                 <div className="border-t border-gray-300 p-4 sm:col-span-2 sm:px-0">
                   <dt className="flex justify-between pb-2 pr-4 text-sm font-semibold leading-6 text-gray-900 dark:text-white">

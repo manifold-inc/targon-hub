@@ -4,10 +4,43 @@ import { z } from "zod";
 import { MinerResponse, ValidatorRequest } from "@/schema/schema";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
+function getStatsSchema(version: number): z.ZodSchema {
+  switch (true) {
+    case version > 204050:
+      return z.object({
+        uid: z.number(),
+        hotkey: z.string(),
+        coldkey: z.string(),
+        block: z.number(),
+        jaro_avg: z.number().optional(),
+        wps: z.number().optional(),
+        total_time: z.number().optional(),
+        time_for_all_tokens: z.number().optional(),
+        time_to_first_token: z.number().optional(),
+      });
+    default:
+      return z.object({
+        jaro_score: z.number().nullable(),
+        words_per_second: z.number(),
+        time_for_all_tokens: z.number(),
+        total_time: z.number(),
+        time_to_first_token: z.number(),
+      });
+  }
+}
+type StatsType = z.infer<ReturnType<typeof getStatsSchema>>;
+
 export const minerRouter = createTRPCRouter({
   globalAvgStats: publicProcedure
     .input(z.object({ verified: z.boolean() }))
     .query(async ({ input, ctx }) => {
+      const latestVersion = await ctx.db
+        .select({ version: ValidatorRequest.version })
+        .from(ValidatorRequest)
+        .orderBy(desc(ValidatorRequest.block))
+        .limit(1)
+        .then((result) => result[0]?.version ?? 1);
+
       const stats = await ctx.db
         .select({
           minute:
@@ -25,9 +58,15 @@ export const minerRouter = createTRPCRouter({
               },
             ),
           avg_jaro:
-            sql<number>`AVG(CAST(${MinerResponse.stats}->'jaro_score' AS DECIMAL))`.mapWith(
-              Number,
-            ),
+            latestVersion > 204050
+              ? sql<number>`
+                AVG(
+                  (SELECT AVG((value::numeric)::float) 
+                   FROM jsonb_array_elements(${MinerResponse.stats}->'jaros'))
+                )`.mapWith(Number)
+              : sql<number>`AVG(CAST(${MinerResponse.stats}->'jaro_score' AS DECIMAL))`.mapWith(
+                  Number,
+                ),
           avg_wps:
             sql<number>`AVG(CAST(${MinerResponse.stats}->'wps' AS DECIMAL))`.mapWith(
               Number,
@@ -69,6 +108,7 @@ export const minerRouter = createTRPCRouter({
 
       return stats;
     }),
+
   stats: publicProcedure
     .input(
       z.object({
@@ -84,42 +124,51 @@ export const minerRouter = createTRPCRouter({
         .from(ValidatorRequest)
         .then((result) => result[0]?.maxBlock ?? 0);
 
-      console.log("Latest Block: ", latestBlock);
-
       const startBlock = latestBlock - Math.min(block!, 360);
 
-      console.log("Start Block: ", startBlock);
+      const latestVersion = await ctx.db
+        .select({ version: ValidatorRequest.version })
+        .from(ValidatorRequest)
+        .orderBy(desc(ValidatorRequest.block))
+        .limit(1)
+        .then((result) => result[0]?.version ?? 1);
+
+      const schema = getStatsSchema(latestVersion);
 
       const eqs =
         query.length < 5
           ? [eq(MinerResponse.uid, parseInt(query))]
           : [eq(MinerResponse.hotkey, query), eq(MinerResponse.coldkey, query)];
-      const stats = await ctx.db
+
+      const stats: StatsType[] = await ctx.db
         .select({
-          jaro_score:
-            sql<number>`CAST(${MinerResponse.stats}->'jaro_score' AS DECIMAL)`.mapWith(
-              Number,
-            ),
-          words_per_second:
-            sql<number>`CAST(${MinerResponse.stats}->'wps' AS DECIMAL)`.mapWith(
-              Number,
-            ),
-          time_for_all_tokens:
-            sql<number>`CAST(${MinerResponse.stats}->'time_for_all_tokens' AS DECIMAL)`.mapWith(
-              Number,
-            ),
-          total_time:
-            sql<number>`CAST(${MinerResponse.stats}->'total_time' AS DECIMAL)`.mapWith(
-              Number,
-            ),
-          time_to_first_token:
-            sql<number>`CAST(${MinerResponse.stats}->'time_to_first_token' AS DECIMAL)`.mapWith(
-              Number,
-            ),
           uid: MinerResponse.uid,
           hotkey: MinerResponse.hotkey,
           coldkey: MinerResponse.coldkey,
           block: ValidatorRequest.block,
+          jaro_avg: sql<number>`
+            (CASE
+              WHEN ${MinerResponse.stats}->'jaros' IS NOT NULL
+              THEN
+                (SELECT AVG((value::numeric)::float) 
+                FROM jsonb_array_elements(${MinerResponse.stats}->'jaros'))
+              ELSE 0
+            END)`.mapWith(Number),
+          wps: sql<number>`COALESCE(${MinerResponse.stats}->>'wps', '0')::DECIMAL`.mapWith(
+            Number,
+          ),
+          total_time:
+            sql<number>`COALESCE(${MinerResponse.stats}->>'total_time', '0')::DECIMAL`.mapWith(
+              Number,
+            ),
+          time_for_all_tokens:
+            sql<number>`COALESCE(${MinerResponse.stats}->>'time_for_all_tokens', '0')::DECIMAL`.mapWith(
+              Number,
+            ),
+          time_to_first_token:
+            sql<number>`COALESCE(${MinerResponse.stats}->>'time_to_first_token', '0')::DECIMAL`.mapWith(
+              Number,
+            ),
         })
         .from(MinerResponse)
         .innerJoin(
@@ -129,13 +178,11 @@ export const minerRouter = createTRPCRouter({
         .where(and(gte(ValidatorRequest.block, startBlock), or(...eqs)))
         .orderBy(desc(ValidatorRequest.block));
 
-      console.log("Stats: ", stats);
+      const validatedStats = stats.map((stat) => schema.parse(stat));
 
-      const orderedStats = stats.reverse();
-      console.log("Ordered Stats: ", orderedStats);
-
-      return orderedStats;
+      return validatedStats.reverse();
     }),
+
   getResponses: publicProcedure
     .input(
       z.object({
@@ -165,10 +212,15 @@ export const minerRouter = createTRPCRouter({
           max_n_tokens: sql<string>`${ValidatorRequest.sampling_params}->'max_new_tokens'`,
           repetition_penalty: sql<string>`${ValidatorRequest.sampling_params}->'repetition_penalty'`,
           verified: sql<boolean>`${MinerResponse.stats}->'verified'`,
-          jaro_score:
-            sql<number>`CAST(${MinerResponse.stats}->'jaro_score' AS DECIMAL)`.mapWith(
-              Number,
-            ),
+          avg_jaro_score: sql<number>`
+          (CASE
+            WHEN ${MinerResponse.stats}->'jaros' IS NOT NULL
+            THEN
+              (SELECT AVG((value::numeric)::float) 
+              FROM jsonb_array_elements(${MinerResponse.stats}->'jaros'))
+            ELSE 0
+          END)`.mapWith(Number),
+          jaros: sql<number[]>`${MinerResponse.stats}->'jaros'`,
           words_per_second:
             sql<number>`CAST(${MinerResponse.stats}->'wps' AS DECIMAL)`.mapWith(
               Number,

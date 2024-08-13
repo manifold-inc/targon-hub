@@ -21,9 +21,9 @@ const MinerChart: React.FC<MinerChartProps> = ({ query, block }) => {
   const cardStyles =
     "flex flex-col flex-grow bg-white dark:bg-neutral-800 p-8 shadow-md rounded-2xl hover:shadow-lg transition-all dark:hover:bg-gray-800 text-center items-center";
   const [visibleCategories, setVisibleCategories] = useState<string[]>([
-    "jaro_score",
+    "jaro_avg",
     "total_time",
-    "words_per_second",
+    "wps",
     "time_for_all_tokens",
     "time_to_first_token",
   ]);
@@ -46,12 +46,13 @@ const MinerChart: React.FC<MinerChartProps> = ({ query, block }) => {
   };
 
   const categoryColorMap: Record<string, string> = {
-    jaro_score: "blue",
+    jaro_avg: "blue",
     total_time: "red",
-    words_per_second: "green",
+    wps: "green",
     time_for_all_tokens: "purple",
     time_to_first_token: "orange",
   };
+
   const textColor = (category: string, color: string) => {
     return visibleCategories.includes(category)
       ? color
@@ -69,7 +70,7 @@ const MinerChart: React.FC<MinerChartProps> = ({ query, block }) => {
         <>
           <dl className=" flex justify-between gap-4 text-center">
             <button
-              onClick={handleCategoryClick("jaro_score")}
+              onClick={handleCategoryClick("jaro_avg")}
               className={cardStyles}
             >
               <dt className="text-sm font-semibold leading-6 text-gray-600 dark:text-gray-400">
@@ -77,13 +78,13 @@ const MinerChart: React.FC<MinerChartProps> = ({ query, block }) => {
               </dt>
               <dd
                 className={`order-first text-3xl font-semibold tracking-tight ${textColor(
-                  "jaro_score",
+                  "jaro_avg",
                   "text-blue-500",
                 )}`}
               >
                 {minerStats
                   ? (
-                      minerStats.data.reduce((s, d) => s + d.jaro_score, 0) /
+                      minerStats.data.reduce((s, d) => s + d.jaro_avg, 0) /
                       minerStats.data.length
                     ).toFixed(2)
                   : "_"}
@@ -112,25 +113,20 @@ const MinerChart: React.FC<MinerChartProps> = ({ query, block }) => {
               </dd>
             </button>
 
-            <button
-              onClick={handleCategoryClick("words_per_second")}
-              className={cardStyles}
-            >
+            <button onClick={handleCategoryClick("wps")} className={cardStyles}>
               <dt className="text-sm font-semibold leading-6 text-gray-600 dark:text-gray-400">
                 Average Words Per Second
               </dt>
               <dd
                 className={`order-first text-3xl font-semibold tracking-tight ${textColor(
-                  "words_per_second",
+                  "wps",
                   "text-green-500",
                 )}`}
               >
                 {minerStats
                   ? (
-                      minerStats.data.reduce(
-                        (s, d) => s + d.words_per_second,
-                        0,
-                      ) / minerStats.data.length
+                      minerStats.data.reduce((s, d) => s + d.wps, 0) /
+                      minerStats.data.length
                     ).toFixed(2)
                   : "_"}
               </dd>
@@ -141,7 +137,7 @@ const MinerChart: React.FC<MinerChartProps> = ({ query, block }) => {
               className={cardStyles}
             >
               <dt className="text-sm font-semibold leading-6 text-gray-600 dark:text-gray-400">
-                Average Time For All tokens
+                Average Time For All Tokens
               </dt>
               <dd
                 className={`order-first text-3xl font-semibold tracking-tight ${textColor(
