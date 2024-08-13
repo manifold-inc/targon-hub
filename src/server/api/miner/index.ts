@@ -164,6 +164,7 @@ export const minerRouter = createTRPCRouter({
           top_n_tokens: sql<string>`${ValidatorRequest.sampling_params}->'top_n_tokens'`,
           max_n_tokens: sql<string>`${ValidatorRequest.sampling_params}->'max_new_tokens'`,
           repetition_penalty: sql<string>`${ValidatorRequest.sampling_params}->'repetition_penalty'`,
+          verified: sql<boolean>`${MinerResponse.stats}->'verified'`,
           jaro_score:
             sql<number>`CAST(${MinerResponse.stats}->'jaro_score' AS DECIMAL)`.mapWith(
               Number,

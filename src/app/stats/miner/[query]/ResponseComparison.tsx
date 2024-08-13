@@ -31,6 +31,7 @@ interface Response {
   max_n_tokens: string;
   repetition_penalty: string;
   prompt: string;
+  verified: boolean,
 }
 
 const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
@@ -86,6 +87,12 @@ const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
                       className="whitespace-nowrap px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200 sm:pl-6"
                     >
                       Hotkey
+                    </th>
+                    <th
+                      scope="col"
+                      className="whitespace-nowrap px-3 py-3.5 text-sm font-semibold text-gray-900 dark:text-gray-200"
+                    >
+                      Verified
                     </th>
                     <th
                       scope="col"
@@ -211,6 +218,9 @@ const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
                             <Copy className="z-10 h-4 w-4 text-gray-500 dark:text-gray-300" />
                           </button>
                         </div>
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">
+                        {response.verified ? "Yes" : "No"}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">
                         <div className="flex items-center justify-between">
@@ -373,7 +383,7 @@ const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
                         "Repetition Penalty",
                         selectedResponse.repetition_penalty,
                       ],
-                      [""],
+                      ["Verified", selectedResponse.verified ? "Yes" : "No"],
                     ].map(([label, value], index) => (
                       <div
                         key={index}
