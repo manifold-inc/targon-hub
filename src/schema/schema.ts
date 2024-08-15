@@ -29,6 +29,7 @@ export const ValidatorRequest = pgTable("validator_request", {
   sampling_params: jsonb("sampling_params"),
   ground_truth: jsonb("ground_truth"),
   version: integer("version").notNull(),
+  hotkey: varchar("hotkey", { length: 48 }),
 });
 
 export const MinerResponse = pgTable("miner_response", {
@@ -38,6 +39,11 @@ export const MinerResponse = pgTable("miner_response", {
   coldkey: varchar("coldkey", { length: 48 }).notNull(),
   uid: integer("uid").notNull(),
   stats: jsonb("stats"),
+});
+
+export const Validator = pgTable("validator", {
+  hotkey: varchar("hotkey", { length: 48 }).primaryKey(),
+  valiName: varchar("vali_name", { length: 48 }),
 });
 
 export const User = pgTable("user", {
