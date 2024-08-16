@@ -20,7 +20,7 @@ export const Header = () => {
             </Link>
           </>
         ) : (
-          <Link className="hidden" href="/sign-in">
+          <Link  href="/sign-in">
             Sign in
           </Link>
         )}
