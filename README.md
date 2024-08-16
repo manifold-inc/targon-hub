@@ -3,7 +3,7 @@
 The goal of the hub is to give validators a simple way to directly generate
 revenue off of their bittensor bandwidth. This is designed as a template for
 validators to take and create their own branded hubs with, however pull requests
-are still encouraged.
+are always encouraged.
 
 ## Setup
 
