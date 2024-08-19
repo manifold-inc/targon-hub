@@ -1,8 +1,21 @@
 import { and, desc, eq, gte, or, sql } from "drizzle-orm";
-import { z } from "zod";
+import {  z } from "zod";
+
 
 import { MinerResponse, ValidatorRequest } from "@/schema/schema";
 import { createTRPCRouter, publicProcedure } from "../trpc";
+
+interface SamplingParams {
+  temperature: string;
+  seed: string;
+  top_k: string;
+  top_p: string;
+  best_of: string;
+  typical_p: string;
+  top_n_tokens: string;
+  max_new_tokens: string;
+  repetition_penalty: string;
+}
 
 export const minerRouter = createTRPCRouter({
   globalAvgStats: publicProcedure
@@ -155,15 +168,7 @@ export const minerRouter = createTRPCRouter({
           ground_truth: sql<string>`${ValidatorRequest.ground_truth}->'ground_truth'`,
           prompt: sql<string>`${ValidatorRequest.ground_truth}->'messages'`,
           hotkey: MinerResponse.hotkey,
-          seed: sql<string>`${ValidatorRequest.sampling_params}->'seed'`,
-          top_k: sql<string>`${ValidatorRequest.sampling_params}->'top_k'`,
-          top_p: sql<string>`${ValidatorRequest.sampling_params}->'top_p'`,
-          best_of: sql<string>`${ValidatorRequest.sampling_params}->'best_of'`,
-          typical_p: sql<string>`${ValidatorRequest.sampling_params}->'typical_p'`,
-          temperature: sql<string>`${ValidatorRequest.sampling_params}->'temperature'`,
-          top_n_tokens: sql<string>`${ValidatorRequest.sampling_params}->'top_n_tokens'`,
-          max_n_tokens: sql<string>`${ValidatorRequest.sampling_params}->'max_new_tokens'`,
-          repetition_penalty: sql<string>`${ValidatorRequest.sampling_params}->'repetition_penalty'`,
+          sampling_params: sql<SamplingParams>`${ValidatorRequest.sampling_params}`,
           verified: sql<boolean>`${MinerResponse.stats}->'verified'`,
           avg_jaro_score: sql<number>`
           (CASE

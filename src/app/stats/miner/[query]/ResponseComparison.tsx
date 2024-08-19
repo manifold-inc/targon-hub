@@ -22,18 +22,20 @@ interface Response {
   time_for_all_tokens: number;
   total_time: number;
   time_to_first_token: number;
-  seed: string;
-  top_k: string;
-  top_p: string;
-  best_of: string;
-  typical_p: string;
-  temperature: string;
-  top_n_tokens: string;
-  max_n_tokens: string;
-  repetition_penalty: string;
+  sampling_params: {
+    seed: string;
+    top_k: string;
+    top_p: string;
+    best_of: string;
+    typical_p: string;
+    temperature: string;
+    top_n_tokens: string;
+    max_new_tokens: string;
+    repetition_penalty: string;
+  };
   prompt: string;
   verified: boolean;
-}
+};
 
 const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
   const {
@@ -273,31 +275,31 @@ const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
                         {response.time_to_first_token.toFixed(2)}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">
-                        {response.seed}
+                        {response.sampling_params?.seed}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">
-                        {response.top_k}
+                        {response.sampling_params.top_k}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">
-                        {response.top_p}
+                        {response.sampling_params.top_k}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">
-                        {response.best_of}
+                        {response.sampling_params.best_of}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">
-                        {response.typical_p}
+                        {response.sampling_params.typical_p}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">
-                        {response.temperature}
+                        {response.sampling_params.temperature}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">
-                        {response.top_n_tokens}
+                        {response.sampling_params.top_n_tokens}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">
-                        {response.max_n_tokens}
+                        {response.sampling_params.max_new_tokens}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">
-                        {response.repetition_penalty}
+                        {response.sampling_params.repetition_penalty}
                       </td>
                       <td className="relative whitespace-nowrap px-3 py-4 text-right text-sm font-medium sm:pr-6">
                         <button
@@ -375,17 +377,17 @@ const ResponseComparison: React.FC<ResponseComparisonProps> = ({ query }) => {
                         "Time To First Token",
                         selectedResponse.time_to_first_token.toFixed(2),
                       ],
-                      ["Seed", selectedResponse.seed],
-                      ["Top K", selectedResponse.top_k],
-                      ["Top P", selectedResponse.top_p],
-                      ["Best Of", selectedResponse.best_of],
-                      ["Typical P", selectedResponse.typical_p],
-                      ["Temperature", selectedResponse.temperature],
-                      ["Top N Tokens", selectedResponse.top_n_tokens],
-                      ["Max N Tokens", selectedResponse.max_n_tokens],
+                      ["Seed", selectedResponse.sampling_params.seed],
+                      ["Top K", selectedResponse.sampling_params.top_k],
+                      ["Top P", selectedResponse.sampling_params.top_p],
+                      ["Best Of", selectedResponse.sampling_params.best_of],
+                      ["Typical P", selectedResponse.sampling_params.typical_p],
+                      ["Temperature", selectedResponse.sampling_params.temperature],
+                      ["Top N Tokens", selectedResponse.sampling_params.top_n_tokens],
+                      ["Max N Tokens", selectedResponse.sampling_params.max_new_tokens],
                       [
                         "Repetition Penalty",
-                        selectedResponse.repetition_penalty,
+                        selectedResponse.sampling_params.repetition_penalty,
                       ],
                       ["Verified", selectedResponse.verified ? "Yes" : "No"],
                     ].map(([label, value], index) => (
