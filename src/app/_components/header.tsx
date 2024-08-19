@@ -10,8 +10,7 @@ export const Header = () => {
     <header>
       <nav className="fixed right-5 top-5 z-40 flex gap-8">
         <Link href="/">Homepage</Link>
-        <Link href="/stats">Stats</Link>
-        <Link href="/stats/miner">Miners</Link>
+        <Link href="https://stats.sybil.com/">Stats</Link>
         {auth.status === "AUTHED" ? (
           <>
             <Link href="/dashboard">Dashboard</Link>
