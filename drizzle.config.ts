@@ -1,13 +1,17 @@
-import { config } from "dotenv";
 import { defineConfig } from "drizzle-kit";
 
-config({ path: ".env" });
+import { env } from "@/env.mjs";
+
+const url = new URL(`https://${env.DATABASE_HOST}/${env.DATABASE_NAME}`);
+url.password = env.DATABASE_PASSWORD;
+url.username = env.DATABASE_USERNAME;
+url.searchParams.set("rejectUnathorized", "true");
 
 export default defineConfig({
   verbose: true,
-  dialect: "postgresql",
+  dialect: "mysql",
   schema: "./src/schema/schema.ts",
   dbCredentials: {
-    url: process.env.DATABASE_URL!,
+    url: url.toString(),
   },
 });

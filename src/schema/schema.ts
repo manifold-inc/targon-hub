@@ -1,15 +1,13 @@
 import { sql } from "drizzle-orm";
 import {
   boolean,
-  integer,
-  jsonb,
-  pgTable,
-  real,
+  int,
+  json,
+  mysqlTable,
   serial,
-  text,
   timestamp,
   varchar,
-} from "drizzle-orm/pg-core";
+} from "drizzle-orm/mysql-core";
 import { customAlphabet } from "nanoid";
 
 import { DEFAULT_CREDITS } from "@/constants";
@@ -19,10 +17,10 @@ export const genId = {
   user: () => "u_" + nanoid(30),
   session: () => "s_" + nanoid(30),
   apikey: () => "sn4_" + nanoid(28),
-  organicRequest: () => "oreq_" + nanoid(27),
+  request: () => "oreq_" + nanoid(27),
 };
 
-export const User = pgTable("user", {
+export const User = mysqlTable("user", {
   id: varchar("id", {
     length: 32,
   }).primaryKey(),
@@ -34,21 +32,22 @@ export const User = pgTable("user", {
   createdAt: timestamp("created_at", { mode: "date" }).default(
     sql`CURRENT_TIMESTAMP`,
   ),
-  credits: integer("credits").notNull().default(DEFAULT_CREDITS),
+  credits: int("credits").notNull().default(DEFAULT_CREDITS),
+  coldkey: varchar("coldkey", {length: 48})
 });
 
-export const OrganicRequest = pgTable("organic_request", {
+export const Request = mysqlTable("request", {
   id: serial("id").primaryKey(),
-  pubId: varchar("pub_id"),
+  pubId: varchar("pub_id", { length: 32 }),
   userId: varchar("user_id", {
     length: 32,
   })
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
-  creditsUsed: integer("credits_used").notNull().default(0),
-  tokens: integer("tokens").notNull().default(0),
-  request: jsonb("request").notNull(),
-  response: text("response"),
+  creditsUsed: int("credits_used").notNull().default(0),
+  tokens: int("tokens").notNull().default(0),
+  request: json("request").notNull(),
+  response: json("response"),
   model: varchar("model_id", {
     length: 128,
   })
@@ -57,17 +56,16 @@ export const OrganicRequest = pgTable("organic_request", {
   createdAt: timestamp("created_at", { mode: "date" })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  uid: integer("uid"),
-  hotkey: varchar("hotkey"),
-  coldkey: varchar("coldkey"),
-  minerAddress: varchar("miner_address"),
-  attempt: varchar("attempt"),
-  metadata: jsonb("metadata"),
+  uid: int("uid"),
+  hotkey: varchar("hotkey", { length: 48 }),
+  coldkey: varchar("coldkey", { length: 48 }),
+  minerAddress: varchar("miner_address", { length: 48 }),
+  attempt: int("attempt"),
+  metadata: json("metadata"),
   scored: boolean("scored").default(false),
-  jaro: real("jaro"),
 });
 
-export const ApiKey = pgTable("api_key", {
+export const ApiKey = mysqlTable("api_key", {
   key: varchar("id", {
     length: 32,
   }).primaryKey(),
@@ -78,7 +76,7 @@ export const ApiKey = pgTable("api_key", {
     .references(() => User.id, { onDelete: "cascade" }),
 });
 
-export const Session = pgTable("session", {
+export const Session = mysqlTable("session", {
   id: varchar("id", {
     length: 255,
   }).primaryKey(),
@@ -93,7 +91,7 @@ export const Session = pgTable("session", {
   ),
 });
 
-export const CheckoutSessions = pgTable("checkoutSessions", {
+export const CheckoutSessions = mysqlTable("checkoutSessions", {
   id: varchar("id", {
     length: 255,
   }).primaryKey(),
@@ -102,19 +100,19 @@ export const CheckoutSessions = pgTable("checkoutSessions", {
   })
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
-  credits: integer("credits").notNull().default(DEFAULT_CREDITS),
+  credits: int("credits").notNull().default(DEFAULT_CREDITS),
   createdAt: timestamp("created_at", { mode: "date" }).default(
     sql`CURRENT_TIMESTAMP`,
   ),
 });
 
-export const Model = pgTable("model", {
+export const Model = mysqlTable("model", {
   id: varchar("id", {
     length: 128,
   }).primaryKey(),
-  miners: integer("miners").default(0).notNull(),
-  success: integer("success").default(0).notNull(),
-  failure: integer("failure").default(0).notNull(),
-  cpt: integer("cpt").default(1).notNull(), // cpt: credits per token
+  miners: int("miners").default(0).notNull(),
+  success: int("success").default(0).notNull(),
+  failure: int("failure").default(0).notNull(),
+  cpt: int("cpt").default(1).notNull(), // cpt: credits per token
   enabled: boolean("enabled").default(true),
 });

@@ -9,7 +9,7 @@ export const MIN_PURCHASE_IN_DOLLARS = 5;
 export const RATE_LIMIT_FACTOR = 50;
 
 // default starting credits
-export const DEFAULT_CREDITS = 0;
+export const DEFAULT_CREDITS = 10000;
 
 // Your api url, ex: https://hub.sybil.com/api
-export const API_BASE_URL = "https://targon.sybil.com/api";
+export const API_BASE_URL = "https://hub-api.sybil.com/v1";

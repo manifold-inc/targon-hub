@@ -4,7 +4,7 @@ import { Google } from "arctic";
 import { Lucia, Scrypt, type User as LuciaUser, type Session } from "lucia";
 
 import { env } from "@/env.mjs";
-import { adapter, type db as DB } from "@/schema/db";
+import { adapter, type DB } from "@/schema/db";
 import { ApiKey, genId, User } from "@/schema/schema";
 import { type stripe as STRIPE } from "./stripe";
 
@@ -69,7 +69,7 @@ export const createAccount = async ({
   googleId,
   password,
 }: {
-  db: typeof DB;
+  db: DB;
   stripe: typeof STRIPE;
   email: string;
   googleId?: string;

@@ -1,27 +1,15 @@
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
-
 import { env } from "@/env.mjs";
 import { LuciaAdapter } from "./lucia_adapter";
 import { Session, User } from "./schema";
+import { Client } from '@planetscale/database'
+import { drizzle } from 'drizzle-orm/planetscale-serverless'
 
-let connection: postgres.Sql;
+const client = new Client({
+  host: env.DATABASE_HOST,
+  username: env.DATABASE_USERNAME,
+  password: env.DATABASE_PASSWORD
+})
 
-if (process.env.NODE_ENV === "production") {
-  connection = postgres(env.DATABASE_URL, { prepare: false });
-} else {
-  const globalConnection = global as typeof globalThis & {
-    connection: postgres.Sql;
-  };
-
-  if (!globalConnection.connection) {
-    globalConnection.connection = postgres(env.DATABASE_URL, {
-      prepare: false,
-    });
-  }
-
-  connection = globalConnection.connection;
-}
-
-export const db = drizzle(connection);
+export const db = drizzle(client)
 export const adapter = new LuciaAdapter(db, Session, User);
+export type DB = typeof db
