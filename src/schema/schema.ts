@@ -3,6 +3,7 @@ import {
   boolean,
   int,
   json,
+  mysqlEnum,
   mysqlTable,
   serial,
   timestamp,
@@ -33,8 +34,10 @@ export const User = mysqlTable("user", {
     sql`CURRENT_TIMESTAMP`,
   ),
   credits: int("credits").notNull().default(DEFAULT_CREDITS),
-  coldkey: varchar("coldkey", {length: 48})
+  coldkey: varchar("coldkey", { length: 48 }),
 });
+
+const ENDPOINTS = ["CHAT", "COMPLETION"] as const;
 
 export const Request = mysqlTable("request", {
   id: serial("id").primaryKey(),
@@ -63,6 +66,7 @@ export const Request = mysqlTable("request", {
   attempt: int("attempt"),
   metadata: json("metadata"),
   scored: boolean("scored").default(false),
+  endpoint: mysqlEnum("endpoint", ENDPOINTS).notNull(),
 });
 
 export const ApiKey = mysqlTable("api_key", {
