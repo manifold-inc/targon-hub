@@ -12,4 +12,4 @@ export const RATE_LIMIT_FACTOR = 50;
 export const DEFAULT_CREDITS = 10000;
 
 // Your api url, ex: https://hub.sybil.com/api
-export const API_BASE_URL = "https://hub-api.sybil.com/v1";
+export const API_BASE_URL = "https://hub-api.sybil.com";

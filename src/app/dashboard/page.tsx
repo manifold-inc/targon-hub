@@ -117,6 +117,52 @@ for chunk in response:
               />
             </pre>
           </div>
+
+          <h4 className="pb-2 pt-12 text-xl font-semibold leading-6 text-gray-900 dark:text-gray-50">
+            Completion
+          </h4>
+          <div className="overflow-x-scroll pb-4">
+            <div className="w-fit whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3 dark:bg-neutral-900">
+              POST {API_BASE_URL}/v1/completions
+            </div>
+          </div>
+          <div className="pb-4">
+            Creates a model completion for the given text. Generally
+            Reference{" "}
+            <a
+              className="text-blue-500"
+              href="https://platform.openai.com/docs/api-reference/completion/create"
+            >
+              OpenAI{"'"}s api endpoint
+            </a>{" "}
+            for the definition behind each field.
+          </div>
+          <div className="pt-2">
+            <pre className="hljs prose-sm overflow-x-scroll rounded bg-gray-800 px-2 py-2 dark:bg-neutral-900">
+              <code
+                dangerouslySetInnerHTML={{
+                  __html: hljs.highlight(
+                    `from openai import OpenAI
+
+client = OpenAI(
+    base_url="${API_BASE_URL}/v1", api_key="[your api token]"
+)
+
+response = client.completions.create(
+    model="NousResearch/Meta-Llama-3.1-8B-Instruct",
+    stream=True,
+    prompt="The x y problem is",
+)
+for chunk in response:
+    if chunk.choices[0].text is not None:
+        print(chunk.choices[0].text, end="")
+`,
+                    { language: "python" },
+                  ).value,
+                }}
+              />
+            </pre>
+          </div>
         </Container>
       </div>
     </div>
