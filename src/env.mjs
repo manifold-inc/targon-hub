@@ -22,7 +22,6 @@ export const env = createEnv({
     STRIPE_ENDPOINT_SECRET: z.string(),
 
     HUB_API_ENDPOINT: z.string(),
-    HUB_SECRET_TOKEN: z.string(),
     VERCEL_URL: z.string(),
   },
   client: {},
@@ -41,7 +40,6 @@ export const env = createEnv({
     STRIPE_CREDIT_PRICE_ID: process.env.STRIPE_CREDIT_PRICE_ID,
     STRIPE_ENDPOINT_SECRET: process.env.STRIPE_ENDPOINT_SECRET,
     HUB_API_ENDPOINT: process.env.HUB_API_ENDPOINT,
-    HUB_SECRET_TOKEN: process.env.HUB_SECRET_TOKEN,
     VERCEL_URL: process.env.VERCEL_ENV ?? "http://localhost:3000",
   },
 
