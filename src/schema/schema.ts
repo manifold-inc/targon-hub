@@ -2,6 +2,7 @@ import { sql } from "drizzle-orm";
 import {
   bigint,
   boolean,
+  float,
   int,
   json,
   mysqlEnum,
@@ -116,6 +117,23 @@ export const CheckoutSession = mysqlTable("checkout_sessions", {
   createdAt: timestamp("created_at", { mode: "date" }).default(
     sql`CURRENT_TIMESTAMP`,
   ),
+});
+
+export const TaoTransfers = mysqlTable("tao_transfers", {
+  id: serial("id").primaryKey(),
+  userId: bigint("user_id", {
+    unsigned: true,
+    mode: "number",
+  }).references(() => User.id, { onDelete: "cascade" }),
+  credits: int("credits").notNull().default(DEFAULT_CREDITS),
+  createdAt: timestamp("created_at", { mode: "date" }).default(
+    sql`CURRENT_TIMESTAMP`,
+  ),
+  rao: float("rao").notNull(),
+  block_hash: varchar("block_hash", { length: 255 }),
+  tx_hash: varchar("tx_hash", { length: 255 }),
+  priced_at: float('priced_at'),
+  success: boolean('success').default(true)
 });
 
 export const Model = mysqlTable("model", {
