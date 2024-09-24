@@ -27,7 +27,7 @@ export class LuciaAdapter implements Adapter {
       .where(eq(this.sessionTable.id, sessionId));
   }
 
-  public async deleteUserSessions(userId: string): Promise<void> {
+  public async deleteUserSessions(userId: number): Promise<void> {
     await this.db
       .delete(this.sessionTable)
       .where(eq(this.sessionTable.userId, userId));
@@ -54,7 +54,7 @@ export class LuciaAdapter implements Adapter {
     ];
   }
 
-  public async getUserSessions(userId: string): Promise<DatabaseSession[]> {
+  public async getUserSessions(userId: number): Promise<DatabaseSession[]> {
     const result = await this.db
       .select()
       .from(this.sessionTable)

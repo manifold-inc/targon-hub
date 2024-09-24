@@ -1,5 +1,6 @@
 import { sql } from "drizzle-orm";
 import {
+  bigint,
   boolean,
   int,
   json,
@@ -22,19 +23,21 @@ export const genId = {
 };
 
 export const User = mysqlTable("user", {
-  id: varchar("id", {
+  id: serial("id").primaryKey(),
+  pubId: varchar("pub_id", {
     length: 32,
-  }).primaryKey(),
+  }).unique(),
   email: varchar("email", { length: 255 }).unique(),
   googleId: varchar("google_id", { length: 36 }).unique(),
-  emailConfirmed: boolean("email_confirmed").notNull().default(true),
+  verified: boolean("verified").notNull().default(true),
   password: varchar("password", { length: 255 }),
   stripeCustomerId: varchar("stripe_customer_id", { length: 32 }),
   createdAt: timestamp("created_at", { mode: "date" }).default(
     sql`CURRENT_TIMESTAMP`,
   ),
   credits: int("credits").notNull().default(DEFAULT_CREDITS),
-  coldkey: varchar("coldkey", { length: 48 }),
+  ss58: varchar("ss58", { length: 48 }),
+  challenge: varchar("challenge", { length: 48 }),
 });
 
 const ENDPOINTS = ["CHAT", "COMPLETION"] as const;
@@ -42,8 +45,9 @@ const ENDPOINTS = ["CHAT", "COMPLETION"] as const;
 export const Request = mysqlTable("request", {
   id: serial("id").primaryKey(),
   pubId: varchar("pub_id", { length: 32 }),
-  userId: varchar("user_id", {
-    length: 32,
+  userId: bigint("user_id", {
+    unsigned: true,
+    mode: "number",
   })
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
@@ -51,8 +55,9 @@ export const Request = mysqlTable("request", {
   tokens: int("tokens").notNull().default(0),
   request: json("request").notNull(),
   response: json("response"),
-  model: varchar("model_id", {
-    length: 128,
+  model: bigint("model_id", {
+    mode: "number",
+    unsigned: true,
   })
     .notNull()
     .references(() => Model.id),
@@ -73,8 +78,9 @@ export const ApiKey = mysqlTable("api_key", {
   key: varchar("id", {
     length: 32,
   }).primaryKey(),
-  userId: varchar("user_id", {
-    length: 32,
+  userId: bigint("user_id", {
+    unsigned: true,
+    mode: "number",
   })
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
@@ -84,8 +90,9 @@ export const Session = mysqlTable("session", {
   id: varchar("id", {
     length: 255,
   }).primaryKey(),
-  userId: varchar("user_id", {
-    length: 32,
+  userId: bigint("user_id", {
+    unsigned: true,
+    mode: "number",
   })
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
@@ -95,12 +102,13 @@ export const Session = mysqlTable("session", {
   ),
 });
 
-export const CheckoutSessions = mysqlTable("checkoutSessions", {
+export const CheckoutSession = mysqlTable("checkout_sessions", {
   id: varchar("id", {
     length: 255,
   }).primaryKey(),
-  userId: varchar("user_id", {
-    length: 32,
+  userId: bigint("user_id", {
+    unsigned: true,
+    mode: "number",
   })
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
@@ -111,9 +119,10 @@ export const CheckoutSessions = mysqlTable("checkoutSessions", {
 });
 
 export const Model = mysqlTable("model", {
-  id: varchar("id", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", {
     length: 128,
-  }).primaryKey(),
+  }).unique(),
   miners: int("miners").default(0).notNull(),
   success: int("success").default(0).notNull(),
   failure: int("failure").default(0).notNull(),

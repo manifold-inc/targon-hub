@@ -5,7 +5,7 @@ import { Model } from "@/schema/schema";
 
 const models = [
   {
-    id: "NousResearch/Meta-Llama-3.1-8B-Instruct",
+    name: "NousResearch/Meta-Llama-3.1-8B-Instruct",
     cpt: 1,
   },
 ];

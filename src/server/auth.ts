@@ -11,6 +11,7 @@ import { type stripe as STRIPE } from "./stripe";
 declare module "lucia" {
   interface Register {
     Lucia: typeof lucia;
+    UserId: number;
   }
 }
 
@@ -85,18 +86,18 @@ export const createAccount = async ({
   if (password) {
     hashedPassowrd = await new Scrypt().hash(password);
   }
-  await db.insert(User).values({
-    id: userId,
+  const res = await db.insert(User).values({
+    pubId: userId,
     email,
     googleId,
     stripeCustomerId: stripeId.id,
     password: hashedPassowrd,
-    emailConfirmed: !hashedPassowrd,
+    verified: !hashedPassowrd,
   });
   const apiKey = genId.apikey();
   await db.insert(ApiKey).values({
-    userId: userId,
+    userId: parseInt(res.insertId),
     key: apiKey,
   });
-  return userId;
+  return parseInt(res.insertId);
 };
