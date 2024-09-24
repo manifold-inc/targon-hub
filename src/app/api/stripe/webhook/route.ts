@@ -23,8 +23,6 @@ export async function POST(request: NextRequest) {
       env.STRIPE_ENDPOINT_SECRET,
     );
   } catch (err) {
-    if (err instanceof Error)
-      console.log(`Webhook signature verification failed.`, err.message);
     return new Response(
       `Webhook Error: ${err instanceof Error && err.message}`,
       { status: 400 },
@@ -36,7 +34,6 @@ export async function POST(request: NextRequest) {
       await checkoutSuccess(event.data.object);
       break;
     default:
-      console.log("Invalid Event Type");
       break;
   }
 

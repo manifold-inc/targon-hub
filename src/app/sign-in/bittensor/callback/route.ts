@@ -67,7 +67,6 @@ export async function GET(request: NextRequest): Promise<Response> {
     .from(ApiKey)
     .where(eq(ApiKey.userId, user.userid));
   let apiKey = api_key_row?.api_key;
-  console.log(roll)
   if (roll || !apiKey) {
     apiKey = genId.apikey();
     await db.delete(ApiKey).where(eq(ApiKey.userId, user.userid));
