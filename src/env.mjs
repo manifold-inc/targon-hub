@@ -11,6 +11,8 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_REDIRECT_URI: z.string(),
 
+    DEPOSIT_ADDRESS: z.string(),
+
     DATABASE_HOST: z.string(),
     DATABASE_NAME: z.string(),
     DATABASE_USERNAME: z.string(),
@@ -35,6 +37,7 @@ export const env = createEnv({
     DATABASE_NAME: process.env.DATABASE_NAME,
     DATABASE_USERNAME: process.env.DATABASE_USERNAME,
     DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
+    DEPOSIT_ADDRESS: process.env.DEPOSIT_ADDRESS,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
     STRIPE_CREDIT_PRICE_ID: process.env.STRIPE_CREDIT_PRICE_ID,

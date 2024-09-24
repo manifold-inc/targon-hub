@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 import { eq } from "drizzle-orm";
 
+import { env } from "@/env.mjs";
 import { db } from "@/schema/db";
 import { ApiKey, User } from "@/schema/schema";
 
@@ -11,13 +12,20 @@ export async function GET(request: NextRequest): Promise<Response> {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
   const [user] = await db
-    .select({ credits: User.credits })
+    .select({ credits: User.credits, ss58: User.ss58 })
     .from(User)
     .innerJoin(ApiKey, eq(User.id, ApiKey.userId))
     .where(eq(ApiKey.key, token));
   if (!user) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
+  const body = { credits: user.credits } as {
+    credits: number;
+    deposit_address?: string;
+  };
+  if (user.ss58) {
+    body.deposit_address = env.DEPOSIT_ADDRESS;
+  }
 
-  return Response.json({ credits: user.credits }, { status: 200 });
+  return Response.json(body, { status: 200 });
 }
