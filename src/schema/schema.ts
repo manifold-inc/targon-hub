@@ -113,7 +113,7 @@ export const CheckoutSession = mysqlTable("checkout_sessions", {
   })
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
-  credits: int("credits").notNull().default(DEFAULT_CREDITS),
+  credits: int("credits").notNull(),
   createdAt: timestamp("created_at", { mode: "date" }).default(
     sql`CURRENT_TIMESTAMP`,
   ),
@@ -125,7 +125,7 @@ export const TaoTransfers = mysqlTable("tao_transfers", {
     unsigned: true,
     mode: "number",
   }).references(() => User.id, { onDelete: "cascade" }),
-  credits: int("credits").notNull().default(DEFAULT_CREDITS),
+  credits: int("credits"),
   createdAt: timestamp("created_at", { mode: "date" }).default(
     sql`CURRENT_TIMESTAMP`,
   ),
