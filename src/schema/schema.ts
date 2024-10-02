@@ -138,6 +138,19 @@ export const TaoTransfers = mysqlTable("tao_transfers", {
   success: boolean("success").default(true),
 });
 
+const CATEGORIES = [
+  "Programming",
+  "Marketing",
+  "Technology",
+  "Science",
+  "Translation",
+  "Legal",
+  "Finance",
+  "Health",
+  "Trivia",
+  "Academia",
+] as const
+
 export const Model = mysqlTable("model", {
   id: serial("id").primaryKey(),
   name: varchar("name", {
@@ -148,4 +161,7 @@ export const Model = mysqlTable("model", {
   failure: int("failure").default(0).notNull(),
   cpt: int("cpt").default(1).notNull(), // cpt: credits per token
   enabled: boolean("enabled").default(true),
+  category: mysqlEnum("category", CATEGORIES ).notNull(),
+  description: varchar("description", { length: 255 }).notNull(),
+  uploadedAt: timestamp("uploaded_at", {mode: "date"}).default(sql`CURRENT_TIMESTAMP`).notNull(),
 });
