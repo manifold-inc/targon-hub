@@ -15,13 +15,18 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import {
+  Blocks,
+  BookOpenText,
+  BrainCog,
   ChevronDown,
   HomeIcon,
   Key,
+  Lock,
   Menu as MenuIcon,
   Search,
   Settings,
   SignalHigh,
+  Trophy,
   User,
   Wallet,
 } from "lucide-react";
@@ -54,9 +59,9 @@ export const Header = () => {
             className="h-4 w-4 text-manifold-green dark:text-white"
           />
         );
-      case "/settings/keys":
+      case "/models":
         return (
-          <Key
+          <BrainCog
             aria-hidden="true"
             className="h-4 w-4 text-manifold-green dark:text-white"
           />
@@ -68,9 +73,44 @@ export const Header = () => {
             className="h-4 w-4 text-manifold-green dark:text-white"
           />
         );
+      case "/rankings":
+        return (
+          <Trophy
+            aria-hidden="true"
+            className="h-4 w-4 text-manifold-green dark:text-white"
+          />
+        );
+      case "/docs":
+        return (
+          <BookOpenText
+            aria-hidden="true"
+            className="h-4 w-4 text-manifold-green dark:text-white"
+          />
+        );
       case "/settings/preferences":
         return (
           <Settings
+            aria-hidden="true"
+            className="h-4 w-4 text-manifold-green dark:text-white"
+          />
+        );
+      case "/settings/keys":
+        return (
+          <Key
+            aria-hidden="true"
+            className="h-4 w-4 text-manifold-green dark:text-white"
+          />
+        );
+      case "/settings/integrations":
+        return (
+          <Blocks
+            aria-hidden="true"
+            className="h-4 w-4 text-manifold-green dark:text-white"
+          />
+        );
+      case "/settings/privacy":
+        return (
+          <Lock
             aria-hidden="true"
             className="h-4 w-4 text-manifold-green dark:text-white"
           />
