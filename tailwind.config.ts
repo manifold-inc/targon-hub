@@ -15,6 +15,16 @@ export default {
     current: "currentColor",
     extend: {
       colors: {
+        manifold: {
+          green: "#1c3836",
+          pink: "#d2cfff",
+          grey1: {
+            500: "f0f0f0",
+            800: "#121212",
+          },
+          grey2: "#dadada",
+          white: "#ffffff",
+        },
         // light mode
         tremor: {
           brand: {
