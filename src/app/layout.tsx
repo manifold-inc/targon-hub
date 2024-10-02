@@ -19,7 +19,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Targon-hub",
+  title: "Targon Hub",
 };
 
 export default function RootLayout({
