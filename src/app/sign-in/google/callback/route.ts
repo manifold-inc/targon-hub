@@ -69,7 +69,7 @@ async function handle(req: NextRequest): Promise<Response> {
   return new Response(null, {
     status: 302,
     headers: {
-      Location: "/dashboard",
+      Location: "/models",
     },
   });
 }
