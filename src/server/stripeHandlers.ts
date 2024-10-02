@@ -14,7 +14,7 @@ export const checkoutSuccess = async (
   if (!metadataUserId) {
     throw new Error("Checkout completed but no user was attached to metadata");
   }
-  const userId = parseInt(metadataUserId)
+  const userId = parseInt(metadataUserId);
   const [user] = await db.select().from(User).where(eq(User.id, userId));
   if (!user) {
     throw new Error("Checkout completed but no user was found");
