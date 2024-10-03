@@ -20,7 +20,7 @@ const ResponsesPage: React.FC = () => {
       </p>
 
       <p className="mb-4 text-gray-700 dark:text-gray-300">
-        Here's the response schema as a TypeScript type:
+        Here&apos;s the response schema as a TypeScript type:
       </p>
 
       <div className="bg-gray-100 p-4 rounded-lg overflow-x-auto mb-6 dark:bg-gray-800">
@@ -72,11 +72,11 @@ const ResponsesPage: React.FC = () => {
       <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Querying Cost and Stats</h2>
       
       <p className="mb-4 text-gray-700 dark:text-gray-300">
-        The token counts that are returned in the completions API response are NOT counted with the model's native tokenizer. Instead it uses a normalized, model-agnostic count.
+        The token counts that are returned in the completions API response are NOT counted with the model&apos;s native tokenizer. Instead it uses a normalized, model-agnostic count.
       </p>
 
       <p className="mb-4 text-gray-700 dark:text-gray-300">
-        For precise token accounting using the model's native tokenizer, use the <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">/api/v1/generation</code> endpoint.
+        For precise token accounting using the model&apos;s native tokenizer, use the <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">/api/v1/generation</code> endpoint.
       </p>
 
       <p className="mb-4 text-gray-700 dark:text-gray-300">

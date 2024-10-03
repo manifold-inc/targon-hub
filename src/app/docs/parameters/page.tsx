@@ -6,7 +6,7 @@ const ParametersPage: React.FC = () => {
       <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">Parameters</h1>
       
       <p className="mb-6 text-lg text-gray-700 dark:text-gray-300">
-        Targon supports various parameters to fine-tune the behavior of language models. Here's a comprehensive list of available parameters:
+        Targon supports various parameters to fine-tune the behavior of language models. Here&apos;s a comprehensive list of available parameters:
       </p>
 
       <div className="space-y-8">

@@ -30,7 +30,7 @@ const PrinciplesPage: React.FC = () => {
         <section>
           <h2 className="text-2xl font-semibold mb-3">The best models will be used the most</h2>
           <p>
-            Evals are flawed. Instead, compare models by how often they're used for different purposes. 
+            Evals are flawed. Instead, compare models by how often they&apos;re used for different purposes. 
             Chat with multiple at once in the Chatroom.
           </p>
         </section>

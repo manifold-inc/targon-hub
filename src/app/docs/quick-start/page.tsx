@@ -31,7 +31,7 @@ const QuickStartPage: React.FC = () => {
         </code>
       </pre>
 
-      <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Using OpenAI's Client API</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Using OpenAI&apos;s Client API</h2>
       <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto mb-6">
         <code className="language-typescript text-sm text-gray-800 dark:text-gray-200">
 {`import OpenAI from "openai"

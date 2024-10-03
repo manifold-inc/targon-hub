@@ -53,7 +53,7 @@ const LimitsPage: React.FC = () => {
 
       <ul className="list-disc pl-6 mb-6 text-gray-700 dark:text-gray-300">
         <li><strong>Free limit</strong>: If you are using a free model variant (with an ID ending in <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">:free</code>), then you will be limited to 20 requests per minute and 200 requests per day.</li>
-        <li><strong>DDoS protection</strong>: Cloudflare's DDoS protection will block requests that dramatically exceed reasonable usage.</li>
+        <li><strong>DDoS protection</strong>: Cloudflare&apos;s DDoS protection will block requests that dramatically exceed reasonable usage.</li>
       </ul>
 
       <p className="mb-4 text-gray-700 dark:text-gray-300">

@@ -6,13 +6,13 @@ const RequestsPage: React.FC = () => {
       <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">Requests</h1>
       
       <p className="mb-6 text-lg text-gray-700 dark:text-gray-300">
-        Targon's request and response schemas are very similar to the OpenAI Chat API, with a few small differences. At a high level, <strong>Targon normalizes the schema across models</strong> and providers so you only need to learn one.
+        Targon&apos;s request and response schemas are very similar to the OpenAI Chat API, with a few small differences. At a high level, <strong>Targon normalizes the schema across models</strong> and providers so you only need to learn one.
       </p>
 
       <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Request Body</h2>
       
       <p className="mb-4 text-gray-700 dark:text-gray-300">
-        Here's the request schema as a TypeScript type. This will be the body of your POST request to the <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">/api/v1/chat/completions</code> endpoint.
+        Here&apos;s the request schema as a TypeScript type. This will be the body of your POST request to the <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">/api/v1/chat/completions</code> endpoint.
       </p>
 
       <div className="bg-gray-100 p-4 rounded-lg overflow-x-auto mb-6 dark:bg-gray-800">
@@ -78,9 +78,9 @@ const RequestsPage: React.FC = () => {
       <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Additional Features</h2>
       
       <ul className="list-disc pl-6 mb-6 text-gray-700 dark:text-gray-300">
-        <li><strong>Model routing:</strong> If the <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">model</code> parameter is omitted, the user or payer's default is used.</li>
+        <li><strong>Model routing:</strong> If the <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">model</code> parameter is omitted, the user or payer&apos;s default is used.</li>
         <li><strong>Streaming:</strong> Server-Sent Events (SSE) are supported for all models. Send <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">stream: true</code> in your request body.</li>
-        <li><strong>Non-standard parameters:</strong> If a chosen model doesn't support a request parameter, it's ignored.</li>
+        <li><strong>Non-standard parameters:</strong> If a chosen model doesn&apos;t support a request parameter, it&apos;s ignored.</li>
         <li><strong>Assistant Prefill:</strong> Targon supports asking models to complete a partial response.</li>
       </ul>
 
