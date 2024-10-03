@@ -28,7 +28,7 @@ interface Model {
   // Add other fields if needed
 }
 
-interface ModelStats {
+export interface ModelStats {
   modelId: number;
   modelName: string;
   category: string;
