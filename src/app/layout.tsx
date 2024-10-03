@@ -3,7 +3,7 @@ import { ThemeProvider } from "next-themes";
 
 import "@/styles/globals.css";
 
-import { Inter } from "next/font/google";
+import { Source_Serif_4 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import clsx from "clsx";
 import { Toaster } from "sonner";
@@ -12,9 +12,9 @@ import { Footer } from "./_components/footer";
 import { Header } from "./_components/header";
 import { WithGlobalProvider } from "./_components/providers";
 
-const inter = Inter({
+const sourceSerif4 = Source_Serif_4({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-source-serif-4",
   display: "swap",
 });
 
@@ -31,7 +31,7 @@ export default function RootLayout({
     <html
       suppressHydrationWarning
       lang="en"
-      className={clsx("h-full", inter.variable)}
+      className={clsx("h-full", sourceSerif4.variable)}
     >
       <head>
         <link rel="manifest" href="/site.webmanifest" />
