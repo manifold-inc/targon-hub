@@ -31,6 +31,7 @@ export default function Page() {
     ...new Set(models.data?.map((model) => model.category) ?? []),
   ];
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [isOpen, setIsOpen] = useState(false);
   const [stats, setStats] = useState<ModelStats[]>([]);
   const [filteredStats, setFilteredStats] = useState<ModelStats[]>([]);
 
@@ -58,7 +59,6 @@ export default function Page() {
   const [selectedPeriod, setSelectedPeriod] = useState<
     "daily" | "weekly" | "monthly"
   >("daily");
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fakeShowcase = generateFakeAppShowcase();
