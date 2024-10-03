@@ -14,9 +14,12 @@ import { reactClient } from "@/trpc/react";
 import {
   generateFakeStats,
   getTrendingModels,
+  generateFakeAppShowcase,
   type ModelStats,
+  type AppShowcaseStats,
 } from "@/utils/utils";
 import { useAuth } from "./_components/providers";
+import Image from "next/image";
 
 export default function Page() {
   const auth = useAuth();
@@ -48,6 +51,16 @@ export default function Page() {
   }, [selectedCategory, stats]);
 
   const trendingModels = getTrendingModels(filteredStats, 3);
+
+  const [showcaseStats, setShowcaseStats] = useState<AppShowcaseStats | null>(null);
+  const [selectedPeriod, setSelectedPeriod] = useState<'daily' | 'weekly' | 'monthly'>('daily');
+
+  useEffect(() => {
+    const fakeShowcase = generateFakeAppShowcase();
+    setShowcaseStats(fakeShowcase);
+  }, []);
+
+  const selectedApps = showcaseStats ? showcaseStats[selectedPeriod] : [];
 
   return (
     <div>
@@ -87,7 +100,7 @@ export default function Page() {
               ~{" "}
               <Link
                 href="/rankings"
-                className="mr-4 font-semibold text-manifold-green hover:text-gray-500 dark:text-gray-300 dark:text-manifold-pink"
+                className="mr-4 font-semibold text-manifold-green hover:text-gray-500 dark:text-manifold-pink"
               >
                 Trending Models
               </Link>
@@ -135,8 +148,66 @@ export default function Page() {
             </dl>
           </div>
         </div>
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center gap-4">
           <div className="w-1/2 border-t border-gray-200 dark:border-white/10" />
+          <span className="font-semibold text-manifold-green dark:text-manifold-pink">
+            ~ App Showcase ~
+          </span>
+          <div className="p-2 w-full max-w-md bg-manifold-grey2 dark:bg-gray-800 rounded-lg">
+            <div className="flex gap-2">
+              <button
+                onClick={() => setSelectedPeriod('daily')}
+                className={`flex-1 py-4 text-white transition-colors duration-200 rounded-lg ${
+                  selectedPeriod === 'daily'
+                    ? 'bg-manifold-green dark:bg-manifold-pink'
+                    : 'bg-gray-400 dark:bg-gray-600 hover:bg-manifold-green/80 dark:hover:bg-manifold-pink/80'
+                }`}
+              >
+                Today
+              </button>
+              <button
+                onClick={() => setSelectedPeriod('weekly')}
+                className={`flex-1 py-4 text-white transition-colors duration-200 rounded-lg ${
+                  selectedPeriod === 'weekly'
+                    ? 'bg-manifold-green dark:bg-manifold-pink'
+                    : 'bg-gray-400 dark:bg-gray-600 hover:bg-manifold-green/80 dark:hover:bg-manifold-pink/80'
+                }`}
+              >
+                This Week
+              </button>
+              <button
+                onClick={() => setSelectedPeriod('monthly')}
+                className={`flex-1 py-4 text-white transition-colors duration-200 rounded-lg ${
+                  selectedPeriod === 'monthly'
+                    ? 'bg-manifold-green dark:bg-manifold-pink'
+                    : 'bg-gray-400 dark:bg-gray-600 hover:bg-manifold-green/80 dark:hover:bg-manifold-pink/80'
+                }`}
+              >
+                This Month
+              </button>
+            </div>
+          </div>
+          <div className="w-full max-w-2xl mt-4">
+            <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+              {selectedApps.map((app, index) => (
+                <li key={index} className="py-4 flex items-center">
+                  <div className="w-8 text-right mr-4">{index + 1}.</div>
+                  <Image src={app.favicon} alt={`${app.name} favicon`} className="w-6 h-6 mr-4" width={24} height={24} unoptimized/>
+                  <div className="flex-1 min-w-0">
+                    <Link href={app.url} className="text-sm font-medium text-gray-900 dark:text-white truncate hover:underline">
+                      {app.name}
+                    </Link>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                      {app.description}
+                    </p>
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400 ml-4">
+                    {app.tokens.toLocaleString()} tokens
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

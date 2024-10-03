@@ -80,7 +80,7 @@ export const Header = () => {
             className="h-4 w-4 text-manifold-green dark:text-white"
           />
         );
-      case "/docs":
+      case pathName.startsWith("/docs") && pathName:
         return (
           <BookOpenText
             aria-hidden="true"
@@ -128,7 +128,7 @@ export const Header = () => {
         );
 
   return (
-    <header className="sticky top-0 z-50 bg-white dark:bg-gray-800">
+    <header className="sticky top-0 z-50 bg-white dark:bg-manifold-grey1-800">
       <nav className="flex items-center p-4 text-manifold-green dark:text-white">
         <Link
           href="/"
@@ -137,20 +137,13 @@ export const Header = () => {
           <Image
             src={
               resolvedTheme === "dark"
-                ? "/ManifoldMarkTransparentGreen.png"
-                : "/ManifoldMarkTransparentWhite.png"
+                ? "/ManifoldMarkTransparentPink.png"
+                : "/ManifoldMarkTransparentGreen.png"
             }
             width={32}
             height={32}
             alt="Targon Hub"
-            className="hidden dark:block"
-          />
-          <Image
-            src="/ManifoldMarkTransparentGreen.png"
-            width={32}
-            height={32}
-            alt="Targon Hub"
-            className="dark:hidden"
+            className="block"
           />
           <p className="text-md font-semibold">Targon Hub</p>
         </Link>

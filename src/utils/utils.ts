@@ -119,3 +119,37 @@ export function getTrendingModels(
     .sort((a, b) => b.trendScore - a.trendScore)
     .slice(0, limit);
 }
+
+export interface AppShowcase {
+  favicon: string;
+  name: string;
+  description: string;
+  tokens: number;
+  url: string;
+}
+
+export interface AppShowcaseStats {
+  daily: AppShowcase[];
+  weekly: AppShowcase[];
+  monthly: AppShowcase[];
+}
+
+export function generateFakeAppShowcase(): AppShowcaseStats {
+  const generateApp = (): AppShowcase => ({
+    favicon: faker.image.url({ width: 16, height: 16 }),
+    name: faker.company.name(),
+    description: faker.company.catchPhrase(),
+    tokens: faker.number.int({ min: 50_000_000, max: 2_000_000_000 }),
+    url: faker.internet.url(),
+  });
+
+  const generateTopApps = (count: number): AppShowcase[] => {
+    return Array.from({ length: count }, generateApp).sort((a, b) => b.tokens - a.tokens);
+  };
+
+  return {
+    daily: generateTopApps(20),
+    weekly: generateTopApps(20),
+    monthly: generateTopApps(20),
+  };
+}
