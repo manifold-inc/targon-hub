@@ -1,12 +1,15 @@
-import React from 'react';
+import React from "react";
 
 const ParametersPage: React.FC = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">Parameters</h1>
-      
+    <div className="mx-auto max-w-4xl px-4 py-8">
+      <h1 className="mb-6 text-3xl font-bold text-gray-900 dark:text-gray-100">
+        Parameters
+      </h1>
+
       <p className="mb-6 text-lg text-gray-700 dark:text-gray-300">
-        Targon supports various parameters to fine-tune the behavior of language models. Here&apos;s a comprehensive list of available parameters:
+        Targon supports various parameters to fine-tune the behavior of language
+        models. Here&apos;s a comprehensive list of available parameters:
       </p>
 
       <div className="space-y-8">
@@ -133,10 +136,15 @@ const ParametersPage: React.FC = () => {
 
       <div className="mt-8 text-sm text-gray-600 dark:text-gray-400">
         <p>
-          For more detailed information about these parameters and their usage, please refer to our{' '}
-          <a href="https://targon.sybil.com/docs/parameters" className="text-manifold-green dark:text-manifold-pink hover:underline">
+          For more detailed information about these parameters and their usage,
+          please refer to our{" "}
+          <a
+            href="https://targon.sybil.com/docs/parameters"
+            className="text-manifold-green hover:underline dark:text-manifold-pink"
+          >
             full parameters documentation
-          </a>.
+          </a>
+          .
         </p>
       </div>
     </div>
@@ -150,12 +158,24 @@ const ParameterSection: React.FC<{
   defaultValue?: string;
   description: string;
 }> = ({ name, type, range, defaultValue, description }) => (
-  <section className="border-b border-gray-200 dark:border-gray-700 pb-4">
-    <h2 className="text-2xl font-semibold mb-2 text-gray-800 dark:text-gray-200">{name}</h2>
-    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+  <section className="border-b border-gray-200 pb-4 dark:border-gray-700">
+    <h2 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-gray-200">
+      {name}
+    </h2>
+    <p className="mb-2 text-sm text-gray-600 dark:text-gray-400">
       <span className="font-bold">Type:</span> {type}
-      {range && <> | <span className="font-bold">Range:</span> {range}</>}
-      {defaultValue && <> | <span className="font-bold">Default:</span> {defaultValue}</>}
+      {range && (
+        <>
+          {" "}
+          | <span className="font-bold">Range:</span> {range}
+        </>
+      )}
+      {defaultValue && (
+        <>
+          {" "}
+          | <span className="font-bold">Default:</span> {defaultValue}
+        </>
+      )}
     </p>
     <p className="text-gray-700 dark:text-gray-300">{description}</p>
   </section>

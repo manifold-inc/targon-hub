@@ -14,6 +14,7 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
+import { format, parseISO } from "date-fns";
 import {
   Blocks,
   BookOpenText,
@@ -57,7 +58,7 @@ export const Header = () => {
             className="h-4 w-4 text-manifold-green dark:text-white"
           />
         );
-      case "/models":
+      case pathName.startsWith("/models") && pathName:
         return (
           <BrainCog
             aria-hidden="true"
@@ -121,9 +122,39 @@ export const Header = () => {
   const filteredModels =
     query === ""
       ? models.data || []
-      : (models.data ?? []).filter((model) =>
-          model.name!.toLowerCase().includes(query.toLowerCase()),
-        );
+      : (models.data ?? []).filter((model) => {
+          const modelName = model.name?.toLowerCase() || "";
+          const uploadDate =
+            model.uploadedAt instanceof Date
+              ? model.uploadedAt
+              : parseISO(model.uploadedAt);
+          const formattedDate = format(uploadDate, "MMMM yyyy").toLowerCase();
+          const searchQuery = query.toLowerCase();
+          return (
+            modelName.includes(searchQuery) ||
+            formattedDate.includes(searchQuery)
+          );
+        });
+
+  const groupedModels = filteredModels.reduce(
+    (acc, model) => {
+      const date =
+        model.uploadedAt instanceof Date
+          ? model.uploadedAt
+          : parseISO(model.uploadedAt);
+      const monthYear = format(date, "MMMM yyyy");
+      if (!acc[monthYear]) {
+        acc[monthYear] = [];
+      }
+      acc[monthYear].push(model);
+      return acc;
+    },
+    {} as Record<string, typeof filteredModels>,
+  );
+
+  const sortedMonthYears = Object.keys(groupedModels).sort(
+    (a, b) => parseISO(b).getTime() - parseISO(a).getTime(),
+  );
 
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-manifold-grey1-800">
@@ -164,33 +195,40 @@ export const Header = () => {
                 </div>
                 <ComboboxInput
                   className="border-1 block w-full rounded-md bg-white py-1.5 pl-10 pr-3 text-manifold-green placeholder:text-gray-400 focus:border-gray-300 focus:outline-none focus:ring-0 dark:bg-gray-700 dark:text-gray-300 dark:placeholder:text-gray-300 dark:focus:border-gray-600 sm:text-sm sm:leading-6"
-                  placeholder="Search models"
+                  placeholder="Search models or dates (September 2024)"
                   displayValue={(model: { name: string } | null) =>
                     model?.name ?? ""
                   }
                   onChange={(event) => setQuery(event.target.value)}
                 />
               </div>
-              <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-700 sm:text-sm">
+              <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-700 sm:text-sm">
                 {filteredModels.length === 0 ? (
                   <div className="relative cursor-default select-none px-4 py-2">
                     Nothing found.
                   </div>
                 ) : (
-                  filteredModels.map((model) => (
-                    <Link
-                      key={model.id}
-                      href={
-                        model.name
-                          ? `/models/${encodeURIComponent(model.name)}`
-                          : "#"
-                      }
-                      className="group flex cursor-pointer select-none items-center gap-2 bg-white px-4 py-2 hover:bg-blue-100 dark:bg-gray-700 dark:hover:bg-gray-900"
-                    >
-                      <ComboboxOption value={model}>
-                        <span> {model.name} </span>
-                      </ComboboxOption>
-                    </Link>
+                  sortedMonthYears.map((monthYear) => (
+                    <div key={monthYear}>
+                      <div className="sticky top-0 bg-gray-100 px-4 py-2 font-semibold dark:bg-gray-800">
+                        {monthYear}
+                      </div>
+                      {groupedModels[monthYear]?.map((model) => (
+                        <Link
+                          key={model.id}
+                          href={
+                            model.name
+                              ? `/models/${encodeURIComponent(model.name)}`
+                              : "#"
+                          }
+                          className="group flex cursor-pointer select-none items-center gap-2 bg-white px-4 py-2 hover:bg-blue-100 dark:bg-gray-700 dark:hover:bg-gray-900"
+                        >
+                          <ComboboxOption value={model}>
+                            <span>{model.name}</span>
+                          </ComboboxOption>
+                        </Link>
+                      ))}
+                    </div>
                   ))
                 )}
               </ComboboxOptions>
@@ -285,7 +323,9 @@ export const Header = () => {
             </>
           ) : (
             <Link
-              className="rounded-full border border-manifold-green px-4 py-2 hover:bg-gray-200"
+              className="rounded-full border border-manifold-green
+              
+              px-4 py-2 hover:bg-gray-200"
               href="/sign-in"
             >
               Sign in

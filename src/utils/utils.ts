@@ -144,7 +144,9 @@ export function generateFakeAppShowcase(): AppShowcaseStats {
   });
 
   const generateTopApps = (count: number): AppShowcase[] => {
-    return Array.from({ length: count }, generateApp).sort((a, b) => b.tokens - a.tokens);
+    return Array.from({ length: count }, generateApp).sort(
+      (a, b) => b.tokens - a.tokens,
+    );
   };
 
   return {

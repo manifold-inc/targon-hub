@@ -11,6 +11,7 @@ export const modelRouter = createTRPCRouter({
         name: Model.name,
         category: Model.category,
         description: Model.description,
+        uploadedAt: Model.uploadedAt,
       })
       .from(Model)
       .where(eq(Model.enabled, true));

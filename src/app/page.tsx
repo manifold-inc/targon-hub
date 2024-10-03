@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Listbox,
@@ -8,18 +9,17 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { ChefHat, ChevronUp } from "lucide-react";
+import { ChefHat, ChevronDown, ChevronUp } from "lucide-react";
 
 import { reactClient } from "@/trpc/react";
 import {
+  generateFakeAppShowcase,
   generateFakeStats,
   getTrendingModels,
-  generateFakeAppShowcase,
-  type ModelStats,
   type AppShowcaseStats,
+  type ModelStats,
 } from "@/utils/utils";
 import { useAuth } from "./_components/providers";
-import Image from "next/image";
 
 export default function Page() {
   const auth = useAuth();
@@ -52,8 +52,13 @@ export default function Page() {
 
   const trendingModels = getTrendingModels(filteredStats, 3);
 
-  const [showcaseStats, setShowcaseStats] = useState<AppShowcaseStats | null>(null);
-  const [selectedPeriod, setSelectedPeriod] = useState<'daily' | 'weekly' | 'monthly'>('daily');
+  const [showcaseStats, setShowcaseStats] = useState<AppShowcaseStats | null>(
+    null,
+  );
+  const [selectedPeriod, setSelectedPeriod] = useState<
+    "daily" | "weekly" | "monthly"
+  >("daily");
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fakeShowcase = generateFakeAppShowcase();
@@ -65,7 +70,7 @@ export default function Page() {
   return (
     <div>
       <div className="relative isolate pt-6 lg:pt-8">
-        <div className="mx-auto max-w-2xl pt-16 pb-8 sm:pt-24 lg:pt-28">
+        <div className="mx-auto max-w-2xl pb-8 pt-16 sm:pt-24 lg:pt-28">
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-manifold-green dark:text-gray-50 sm:text-6xl">
               Decentralized LLMs at your fingertips
@@ -104,39 +109,63 @@ export default function Page() {
               >
                 Trending Models
               </Link>
-              <Listbox value={selectedCategory} onChange={setSelectedCategory}>
-                <div className="relative">
-                  <ListboxButton className="relative w-40 cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md hover:bg-gray-50 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 dark:bg-gray-700 dark:text-manifold-pink dark:ring-gray-600 dark:hover:bg-gray-600 sm:text-sm">
-                    <span className="block">{selectedCategory}</span>
-                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                      <ChevronUp
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </span>
-                  </ListboxButton>
-                  <ListboxOptions className="absolute z-10 mt-1 max-h-60 w-40 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-700 dark:text-manifold-pink dark:ring-gray-600 sm:text-sm">
-                    {categories.map((category) => (
-                      <ListboxOption
-                        key={category}
-                        value={category}
-                        className="p-2 hover:bg-gray-50 dark:hover:bg-gray-800"
-                      >
-                        {category}
-                      </ListboxOption>
-                    ))}
-                  </ListboxOptions>
-                </div>
+              <Listbox
+                value={selectedCategory}
+                onChange={setSelectedCategory}
+                as="div"
+                className="relative"
+              >
+                {({ open }) => (
+                  <>
+                    <ListboxButton
+                      className="relative w-40 cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md hover:bg-gray-50 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 dark:bg-gray-700 dark:text-manifold-pink dark:ring-gray-600 dark:hover:bg-gray-600 sm:text-sm"
+                      onClick={() => setIsOpen(!isOpen)}
+                    >
+                      <span className="block">{selectedCategory}</span>
+                      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                        {open ? (
+                          <ChevronUp
+                            className="h-5 w-5 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        ) : (
+                          <ChevronDown
+                            className="h-5 w-5 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </span>
+                    </ListboxButton>
+                    <ListboxOptions className="absolute z-10 mt-1 max-h-60 w-40 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-700 dark:text-manifold-pink dark:ring-gray-600 sm:text-sm">
+                      {categories.map((category) => (
+                        <ListboxOption
+                          key={category}
+                          value={category}
+                          className="p-2 hover:bg-gray-50 dark:hover:bg-gray-800"
+                        >
+                          {category}
+                        </ListboxOption>
+                      ))}
+                    </ListboxOptions>
+                  </>
+                )}
               </Listbox>{" "}
               ~
             </div>
-            <dl className={`mx-auto flex items-center justify-center ${trendingModels.length === 2 ? 'gap-8' : 'gap-2'}`}>
+            <dl
+              className={`mx-auto flex items-center justify-center ${trendingModels.length === 2 ? "gap-8" : "gap-2"}`}
+            >
               {trendingModels.map((model) => (
                 <div
                   key={model.modelId}
-                  className="flex flex-col gap-y-3 border-x border-gray-200 dark:border-white/10 text-manifold-green dark:text-manifold-pink p-6 w-48 h-40"
+                  className="flex h-40 w-48 flex-col gap-y-3 border-x border-gray-200 p-6 text-manifold-green dark:border-white/10 dark:text-manifold-pink"
                 >
-                  <Link href={`/models/${model.modelName}`} className="text-sm leading-6 truncate hover:underline">{model.modelName}</Link>
+                  <Link
+                    href={`/models/${model.modelName}`}
+                    className="truncate text-sm leading-6 hover:underline"
+                  >
+                    {model.modelName}
+                  </Link>
                   <dd className="order-first text-3xl font-semibold tracking-tight text-manifold-green dark:text-manifold-pink">
                     {model.trendScore.toFixed(2)}
                   </dd>
@@ -153,55 +182,65 @@ export default function Page() {
           <span className="font-semibold text-manifold-green dark:text-manifold-pink">
             ~ App Showcase ~
           </span>
-          <div className="p-2 w-full max-w-md bg-manifold-grey2 dark:bg-gray-800 rounded-lg">
+          <div className="w-full max-w-md rounded-lg bg-manifold-grey2 p-2 dark:bg-manifold-grey1-800">
             <div className="flex gap-2">
               <button
-                onClick={() => setSelectedPeriod('daily')}
-                className={`flex-1 py-4 text-white transition-colors duration-200 rounded-lg ${
-                  selectedPeriod === 'daily'
-                    ? 'bg-manifold-green dark:bg-manifold-pink dark:text-manifold-grey1-800'
-                    : 'bg-gray-400 dark:bg-gray-600 hover:bg-manifold-green/80 dark:hover:bg-manifold-pink/80'
+                onClick={() => setSelectedPeriod("daily")}
+                className={`flex-1 rounded-lg py-4 text-white transition-colors duration-200 ${
+                  selectedPeriod === "daily"
+                    ? "bg-manifold-green dark:bg-manifold-pink dark:text-manifold-grey1-800"
+                    : "bg-gray-400 hover:bg-manifold-green/80 dark:bg-gray-600 dark:hover:bg-manifold-pink/80"
                 }`}
               >
                 Today
               </button>
               <button
-                onClick={() => setSelectedPeriod('weekly')}
-                className={`flex-1 py-4 text-white transition-colors duration-200 rounded-lg ${
-                  selectedPeriod === 'weekly'
-                    ? 'bg-manifold-green dark:bg-manifold-pink dark:text-manifold-grey1-800'
-                    : 'bg-gray-400 dark:bg-gray-600 hover:bg-manifold-green/80 dark:hover:bg-manifold-pink/80'
+                onClick={() => setSelectedPeriod("weekly")}
+                className={`flex-1 rounded-lg py-4 text-white transition-colors duration-200 ${
+                  selectedPeriod === "weekly"
+                    ? "bg-manifold-green dark:bg-manifold-pink dark:text-manifold-grey1-800"
+                    : "bg-gray-400 hover:bg-manifold-green/80 dark:bg-gray-600 dark:hover:bg-manifold-pink/80"
                 }`}
               >
                 This Week
               </button>
               <button
-                onClick={() => setSelectedPeriod('monthly')}
-                className={`flex-1 py-4 text-white transition-colors duration-200 rounded-lg ${
-                  selectedPeriod === 'monthly'
-                    ? 'bg-manifold-green dark:bg-manifold-pink dark:text-manifold-grey1-800'
-                    : 'bg-gray-400 dark:bg-gray-600 hover:bg-manifold-green/80 dark:hover:bg-manifold-pink/80'
+                onClick={() => setSelectedPeriod("monthly")}
+                className={`flex-1 rounded-lg py-4 text-white transition-colors duration-200 ${
+                  selectedPeriod === "monthly"
+                    ? "bg-manifold-green dark:bg-manifold-pink dark:text-manifold-grey1-800"
+                    : "bg-gray-400 hover:bg-manifold-green/80 dark:bg-gray-600 dark:hover:bg-manifold-pink/80"
                 }`}
               >
                 This Month
               </button>
             </div>
           </div>
-          <div className="w-full max-w-2xl mt-4">
+          <div className="mt-4 w-full max-w-2xl">
             <ul className="divide-y divide-gray-200 dark:divide-gray-700">
               {selectedApps.map((app, index) => (
-                <li key={index} className="py-4 flex items-center">
-                  <div className="w-8 text-right mr-4">{index + 1}.</div>
-                  <Image src={app.favicon} alt={`${app.name} favicon`} className="w-6 h-6 mr-4" width={24} height={24} unoptimized/>
-                  <div className="flex-1 min-w-0">
-                    <Link href={app.url} className="text-sm font-medium text-gray-900 dark:text-white truncate hover:underline">
+                <li key={index} className="flex items-center py-4">
+                  <div className="mr-4 w-8 text-right">{index + 1}.</div>
+                  <Image
+                    src={app.favicon}
+                    alt={`${app.name} favicon`}
+                    className="mr-4 h-6 w-6"
+                    width={24}
+                    height={24}
+                    unoptimized
+                  />
+                  <div className="min-w-0 flex-1">
+                    <Link
+                      href={app.url}
+                      className="truncate text-sm font-medium text-gray-900 hover:underline dark:text-white"
+                    >
                       {app.name}
                     </Link>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                    <p className="truncate text-sm text-gray-500 dark:text-gray-400">
                       {app.description}
                     </p>
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400 ml-4">
+                  <div className="ml-4 text-sm text-gray-500 dark:text-gray-400">
                     {app.tokens.toLocaleString()} tokens
                   </div>
                 </li>
