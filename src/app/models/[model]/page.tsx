@@ -1,7 +1,8 @@
 "use client";
 
-import { useAuth } from "@/app/_components/providers";
 import { useParams } from "next/navigation";
+
+import { useAuth } from "@/app/_components/providers";
 
 export default function Page() {
   const auth = useAuth();

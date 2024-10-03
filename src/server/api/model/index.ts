@@ -10,7 +10,7 @@ export const modelRouter = createTRPCRouter({
         id: Model.id,
         name: Model.name,
         category: Model.category,
-        description: Model.description
+        description: Model.description,
       })
       .from(Model)
       .where(eq(Model.enabled, true));

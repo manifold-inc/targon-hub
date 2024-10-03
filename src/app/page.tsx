@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-
-import { useAuth } from "./_components/providers";
 import { ChefHat } from "lucide-react";
+
+import { reactClient } from "@/trpc/react";
+import { useAuth } from "./_components/providers";
 
 export default function Page() {
   const auth = useAuth();
@@ -18,10 +19,10 @@ export default function Page() {
               Decentralized LLMs at your fingertips
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-white">
-              Powered by the bittensor ecosystem on subnet 4. 
-              <Link 
-                href="models" 
-                className="ml-1 font-semibold text-manifold-green hover:text-manifold-green/80 dark:text-gray-400 dark:hover:text-gray-300 underline decoration-2 underline-offset-2 transition-colors duration-200"
+              Powered by the bittensor ecosystem on subnet 4.
+              <Link
+                href="models"
+                className="ml-1 font-semibold text-manifold-green underline decoration-2 underline-offset-2 transition-colors duration-200 hover:text-manifold-green/80 dark:text-gray-400 dark:hover:text-gray-300"
               >
                 Cheaper, better, faster.
               </Link>
@@ -29,7 +30,7 @@ export default function Page() {
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
                 href={auth.status === "AUTHED" ? "/models" : "/sign-in"}
-                className="flex items-center justify-center  rounded-md bg-manifold-green px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-900 dark:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex items-center justify-center  rounded-md bg-manifold-green px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-gray-700"
               >
                 <span className="flex items-center gap-2">
                   Get started
@@ -44,8 +45,16 @@ export default function Page() {
               </Link>
             </div>
             <div className="p-10">
-            ~ <Link href="/rankings" className="text-manifold-green hover:text-gray-500 font-semibold"> Trending Models </Link> ~
-          </div>
+              ~{" "}
+              <Link
+                href="/rankings"
+                className="font-semibold text-manifold-green hover:text-gray-500"
+              >
+                {" "}
+                Trending Models{" "}
+              </Link>{" "}
+              ~
+            </div>
           </div>
         </div>
       </div>

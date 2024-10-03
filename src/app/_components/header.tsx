@@ -185,15 +185,17 @@ export const Header = () => {
                 ) : (
                   filteredModels.map((model) => (
                     <Link
-                    key={model.id}
-                    href={model.name ? `/models/${encodeURIComponent(model.name)}` : '#'}
-                    className="group flex cursor-pointer select-none items-center gap-2 bg-white px-4 py-2 hover:bg-blue-100 dark:bg-gray-700 dark:hover:bg-gray-900"
-                  >
-                    <ComboboxOption
-                      value={model}
+                      key={model.id}
+                      href={
+                        model.name
+                          ? `/models/${encodeURIComponent(model.name)}`
+                          : "#"
+                      }
+                      className="group flex cursor-pointer select-none items-center gap-2 bg-white px-4 py-2 hover:bg-blue-100 dark:bg-gray-700 dark:hover:bg-gray-900"
                     >
-                      <span> {model.name} </span>
-                    </ComboboxOption>
+                      <ComboboxOption value={model}>
+                        <span> {model.name} </span>
+                      </ComboboxOption>
                     </Link>
                   ))
                 )}

@@ -1,9 +1,47 @@
 "use client";
 
+import { useMemo } from "react";
+
 import { useAuth } from "@/app/_components/providers";
+import { reactClient } from "@/trpc/react";
+import {
+  generateFakeStats,
+  getStatsForTimeframe,
+  getTrendingModels,
+} from "@/utils/utils";
 
 export default function Page() {
   const auth = useAuth();
+
+  const {
+    data: models,
+    isLoading,
+    error,
+  } = reactClient.model.getModels.useQuery();
+
+  const stats = useMemo(() => {
+    if (models) {
+      return generateFakeStats(models);
+    }
+    return [];
+  }, [models]);
+
+  const dailyStats = useMemo(
+    () => getStatsForTimeframe(stats, "daily"),
+    [stats],
+  );
+  const weeklyStats = useMemo(
+    () => getStatsForTimeframe(stats, "weekly"),
+    [stats],
+  );
+  const monthlyStats = useMemo(
+    () => getStatsForTimeframe(stats, "monthly"),
+    [stats],
+  );
+  const trendingModels = useMemo(() => getTrendingModels(stats), [stats]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div>
@@ -13,10 +51,37 @@ export default function Page() {
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-50 sm:text-6xl">
               Welcome {auth.user || ""} to rankings
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-200">
-              Powered by the bittensor ecosystem on subnet 4. Cheaper, better,
-              faster.
-            </p>
+            <h2>Daily Stats</h2>
+            {dailyStats.map((stat) => (
+              <div key={`${stat.modelId}-daily`}>
+                <h3>{stat.modelName}</h3>
+                <p>Daily Tokens: {stat.dailyTokens}</p>
+                <p>Trend Score: {stat.trendScore.toFixed(2)}</p>
+              </div>
+            ))}
+            <h2>Weekly Stats</h2>
+            {weeklyStats.map((stat) => (
+              <div key={`${stat.modelId}-weekly`}>
+                <h3>{stat.modelName}</h3>
+                <p>Weekly Tokens: {stat.weeklyTokens}</p>
+                <p>Trend Score: {stat.trendScore.toFixed(2)}</p>
+              </div>
+            ))}
+            <h2>Monthly Stats</h2>
+            {monthlyStats.map((stat) => (
+              <div key={`${stat.modelId}-weekly`}>
+                <h3>{stat.modelName}</h3>
+                <p>Monthly Tokens: {stat.monthlyTokens}</p>
+                <p>Trend Score: {stat.trendScore.toFixed(2)}</p>
+              </div>
+            ))}
+            <h2>Trending Models</h2>
+            {trendingModels.map((model) => (
+              <div key={`${model.modelId}-trending`}>
+                <h3>{model.modelName}</h3>
+                <p>Trend Score: {model.trendScore.toFixed(2)}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
