@@ -128,7 +128,7 @@ export const Header = () => {
         );
 
   return (
-    <header className="">
+    <header className="sticky top-0 z-50 bg-white dark:bg-gray-800">
       <nav className="flex items-center p-4 text-manifold-green dark:text-white">
         <Link
           href="/"
@@ -137,8 +137,8 @@ export const Header = () => {
           <Image
             src={
               resolvedTheme === "dark"
-                ? "/ManifoldMarkTransparentWhite.png"
-                : "/ManifoldMarkTransparentGreen.png"
+                ? "/ManifoldMarkTransparentGreen.png"
+                : "/ManifoldMarkTransparentWhite.png"
             }
             width={32}
             height={32}
@@ -210,7 +210,7 @@ export const Header = () => {
           </Link>
           {auth.status === "AUTHED" ? (
             <>
-              <Link href="/dashboard" className="hover:underline">
+              <Link href="/docs/quick-start" className="hover:underline">
                 Docs
               </Link>
               <Menu as="div" className="relative inline-block text-left">

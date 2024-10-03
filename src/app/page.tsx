@@ -4,11 +4,10 @@ import Link from "next/link";
 
 import { useAuth } from "./_components/providers";
 import { ChefHat } from "lucide-react";
-import { reactClient } from "@/trpc/react";
 
 export default function Page() {
   const auth = useAuth();
-  const models = reactClient.model.getModels.useQuery();
+  // Remove the unused 'models' variable if it's not needed
 
   return (
     <div>
