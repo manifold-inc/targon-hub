@@ -1,87 +1,99 @@
 import React from 'react';
-import { Sidebar } from "@/app/_components/docs/sidebar";
 
-export default function QuickStartPage() {
+const RequestsPage: React.FC = () => {
   return (
-    <div className="flex h-screen">
-      <Sidebar />
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">Requests</h1>
       
-      <main className="flex-1 overflow-y-auto ml-64">
-        <div className="max-w-4xl mx-auto py-8 px-4">
-          <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-gray-100">Quick Start</h1>
+      <p className="mb-6 text-lg text-gray-700 dark:text-gray-300">
+        Targon's request and response schemas are very similar to the OpenAI Chat API, with a few small differences. At a high level, <strong>Targon normalizes the schema across models</strong> and providers so you only need to learn one.
+      </p>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Introduction</h2>
-            <p className="text-gray-700 dark:text-gray-300">
-              To get started, you can use our API like this:
-            </p>
-            <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded overflow-x-auto">
-              <code className="language-typescript text-gray-800 dark:text-gray-200">
-                {`fetch("https://api.yourservice.com/v1/endpoint", {
-                  method: "POST",
-                  headers: {
-                    "Authorization": \`Bearer \${API_KEY}\`,
-                    "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify({
-                    "data": "your data here"
-                  })
-                });`}
-              </code>
-            </pre>
-          </section>
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Request Body</h2>
+      
+      <p className="mb-4 text-gray-700 dark:text-gray-300">
+        Here's the request schema as a TypeScript type. This will be the body of your POST request to the <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">/api/v1/chat/completions</code> endpoint.
+      </p>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Using Our Client Library</h2>
-            <p className="text-gray-700 dark:text-gray-300">
-              You can also use our client library to interact with the API:
-            </p>
-            <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded overflow-x-auto">
-              <code className="language-typescript text-gray-800 dark:text-gray-200">
-                {`import ClientLibrary from "your-client-library";
-  
-                const client = new ClientLibrary({
-                  apiKey: API_KEY,
-                });
-  
-                async function main() {
-                  const response = await client.makeRequest({
-                    data: "your data here"
-                  });
-                  console.log(response);
-                }
-  
-                main();`}
-              </code>
-            </pre>
-          </section>
+      <div className="bg-gray-100 p-4 rounded-lg overflow-x-auto mb-6 dark:bg-gray-800">
+        <pre className="text-sm text-gray-800 dark:text-gray-200">
+          <code>
+{`type Request = {
+  messages?: Message[];
+  prompt?: string;
+  model?: string;
+  response_format?: { type: 'json_object' };
+  stop?: string | string[];
+  stream?: boolean;
+  max_tokens?: number;
+  temperature?: number;
+  top_p?: number;
+  top_k?: number;
+  frequency_penalty?: number;
+  presence_penalty?: number;
+  repetition_penalty?: number;
+  seed?: number;
+  tools?: Tool[];
+  tool_choice?: ToolChoice;
+  logit_bias?: { [key: number]: number };
+  transforms?: string[];
+  models?: string[];
+  route?: 'fallback';
+  provider?: ProviderPreferences;
+};
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Next Steps</h2>
-            <p className="text-gray-700 dark:text-gray-300">
-              Check out our full documentation to learn more about advanced usage and features.
-            </p>
-            <ul className="list-disc list-inside text-gray-700 dark:text-gray-300">
-              <li>
-                <a href="/docs/api-reference" className="text-blue-500 hover:underline dark:text-blue-400">
-                  API Reference
-                </a>
-              </li>
-              <li>
-                <a href="/docs/examples" className="text-blue-500 hover:underline dark:text-blue-400">
-                  Code Examples
-                </a>
-              </li>
-              <li>
-                <a href="/docs/faq" className="text-blue-500 hover:underline dark:text-blue-400">
-                  Frequently Asked Questions
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
-      </main>
+// ... (other type definitions)`}
+          </code>
+        </pre>
+      </div>
+
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Request Headers</h2>
+      
+      <p className="mb-4 text-gray-700 dark:text-gray-300">
+        Targon allows you to specify optional headers to identify your app and make it discoverable to users on targon.sybil.com.
+      </p>
+
+      <div className="bg-gray-100 p-4 rounded-lg overflow-x-auto mb-6 dark:bg-gray-800">
+        <pre className="text-sm text-gray-800 dark:text-gray-200">
+          <code>
+{`fetch("https://targon.sybil.com/api/v1/chat/completions", {
+  method: "POST",
+  headers: {
+    "Authorization": \`Bearer \${TARGON_API_KEY}\`,
+    "HTTP-Referer": \`\${YOUR_SITE_URL}\`, // Optional, for including your app on targon.sybil.com rankings.
+    "X-Title": \`\${YOUR_SITE_NAME}\`, // Optional. Shows in rankings on targon.sybil.com.
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    "model": "mistralai/mixtral-8x7b-instruct",
+    "messages": [
+      {"role": "user", "content": "Who are you?"},
+    ],
+  })
+});`}
+          </code>
+        </pre>
+      </div>
+
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Additional Features</h2>
+      
+      <ul className="list-disc pl-6 mb-6 text-gray-700 dark:text-gray-300">
+        <li><strong>Model routing:</strong> If the <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">model</code> parameter is omitted, the user or payer's default is used.</li>
+        <li><strong>Streaming:</strong> Server-Sent Events (SSE) are supported for all models. Send <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">stream: true</code> in your request body.</li>
+        <li><strong>Non-standard parameters:</strong> If a chosen model doesn't support a request parameter, it's ignored.</li>
+        <li><strong>Assistant Prefill:</strong> Targon supports asking models to complete a partial response.</li>
+      </ul>
+
+      <div className="mt-8 text-sm text-gray-600 dark:text-gray-400">
+        <p>
+          For more detailed information about requests, including multimodal requests, tool calls, and stream cancellation, please refer to our{' '}
+          <a href="https://targon.sybil.com/docs/requests" className="text-manifold-green dark:text-manifold-pink hover:underline">
+            full requests documentation
+          </a>.
+        </p>
+      </div>
     </div>
   );
-}
+};
 
+export default RequestsPage;

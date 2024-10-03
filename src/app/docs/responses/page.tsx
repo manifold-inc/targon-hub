@@ -1,87 +1,114 @@
 import React from 'react';
-import { Sidebar } from "@/app/_components/docs/sidebar";
 
-export default function QuickStartPage() {
+const ResponsesPage: React.FC = () => {
   return (
-    <div className="flex h-screen">
-      <Sidebar />
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">Responses</h1>
       
-      <main className="flex-1 overflow-y-auto ml-64">
-        <div className="max-w-4xl mx-auto py-8 px-4">
-          <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-gray-100">Quick Start</h1>
+      <p className="mb-6 text-lg text-gray-700 dark:text-gray-300">
+        Responses are largely consistent with the OpenAI Chat API. This means that <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">choices</code> is always an array, even if the model only returns one completion. Each choice will contain a <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">delta</code> property if a stream was requested and a <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">message</code> property otherwise. This makes it easier to use the same code for all models.
+      </p>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Introduction</h2>
-            <p className="text-gray-700 dark:text-gray-300">
-              To get started, you can use our API like this:
-            </p>
-            <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded overflow-x-auto">
-              <code className="language-typescript text-gray-800 dark:text-gray-200">
-                {`fetch("https://api.yourservice.com/v1/endpoint", {
-                  method: "POST",
-                  headers: {
-                    "Authorization": \`Bearer \${API_KEY}\`,
-                    "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify({
-                    "data": "your data here"
-                  })
-                });`}
-              </code>
-            </pre>
-          </section>
+      <p className="mb-6 text-lg text-gray-700 dark:text-gray-300">
+        At a high level, <strong>Targon normalizes the schema across models</strong> and providers so you only need to learn one.
+      </p>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Using Our Client Library</h2>
-            <p className="text-gray-700 dark:text-gray-300">
-              You can also use our client library to interact with the API:
-            </p>
-            <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded overflow-x-auto">
-              <code className="language-typescript text-gray-800 dark:text-gray-200">
-                {`import ClientLibrary from "your-client-library";
-  
-                const client = new ClientLibrary({
-                  apiKey: API_KEY,
-                });
-  
-                async function main() {
-                  const response = await client.makeRequest({
-                    data: "your data here"
-                  });
-                  console.log(response);
-                }
-  
-                main();`}
-              </code>
-            </pre>
-          </section>
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Response Body</h2>
+      
+      <p className="mb-4 text-gray-700 dark:text-gray-300">
+        Note that <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">finish_reason</code> will vary depending on the model provider. The <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">model</code> property tells you which model was used inside the underlying API.
+      </p>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Next Steps</h2>
-            <p className="text-gray-700 dark:text-gray-300">
-              Check out our full documentation to learn more about advanced usage and features.
-            </p>
-            <ul className="list-disc list-inside text-gray-700 dark:text-gray-300">
-              <li>
-                <a href="/docs/api-reference" className="text-blue-500 hover:underline dark:text-blue-400">
-                  API Reference
-                </a>
-              </li>
-              <li>
-                <a href="/docs/examples" className="text-blue-500 hover:underline dark:text-blue-400">
-                  Code Examples
-                </a>
-              </li>
-              <li>
-                <a href="/docs/faq" className="text-blue-500 hover:underline dark:text-blue-400">
-                  Frequently Asked Questions
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
-      </main>
+      <p className="mb-4 text-gray-700 dark:text-gray-300">
+        Here's the response schema as a TypeScript type:
+      </p>
+
+      <div className="bg-gray-100 p-4 rounded-lg overflow-x-auto mb-6 dark:bg-gray-800">
+        <pre className="text-sm text-gray-800 dark:text-gray-200">
+          <code>
+{`type Response = {
+  id: string;
+  choices: (NonStreamingChoice | StreamingChoice | NonChatChoice)[];
+  created: number; // Unix timestamp
+  model: string;
+  object: 'chat.completion' | 'chat.completion.chunk';
+  system_fingerprint?: string; // Only present if the provider supports it
+  usage?: ResponseUsage;
+};
+
+// ... (other type definitions)`}
+          </code>
+        </pre>
+      </div>
+
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Example Response</h2>
+      
+      <div className="bg-gray-100 p-4 rounded-lg overflow-x-auto mb-6 dark:bg-gray-800">
+        <pre className="text-sm text-gray-800 dark:text-gray-200">
+          <code>
+{`{
+  "id": "gen-xxxxxxxxxxxxxx",
+  "choices": [
+    {
+      "finish_reason": "stop", // Different models provide different reasons here
+      "message": {
+        // will be "delta" if streaming
+        "role": "assistant",
+        "content": "Hello there!"
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 4,
+    "total_tokens": 4
+  },
+  "model": "openai/gpt-3.5-turbo" // Could also be "anthropic/claude-2.1", etc, depending on the "model" that ends up being used
+}`}
+          </code>
+        </pre>
+      </div>
+
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Querying Cost and Stats</h2>
+      
+      <p className="mb-4 text-gray-700 dark:text-gray-300">
+        The token counts that are returned in the completions API response are NOT counted with the model's native tokenizer. Instead it uses a normalized, model-agnostic count.
+      </p>
+
+      <p className="mb-4 text-gray-700 dark:text-gray-300">
+        For precise token accounting using the model's native tokenizer, use the <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">/api/v1/generation</code> endpoint.
+      </p>
+
+      <p className="mb-4 text-gray-700 dark:text-gray-300">
+        You can use the returned <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">id</code> to query for the generation stats (including token counts and cost) after the request is complete.
+      </p>
+
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">SSE Streaming Comments</h2>
+      
+      <p className="mb-4 text-gray-700 dark:text-gray-300">
+        For SSE streams, we occasionally need to send an SSE comment to indicate that Targon is processing your request. This helps prevent connections from timing out. The comment will look like this:
+      </p>
+
+      <div className="bg-gray-100 p-4 rounded-lg overflow-x-auto mb-6 dark:bg-gray-800">
+        <pre className="text-sm text-gray-800 dark:text-gray-200">
+          <code>: TARGON PROCESSING</code>
+        </pre>
+      </div>
+
+      <p className="mb-4 text-gray-700 dark:text-gray-300">
+        Comment payload can be safely ignored per the SSE specs. However, you can leverage it to improve UX as needed, e.g. by showing a dynamic loading indicator.
+      </p>
+
+      <div className="mt-8 text-sm text-gray-600 dark:text-gray-400">
+        <p>
+          For more detailed information about responses, including recommended SSE client implementations, please refer to our{' '}
+          <a href="https://targon.sybil.com/docs/responses" className="text-manifold-green dark:text-manifold-pink hover:underline">
+            full responses documentation
+          </a>.
+        </p>
+      </div>
     </div>
   );
-}
+};
 
+export default ResponsesPage;

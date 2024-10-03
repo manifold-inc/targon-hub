@@ -1,87 +1,61 @@
 import React from 'react';
-import { Sidebar } from "@/app/_components/docs/sidebar";
 
-export default function QuickStartPage() {
+const ModelsPage: React.FC = () => {
   return (
-    <div className="flex h-screen">
-      <Sidebar />
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">Models</h1>
       
-      <main className="flex-1 overflow-y-auto ml-64">
-        <div className="max-w-4xl mx-auto py-8 px-4">
-          <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-gray-100">Quick Start</h1>
+      <p className="mb-6 text-lg text-gray-700 dark:text-gray-300">
+        Model usage can be paid by users, developers, or both, and may shift in availability. 
+        You can also fetch models, prices, and limits via API.
+      </p>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Introduction</h2>
-            <p className="text-gray-700 dark:text-gray-300">
-              To get started, you can use our API like this:
-            </p>
-            <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded overflow-x-auto">
-              <code className="language-typescript text-gray-800 dark:text-gray-200">
-                {`fetch("https://api.yourservice.com/v1/endpoint", {
-                  method: "POST",
-                  headers: {
-                    "Authorization": \`Bearer \${API_KEY}\`,
-                    "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify({
-                    "data": "your data here"
-                  })
-                });`}
-              </code>
-            </pre>
-          </section>
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Text models</h2>
+      
+      <div className="overflow-x-auto mb-8">
+        <table className="w-full border-collapse border border-gray-300 dark:border-gray-600">
+          <thead>
+            <tr className="bg-gray-100 dark:bg-gray-700">
+              <th className="border border-gray-300 dark:border-gray-600 p-2 text-gray-900 dark:text-gray-100">Model Name & ID</th>
+              <th className="border border-gray-300 dark:border-gray-600 p-2 text-gray-900 dark:text-gray-100">Prompt cost ($ per 1M tokens)</th>
+              <th className="border border-gray-300 dark:border-gray-600 p-2 text-gray-900 dark:text-gray-100">Completion cost ($ per 1M tokens)</th>
+              <th className="border border-gray-300 dark:border-gray-600 p-2 text-gray-900 dark:text-gray-100">Context (tokens)</th>
+              <th className="border border-gray-300 dark:border-gray-600 p-2 text-gray-900 dark:text-gray-100">Moderation</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* Add table rows here based on the actual model data */}
+            <tr className="bg-white dark:bg-gray-800">
+              <td className="border border-gray-300 dark:border-gray-600 p-2 text-gray-900 dark:text-gray-100">Example Model</td>
+              <td className="border border-gray-300 dark:border-gray-600 p-2 text-gray-900 dark:text-gray-100">$X.XX</td>
+              <td className="border border-gray-300 dark:border-gray-600 p-2 text-gray-900 dark:text-gray-100">$X.XX</td>
+              <td className="border border-gray-300 dark:border-gray-600 p-2 text-gray-900 dark:text-gray-100">XXXX</td>
+              <td className="border border-gray-300 dark:border-gray-600 p-2 text-gray-900 dark:text-gray-100">Yes/No</td>
+            </tr>
+            {/* Repeat for other models */}
+          </tbody>
+        </table>
+      </div>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Using Our Client Library</h2>
-            <p className="text-gray-700 dark:text-gray-300">
-              You can also use our client library to interact with the API:
-            </p>
-            <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded overflow-x-auto">
-              <code className="language-typescript text-gray-800 dark:text-gray-200">
-                {`import ClientLibrary from "your-client-library";
-  
-                const client = new ClientLibrary({
-                  apiKey: API_KEY,
-                });
-  
-                async function main() {
-                  const response = await client.makeRequest({
-                    data: "your data here"
-                  });
-                  console.log(response);
-                }
-  
-                main();`}
-              </code>
-            </pre>
-          </section>
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Media models</h2>
+      <p className="mb-6 text-gray-700 dark:text-gray-300">
+        <strong>Note:</strong> Different models tokenize text in different ways. Some models break up text into 
+        chunks of multiple characters (GPT, Claude, Llama, etc) while others tokenize by character (PaLM). 
+        This means that the number of tokens may vary depending on the model.
+      </p>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Next Steps</h2>
-            <p className="text-gray-700 dark:text-gray-300">
-              Check out our full documentation to learn more about advanced usage and features.
-            </p>
-            <ul className="list-disc list-inside text-gray-700 dark:text-gray-300">
-              <li>
-                <a href="/docs/api-reference" className="text-blue-500 hover:underline dark:text-blue-400">
-                  API Reference
-                </a>
-              </li>
-              <li>
-                <a href="/docs/examples" className="text-blue-500 hover:underline dark:text-blue-400">
-                  Code Examples
-                </a>
-              </li>
-              <li>
-                <a href="/docs/faq" className="text-blue-500 hover:underline dark:text-blue-400">
-                  Frequently Asked Questions
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
-      </main>
+      {/* Add media models table or list here if available */}
+
+      <div className="mt-8 text-sm text-gray-600 dark:text-gray-400">
+        <p>
+          For more detailed information and up-to-date model listings, please refer to our{' '}
+          <a href="https://targon.sybil.com/docs/models" className="text-manifold-green dark:text-manifold-pink hover:underline">
+            full models documentation
+          </a>.
+        </p>
+      </div>
     </div>
   );
-}
+};
 
+export default ModelsPage;

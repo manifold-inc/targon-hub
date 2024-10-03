@@ -1,87 +1,51 @@
 import React from 'react';
-import { Sidebar } from "@/app/_components/docs/sidebar";
 
-export default function QuickStartPage() {
+const PrinciplesPage: React.FC = () => {
   return (
-    <div className="flex h-screen">
-      <Sidebar />
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6">Principles</h1>
       
-      <main className="flex-1 overflow-y-auto ml-64">
-        <div className="max-w-4xl mx-auto py-8 px-4">
-          <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-gray-100">Quick Start</h1>
+      <p className="mb-6 text-lg">
+        The future will bring us hundreds of language models and dozens of providers for each. 
+        <em className="font-semibold"> How will you choose the best?</em>
+      </p>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Introduction</h2>
-            <p className="text-gray-700 dark:text-gray-300">
-              To get started, you can use our API like this:
-            </p>
-            <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded overflow-x-auto">
-              <code className="language-typescript text-gray-800 dark:text-gray-200">
-                {`fetch("https://api.yourservice.com/v1/endpoint", {
-                  method: "POST",
-                  headers: {
-                    "Authorization": \`Bearer \${API_KEY}\`,
-                    "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify({
-                    "data": "your data here"
-                  })
-                });`}
-              </code>
-            </pre>
-          </section>
+      <div className="space-y-6">
+        <section>
+          <h2 className="text-2xl font-semibold mb-3">Prioritize price or performance</h2>
+          <p>
+            Targon scouts for the lowest prices and best latencies/throughputs across dozens of providers, 
+            and lets you choose how to prioritize them.
+          </p>
+        </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Using Our Client Library</h2>
-            <p className="text-gray-700 dark:text-gray-300">
-              You can also use our client library to interact with the API:
-            </p>
-            <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded overflow-x-auto">
-              <code className="language-typescript text-gray-800 dark:text-gray-200">
-                {`import ClientLibrary from "your-client-library";
-  
-                const client = new ClientLibrary({
-                  apiKey: API_KEY,
-                });
-  
-                async function main() {
-                  const response = await client.makeRequest({
-                    data: "your data here"
-                  });
-                  console.log(response);
-                }
-  
-                main();`}
-              </code>
-            </pre>
-          </section>
+        <section>
+          <h2 className="text-2xl font-semibold mb-3">Standardized API</h2>
+          <p>
+            No need to change your code when switching between models or providers. You can even let users 
+            choose and pay for their own.
+          </p>
+        </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Next Steps</h2>
-            <p className="text-gray-700 dark:text-gray-300">
-              Check out our full documentation to learn more about advanced usage and features.
-            </p>
-            <ul className="list-disc list-inside text-gray-700 dark:text-gray-300">
-              <li>
-                <a href="/docs/api-reference" className="text-blue-500 hover:underline dark:text-blue-400">
-                  API Reference
-                </a>
-              </li>
-              <li>
-                <a href="/docs/examples" className="text-blue-500 hover:underline dark:text-blue-400">
-                  Code Examples
-                </a>
-              </li>
-              <li>
-                <a href="/docs/faq" className="text-blue-500 hover:underline dark:text-blue-400">
-                  Frequently Asked Questions
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
-      </main>
+        <section>
+          <h2 className="text-2xl font-semibold mb-3">The best models will be used the most</h2>
+          <p>
+            Evals are flawed. Instead, compare models by how often they're used for different purposes. 
+            Chat with multiple at once in the Chatroom.
+          </p>
+        </section>
+      </div>
+
+      <div className="mt-8">
+        <p className="text-sm text-gray-600">
+          For more information, visit our{' '}
+          <a href="https://targon.sybil.com/docs/principles" className="text-manifold-green dark:text-manifold-pink hover:underline">
+            full principles documentation
+          </a>.
+        </p>
+      </div>
     </div>
   );
-}
+};
 
+export default PrinciplesPage;

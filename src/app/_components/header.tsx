@@ -128,7 +128,7 @@ export const Header = () => {
         );
 
   return (
-    <header className="">
+    <header className="sticky top-0 z-50 bg-white dark:bg-gray-800">
       <nav className="flex items-center p-4 text-manifold-green dark:text-white">
         <Link
           href="/"
