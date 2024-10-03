@@ -20,7 +20,7 @@ import { useAuth } from "./_components/providers";
 
 export default function Page() {
   const auth = useAuth();
-  // Remove the unused 'models' variable if it's not needed
+  const models = reactClient.model.getModels.useQuery();
 
   // Extract unique categories from the models query
   const categories = [
