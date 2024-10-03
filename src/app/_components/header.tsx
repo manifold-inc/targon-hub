@@ -30,7 +30,6 @@ import {
   User,
   Wallet,
 } from "lucide-react";
-import { useTheme } from "next-themes";
 
 import { reactClient } from "@/trpc/react";
 import { useAuth } from "./providers";
@@ -39,7 +38,6 @@ import ToggleTheme from "./ToggleTheme";
 export const Header = () => {
   const auth = useAuth();
   const pathName = usePathname();
-  const { resolvedTheme } = useTheme();
   const [selectedModel, setSelectedModel] = useState("");
   const [query, setQuery] = useState("");
 
@@ -135,15 +133,18 @@ export const Header = () => {
           className="flex items-center gap-2 rounded-full p-2 hover:bg-gray-200 dark:hover:bg-gray-700"
         >
           <Image
-            src={
-              resolvedTheme === "dark"
-                ? "/ManifoldMarkTransparentPink.png"
-                : "/ManifoldMarkTransparentGreen.png"
-            }
+            src="/ManifoldMarkTransparentPink.png"
             width={32}
             height={32}
             alt="Targon Hub"
-            className="block"
+            className="hidden dark:block"
+          />
+          <Image
+            src="/ManifoldMarkTransparentGreen.png"
+            width={32}
+            height={32}
+            alt="Targon Hub"
+            className="block dark:hidden"
           />
           <p className="text-md font-semibold">Targon Hub</p>
         </Link>
