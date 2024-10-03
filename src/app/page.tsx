@@ -159,7 +159,7 @@ export default function Page() {
                 onClick={() => setSelectedPeriod('daily')}
                 className={`flex-1 py-4 text-white transition-colors duration-200 rounded-lg ${
                   selectedPeriod === 'daily'
-                    ? 'bg-manifold-green dark:bg-manifold-pink'
+                    ? 'bg-manifold-green dark:bg-manifold-pink dark:text-manifold-grey1-800'
                     : 'bg-gray-400 dark:bg-gray-600 hover:bg-manifold-green/80 dark:hover:bg-manifold-pink/80'
                 }`}
               >
@@ -169,7 +169,7 @@ export default function Page() {
                 onClick={() => setSelectedPeriod('weekly')}
                 className={`flex-1 py-4 text-white transition-colors duration-200 rounded-lg ${
                   selectedPeriod === 'weekly'
-                    ? 'bg-manifold-green dark:bg-manifold-pink'
+                    ? 'bg-manifold-green dark:bg-manifold-pink dark:text-manifold-grey1-800'
                     : 'bg-gray-400 dark:bg-gray-600 hover:bg-manifold-green/80 dark:hover:bg-manifold-pink/80'
                 }`}
               >
@@ -179,7 +179,7 @@ export default function Page() {
                 onClick={() => setSelectedPeriod('monthly')}
                 className={`flex-1 py-4 text-white transition-colors duration-200 rounded-lg ${
                   selectedPeriod === 'monthly'
-                    ? 'bg-manifold-green dark:bg-manifold-pink'
+                    ? 'bg-manifold-green dark:bg-manifold-pink dark:text-manifold-grey1-800'
                     : 'bg-gray-400 dark:bg-gray-600 hover:bg-manifold-green/80 dark:hover:bg-manifold-pink/80'
                 }`}
               >
