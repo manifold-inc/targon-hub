@@ -137,8 +137,8 @@ export const Header = () => {
           <Image
             src={
               resolvedTheme === "dark"
-                ? "/ManifoldMarkTransparentWhite.png"
-                : "/ManifoldMarkTransparentGreen.png"
+                ? "/ManifoldMarkTransparentGreen.png"
+                : "/ManifoldMarkTransparentWhite.png"
             }
             width={32}
             height={32}
@@ -210,7 +210,7 @@ export const Header = () => {
           </Link>
           {auth.status === "AUTHED" ? (
             <>
-              <Link href="/dashboard" className="hover:underline">
+              <Link href="/docs/quick-start" className="hover:underline">
                 Docs
               </Link>
               <Menu as="div" className="relative inline-block text-left">
