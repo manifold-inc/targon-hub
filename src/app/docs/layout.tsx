@@ -1,16 +1,28 @@
-import React from "react";
+import glob from 'fast-glob'
 
-import { Sidebar } from "@/app/_components/docs/sidebar";
+import { Providers } from './providers'
+import { Layout } from '@/components/Layout'
+import { type Section } from '@/components/SectionProvider'
 
-export default function DocsLayout({
+export default async function DocsLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
+  const pages = await glob('**/*.mdx', { cwd: 'src/app/docs' })
+  const allSectionsEntries = (await Promise.all(
+    pages.map(async (filename) => [
+      '/docs/' + filename.replace(/(^|\/)page\.mdx$/, ''),
+      (await import(`./${filename}`)).sections,
+    ]),
+  )) as Array<[string, Array<Section>]>
+  const allSections = Object.fromEntries(allSectionsEntries)
+
   return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-      <main className="flex-1 overflow-y-auto pl-16">{children}</main>
-    </div>
-  );
+        <Providers>
+          <div className="w-full">
+            <Layout allSections={allSections}>{children}</Layout>
+          </div>
+        </Providers>
+  )
 }
