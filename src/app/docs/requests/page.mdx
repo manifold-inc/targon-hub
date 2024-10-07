@@ -1,0 +1,71 @@
+export const metadata = {
+  title: 'Requests',
+  description: 'Making Requests with Targon',
+}
+
+# Requests
+
+Targon's request and response schemas are very similar to the OpenAI Chat API, with a few small differences. At a high level, **Targon normalizes the schema across models** and providers so you only need to learn one.
+
+## Request Body
+
+Here's the request schema as a TypeScript type. This will be the body of your POST request to the `/api/v1/chat/completions` endpoint.
+
+```typescript
+type Request = {
+  messages?: Message[];
+  prompt?: string;
+  model?: string;
+  response_format?: { type: 'json_object' };
+  stop?: string | string[];
+  stream?: boolean;
+  max_tokens?: number;
+  temperature?: number;
+  top_p?: number;
+  top_k?: number;
+  frequency_penalty?: number;
+  presence_penalty?: number;
+  repetition_penalty?: number;
+  seed?: number;
+  tools?: Tool[];
+  tool_choice?: ToolChoice;
+  logit_bias?: { [key: number]: number };
+  transforms?: string[];
+  models?: string[];
+  route?: 'fallback';
+  provider?: ProviderPreferences;
+};
+
+// ... (other type definitions)
+```
+
+## Request Headers
+
+Targon allows you to specify optional headers to identify your app and make it discoverable to users on targon.sybil.com.
+
+```javascript
+fetch("https://targon.sybil.com/api/v1/chat/completions", {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${TARGON_API_KEY}`,
+    "HTTP-Referer": `${YOUR_SITE_URL}`, // Optional, for including your app on targon.sybil.com rankings.
+    "X-Title": `${YOUR_SITE_NAME}`, // Optional. Shows in rankings on targon.sybil.com.
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    "model": "mistralai/mixtral-8x7b-instruct",
+    "messages": [
+      {"role": "user", "content": "Who are you?"},
+    ],
+  })
+});
+```
+
+## Additional Features
+
+- **Model routing:** If the `model` parameter is omitted, the user or payer's default is used.
+- **Streaming:** Server-Sent Events (SSE) are supported for all models. Send `stream: true` in your request body.
+- **Non-standard parameters:** If a chosen model doesn't support a request parameter, it's ignored.
+- **Assistant Prefill:** Targon supports asking models to complete a partial response.
+
+For more detailed information about requests, including multimodal requests, tool calls, and stream cancellation, please refer to our [full requests documentation](https://targon.sybil.com/docs/requests).
