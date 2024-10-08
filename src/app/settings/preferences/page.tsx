@@ -77,7 +77,7 @@ export default function Page() {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">Account</h2>
         <p className="mb-4">Manage your login credentials, security settings, or delete your account.</p>
-        <button className="bg-blue-500 enable:hover:bg-blue-600 text-white px-4 py-2 rounded transition duration-300">Manage Account</button>
+        <button className="bg-gray-700 enable:hover:bg-gray-800 text-white px-4 py-2 rounded transition duration-300">Manage Account</button>
       </section>
 
       <section>
@@ -87,8 +87,9 @@ export default function Page() {
           This model will also be used as your default fallback model.
         </p>
         <a href="/models" className="text-blue-500 hover:text-blue-600 transition duration-300">
-          Click here to browse available models and prices.
+          Click here&nbsp;
         </a>
+         to browse available models and prices.
         <div className="mt-4">
           <Combobox
             value={selectedModel}
