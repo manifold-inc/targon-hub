@@ -17,7 +17,7 @@
     "@fortaine/fetch-event-source": "^3.0.6",
     "@headlessui/react": "^2.1.2",
     "@headlessui/tailwindcss": "^0.2.1",
-    "@heroicons/react": "v1",
+    "@heroicons/react": "^2.1.5",
     "@mdx-js/loader": "^3.0.0",
     "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^14.2.14",

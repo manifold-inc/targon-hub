@@ -15,7 +15,7 @@ export default function Page() {
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-200">
           Create a new API key to access all models from Targon
         </p>
-        <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded">
+        <button className="mt-4 px-4 py-2 bg-manifold-pink2 hover:bg-manifold-pink text-grey-900 rounded">
           Create Key
         </button>
       </div>

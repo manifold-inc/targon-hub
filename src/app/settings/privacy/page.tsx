@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Popover, Switch } from "@headlessui/react";
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 
 const PrivacyPage: React.FC = () => {
   const [loggingEnabled, setLoggingEnabled] = useState(false);
@@ -15,28 +15,26 @@ const PrivacyPage: React.FC = () => {
       <section className="mb-10">
         <h2 className="mb-4 text-2xl font-semibold">Logging</h2>
         <div className="mb-2 flex items-center justify-between">
-          <span className="text-gray-700">Enable input/output logging</span>
-          <Switch
-            checked={loggingEnabled}
-            onChange={setLoggingEnabled}
-            className="relative inline-flex h-6 w-11 items-center rounded-full"
+          <span className="text-gray-700 dark:text-gray-300">Enable input/output logging</span>
+          <button
+            onClick={() => setLoggingEnabled(!loggingEnabled)}
+            className={`w-14 h-7 flex items-center rounded-full p-1 ${
+              loggingEnabled ? "bg-manifold-pink2" : "bg-gray-700 dark:bg-gray-600"
+            }`}
           >
-            <span className="sr-only">Enable input/output logging</span>
-            <span
-              className={`${
-                loggingEnabled ? "translate-x-6" : "translate-x-1"
-              } inline-block h-4 w-4 transform rounded-full bg-white`}
-            />
-          </Switch>
+            <div className={`bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out ${
+              loggingEnabled ? "translate-x-7" : ""
+            }`} />
+          </button>
         </div>
-        <p className="flex items-center text-sm text-gray-600">
+        <p className="flex items-center text-sm text-gray-600 dark:text-gray-400">
           Store inputs & outputs with OpenRouter and get a 1% discount on all
           LLMs.
           <Popover className="relative">
-            <Popover.Button className="ml-1 cursor-help">ⓘ</Popover.Button>
-            <Popover.Panel className="absolute z-10 w-64 rounded border border-gray-300 bg-white p-4 shadow-lg">
+            <PopoverButton className="ml-1 cursor-help">ⓘ</PopoverButton>
+            <PopoverPanel className="absolute z-10 w-64 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-lg">
               More information about logging
-            </Popover.Panel>
+            </PopoverPanel>
           </Popover>
         </p>
       </section>
@@ -44,41 +42,37 @@ const PrivacyPage: React.FC = () => {
       <section className="mb-10">
         <h2 className="mb-4 text-2xl font-semibold">Model Training</h2>
         <div className="mb-2 flex items-center justify-between">
-          <span className="text-gray-700">
+          <span className="text-gray-700 dark:text-gray-300">
             Enable providers that may train on inputs
           </span>
-          <Switch
-            checked={modelTrainingEnabled}
-            onChange={setModelTrainingEnabled}
-            className="relative inline-flex h-6 w-11 items-center rounded-full"
+          <button
+            onClick={() => setModelTrainingEnabled(!modelTrainingEnabled)}
+            className={`w-14 h-7 flex items-center rounded-full p-1 ${
+              modelTrainingEnabled ? "bg-manifold-pink2" : "bg-gray-700 dark:bg-gray-600"
+            }`}
           >
-            <span className="sr-only">
-              Enable providers that may train on inputs
-            </span>
-            <span
-              className={`${
-                modelTrainingEnabled ? "translate-x-6" : "translate-x-1"
-              } inline-block h-4 w-4 transform rounded-full bg-white`}
-            />
-          </Switch>
+            <div className={`bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out ${
+              modelTrainingEnabled ? "translate-x-7" : ""
+            }`} />
+          </button>
         </div>
-        <p className="flex items-center text-sm text-gray-600">
+        <p className="flex items-center text-sm text-gray-600 dark:text-gray-400">
           Control whether to enable providers that can anonymously use your data
           to improve their models.
           <Popover className="relative">
-            <Popover.Button className="ml-1 cursor-help">ⓘ</Popover.Button>
-            <Popover.Panel className="absolute z-10 w-64 rounded border border-gray-300 bg-white p-4 shadow-lg">
+            <PopoverButton className="ml-1 cursor-help">ⓘ</PopoverButton>
+            <PopoverPanel className="absolute z-10 w-64 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-lg">
               More information about model training
-            </Popover.Panel>
+            </PopoverPanel>
           </Popover>
         </p>
       </section>
 
       <section>
         <h2 className="mb-4 text-2xl font-semibold">Chat History</h2>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
           Your chat history in the{" "}
-          <Link href="/chatroom" className="text-blue-600 hover:underline">
+          <Link href="/chatroom" className="text-blue-600 dark:text-blue-400 hover:underline">
             Chatroom
           </Link>{" "}
           is stored locally on your device. If logging is enabled, only LLM
