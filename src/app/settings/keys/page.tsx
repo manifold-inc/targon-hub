@@ -7,18 +7,17 @@ export default function Page() {
 
   return (
     <div>
-      <div className="relative isolate px-6 pt-14 lg:px-8">
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-50 sm:text-6xl">
-              Welcome {auth.user || ""} to keys
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-200">
-              Powered by the bittensor ecosystem on subnet 4. Cheaper, better,
-              faster.
-            </p>
-          </div>
-        </div>
+      {/* New API Keys Section */}
+      <div className="max-w-2xl mx-auto mt-10">
+        <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-50">
+          API Keys
+        </h2>
+        <p className="mt-2 text-sm text-gray-600 dark:text-gray-200">
+          Create a new API key to access all models from Targon
+        </p>
+        <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded">
+          Create Key
+        </button>
       </div>
     </div>
   );
