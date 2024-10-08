@@ -1,0 +1,83 @@
+# Limits
+
+## Rate Limits and Credits Remaining
+
+To check the rate limit or credits left on an API key, make a GET request to `https://targon.sybil.com/api/v1/auth/key`.
+
+```javascript
+fetch('https://targon.sybil.com/api/v1/auth/key', {
+  method: 'GET',
+  headers: {
+    Authorization: 'Bearer $TARGON_API_KEY',
+  },
+});
+```
+
+If you submit a valid API key, you should get a response of the form:
+
+```typescript
+type Key = {
+  data: {
+    label: string;
+    usage: number; // Number of credits used
+    limit: number | null; // Credit limit for the key, or null if unlimited
+    is_free_tier: boolean; // Whether the user has paid for credits before
+    rate_limit: {
+      requests: number; // Number of requests allowed...
+      interval: string; // in this interval, e.g. "10s"
+    };
+  };
+};
+```
+
+There are a few rate limits that apply to certain types of requests, regardless of account status:
+
+- **Free limit**: If you are using a free model variant (with an ID ending in `:free`), then you will be limited to 20 requests per minute and 200 requests per day.
+- **DDoS protection**: Cloudflare's DDoS protection will block requests that dramatically exceed reasonable usage.
+
+For all other requests, rate limits are a function of the number of credits remaining on the key or account. For the credits available on your API key, you can make **1 request per credit per second** up to the surge limit.
+
+For example:
+
+- 0 credits → 1 req/s (minimum)
+- 5 credits → 5 req/s
+- 10 credits → 10 req/s
+- 1000 credits → 200 req/s
+
+If your account has a negative credit balance, you may see `402` errors, including for free models. Adding credits to put your balance above zero allows you to use those models again.
+
+## Token Limits
+
+Some users may have too few credits on their account to make expensive requests. Targon provides a way to know that before making a request to any model.
+
+To get the maximum tokens that a user can generate and the maximum tokens allowed in their prompt, add authentication headers in your request to `https://targon.sybil.com/api/v1/models`:
+
+```javascript
+fetch('https://targon.sybil.com/api/v1/models', {
+  method: 'GET',
+  headers: {
+    Authorization: 'Bearer $TARGON_API_KEY',
+  },
+});
+```
+
+Each model will include a `per_request_limits` property:
+
+```typescript
+type Model = {
+  id: string;
+  pricing: {
+    prompt: number;
+    completion: number;
+  };
+  context_length: number;
+  per_request_limits: {
+    prompt_tokens: number;
+    completion_tokens: number;
+  };
+};
+```
+
+---
+
+For more detailed information about limits and rate limiting, please refer to our [full limits documentation](https://targon.sybil.com/docs/limits).

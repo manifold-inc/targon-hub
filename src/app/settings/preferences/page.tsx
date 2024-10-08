@@ -74,6 +74,7 @@ export default function Page() {
             <h2 className="text-2xl font-semibold mb-4">Default Model</h2>
             <p className="text-sm text-gray-400 mb-4">
               Apps will use this model by default, but they may override it if they choose to do so. This model will also be used as your default fallback model.
+
             </p>
             <a href="#" className="text-blue-400 hover:underline">Click here</a> to browse available models and prices.
             <select className="bg-gray-800 text-white p-3 rounded-lg w-full mt-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600">
