@@ -445,11 +445,11 @@ export default function Page() {
           {selectedPeriod === "trending" ? "Growth Rate" : "Token Usage"} -{" "}
           {selectedPeriod.charAt(0).toUpperCase() + selectedPeriod.slice(1)}
         </h3>
-        <ul className="overflow-hidden rounded-lg bg-white shadow dark:bg-gray-800">
+        <ul className="overflow-hidden rounded-lg bg-white dark:bg-gray-800">
           {topModels.map((model) => (
             <li
               key={model.modelName}
-              className="flex items-center justify-between border-b border-gray-200 px-6 py-4 last:border-b-0 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700"
+              className="flex items-center justify-between  px-6 py-4 last:border-b-0 hover:bg-gray-50 dark:hover:bg-gray-700"
             >
               <div className="flex items-center">
                 <span className="mr-4 w-8 text-right text-sm text-gray-500 dark:text-gray-400">
