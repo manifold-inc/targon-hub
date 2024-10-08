@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { format } from "date-fns";
-import { Info, ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronUp, Info } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -18,10 +19,7 @@ import {
 } from "recharts/types/component/DefaultTooltipContent";
 
 import { reactClient } from "@/trpc/react";
-import Link from "next/link";
-import {
-  generateFakeStats,
-} from "@/utils/utils";
+import { generateFakeStats } from "@/utils/utils";
 
 interface CustomTooltipProps extends TooltipProps<ValueType, NameType> {
   active?: boolean;
@@ -107,15 +105,22 @@ export default function Page() {
     error,
   } = reactClient.model.getModels.useQuery();
 
-  const categories = models ? Array.from(new Set(models.flatMap((model) => model.category))) : [];
+  const categories = models
+    ? Array.from(new Set(models.flatMap((model) => model.category)))
+    : [];
 
-  const stats = useMemo(() => (models ? generateFakeStats(models) : []), [models]);
+  const stats = useMemo(
+    () => (models ? generateFakeStats(models) : []),
+    [models],
+  );
 
   const filteredStats = useMemo(() => {
     if (!stats || !models) return [];
-    return stats.filter((stat) => 
-      selectedCategory === "All Categories" || 
-      models.find((m) => m.name === stat.modelName)?.category === selectedCategory
+    return stats.filter(
+      (stat) =>
+        selectedCategory === "All Categories" ||
+        models.find((m) => m.name === stat.modelName)?.category ===
+          selectedCategory,
     );
   }, [stats, models, selectedCategory]);
 
@@ -216,45 +221,48 @@ export default function Page() {
     const oneDay = 24 * 60 * 60 * 1000;
     const oneWeek = 7 * oneDay;
 
-    const modelTotals = filteredStats.reduce((acc, stat) => {
-      const statDate = new Date(stat.date);
-      const timeDiff = now.getTime() - statDate.getTime();
+    const modelTotals = filteredStats.reduce(
+      (acc, stat) => {
+        const statDate = new Date(stat.date);
+        const timeDiff = now.getTime() - statDate.getTime();
 
-      if (selectedPeriod === "trending") {
-        // For trending, we'll compare this week to last week
-        if (timeDiff <= oneWeek) {
-          if (!acc[stat.modelName]) {
-            acc[stat.modelName] = { thisWeek: 0, lastWeek: 0 };
+        if (selectedPeriod === "trending") {
+          // For trending, we'll compare this week to last week
+          if (timeDiff <= oneWeek) {
+            if (!acc[stat.modelName]) {
+              acc[stat.modelName] = { thisWeek: 0, lastWeek: 0 };
+            }
+            acc[stat.modelName]!.thisWeek += stat.dailyTokens;
+          } else if (timeDiff <= 2 * oneWeek) {
+            if (!acc[stat.modelName]) {
+              acc[stat.modelName] = { thisWeek: 0, lastWeek: 0 };
+            }
+            acc[stat.modelName]!.lastWeek += stat.dailyTokens;
           }
-          acc[stat.modelName]!.thisWeek += stat.dailyTokens;
-        } else if (timeDiff <= 2 * oneWeek) {
-          if (!acc[stat.modelName]) {
-            acc[stat.modelName] = { thisWeek: 0, lastWeek: 0 };
+        } else {
+          // Existing logic for other periods
+          if (
+            (selectedPeriod === "daily" && timeDiff <= oneDay) ||
+            (selectedPeriod === "weekly" && timeDiff <= oneWeek) ||
+            (selectedPeriod === "monthly" && timeDiff <= 30 * oneDay)
+          ) {
+            if (!acc[stat.modelName]) {
+              acc[stat.modelName] = { thisWeek: 0, lastWeek: 0 };
+            }
+            acc[stat.modelName]!.thisWeek += stat.dailyTokens;
           }
-          acc[stat.modelName]!.lastWeek += stat.dailyTokens;
         }
-      } else {
-        // Existing logic for other periods
-        if (
-          (selectedPeriod === "daily" && timeDiff <= oneDay) ||
-          (selectedPeriod === "weekly" && timeDiff <= oneWeek) ||
-          (selectedPeriod === "monthly" && timeDiff <= 30 * oneDay)
-        ) {
-          if (!acc[stat.modelName]) {
-            acc[stat.modelName] = { thisWeek: 0, lastWeek: 0 };
-          }
-          acc[stat.modelName]!.thisWeek += stat.dailyTokens;
-        }
-      }
-      return acc;
-    }, {} as Record<string, { thisWeek: number, lastWeek: number }>);
+        return acc;
+      },
+      {} as Record<string, { thisWeek: number; lastWeek: number }>,
+    );
 
     if (selectedPeriod === "trending") {
       return Object.entries(modelTotals)
         .map(([modelName, { thisWeek, lastWeek }]) => ({
           modelName,
           growthRate: lastWeek > 0 ? (thisWeek - lastWeek) / lastWeek : 0,
-          totalTokens: thisWeek
+          totalTokens: thisWeek,
         }))
         .sort((a, b) => b.growthRate - a.growthRate)
         .slice(0, 20)
@@ -263,7 +271,11 @@ export default function Page() {
       return Object.entries(modelTotals)
         .sort(([, a], [, b]) => b.thisWeek - a.thisWeek)
         .slice(0, 20)
-        .map(([modelName, totalTokens], index) => ({ modelName, totalTokens, rank: index + 1 }));
+        .map(([modelName, totalTokens], index) => ({
+          modelName,
+          totalTokens,
+          rank: index + 1,
+        }));
     }
   }, [filteredStats, selectedPeriod]);
 
@@ -336,7 +348,7 @@ export default function Page() {
         ))}
       </div>
 
-      <div className="flex items-center justify-center pt-8 w-full">
+      <div className="flex w-full items-center justify-center pt-8">
         <div className="w-1/2">
           <h2 className="mb-4 flex items-center justify-center text-2xl font-bold tracking-tight text-manifold-green dark:text-gray-50">
             Daily Token Usage (Top 5 Models) - {selectedCategory}
@@ -427,47 +439,59 @@ export default function Page() {
       </div>
 
       {/* New section for top 20 models list */}
-      <div className="w-full max-w-2xl mt-8">
-        <h3 className="text-xl font-bold mb-4 text-center text-manifold-green dark:text-gray-50">
-          Top 20 Models by {selectedPeriod === "trending" ? "Growth Rate" : "Token Usage"} - {selectedPeriod.charAt(0).toUpperCase() + selectedPeriod.slice(1)}
+      <div className="mt-8 w-full max-w-2xl">
+        <h3 className="mb-4 text-center text-xl font-bold text-manifold-green dark:text-gray-50">
+          Top 20 Models by{" "}
+          {selectedPeriod === "trending" ? "Growth Rate" : "Token Usage"} -{" "}
+          {selectedPeriod.charAt(0).toUpperCase() + selectedPeriod.slice(1)}
         </h3>
-        <ul className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+        <ul className="overflow-hidden rounded-lg bg-white shadow dark:bg-gray-800">
           {topModels.map((model) => (
-            <li 
-              key={model.modelName} 
-              className="flex items-center justify-between px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-700 border-b border-gray-200 dark:border-gray-700 last:border-b-0"
+            <li
+              key={model.modelName}
+              className="flex items-center justify-between border-b border-gray-200 px-6 py-4 last:border-b-0 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700"
             >
               <div className="flex items-center">
-                <span className="w-8 text-right mr-4 text-sm text-gray-500 dark:text-gray-400">
+                <span className="mr-4 w-8 text-right text-sm text-gray-500 dark:text-gray-400">
                   {model.rank}.
                 </span>
-                <Link href={`/models/${model.modelName}/`} className="font-medium text-gray-900 dark:text-white">
+                <Link
+                  href={`/models/${model.modelName}/`}
+                  className="font-medium text-gray-900 dark:text-white"
+                >
                   {model.modelName}
                 </Link>
               </div>
               <div className="flex items-center space-x-4">
                 {selectedPeriod === "trending" && (
                   <div className="flex items-center">
-                    {'growthRate' in model ? (
+                    {"growthRate" in model ? (
                       model.growthRate > 0 ? (
-                        <ChevronUp className="h-5 w-5 text-green-500 mr-1" />
+                        <ChevronUp className="mr-1 h-5 w-5 text-green-500" />
                       ) : model.growthRate < 0 ? (
-                        <ChevronDown className="h-5 w-5 text-red-500 mr-1" />
+                        <ChevronDown className="mr-1 h-5 w-5 text-red-500" />
                       ) : null
                     ) : null}
-                    <span className={`text-sm ${
-                      'growthRate' in model && model.growthRate > 0
-                        ? 'text-green-500'
-                        : 'growthRate' in model && model.growthRate < 0
-                        ? 'text-red-500'
-                        : 'text-gray-500'
-                    }`}>
-                      {'growthRate' in model ? (model.growthRate * 100).toFixed(2) + '%' : 'N/A'}
+                    <span
+                      className={`text-sm ${
+                        "growthRate" in model && model.growthRate > 0
+                          ? "text-green-500"
+                          : "growthRate" in model && model.growthRate < 0
+                            ? "text-red-500"
+                            : "text-gray-500"
+                      }`}
+                    >
+                      {"growthRate" in model
+                        ? (model.growthRate * 100).toFixed(2) + "%"
+                        : "N/A"}
                     </span>
                   </div>
                 )}
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {(typeof model.totalTokens === 'object' ? model.totalTokens.thisWeek : model.totalTokens)} tokens
+                  {typeof model.totalTokens === "object"
+                    ? model.totalTokens.thisWeek
+                    : model.totalTokens}{" "}
+                  tokens
                 </span>
               </div>
             </li>
