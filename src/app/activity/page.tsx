@@ -10,7 +10,7 @@ export default function Page() {
       <div className="text-center mb-8">
         <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">Your Activity</h1>
         <p className="text-sm text-gray-500 dark:text-gray-400">
-          See how you've been using models on OpenRouter. Privacy
+          See how you've been using models on Targon
         </p>
       </div>
       <div className="overflow-x-auto">
