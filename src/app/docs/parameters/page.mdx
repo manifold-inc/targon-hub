@@ -1,0 +1,95 @@
+export const metadata = {
+  title: 'Parameters',
+  description: 'Available Parameters for Targon API',
+}
+
+# Parameters
+
+Targon supports various parameters to fine-tune the behavior of language models. Here's a comprehensive list of available parameters:
+
+## temperature
+**Type:** float | **Range:** 0.0 to 2.0 | **Default:** 1.0
+
+Influences the variety in the model's responses. Lower values lead to more predictable responses, while higher values encourage more diverse outputs.
+
+## top_p
+**Type:** float | **Range:** 0.0 to 1.0 | **Default:** 1.0
+
+Limits the model's choices to a percentage of likely tokens. A lower value makes responses more predictable, while the default allows for a full range of token choices.
+
+## top_k
+**Type:** integer | **Range:** 0 or above | **Default:** 0
+
+Limits the model's choice of tokens at each step. A value of 1 means the model will always pick the most likely next token. By default, this setting is disabled.
+
+## frequency_penalty
+**Type:** float | **Range:** -2.0 to 2.0 | **Default:** 0.0
+
+Controls the repetition of tokens based on how often they appear in the input. Higher values make repetition less likely. Negative values encourage token reuse.
+
+## presence_penalty
+**Type:** float | **Range:** -2.0 to 2.0 | **Default:** 0.0
+
+Adjusts how often the model repeats specific tokens already used in the input. Higher values make repetition less likely. Negative values encourage token reuse.
+
+## repetition_penalty
+**Type:** float | **Range:** 0.0 to 2.0 | **Default:** 1.0
+
+Helps reduce the repetition of tokens from the input. A higher value makes the model less likely to repeat tokens, but too high a value can make the output less coherent.
+
+## min_p
+**Type:** float | **Range:** 0.0 to 1.0 | **Default:** 0.0
+
+Represents the minimum probability for a token to be considered, relative to the probability of the most likely token.
+
+## top_a
+**Type:** float | **Range:** 0.0 to 1.0 | **Default:** 0.0
+
+Considers only the top tokens with 'sufficiently high' probabilities based on the probability of the most likely token. Think of it like a dynamic Top-P.
+
+## seed
+**Type:** integer
+
+If specified, the inferencing will sample deterministically. Repeated requests with the same seed and parameters should return the same result.
+
+## max_tokens
+**Type:** integer | **Range:** 1 or above
+
+Sets the upper limit for the number of tokens the model can generate in response. The maximum value is the context length minus the prompt length.
+
+## logit_bias
+**Type:** map
+
+Accepts a JSON object that maps tokens to an associated bias value from -100 to 100. This affects the likelihood of specific tokens being selected.
+
+## logprobs
+**Type:** boolean
+
+Whether to return log probabilities of the output tokens or not.
+
+## top_logprobs
+**Type:** integer | **Range:** 0 to 20
+
+Specifies the number of most likely tokens to return at each token position, each with an associated log probability. Requires logprobs to be set to true.
+
+## response_format
+**Type:** map
+
+Forces the model to produce specific output format. Setting to 'type': 'json_object'  enables JSON mode.
+
+## stop
+**Type:** array
+
+Stop generation immediately if the model encounters any token specified in the stop array.
+
+## tools
+**Type:** array
+
+Tool calling parameter, following OpenAI's tool calling request shape. For non-OpenAI providers, it will be transformed accordingly.
+
+## tool_choice
+**Type:** array
+
+Controls which (if any) tool is called by the model. Options include 'none', 'auto', 'required', or specifying a particular tool.
+
+For more detailed information about these parameters and their usage, please refer to our [full parameters documentation](https://targon.sybil.com/docs/parameters).

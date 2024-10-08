@@ -4,24 +4,29 @@
  */
 await import("./src/env.mjs");
 
-/** @type {import("next").NextConfig} */
-const config = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "serpapi.com",
-      },
-      {
-        protocol: "https",
-        hostname: "www.micreate.eu",
-      },
-      {
-        protocol: "https",
-        hostname: "www.google.com",
-      },
-    ],
-  },
-};
+import nextMDX from '@next/mdx'
+import { recmaPlugins } from './src/mdx/recma.mjs'
+import { rehypePlugins } from './src/mdx/rehype.mjs'
+import { remarkPlugins } from './src/mdx/remark.mjs'
+import withSearch from './src/mdx/search.mjs'
 
-export default config;
+const withMDX = nextMDX({
+  options: {
+    remarkPlugins,
+    rehypePlugins,
+    recmaPlugins,
+  },
+})
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
+  experimental: {
+    outputFileTracingIncludes: {
+      '/**/*': ['./src/app/**/*.mdx'],
+    },
+  },
+  // ... your existing configuration
+}
+
+export default withSearch(withMDX(nextConfig))

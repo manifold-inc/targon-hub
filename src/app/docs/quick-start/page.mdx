@@ -1,0 +1,63 @@
+export const metadata = {
+  title: 'Quick Start',
+  description: 'Quickly Use Targon',
+}
+
+# Quick Start
+
+To get started with Targon, you can use it via Fetch calls as follows:
+
+## Using Fetch API
+
+```typescript
+fetch("https://targon.sybil.com/api/v1/chat/completions", {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${TARGON_API_KEY}`,
+    "HTTP-Referer": `${YOUR_SITE_URL}`, // Optional,
+    "X-Title": `${YOUR_SITE_NAME}`, // Optional, for rankings
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    "model": "openai/gpt-3.5-turbo",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is the meaning of life?"
+      }
+    ]
+  })
+});
+```
+
+## Using OpenAI's Client API
+
+```typescript
+import OpenAI from "openai"
+
+const openai = new OpenAI({
+  baseURL: "https://targon.sybil.com/api/v1",
+  apiKey: $TARGON_API_KEY,
+  defaultHeaders: {
+    "HTTP-Referer": $YOUR_SITE_URL, // Optional, for rankings
+    "X-Title": $YOUR_SITE_NAME, // Optional, for rankings
+  }
+})
+
+async function main() {
+  const completion = await openai.chat.completions.create({
+    model: "openai/gpt-3.5-turbo",
+    messages: [
+      {
+        "role": "user",
+        "content": "What is the meaning of life?"
+      }
+    ]
+  })
+
+  console.log(completion.choices[0].message)
+}
+main()
+```
+
+For more detailed information, check out our [full documentation](https://targon.sybil.com/docs).
