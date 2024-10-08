@@ -14,8 +14,7 @@ export default function Page() {
               Welcome {auth.user || ""} to preferences
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-200">
-              Powered by the bittensor ecosystem on subnet 4. Cheaper, better,
-              faster.
+              powered by SN4
             </p>
           </div>
         </div>
