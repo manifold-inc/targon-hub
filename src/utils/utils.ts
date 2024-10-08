@@ -25,7 +25,8 @@ interface Model {
   id: number;
   name: string | null;
   category: string;
-  // Add other fields if needed
+  description: string;
+  uploadedAt: Date;
 }
 
 export interface ModelStats {
@@ -75,13 +76,13 @@ export function generateFakeStats(models: Model[], days = 30): ModelStats[] {
 }
 
 // Helper function to get stats for a specific timeframe
-export function getStatsForTimeframe(stats: any[] | undefined, timeframe: string): any[] {
+export function getStatsForTimeframe(stats: ModelStats[] | undefined, timeframe: string): ModelStats[] {
   if (!stats || stats.length === 0) {
     return [];
   }
 
   const today = new Date();
-  let filteredStats: any[] = [];
+  let filteredStats: ModelStats[] = [];
 
   switch (timeframe) {
     case "daily":

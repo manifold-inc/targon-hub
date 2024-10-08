@@ -242,11 +242,11 @@ export const Header = () => {
           <Link href="/rankings" className="hover:underline">
             Rankings
           </Link>
+          <Link href="/docs" className="hover:underline">
+                Docs
+          </Link>
           {auth.status === "AUTHED" ? (
             <>
-              <Link href="/docs/quick-start" className="hover:underline">
-                Docs
-              </Link>
               <Menu as="div" className="relative inline-block text-left">
                 {({ open }) => (
                   <>
