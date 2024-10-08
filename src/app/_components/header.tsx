@@ -243,7 +243,7 @@ export const Header = () => {
             Rankings
           </Link>
           <Link href="/docs" className="hover:underline">
-                Docs
+            Docs
           </Link>
           {auth.status === "AUTHED" ? (
             <>

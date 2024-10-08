@@ -1,15 +1,21 @@
 export const metadata = {
-  title: 'API Keys',
-  description: 'Using API Keys with Targon',
-}
+  title: "API Keys",
+  description: "Using API Keys with Targon",
+};
 
 # API Keys
 
-Users or developers can cover model costs with normal API keys. This allows you to use `curl` or the OpenAI SDK directly with Targon. Just create an API key, set the `api_base`, and optionally set a referrer header to make your app discoverable to others on Targon.
+Users or developers can cover model costs with normal API keys. This allows you
+to use `curl` or the OpenAI SDK directly with Targon. Just create an API key,
+set the `api_base`, and optionally set a referrer header to make your app
+discoverable to others on Targon.
 
-> **Note:** API keys on Targon are more powerful than keys used directly for model APIs. They allow users to set credit limits for apps, and they can be used in OAuth flows.
+> **Note:** API keys on Targon are more powerful than keys used directly for
+> model APIs. They allow users to set credit limits for apps, and they can be
+> used in OAuth flows.
 
 ## Example code
+
 ```
 import openai
 openai.api_base = "https://targon.sybil.com/api/v1"
@@ -27,4 +33,5 @@ reply = response.choices[0].message
 
 To stream with Python, see this example from OpenAI.
 
-For more detailed information about API keys and usage, please refer to our [full API keys documentation](https://targon.sybil.com/docs/api-keys).
+For more detailed information about API keys and usage, please refer to our
+[full API keys documentation](https://targon.sybil.com/docs/api-keys).

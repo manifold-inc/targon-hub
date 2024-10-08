@@ -1,19 +1,19 @@
-'use client'
+"use client";
 
-import { usePathname } from 'next/navigation'
-import { motion } from 'framer-motion'
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 
-import { Navigation } from '@/components/Navigation'
-import { type Section, SectionProvider } from '@/components/SectionProvider'
+import { Navigation } from "@/components/Navigation";
+import { SectionProvider, type Section } from "@/components/SectionProvider";
 
 export function Layout({
   children,
   allSections,
 }: {
-  children: React.ReactNode
-  allSections: Record<string, Array<Section>>
+  children: React.ReactNode;
+  allSections: Record<string, Array<Section>>;
 }) {
-  let pathname = usePathname()
+  let pathname = usePathname();
 
   return (
     <SectionProvider sections={allSections[pathname] ?? []}>
@@ -22,7 +22,7 @@ export function Layout({
           layoutScroll
           className="contents lg:pointer-events-none lg:fixed lg:inset-0 lg:z-40 lg:flex"
         >
-          <div className="contents lg:pointer-events-auto lg:block lg:w-72 lg:overflow-y-auto lg:border-r lg:border-zinc-900/10 lg:px-6 lg:pb-8 lg:pt-10 xl:w-80 lg:dark:border-white/10">
+          <div className="contents lg:pointer-events-auto lg:block lg:w-72 lg:overflow-y-auto lg:border-r lg:border-zinc-900/10 lg:px-6 lg:pb-8 lg:pt-10 lg:dark:border-white/10 xl:w-80">
             <Navigation className="hidden lg:mt-10 lg:block" />
           </div>
         </motion.header>
@@ -31,5 +31,5 @@ export function Layout({
         </div>
       </div>
     </SectionProvider>
-  )
+  );
 }

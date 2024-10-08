@@ -76,7 +76,10 @@ export function generateFakeStats(models: Model[], days = 30): ModelStats[] {
 }
 
 // Helper function to get stats for a specific timeframe
-export function getStatsForTimeframe(stats: ModelStats[] | undefined, timeframe: string): ModelStats[] {
+export function getStatsForTimeframe(
+  stats: ModelStats[] | undefined,
+  timeframe: string,
+): ModelStats[] {
   if (!stats || stats.length === 0) {
     return [];
   }
@@ -92,12 +95,14 @@ export function getStatsForTimeframe(stats: ModelStats[] | undefined, timeframe:
       break;
     case "weekly":
       const oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
-      filteredStats = stats.filter(
-        (stat) => new Date(stat.date) >= oneWeekAgo,
-      );
+      filteredStats = stats.filter((stat) => new Date(stat.date) >= oneWeekAgo);
       break;
     case "monthly":
-      const oneMonthAgo = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+      const oneMonthAgo = new Date(
+        today.getFullYear(),
+        today.getMonth() - 1,
+        today.getDate(),
+      );
       filteredStats = stats.filter(
         (stat) => new Date(stat.date) >= oneMonthAgo,
       );
