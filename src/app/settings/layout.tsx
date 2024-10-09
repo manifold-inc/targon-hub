@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 
 import { Navigation } from '@/app/_components/sidebar'
-import { type Section, SectionProvider } from '@/components/SectionProvider'
+import {type Section, SectionProvider } from '@/components/SectionProvider'
 import { settingsNavigation } from '@/app/_components/sidebar'
 
 export default function SettingsLayout({
@@ -12,10 +12,10 @@ export default function SettingsLayout({
 }: {
   children: React.ReactNode
 }) {
-  let pathname = usePathname()
+  const pathname = usePathname()
   const allSections = settingsNavigation;
   return (
-    <SectionProvider sections={allSections[pathname] ?? []}>
+    <SectionProvider sections={(allSections[pathname] as Section[]) ?? []}>
       <div className="h-full lg:ml-72 xl:ml-80">
         <motion.header
           layoutScroll

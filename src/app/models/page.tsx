@@ -2,12 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/app/_components/providers";
 import Sidebar from "@/app/_components/browse/sidebar";
 import { reactClient } from "@/trpc/react";
 
 export default function BrowsePage() {
-  const auth = useAuth();
   const router = useRouter();
   const [filterText, setFilterText] = useState("");
 
@@ -25,9 +23,9 @@ export default function BrowsePage() {
     model.name.toLowerCase().includes(filterText.toLowerCase())
   );
 
-  // Navigate to the model's page
-  const handleModelClick = (modelId: string) => {
-    router.push(`/models/${modelId}`);
+  // Navigate to the model's page using the model name
+  const handleModelClick = (modelName: string) => {
+    router.push(`/models/${encodeURIComponent(modelName)}`);
   };
 
   return (
@@ -51,7 +49,7 @@ export default function BrowsePage() {
                 <li
                   key={model.id}
                   className="p-4 border border-gray-200 dark:border-gray-700 rounded shadow-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
-                  onClick={() => handleModelClick(model.id)}
+                  onClick={() => handleModelClick(model.name)}
                 >
                   <div className="flex justify-between items-center">
                     <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-50">

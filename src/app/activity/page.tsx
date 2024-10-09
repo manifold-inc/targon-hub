@@ -1,9 +1,6 @@
 "use client";
 
-import { useAuth } from "@/app/_components/providers";
-
 export default function Page() {
-  const auth = useAuth();
 
   return (
     <div className="p-6">
@@ -12,7 +9,7 @@ export default function Page() {
           Your Activity
         </h1>
         <p className="text-sm text-gray-500 dark:text-gray-400">
-          See how you've been using models on OpenRouter. Privacy
+          See how you&apos;ve been using models on OpenRouter. Privacy
         </p>
       </div>
       <div className="overflow-x-auto">

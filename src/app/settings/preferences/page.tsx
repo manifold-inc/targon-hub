@@ -1,15 +1,9 @@
 "use client";
 
-import { Sidebar } from "@/app/_components/settings/sidebar";
 import { useState } from "react";
-// End of Selection
 
 export default function Page() {
   const [sendEmails, setSendEmails] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-
   return (
     <div className="flex h-screen text-black dark:bg-manifold-grey1-800 dark:text-gray-200">
       <div className={`flex-1 transition-all duration-300`}>

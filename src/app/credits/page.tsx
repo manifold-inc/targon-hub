@@ -1,12 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Popover, Switch } from "@headlessui/react";
-
-import { useAuth } from "../_components/providers";
+import { Popover, PopoverButton, PopoverPanel, Switch } from "@headlessui/react";
 
 export default function Page() {
-  const auth = useAuth();
   const [useCrypto, setUseCrypto] = useState(false);
 
   return (
@@ -16,10 +13,10 @@ export default function Page() {
           <h1 className="flex items-center justify-center text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-50 sm:text-6xl">
             Credits
             <Popover className="relative">
-              <Popover.Button className="ml-2 inline-flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border border-gray-500">
+              <PopoverButton className="ml-2 inline-flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border border-gray-500">
                 <span className="text-xs text-gray-500">i</span>
-              </Popover.Button>
-              <Popover.Panel className="absolute z-10 w-64 rounded-md bg-gray-200 p-4 text-xs text-gray-700 shadow-lg">
+              </PopoverButton>
+              <PopoverPanel className="absolute z-10 w-64 rounded-md bg-gray-200 p-4 text-xs text-gray-700 shadow-lg">
                 <p>
                   You have a small usage allowance (&lt; $1) before you need to
                   pay.
@@ -33,7 +30,7 @@ export default function Page() {
                   Pricing: See pricing per model and fees (5% + $0.35 for
                   Stripe).
                 </p>
-              </Popover.Panel>
+              </PopoverPanel>
             </Popover>
           </h1>
           <p className="mt-4 text-2xl">$ 0</p>
