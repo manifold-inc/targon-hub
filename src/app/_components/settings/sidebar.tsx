@@ -3,20 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-interface SidebarProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export function Sidebar({ isOpen, onClose }: SidebarProps) {
+export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <>
-      {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={onClose}></div>
-      )}
-      <aside className={`fixed top-0 left-0 h-full w-64 bg-gray-800 p-4 transition-transform duration-300 ease-in-out z-50 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed top-15 left-0 h-full w-64 bg-white dark:bg-manifold-grey1 p-4 transition-transform duration-300 ease-in-out z-50`}>
         <nav className="space-y-2">
           {[
             { href: "/settings/preferences", label: "Preferences" },
@@ -29,8 +20,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               <Link
                 key={href}
                 href={href}
-                className={`block text-gray-300 hover:text-white ${
-                  isActive ? "text-white font-semibold" : ""
+                className={`block text-manifold-green dark:text-manifold-pink hover:text-manifold-green/80 dark:hover:text-manifold-pink/80 ${
+                  isActive ? "text-manifold-green dark:text-manifold-pink font-semibold" : ""
                 }`}
               >
                 {label}
@@ -39,6 +30,5 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           })}
         </nav>
       </aside>
-    </>
   );
 }

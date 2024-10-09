@@ -60,6 +60,7 @@ export default function BrowsePage() {
                     </span>
                   </div>
                   <p className="text-gray-600 dark:text-gray-300">
+                    
                     {model.description}
                   </p>
                   <div className="text-sm text-gray-500 dark:text-gray-400">

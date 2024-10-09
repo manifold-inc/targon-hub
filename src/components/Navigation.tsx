@@ -21,7 +21,7 @@ interface NavGroup {
 }
 
 function useInitialValue<T>(value: T, condition = true) {
-  let initialValue = useRef(value).current;
+  const initialValue = useRef(value).current;
   return condition ? initialValue : value;
 }
 
