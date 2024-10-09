@@ -7,7 +7,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-      <aside className={`fixed top-15 left-0 h-full w-64 bg-white dark:bg-manifold-grey1 p-4 transition-transform duration-300 ease-in-out z-50`}>
+      <aside className={`fixed top-15 left-0 h-full w-64 bg-white dark:bg-grey-800 p-4 transition-transform duration-300 ease-in-out z-50`}>
         <nav className="space-y-2">
           {[
             { href: "/settings/preferences", label: "Preferences" },
