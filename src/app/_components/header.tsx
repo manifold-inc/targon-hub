@@ -297,7 +297,7 @@ export const Header = () => {
                         </MenuItem>
                         <MenuItem>
                           <Link
-                            href="/settings/preferences"
+                            href="/settings"
                             className="block px-4 py-2 text-sm hover:bg-gray-100  dark:hover:bg-gray-900"
                           >
                             Settings

@@ -1,23 +1,74 @@
 "use client";
 
-import { useAuth } from "@/app/_components/providers";
+import { Sidebar } from "@/app/_components/settings/sidebar";
+import { useState } from "react";
+// End of Selection
 
 export default function Page() {
-  const auth = useAuth();
+  const [sendEmails, setSendEmails] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   return (
-    <div>
-      <div className="relative isolate px-6 pt-14 lg:px-8">
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-50 sm:text-6xl">
-              Welcome {auth.user || ""} to preferences
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-200">
-              Powered by the bittensor ecosystem on subnet 4. Cheaper, better,
-              faster.
+    <div className="flex h-screen text-black dark:bg-manifold-grey1-800 dark:text-gray-200">
+      <div className={`flex-1 transition-all duration-300`}>
+        <div className="p-8">
+          <h1 className="text-3xl font-bold mb-8">Settings</h1>
+          
+          <section className="mb-10">
+            <h2 className="text-2xl font-semibold mb-4">Notifications</h2>
+            <div className="flex items-center justify-between  p-4 rounded-lg dark:bg-manifold-grey1-800">
+              <span>Send me emails</span>
+              <button
+                onClick={() => setSendEmails(!sendEmails)}
+                className={`w-14 h-7 flex items-center rounded-full p-1 ${
+                  sendEmails ? "bg-manifold-pink2" : "bg-gray-700 dark:bg-gray-600"
+                }`}
+              >
+                <div className={`bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out ${
+                  sendEmails ? "translate-x-7" : ""
+                }`} />
+              </button>
+            </div>
+            <p className="text-sm text-black mt-2 dark:text-gray-500">
+              Alert notifications will be sent to alex@manifold.inc
             </p>
-          </div>
+          </section>
+          
+          <section className="mb-10">
+            <h2 className="text-2xl font-semibold mb-4">Account</h2>
+            <p className="text-sm text-black mb-4 dark:text-gray-500">
+              Manage your login credentials, security settings, or delete your account.
+            </p>
+            <button className="bg-manifold-pink2 text-white dark:text-gray-100 hover:bg-manifold-pink px-6 py-2 rounded-lg transition duration-200">
+              Manage Account
+            </button>
+          </section>
+          
+          <section className="mb-10">
+            <h2 className="text-2xl font-semibold mb-4">Ignored Providers</h2>
+            <p className="text-sm text-black mb-4 dark:text-gray-500 ">
+              Select the providers you want to exclude from serving your requests.
+            </p>
+            <select className="dark:bg-manifold-grey1-800 text-black dark:text-white p-3 rounded-lg w-full border border-gray-700 focus:outline-none focus:ring-2 focus:ring-manifold-pink dark:bg-manifold-grey1-800 dark:border-gray-600">
+              <option>Select a provider</option>
+            </select>
+            <p className="text-sm text-black mt-2 dark:text-gray-500">
+              No providers are ignored.
+            </p>
+          </section>
+          
+          <section>
+            <h2 className="text-2xl font-semibold mb-4">Default Model</h2>
+            <p className="text-sm text-black mb-4 dark:text-gray-500">
+              Apps will use this model by default, but they may override it if they choose to do so. This model will also be used as your default fallback model.
+            </p>
+            <a href="#" className="dark:text-manifold-pink text-manifold-green hover:underline">Click here</a> to browse available models and prices.
+            <select className="dark:bg-manifold-grey1-800 text-black dark:text-white p-3 rounded-lg w-full mt-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-manifold-pink dark:bg-manifold-grey1-800 dark:border-gray-600">
+              <option>Select a model</option>
+            </select>
+          </section>
         </div>
       </div>
     </div>

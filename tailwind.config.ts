@@ -18,6 +18,7 @@ export default {
         manifold: {
           green: "#1c3836",
           pink: "#d2cfff",
+          pink2: "#988aff",
           grey1: {
             500: "f0f0f0",
             800: "#121212",
