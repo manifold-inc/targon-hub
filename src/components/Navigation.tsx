@@ -7,7 +7,6 @@ import clsx from "clsx";
 import { AnimatePresence, motion, useIsPresent } from "framer-motion";
 
 import { Button } from "@/components/Button";
-import { useIsInsideMobileNavigation } from "@/components/MobileNavigation";
 import { useSectionStore } from "@/components/SectionProvider";
 import { Tag } from "@/components/Tag";
 import { remToPx } from "@/utils/remToPx";
@@ -91,7 +90,6 @@ function VisibleSectionHighlight({
       useSectionStore((s) => s.sections),
       useSectionStore((s) => s.visibleSections),
     ],
-    useIsInsideMobileNavigation(),
   );
 
   let isPresent = useIsPresent();
@@ -155,10 +153,8 @@ function NavigationGroup({
   // If this is the mobile navigation then we always render the initial
   // state, so that the state does not change during the close animation.
   // The state will still update when we re-open (re-render) the navigation.
-  let isInsideMobileNavigation = useIsInsideMobileNavigation();
   let [pathname, sections] = useInitialValue(
     [usePathname(), useSectionStore((s) => s.sections)],
-    isInsideMobileNavigation,
   );
 
   let isActiveGroup =
@@ -173,7 +169,7 @@ function NavigationGroup({
         {group.title}
       </motion.h2>
       <div className="relative mt-3 pl-2">
-        <AnimatePresence initial={!isInsideMobileNavigation}>
+        <AnimatePresence >
           {isActiveGroup && (
             <VisibleSectionHighlight group={group} pathname={pathname} />
           )}
