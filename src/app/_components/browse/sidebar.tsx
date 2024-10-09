@@ -1,5 +1,5 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'; // Import the new component if available
-import { ChevronUpIcon } from '@heroicons/react/solid';
+import { ChevronUpIcon } from 'lucide-react';
 
 const Sidebar = () => {
   return (
