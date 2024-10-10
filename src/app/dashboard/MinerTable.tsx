@@ -8,7 +8,7 @@ export default async function MinerTable() {
   const [models] = await Promise.all([
     db
       .select({
-        model: Model.id,
+        model: Model.name,
         failure: Model.failure,
         success: Model.success,
         cpt: Model.cpt,
@@ -33,12 +33,6 @@ export default async function MinerTable() {
                   </th>
                   <th
                     scope="col"
-                    className="sticky top-0 z-10 whitespace-nowrap border-b border-gray-300 px-3 py-3.5 text-right backdrop-blur backdrop-filter dark:border-gray-500 sm:table-cell"
-                  >
-                    Netuids
-                  </th>
-                  <th
-                    scope="col"
                     className="sticky top-0 z-10 whitespace-nowrap border-b border-gray-300 px-3 py-3.5 pr-4 text-right backdrop-blur backdrop-filter dark:border-gray-500 lg:table-cell"
                   >
                     Base Credits per Token
@@ -57,16 +51,6 @@ export default async function MinerTable() {
                       )}
                     >
                       {m.model}
-                    </td>
-                    <td
-                      className={clsx(
-                        idx !== models.length - 1
-                          ? "border-b border-gray-200"
-                          : "",
-                        "whitespace-nowrap px-3 py-4 text-right text-sm text-gray-500 dark:text-gray-50",
-                      )}
-                    >
-                      {m.miners}
                     </td>
                     <td
                       className={clsx(
