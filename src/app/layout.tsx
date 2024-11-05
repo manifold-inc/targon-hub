@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import { ThemeProvider } from "next-themes";
 
 import "@/styles/globals.css";
@@ -11,10 +10,6 @@ import { Toaster } from "sonner";
 
 import { Header } from "./_components/header";
 import { WithGlobalProvider } from "./_components/providers";
-
-const ToggleTheme = dynamic(() => import("./_components/ToggleTheme"), {
-  ssr: false,
-});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -41,16 +36,11 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="icon" href="/Delta.png" />
       </head>
-      <body
-        className={`relative bg-neutral-50 text-gray-950 transition-colors dark:bg-neutral-900 dark:text-gray-100`}
-      >
+      <body>
         <WithGlobalProvider>
           <ThemeProvider attribute="class">
             <Header />
             <main>{children}</main>
-            <div className="fixed bottom-5 right-5 z-40">
-              <ToggleTheme />
-            </div>
           </ThemeProvider>
         </WithGlobalProvider>
 
