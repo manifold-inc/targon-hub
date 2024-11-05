@@ -107,7 +107,7 @@ export default {
       },
       animation: {
         fadeIn: "fadeIn 0.14s ease-in forwards",
-        slideIn: "slideIn 0.3s ease-in forwards",
+        slideIn: "slideIn 0.6s ease-in forwards",
       },
       keyframes: {
         fadeIn: {

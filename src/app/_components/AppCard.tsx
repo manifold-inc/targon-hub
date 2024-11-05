@@ -23,7 +23,9 @@ export const AppCard = ({
         <div className="text-xs font-normal leading-4 text-[#98a1b2]">
           {tokens}
         </div>
-        <div className="py-0.75 gap-0.75 flex items-center justify-center rounded-md bg-[#101828] px-2">
+        <div className={`py-0.75 gap-0.75 flex items-center justify-center rounded-md px-2 ${
+              ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500'][Math.floor(Math.random() * 5)]
+          }`}>
           <div className="flex items-center justify-start gap-1">
             <div className="text-center text-sm font-semibold leading-tight text-white">
               {rating}
