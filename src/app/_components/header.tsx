@@ -30,6 +30,7 @@ import {
   User,
   Wallet,
 } from "lucide-react";
+import moment from "moment";
 
 import { reactClient } from "@/trpc/react";
 import { useAuth } from "./providers";
@@ -131,14 +132,11 @@ export const Header = () => {
           return modelName.includes(searchQuery);
         });
 
-  /*
+  
   const groupedModels = filteredModels.reduce(
     (acc, model) => {
-      const date =
-        model.uploadedAt instanceof Date
-          ? model.uploadedAt
-          : parseISO(model.uploadedAt);
-      const monthYear = format(date, "MMMM yyyy");
+      const date = moment(model.createdAt);
+      const monthYear = date.format("MMMM YYYY");
       if (!acc[monthYear]) {
         acc[monthYear] = [];
       }
@@ -149,10 +147,9 @@ export const Header = () => {
   );
 
   const sortedMonthYears = Object.keys(groupedModels).sort(
-    (a, b) => parseISO(b).getTime() - parseISO(a).getTime(),
+    (a, b) => moment(b).valueOf() - moment(a).valueOf()
   );
 
-  */
 
   return (
     <header className="sticky top-0 z-10 animate-slideIn">
@@ -209,21 +206,16 @@ export const Header = () => {
                     Nothing found.
                   </div>
                 ) : (
-                  /*
-                  models.data?.map((model) => (
-                    <div key={model.id}>
-                      <div className="sticky top-0 bg-gray-100 px-4 py-2 font-semibold dark:bg-gray-800">
+                  sortedMonthYears.map((monthYear) => (
+                    <div key={monthYear}>
+                      <div className="sticky top-0 bg-gray-100 px-4 py-2 font-semibold">
                         {monthYear}
                       </div>
                       {groupedModels[monthYear]?.map((model) => (
                         <Link
                           key={model.id}
-                          href={
-                            model.name
-                              ? `/models/${encodeURIComponent(model.name)}`
-                              : "#"
-                          }
-                          className="group flex cursor-pointer select-none items-center gap-2 bg-white px-4 py-2 hover:bg-blue-100 dark:bg-gray-700 dark:hover:bg-gray-900"
+                          href={`/models/${encodeURIComponent(model.name!)}`}
+                          className="group flex cursor-pointer select-none items-center gap-2 bg-white px-4 py-2 hover:bg-blue-100"
                         >
                           <ComboboxOption value={model}>
                             <span>{model.name}</span>
@@ -231,18 +223,6 @@ export const Header = () => {
                         </Link>
                       ))}
                     </div>
-                  ))
-                */
-                  filteredModels?.map((model) => (
-                    <Link
-                      key={model.id}
-                      href={`/models/${encodeURIComponent(model.name!)}`}
-                      className="group flex cursor-pointer select-none items-center gap-2 bg-white px-4 py-2 hover:bg-blue-100"
-                    >
-                      <ComboboxOption value={model}>
-                        <span>{model.name}</span>
-                      </ComboboxOption>
-                    </Link>
                   ))
                 )}
               </ComboboxOptions>
