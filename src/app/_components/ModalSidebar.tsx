@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import {
   AlignVerticalSpaceAround,
@@ -12,28 +11,31 @@ import {
   Tag,
 } from "lucide-react";
 
+import { useModalSidebarStore } from "@/store/modelSidebarStore";
+
 export default function ModalSidebar() {
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    modality: false,
-    contextLength: false,
-    promptPricing: false,
-    series: false,
-    category: false,
-    parameters: false,
-  });
-  const [activeModality, setActiveModality] = useState<
-    Array<"text-to-text" | "text-to-image">
-  >([]);
-  const [activeContextLength, setActiveContextLength] = useState<number>(4000);
-  const [activePromptPricing, setActivePromptPricing] = useState<
-    [number, number]
-  >([0, 10]);
-  const [activeSeries, setActiveSeries] = useState<string[]>([]);
-  const [showAllSeries, setShowAllSeries] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<string[]>([]);
-  const [showAllCategory, setShowAllCategory] = useState(false);
-  const [activeParameters, setActiveParameters] = useState<string[]>([]);
-  const [showAllParameters, setShowAllParameters] = useState(false);
+  const {
+    openSections,
+    toggleSection,
+    activeModality,
+    setActiveModality,
+    activeContextLength,
+    setActiveContextLength,
+    activePromptPricing,
+    setActivePromptPricing,
+    activeSeries,
+    setActiveSeries,
+    showAllSeries,
+    setShowAllSeries,
+    activeCategory,
+    setActiveCategory,
+    showAllCategory,
+    setShowAllCategory,
+    activeParameters,
+    setActiveParameters,
+    showAllParameters,
+    setShowAllParameters,
+  } = useModalSidebarStore();
 
   const contextTickLabels = ["4k", "64k", "1M"];
   const contextTotalTicks = 8;
@@ -62,13 +64,6 @@ export default function ModalSidebar() {
     "max_new_tokens",
     "stop_sequences",
   ];
-
-  const toggleSection = (section: string) => {
-    setOpenSections((prev) => ({
-      ...prev,
-      [section]: !prev[section],
-    }));
-  };
 
   return (
     <aside className="h-full pr-8 pt-10">
