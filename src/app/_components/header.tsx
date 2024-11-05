@@ -132,7 +132,6 @@ export const Header = () => {
           return modelName.includes(searchQuery);
         });
 
-  
   const groupedModels = filteredModels.reduce(
     (acc, model) => {
       const date = moment(model.createdAt);
@@ -147,12 +146,13 @@ export const Header = () => {
   );
 
   const sortedMonthYears = Object.keys(groupedModels).sort(
-    (a, b) => moment(b).valueOf() - moment(a).valueOf()
+    (a, b) => moment(b).valueOf() - moment(a).valueOf(),
   );
 
-
   return (
-    <header className="sticky top-0 z-10 animate-slideIn">
+    <header
+      className={`sticky top-0 z-10 animate-slideIn ${pathName !== "/" ? "bg-white" : ""}`}
+    >
       <nav className="text-manifold-green flex items-center p-4">
         <div className="w-52">
           <Link
@@ -184,7 +184,7 @@ export const Header = () => {
                   />
                 </div>
                 <ComboboxInput
-                  className="text-md flex h-11 w-full items-center rounded-full border-0 bg-gray-50 pb-2.5 pl-11 pr-3 pt-3 placeholder:text-[#98a1b2]"
+                  className="text-md flex h-11 w-full items-center rounded-full border-0 bg-gray-50 pb-2.5 pl-11 pr-3 pt-3 placeholder:text-[#98a1b2] focus:ring-gray-200"
                   ref={searchInputRef}
                   placeholder="Search models or dates (September 2024)"
                   displayValue={(model: { name: string } | null) =>
