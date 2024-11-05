@@ -10,7 +10,7 @@ import { stripe } from "@/server/stripe";
 export async function GET(request: NextRequest): Promise<Response> {
   const ss58 = request.nextUrl.searchParams.get("ss58");
   const signature = request.nextUrl.searchParams.get("signature");
-  const roll = request.nextUrl.searchParams.has("roll")
+  const roll = request.nextUrl.searchParams.has("roll");
   if (!ss58 || ss58.length != 48 || !signature) {
     return Response.json(
       { error: "Missing or improper ss58 address or signature" },

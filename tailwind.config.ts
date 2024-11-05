@@ -44,6 +44,10 @@ export default {
             strong: colors.gray[900],
             inverted: colors.white,
           },
+          manifold: {
+            green: "#1c3836",
+            grey: "#98A1B2",
+          },
         },
         // dark mode
         "dark-tremor": {
@@ -100,6 +104,20 @@ export default {
         "tremor-default": ["0.875rem", { lineHeight: "1.25rem" }],
         "tremor-title": ["1.125rem", { lineHeight: "1.75rem" }],
         "tremor-metric": ["1.875rem", { lineHeight: "2.25rem" }],
+      },
+      animation: {
+        fadeIn: "fadeIn 0.14s ease-in forwards",
+        slideIn: "slideIn 0.3s ease-in forwards",
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        slideIn: {
+          "0%": { transform: "translateY(-20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
       },
     },
   },
