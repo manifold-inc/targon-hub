@@ -33,7 +33,6 @@ import {
 
 import { reactClient } from "@/trpc/react";
 import { useAuth } from "./providers";
-import ToggleTheme from "./ToggleTheme";
 
 export const Header = () => {
   const auth = useAuth();
@@ -336,9 +335,6 @@ export const Header = () => {
                             Sign Out
                           </Link>
                         </MenuItem>
-                      </div>
-                      <div className="flex p-2">
-                        <ToggleTheme />
                       </div>
                     </MenuItems>
                   </>
