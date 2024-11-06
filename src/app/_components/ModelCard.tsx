@@ -18,8 +18,6 @@ const authorImages: Record<string, string> = {
 export default function ModelCard({ name, category, author }: ModelCardProps) {
   const imageUrl = authorImages[author.toLowerCase()];
 
-  console.log(author);
-
   return (
     <div className="flex h-40 items-center gap-10 bg-white p-5">
       <div className="h-28 w-40 shrink-0 overflow-hidden rounded-lg">

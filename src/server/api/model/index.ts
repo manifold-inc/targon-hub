@@ -1,4 +1,5 @@
 import { count, eq } from "drizzle-orm";
+import { z } from "zod";
 
 import { Model } from "@/schema/schema";
 import { createTRPCRouter, publicAuthlessProcedure } from "../trpc";
@@ -69,4 +70,37 @@ export const modelRouter = createTRPCRouter({
     const modelInfoResults = await Promise.all(modelInfoPromises);
     return modelInfoResults.filter((result) => result !== null);
   }),
+
+  getModel: publicAuthlessProcedure
+    .input(
+      z.object({
+        slug: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const model = await ctx.db
+        .select()
+        .from(Model)
+        .where(eq(Model.enabled, true) && eq(Model.name, input.slug));
+
+      if (model.length === 0) return null;
+
+      const response = await fetch(
+        `https://huggingface.co/api/models?search=${input.slug}&limit=20&full=true&config=true`,
+        {
+          method: "GET",
+          headers: {},
+        },
+      );
+      const data = (await response.json()) as HuggingFaceModelInfo[];
+      const exactMatch = data.find(
+        (item) => item.id.toLowerCase() === input.slug.toLowerCase(),
+      );
+
+      return {
+        ...model[0],
+        author: exactMatch?.author ?? null,
+        category: exactMatch?.pipeline_tag ?? null,
+      };
+    }),
 });
