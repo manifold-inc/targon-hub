@@ -21,6 +21,7 @@ const config = {
         hostname: "www.google.com",
       },
     ],
+    domains: ["picsum.photos"],
   },
 };
 

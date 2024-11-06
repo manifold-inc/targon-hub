@@ -2,8 +2,8 @@ import Image from "next/image";
 
 const authorImages: Record<string, string> = {
   "deepseek-ai": "/models/DeepSeek.png",
-    gryphe: "/models/Gryphe.png",
-    ntqai: "/models/NTQA.png",
+  gryphe: "/models/Gryphe.png",
+  ntqai: "/models/NTQA.png",
   nvidia: "/models/Nvidia.png",
 };
 

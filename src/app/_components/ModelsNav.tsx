@@ -1,12 +1,47 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+
 const ModelsNav = () => {
+  const [activeSection, setActiveSection] = useState<string>("overview");
+  const sections = useRef<Element[]>([]);
+
   const navItems = [
-    { label: "Overview", isActive: true },
+    { label: "Overview", isActive: false },
     { label: "Providers", isActive: false },
     { label: "Apps Using This", isActive: false },
     { label: "Parameters", isActive: false },
   ];
+
+  const handleScroll = () => {
+    const pageYOffset = window.scrollY;
+    let newActiveSection = "overview";
+
+    sections.current.forEach((section) => {
+      const sectionOffsetTop = (section as HTMLElement).offsetTop;
+      const sectionHeight = (section as HTMLElement).offsetHeight;
+
+      if (
+        pageYOffset >= sectionOffsetTop - 100 && // offset for header
+        pageYOffset < sectionOffsetTop + sectionHeight - 100
+      ) {
+        newActiveSection = section.id;
+      }
+    });
+
+    setActiveSection(newActiveSection);
+  };
+
+  useEffect(() => {
+    // Convert NodeList to Array for easier handling
+    sections.current = Array.from(document.querySelectorAll("[data-section]"));
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Check initial position
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const scrollToSection = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -14,15 +49,19 @@ const ModelsNav = () => {
   ) => {
     e.preventDefault();
     const sectionId = label.toLowerCase().replace(/\s+/g, "-");
-    const section = document.getElementById(sectionId);
+    const element = document.getElementById(sectionId);
 
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+    if (element) {
+      const offset = 200; // Adjust this based on your header height
+      window.scrollTo({
+        top: element.offsetTop - offset,
+        behavior: "smooth",
+      });
     }
   };
 
   return (
-    <nav className="w-[252px] py-14">
+    <nav className="sticky top-20 h-fit animate-slideInDelay py-14">
       <ul className="flex flex-col">
         {navItems.map((item) => (
           <li key={item.label}>
@@ -33,7 +72,8 @@ const ModelsNav = () => {
                 flex items-center border-l-2 px-6
                 py-2 transition-colors hover:bg-gray-50
                 ${
-                  item.isActive
+                  activeSection ===
+                  item.label.toLowerCase().replace(/\s+/g, "-")
                     ? "border-black text-black"
                     : "border-gray-400 text-gray-400 hover:text-gray-600"
                 }
