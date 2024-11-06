@@ -6,10 +6,13 @@ import { Search } from "lucide-react";
 
 import { reactClient } from "@/trpc/react";
 import ModalSidebar from "../_components/ModalSidebar";
+import ModelCard from "../_components/ModelCard";
 
 export default function Page() {
   const { data: count } = reactClient.model.getCountModels.useQuery();
   const [query, setQuery] = useState("");
+
+  const { data: modelInfo } = reactClient.model.getModelInfo.useQuery();
 
   return (
     <>
@@ -50,6 +53,18 @@ export default function Page() {
               </Combobox>
             </div>
           </div>
+          {modelInfo && (
+            <div className="flex flex-col gap-4 p-8">
+              {modelInfo.map((model) => (
+                <ModelCard
+                  key={model.id}
+                  name={model.id}
+                  author={model.author ?? null}
+                  category={model.category ?? null}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </>
