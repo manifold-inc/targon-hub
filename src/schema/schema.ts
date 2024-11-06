@@ -148,4 +148,7 @@ export const Model = mysqlTable("model", {
   failure: int("failure").default(0).notNull(),
   cpt: int("cpt").default(1).notNull(), // cpt: credits per token
   enabled: boolean("enabled").default(true),
+  createdAt: timestamp("created_at", { mode: "date" })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
 });
