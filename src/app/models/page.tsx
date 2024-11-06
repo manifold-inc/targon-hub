@@ -14,6 +14,13 @@ export default function Page() {
 
   const { data: modelInfo } = reactClient.model.getModelInfo.useQuery();
 
+  // Filter models based on search query
+  const filteredModels = !query ? modelInfo : modelInfo?.filter((model) =>
+    model.id.toLowerCase().includes(query?.toLowerCase() || '') ||
+    (model.author?.toLowerCase() || '').includes(query?.toLowerCase() || '') ||
+    (model.category?.toLowerCase() || '').includes(query?.toLowerCase() || '')
+  );
+
   return (
     <>
       <div className="flex border-t border-gray-200">
@@ -55,7 +62,7 @@ export default function Page() {
           </div>
           {modelInfo && (
             <div className="flex flex-col gap-4 p-8">
-              {modelInfo.map((model) => (
+              {filteredModels?.map((model) => (
                 <ModelCard
                   key={model.id}
                   name={model.id}
