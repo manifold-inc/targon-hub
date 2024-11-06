@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Combobox, ComboboxInput } from "@headlessui/react";
 import { Search } from "lucide-react";
 
+import { useModalSidebarStore } from "@/store/modelSidebarStore";
 import { reactClient } from "@/trpc/react";
 import ModalSidebar from "../_components/ModalSidebar";
 import ModelCard from "../_components/ModelCard";
@@ -13,13 +14,28 @@ export default function Page() {
   const [query, setQuery] = useState("");
 
   const { data: modelInfo } = reactClient.model.getModelInfo.useQuery();
+  const { activeSeries } = useModalSidebarStore();
 
-  // Filter models based on search query
-  const filteredModels = !query ? modelInfo : modelInfo?.filter((model) =>
-    model.id.toLowerCase().includes(query?.toLowerCase() || '') ||
-    (model.author?.toLowerCase() || '').includes(query?.toLowerCase() || '') ||
-    (model.category?.toLowerCase() || '').includes(query?.toLowerCase() || '')
-  );
+  // Filter models based on search query and active series
+  const filteredModels = modelInfo?.filter((model) => {
+    // If no query and no active series, include all models
+    if (!query && !activeSeries.length) return true;
+
+    // Check if model matches search query
+    const matchesQuery =
+      !query ||
+      model.id.toLowerCase().includes(query.toLowerCase()) ||
+      (model.author?.toLowerCase() || "").includes(query.toLowerCase()) ||
+      (model.category?.toLowerCase() || "").includes(query.toLowerCase());
+
+    // Check if model matches active series
+    const matchesSeries =
+      !activeSeries.length ||
+      (model.author && activeSeries.includes(model.author));
+
+    // Model must match both conditions
+    return matchesQuery && matchesSeries;
+  });
 
   return (
     <>

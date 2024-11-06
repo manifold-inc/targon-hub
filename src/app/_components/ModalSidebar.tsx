@@ -42,15 +42,7 @@ export default function ModalSidebar() {
   const priceTickLabels = ["$0", "$0.5", "$10+"];
   const priceTotalTicks = 8;
 
-  const seriesList = [
-    "ChatGPT",
-    "Llama",
-    "Claude",
-    "PaLM",
-    "DALL-E",
-    "Stable Diffusion",
-    "Midjourney",
-  ];
+  const seriesList = ["Gryphe", "deepseek-ai", "NTQAI", "nvidia"];
   const categoryList: Record<string, string> = {
     General: "#fde272",
     Image: "#fac414",
