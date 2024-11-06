@@ -108,6 +108,7 @@ export default {
       animation: {
         fadeIn: "fadeIn 0.14s ease-in forwards",
         slideIn: "slideIn 0.6s ease-in forwards",
+        slideInDelay: "slideIn 0.6s ease-in backwards 0.5s",
       },
       keyframes: {
         fadeIn: {
@@ -115,7 +116,11 @@ export default {
           "100%": { opacity: "1" },
         },
         slideIn: {
-          "0%": { transform: "translateY(-20px)", opacity: "0" },
+          "0%": { transform: "translateY(-24px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        slideInDelay: {
+          "0%, 50%": { transform: "translateY(-24px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
       },

@@ -165,7 +165,7 @@ export default function Page() {
 
       {/* Content without background */}
       <div className="-mt-10 px-10">
-        <div className="animate-slideIn delay-1000">
+        <div className="animate-slideInDelay">
           <TabGroup>
             <TabList className="inline-flex h-12 w-full items-center justify-start gap-2 rounded-full border border-[#e4e7ec] bg-white p-2">
               {tabs.map((tab, index) => (
@@ -185,7 +185,7 @@ export default function Page() {
           </TabGroup>
         </div>
 
-        <div className="animate-slideIn py-4 delay-1000">
+        <div className="animate-slideInDelay py-4">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {filteredApps.map((app) => (
               <AppCard key={app.id} {...app} />

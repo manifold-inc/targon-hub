@@ -58,7 +58,7 @@ export default function ModalSidebar() {
   ];
 
   return (
-    <aside className="h-full pr-8 pt-10">
+    <aside className="h-full animate-slideInDelay pr-8 pt-10">
       <div className="flex flex-col gap-2.5">
         <div className="p-3">
           <div
