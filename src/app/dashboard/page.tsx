@@ -127,8 +127,7 @@ for chunk in response:
             </div>
           </div>
           <div className="pb-4">
-            Creates a model completion for the given text. Generally
-            Reference{" "}
+            Creates a model completion for the given text. Generally Reference{" "}
             <a
               className="text-blue-500"
               href="https://platform.openai.com/docs/api-reference/completion/create"
