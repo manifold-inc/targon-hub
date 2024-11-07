@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Star, UserRound } from "lucide-react";
 
+import CodeBlock from "@/app/_components/CodeBlock";
 import ModelsNav from "@/app/_components/ModelsNav";
 import { useAuth } from "@/app/_components/providers";
 import { reactClient } from "@/trpc/react";
@@ -39,6 +40,21 @@ export default function Page({ params }: Props) {
       .reduce((acc, char) => acc + char.charCodeAt(0), 0);
     return gradients[seed % gradients.length];
   };
+
+  const exampleCode = `import { OpenAI } from 'openai';
+
+const openai = new OpenAI({
+  apiKey: 'your-api-key',
+});
+
+const response = await openai.chat.completions.create({
+  model: "${modelName}",
+  messages: [
+    { role: "system", content: "You are a helpful assistant." },
+    { role: "user", content: "Hello!" }
+  ],
+});
+`;
 
   return (
     <div className="relative flex border-t border-gray-200">
@@ -346,6 +362,12 @@ export default function Page({ params }: Props) {
                 </div>
               </div>
             ))}
+            <div className="py-10">
+              <p className="text-sm font-medium leading-tight text-[#344054]">
+                Sample Code
+              </p>
+              <CodeBlock code={exampleCode} language="python" />
+            </div>
           </section>
         </div>
       </div>
