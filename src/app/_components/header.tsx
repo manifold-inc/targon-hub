@@ -162,7 +162,7 @@ export const Header = () => {
             className="flex h-11 w-fit items-center justify-start gap-2 rounded-full p-2 hover:bg-gray-200"
           >
             <Image
-              src="/ManifoldMarkTransparentGreen.png"
+              src="/ManifoldMarkTransparentGreenSVG.svg"
               width={32}
               height={28}
               alt="Targon"
