@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Combobox,
   ComboboxInput,
@@ -38,7 +38,7 @@ import { useAuth } from "./providers";
 export const Header = () => {
   const auth = useAuth();
   const pathName = usePathname();
-  const [selectedModel, setSelectedModel] = useState("");
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -173,8 +173,17 @@ export const Header = () => {
           <div className="relative w-2/5">
             <Combobox
               immediate
-              value={selectedModel}
-              onChange={(value: string | null) => setSelectedModel(value || "")}
+              value={query}
+              onChange={(value: string) => {
+                const selectedModel = filteredModels.find(
+                  (m) => m.name === value,
+                );
+                if (selectedModel?.name) {
+                  router.push(
+                    `/models/${encodeURIComponent(selectedModel.name)}`,
+                  );
+                }
+              }}
             >
               <div className="relative">
                 <div className="pointer-events-none absolute inset-y-0 left-5 flex items-center">
@@ -212,15 +221,13 @@ export const Header = () => {
                         {monthYear}
                       </div>
                       {groupedModels[monthYear]?.map((model) => (
-                        <Link
+                        <ComboboxOption
                           key={model.id}
-                          href={`/models/${encodeURIComponent(model.name!)}`}
+                          value={model.name}
                           className="group flex cursor-pointer select-none items-center gap-2 bg-white px-4 py-2 hover:bg-blue-100"
                         >
-                          <ComboboxOption value={model}>
-                            <span>{model.name}</span>
-                          </ComboboxOption>
-                        </Link>
+                          <span>{model.name}</span>
+                        </ComboboxOption>
                       ))}
                     </div>
                   ))

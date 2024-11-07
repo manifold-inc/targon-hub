@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Star, UserRound } from "lucide-react";
 
-import ModelImage from "@/app/_components/ModelImage";
 import ModelsNav from "@/app/_components/ModelsNav";
 import { useAuth } from "@/app/_components/providers";
 import { reactClient } from "@/trpc/react";
@@ -25,6 +24,21 @@ export default function Page({ params }: Props) {
     ? decodeURIComponent(params.slug).charAt(0).toUpperCase() +
       decodeURIComponent(params.slug).slice(1).toLowerCase()
     : "";
+
+  const getRandomGradient = () => {
+    const gradients = [
+      "from-indigo-500 via-sky-500 to-violet-500",
+      "from-sky-500 via-emerald-500 to-teal-500",
+      "from-violet-500 via-rose-500 to-amber-500",
+      "from-rose-500 via-fuchsia-500 to-indigo-500",
+    ];
+
+    // Use the slug as a seed
+    const seed = params.slug
+      .split("")
+      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    return gradients[seed % gradients.length];
+  };
 
   return (
     <div className="relative flex border-t border-gray-200">
@@ -66,7 +80,9 @@ export default function Page({ params }: Props) {
             </div>
 
             <div className="py-8">
-              <ModelImage author={data?.author ?? ""} />
+              <div
+                className={`h-64 w-full rounded-lg bg-gradient-to-r ${getRandomGradient()}`}
+              />
             </div>
 
             <div className="flex gap-4">
@@ -99,8 +115,8 @@ export default function Page({ params }: Props) {
 
             <div className="flex gap-4">
               {[
-                { color: "blue", label: "Category" },
-                { color: "green", label: "Category" },
+                { color: "blue", label: "Category 1" },
+                { color: "green", label: "Category 2" },
               ].map((category) => (
                 <div
                   key={category.label}
@@ -137,7 +153,6 @@ export default function Page({ params }: Props) {
 
           <section id="providers" data-section>
             <p className="text-2xl leading-loose text-[#101828]">Providers</p>
-
             <div className="py-6">
               {[
                 {

@@ -52,7 +52,7 @@ const ModelsNav = () => {
     const element = document.getElementById(sectionId);
 
     if (element) {
-      const offset = 200; // Adjust this based on your header height
+      const offset = 200; // Adjust based on header height
       window.scrollTo({
         top: element.offsetTop - offset,
         behavior: "smooth",
