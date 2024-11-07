@@ -7,10 +7,9 @@ const ModelsNav = () => {
   const sections = useRef<Element[]>([]);
 
   const navItems = [
-    { label: "Overview", isActive: false },
-    { label: "Providers", isActive: false },
-    { label: "Apps Using This", isActive: false },
-    { label: "Parameters", isActive: false },
+    { label: "Overview" },
+    { label: "Apps Using This" },
+    { label: "Parameters" },
   ];
 
   const handleScroll = () => {
