@@ -151,7 +151,9 @@ export const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-10 animate-slideIn ${pathName !== "/" ? "bg-white" : ""}`}
+      className={`sticky top-0 z-10 animate-slideIn ${
+        pathName !== "/" ? "border-b border-gray-200 bg-white" : ""
+      }`}
     >
       <nav className="text-manifold-green flex items-center p-4">
         <div className="w-52">

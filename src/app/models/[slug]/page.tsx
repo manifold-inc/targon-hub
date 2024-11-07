@@ -57,8 +57,8 @@ const response = await openai.chat.completions.create({
 `;
 
   return (
-    <div className="relative flex border-t border-gray-200">
-      <div className="fixed right-20">
+    <div className="relative flex">
+      <div className="fixed right-20 top-32">
         <ModelsNav />
       </div>
       <div className="mx-auto w-1/2 animate-slideIn py-20">
