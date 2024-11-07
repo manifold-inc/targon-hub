@@ -34,6 +34,7 @@ import moment from "moment";
 
 import { reactClient } from "@/trpc/react";
 import { useAuth } from "./providers";
+import SettingsModal from "./SettingsModal";
 
 export const Header = () => {
   const auth = useAuth();
@@ -41,6 +42,10 @@ export const Header = () => {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<
+    "dashboard" | "credits" | "activity" | "keys" | "integrations" | "settings"
+  >("dashboard");
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -148,6 +153,11 @@ export const Header = () => {
   const sortedMonthYears = Object.keys(groupedModels).sort(
     (a, b) => moment(b).valueOf() - moment(a).valueOf(),
   );
+
+  const handleSettingsModalClose = () => {
+    setIsModalOpen(false);
+    setActiveTab("dashboard");
+  };
 
   return (
     <header
@@ -284,42 +294,54 @@ export const Header = () => {
                     <MenuItems className="absolute right-0 mt-1 w-36 rounded-md bg-white pt-1 shadow-lg ring-1 ring-black ring-opacity-5">
                       <div className="border-b border-gray-200 py-1">
                         <MenuItem>
-                          <Link
-                            href="/credits"
-                            className="block px-4 py-2 text-sm  hover:bg-gray-100"
+                          <button
+                            onClick={() => {
+                              setIsModalOpen(true);
+                              setActiveTab("credits");
+                            }}
+                            className="block w-full px-4 py-2 text-sm  hover:bg-gray-100"
                           >
                             Credits
-                          </Link>
+                          </button>
                         </MenuItem>
                         <MenuItem>
-                          <Link
-                            href="/settings/keys"
-                            className="block px-4 py-2 text-sm  hover:bg-gray-100"
+                          <button
+                            onClick={() => {
+                              setIsModalOpen(true);
+                              setActiveTab("keys");
+                            }}
+                            className="block w-full px-4 py-2 text-sm  hover:bg-gray-100"
                           >
                             Keys
-                          </Link>
+                          </button>
                         </MenuItem>
                         <MenuItem>
-                          <Link
-                            href="/activity"
-                            className="block px-4 py-2 text-sm  hover:bg-gray-100"
+                          <button
+                            onClick={() => {
+                              setIsModalOpen(true);
+                              setActiveTab("activity");
+                            }}
+                            className="block w-full px-4 py-2 text-sm  hover:bg-gray-100"
                           >
                             Activity
-                          </Link>
+                          </button>
                         </MenuItem>
                         <MenuItem>
-                          <Link
-                            href="/settings/preferences"
-                            className="block px-4 py-2 text-sm hover:bg-gray-100"
+                          <button
+                            onClick={() => {
+                              setIsModalOpen(true);
+                              setActiveTab("dashboard");
+                            }}
+                            className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
                           >
                             Settings
-                          </Link>
+                          </button>
                         </MenuItem>
                         <MenuItem>
                           <Link
                             prefetch={false}
                             href="/sign-out"
-                            className="block px-4 py-2 text-sm hover:bg-gray-100"
+                            className="block px-4 py-2 text-center text-sm hover:bg-gray-100"
                           >
                             Sign Out
                           </Link>
@@ -329,6 +351,11 @@ export const Header = () => {
                   </>
                 )}
               </Menu>
+              <SettingsModal
+                isOpen={isModalOpen}
+                onClose={handleSettingsModalClose}
+                activeTab={activeTab}
+              />
             </>
           ) : (
             <Link
