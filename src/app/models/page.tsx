@@ -39,7 +39,7 @@ export default function Page() {
 
   return (
     <>
-      <div className="flex border-t border-gray-200">
+      <div className="flex">
         {/* Left sidebar */}
         <div className="w-80 border-r border-[#f2f4f7]">
           <ModalSidebar />
