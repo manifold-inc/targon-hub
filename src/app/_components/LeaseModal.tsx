@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { CheckIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { toast } from "sonner";
 
+import { COST_PER_GPU, CREDIT_PER_DOLLAR } from "@/constants";
 import { reactClient } from "@/trpc/react";
 
 const steps = [
@@ -22,7 +24,9 @@ interface LeaseModalProps {
 
 export default function LeaseModal({ isOpen, onClose }: LeaseModalProps) {
   const [currentStep, setCurrentStep] = useState(0);
-  const [modelUrl, setModelUrl] = useState("");
+  const [model, setModel] = useState("");
+  const [requiredGPUs, setRequiredGPUs] = useState(0n);
+  const router = useRouter();
 
   // Update steps array with current status
   const updatedSteps = steps.map((step, index) => ({
@@ -35,9 +39,12 @@ export default function LeaseModal({ isOpen, onClose }: LeaseModalProps) {
           : "upcoming",
   }));
 
+  const user = reactClient.account.getUser.useQuery();
+
   const addModelMutation = reactClient.model.addModel.useMutation({
-    onSuccess: () => {
+    onSuccess: (gpus) => {
       toast.success("Model added successfully");
+      setRequiredGPUs(BigInt(gpus));
       setCurrentStep(currentStep + 1);
     },
     onError: (error) => {
@@ -45,11 +52,46 @@ export default function LeaseModal({ isOpen, onClose }: LeaseModalProps) {
     },
   });
 
+  const checkout = reactClient.credits.checkout.useMutation({
+    onError: (e) => {
+      toast.error(`Failed getting checkout session: ${e.message}`);
+    },
+    onSuccess: (url) => {
+      router.push(url);
+    },
+  });
+
   const handleNext = () => {
-    if (currentStep < steps.length - 1) {
-      if (currentStep === 0) {
-        addModelMutation.mutate(modelUrl);
-      }
+    switch (currentStep) {
+      case 0:
+        addModelMutation.mutate(model);
+        break;
+      case 1:
+        // TODO: This should redirect back here upon sign in
+        if (!user.data) {
+          router.push("/sign-in");
+          return;
+        }
+        if (BigInt(user.data.credits) < COST_PER_GPU * requiredGPUs) {
+          // TODO: add redirect paramater so stripe knows to redirect us back here
+          checkout.mutate({
+            purchaseAmount: 1000 * Number(requiredGPUs),
+          });
+        }
+        setCurrentStep(currentStep + 1);
+        break;
+      case 2:
+        // TODO add mutation to subtract credits
+        // Paramaters:
+        //  - model
+        //  make sure to check that we have enough GPUs. MAX 8
+        //
+        //  1. grap all models running
+        //  2. see if there is an exact match on num gpus
+        //  3. start suming lowest gpu models untill you have enough
+        //
+        //  redirect to model page
+        break;
     }
   };
 
@@ -156,18 +198,61 @@ export default function LeaseModal({ isOpen, onClose }: LeaseModalProps) {
                     NousResearch/Hermes-3-Llama-3.1-8B).
                   </p>
                   <div className="flex w-full items-center rounded-lg border border-gray-300 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500">
-                    <span className="pl-4 text-black">
+                    <span className="whitespace-nowrap pl-4 text-black">
                       https://huggingface.co/
                     </span>
                     <input
                       type="text"
                       id="modelUrl"
-                      value={modelUrl}
-                      onChange={(e) => setModelUrl(e.target.value)}
+                      value={model}
+                      onChange={(e) => setModel(e.target.value)}
                       placeholder="organization/model-name"
                       className="w-full border-0 px-0 py-2 outline-none focus:ring-0"
                     />
                   </div>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {/* Step 1 */}
+          {currentStep === 1 && (
+            <div className="mx-auto flex w-full max-w-xl flex-col items-center py-8">
+              <form
+                className="w-full space-y-4"
+                onSubmit={(e) => e.preventDefault()}
+              >
+                <div className="flex flex-col space-y-2">
+                  <label
+                    htmlFor="modelUrl"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Price
+                  </label>
+                  <p className="text-sm text-gray-500">{model}</p>
+                  {(COST_PER_GPU * requiredGPUs).toString()} tokens
+                </div>
+              </form>
+            </div>
+          )}
+
+          {/* Step 1 */}
+          {currentStep === 2 && (
+            <div className="mx-auto flex w-full max-w-xl flex-col items-center py-8">
+              <form
+                className="w-full space-y-4"
+                onSubmit={(e) => e.preventDefault()}
+              >
+                <div className="flex flex-col space-y-2">
+                  <label
+                    htmlFor="modelUrl"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Purchase
+                  </label>
+                  <p className="text-sm text-gray-500">{model}</p>
+                  {(COST_PER_GPU * requiredGPUs).toString()} tokens
+                  (Purchase button)
                 </div>
               </form>
             </div>
@@ -191,7 +276,9 @@ export default function LeaseModal({ isOpen, onClose }: LeaseModalProps) {
             <button
               type="button"
               onClick={handleNext}
-              disabled={currentStep === steps.length - 1}
+              disabled={
+                currentStep === steps.length - 1 || addModelMutation.isLoading
+              }
               className={classNames(
                 "relative inline-flex h-10 w-36 items-center justify-center gap-1.5 rounded-full border-2 px-4 py-2.5 text-sm font-semibold",
                 currentStep === steps.length - 1

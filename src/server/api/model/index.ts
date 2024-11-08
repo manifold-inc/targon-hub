@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
@@ -114,16 +115,15 @@ export const modelRouter = createTRPCRouter({
       }
 
       // check if model already exists
-      console.log("Checking if model already exists:", input);
       const existingModel = await ctx.db
-        .select()
+        .select({
+          gpus: Model.requiredGpus,
+        })
         .from(Model)
         .where(eq(Model.name, input));
-      console.log("Existing model check result:", existingModel);
-
       if (existingModel.length > 0) {
-        console.log("Model already exists, returning error");
-        throw new Error("Model already exists");
+        console.log(existingModel.at(0)!.gpus);
+        return existingModel.at(0)!.gpus;
       }
 
       // Validate model exists on HuggingFace using direct model endpoint
@@ -131,7 +131,6 @@ export const modelRouter = createTRPCRouter({
         `https://huggingface.co/api/models/${organization}/${modelName}`,
         {
           method: "GET",
-          headers: {},
         },
       );
 
@@ -167,16 +166,18 @@ export const modelRouter = createTRPCRouter({
       });
 
       if (!gpuResponse.ok) {
-        const errorText = await gpuResponse.text();
-        console.error("GPU estimation failed:", errorText);
         throw new Error("Failed to estimate GPU requirements");
       }
 
       const gpuData = (await gpuResponse.json()) as {
         required_gpus: number;
-        /*supported_endpoints: string[];*/
       };
-      console.log("GPU Response:", gpuData);
+      if (!gpuData.required_gpus) {
+        throw new TRPCError({
+          message: "Failed getting required GPUS",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
 
       await ctx.db.insert(Model).values({
         name: modelInfo.id,
@@ -185,6 +186,6 @@ export const modelRouter = createTRPCRouter({
         supportedEndpoints: supportedEndpoints,
       });
 
-      return { status: 200 };
+      return gpuData.required_gpus;
     }),
 });
