@@ -1,23 +1,21 @@
 import { create } from "zustand";
 
-export type Modality = "text-to-text" | "text-to-image";
-
 interface ModalSidebarState {
   // Section open/close state
   openSections: {
     modality: boolean;
     contextLength: boolean;
     promptPricing: boolean;
-    series: boolean;
+    organization: boolean;
     category: boolean;
     parameters: boolean;
   };
   toggleSection: (section: keyof ModalSidebarState["openSections"]) => void;
 
   // Modality state
-  activeModality: Modality[];
+  activeModality: string[];
   setActiveModality: (
-    modalityOrUpdater: Modality[] | ((prev: Modality[]) => Modality[]),
+    modalityOrUpdater: string[] | ((prev: string[]) => string[]),
   ) => void;
 
   // Context length state
@@ -28,13 +26,13 @@ interface ModalSidebarState {
   activePromptPricing: [number, number];
   setActivePromptPricing: (pricing: [number, number]) => void;
 
-  // Series state
-  activeSeries: string[];
-  setActiveSeries: (
-    seriesOrUpdater: string[] | ((prev: string[]) => string[]),
+  // Organization state
+  activeOrganization: string[];
+  setActiveOrganization: (
+    organizationOrUpdater: string[] | ((prev: string[]) => string[]),
   ) => void;
-  showAllSeries: boolean;
-  setShowAllSeries: (show: boolean) => void;
+  showAllOrganization: boolean;
+  setShowAllOrganization: (show: boolean) => void;
 
   // Category state
   activeCategory: string[];
@@ -59,7 +57,7 @@ export const useModalSidebarStore = create<ModalSidebarState>((set) => ({
     modality: false,
     contextLength: false,
     promptPricing: false,
-    series: false,
+    organization: false,
     category: false,
     parameters: false,
   },
@@ -72,7 +70,7 @@ export const useModalSidebarStore = create<ModalSidebarState>((set) => ({
     })),
 
   // Modality
-  activeModality: [] as Modality[],
+  activeModality: [] as string[],
   setActiveModality: (modalityOrUpdater) =>
     set((state) => ({
       activeModality:
@@ -89,17 +87,17 @@ export const useModalSidebarStore = create<ModalSidebarState>((set) => ({
   activePromptPricing: [0, 10] as [number, number],
   setActivePromptPricing: (pricing) => set({ activePromptPricing: pricing }),
 
-  // Series
-  activeSeries: [] as string[],
-  setActiveSeries: (seriesOrUpdater) =>
+  // Organization
+  activeOrganization: [] as string[],
+  setActiveOrganization: (organizationOrUpdater) =>
     set((state) => ({
-      activeSeries:
-        typeof seriesOrUpdater === "function"
-          ? seriesOrUpdater(state.activeSeries)
-          : seriesOrUpdater,
+      activeOrganization:
+        typeof organizationOrUpdater === "function"
+          ? organizationOrUpdater(state.activeOrganization)
+          : organizationOrUpdater,
     })),
-  showAllSeries: false,
-  setShowAllSeries: (show) => set({ showAllSeries: show }),
+  showAllOrganization: false,
+  setShowAllOrganization: (show) => set({ showAllOrganization: show }),
 
   // Category
   activeCategory: [] as string[],

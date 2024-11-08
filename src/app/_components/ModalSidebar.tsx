@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import {
   AlignVerticalSpaceAround,
+  BadgeDollarSign,
   Box,
   ChevronDown,
   ChevronUp,
@@ -12,6 +14,8 @@ import {
 } from "lucide-react";
 
 import { useModalSidebarStore } from "@/store/modelSidebarStore";
+import { reactClient } from "@/trpc/react";
+import LeaseModal from "./LeaseModal";
 
 export default function ModalSidebar() {
   const {
@@ -23,10 +27,10 @@ export default function ModalSidebar() {
     setActiveContextLength,
     activePromptPricing,
     setActivePromptPricing,
-    activeSeries,
-    setActiveSeries,
-    showAllSeries,
-    setShowAllSeries,
+    activeOrganization,
+    setActiveOrganization,
+    showAllOrganization,
+    setShowAllOrganization,
     activeCategory,
     setActiveCategory,
     showAllCategory,
@@ -36,13 +40,13 @@ export default function ModalSidebar() {
     showAllParameters,
     setShowAllParameters,
   } = useModalSidebarStore();
+  const [isLeaseModalOpen, setIsLeaseModalOpen] = useState(false);
 
   const contextTickLabels = ["4k", "64k", "1M"];
   const contextTotalTicks = 8;
   const priceTickLabels = ["$0", "$0.5", "$10+"];
   const priceTotalTicks = 8;
 
-  const seriesList = ["Gryphe", "deepseek-ai", "NTQAI", "nvidia"];
   const categoryList: Record<string, string> = {
     General: "#fde272",
     Image: "#fac414",
@@ -56,6 +60,11 @@ export default function ModalSidebar() {
     "max_new_tokens",
     "stop_sequences",
   ];
+
+  const { data: modelFilters } =
+    reactClient.model.getModelFilters.useQuery() as {
+      data: { organizations: string[]; modalities: string[] } | undefined;
+    };
 
   return (
     <aside className="h-full animate-slideInDelay pr-8 pt-10">
@@ -81,54 +90,37 @@ export default function ModalSidebar() {
             <div className="pt-2">
               <div className="inline-flex flex-col items-start justify-start gap-2 px-2">
                 <div className="flex flex-col items-start justify-start gap-2 border-l border-[#e4e7ec] px-4">
-                  <button
-                    onClick={() => {
-                      setActiveModality((prev) =>
-                        prev.includes("text-to-text")
-                          ? prev.filter((m) => m !== "text-to-text")
-                          : [...prev, "text-to-text"],
-                      );
-                    }}
-                    className={`flex h-9 w-full items-center rounded-full px-3 py-2  ${
-                      activeModality.includes("text-to-text")
-                        ? "bg-[#f2f4f7]"
-                        : ""
-                    }`}
-                  >
-                    <div
-                      className={`text-sm leading-tight ${
-                        activeModality.includes("text-to-text")
-                          ? "text-[#344054]"
-                          : "text-[#475467]"
+                  {modelFilters?.modalities?.map((modality) => (
+                    <button
+                      key={modality}
+                      onClick={() => {
+                        setActiveModality((prev) =>
+                          prev.includes(modality)
+                            ? prev.filter((m) => m !== modality)
+                            : [...prev, modality],
+                        );
+                      }}
+                      className={`flex h-9 w-full items-center rounded-full px-3 py-2 ${
+                        activeModality.includes(modality) ? "bg-[#f2f4f7]" : ""
                       }`}
                     >
-                      Text to text
-                    </div>
-                  </button>
-                  <button
-                    onClick={() => {
-                      setActiveModality((prev) =>
-                        prev.includes("text-to-image")
-                          ? prev.filter((m) => m !== "text-to-image")
-                          : [...prev, "text-to-image"],
-                      );
-                    }}
-                    className={`flex h-9 w-full items-center rounded-full px-3 py-2 ${
-                      activeModality.includes("text-to-image")
-                        ? "bg-[#f2f4f7]"
-                        : ""
-                    }`}
-                  >
-                    <div
-                      className={`text-sm leading-tight ${
-                        activeModality.includes("text-to-image")
-                          ? "text-[#344054]"
-                          : "text-[#475467]"
-                      }`}
-                    >
-                      Text to image
-                    </div>
-                  </button>
+                      <div
+                        className={`text-sm leading-tight ${
+                          activeModality.includes(modality)
+                            ? "text-[#344054]"
+                            : "text-[#475467]"
+                        }`}
+                      >
+                        {modality
+                          .split("-")
+                          .map(
+                            (word) =>
+                              word.charAt(0).toUpperCase() + word.slice(1),
+                          )
+                          .join(" ")}
+                      </div>
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -336,7 +328,7 @@ export default function ModalSidebar() {
         <div className="p-3">
           <div
             className="flex cursor-pointer items-center justify-between"
-            onClick={() => toggleSection("series")}
+            onClick={() => toggleSection("organization")}
           >
             <div className="flex items-center gap-5">
               <AlignVerticalSpaceAround
@@ -345,56 +337,65 @@ export default function ModalSidebar() {
                 className="text-[#98a1b2]"
               />
               <div className="font-medium leading-normal text-[#101828]">
-                Series
+                Organization
               </div>
             </div>
-            {openSections.series ? (
+            {openSections.organization ? (
               <ChevronDown width={20} height={20} className="text-black" />
             ) : (
               <ChevronUp width={20} height={20} className="text-black" />
             )}
           </div>
-          {openSections.series && (
+          {openSections.organization && (
             <div className="pt-2">
               <div className="inline-flex flex-col items-start justify-start gap-2 px-2">
                 <div className="flex flex-col items-start justify-start gap-2 border-l border-[#e4e7ec] px-4">
-                  {seriesList
-                    .slice(0, showAllSeries ? seriesList.length : 3)
-                    .map((series) => (
+                  {modelFilters?.organizations
+                    .slice(
+                      0,
+                      showAllOrganization
+                        ? modelFilters?.organizations.length
+                        : 3,
+                    )
+                    .map((organization) => (
                       <button
-                        key={series}
+                        key={organization}
                         onClick={() => {
-                          setActiveSeries((prev) =>
-                            prev.includes(series)
-                              ? prev.filter((s) => s !== series)
-                              : [...prev, series],
+                          setActiveOrganization((prev) =>
+                            prev.includes(organization)
+                              ? prev.filter((s) => s !== organization)
+                              : [...prev, organization],
                           );
                         }}
                         className={`inline-flex h-9 w-full items-center justify-start gap-1 rounded-full px-3 py-2 ${
-                          activeSeries.includes(series) ? "bg-[#f2f4f7]" : ""
+                          activeOrganization.includes(organization)
+                            ? "bg-[#f2f4f7]"
+                            : ""
                         }`}
                       >
                         <div className="flex w-48 items-center justify-start px-0.5">
                           <div
                             className={`text-sm leading-tight ${
-                              activeSeries.includes(series)
+                              activeOrganization.includes(organization)
                                 ? "text-[#344054]"
                                 : "text-[#475467]"
                             }`}
                           >
-                            {series}
+                            {organization}
                           </div>
                         </div>
                       </button>
                     ))}
-                  {seriesList.length > 3 && (
+                  {(modelFilters?.organizations?.length ?? 0) > 3 && (
                     <button
-                      onClick={() => setShowAllSeries(!showAllSeries)}
+                      onClick={() =>
+                        setShowAllOrganization(!showAllOrganization)
+                      }
                       className="inline-flex h-9 w-full items-center justify-start gap-1 rounded-full px-3 py-2 opacity-50"
                     >
                       <div className="flex items-center justify-start px-0.5">
                         <div className="text-sm font-normal leading-tight text-[#475467]">
-                          {showAllSeries ? "Show less" : "Show more"}
+                          {showAllOrganization ? "Show less" : "Show more"}
                         </div>
                       </div>
                     </button>
@@ -551,7 +552,25 @@ export default function ModalSidebar() {
             </div>
           )}
         </div>
+        <div className="flex justify-center p-3">
+          <button
+            className="group relative flex h-12 w-44 items-center justify-center"
+            onClick={() => setIsLeaseModalOpen(true)}
+          >
+            <div className="absolute h-11 w-40 rounded-full border-2 border-black opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-white group-hover:border-0">
+              <span className="flex items-center gap-2 text-sm font-semibold leading-tight">
+                Lease a Model
+                <BadgeDollarSign className="h-4 w-4 opacity-50" />
+              </span>
+            </div>
+          </button>
+        </div>
       </div>
+      <LeaseModal
+        isOpen={isLeaseModalOpen}
+        onClose={() => setIsLeaseModalOpen(false)}
+      />
     </aside>
   );
 }

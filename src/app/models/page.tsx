@@ -10,31 +10,34 @@ import ModalSidebar from "../_components/ModalSidebar";
 import ModelCard from "../_components/ModelCard";
 
 export default function Page() {
-  const { data: count } = reactClient.model.getCountModels.useQuery();
   const [query, setQuery] = useState("");
 
-  const { data: modelInfo } = reactClient.model.getModelInfo.useQuery();
-  const { activeSeries } = useModalSidebarStore();
+  const { data: modelsInfo } = reactClient.model.getModelsInfo.useQuery();
+  const { activeOrganization, activeModality } = useModalSidebarStore();
 
   // Filter models based on search query and active series
-  const filteredModels = modelInfo?.filter((model) => {
+  const filteredModels = modelsInfo?.filter((model) => {
     // If no query and no active series, include all models
-    if (!query && !activeSeries.length) return true;
+    if (!query && !activeOrganization.length) return true;
 
     // Check if model matches search query
     const matchesQuery =
       !query ||
-      model.id.toLowerCase().includes(query.toLowerCase()) ||
-      (model.author?.toLowerCase() || "").includes(query.toLowerCase()) ||
-      (model.category?.toLowerCase() || "").includes(query.toLowerCase());
+      model.name?.toLowerCase().includes(query.toLowerCase()) ||
+      model.organization?.toLowerCase().includes(query.toLowerCase()) ||
+      (model.modality?.toLowerCase() || "").includes(query.toLowerCase());
 
     // Check if model matches active series
-    const matchesSeries =
-      !activeSeries.length ||
-      (model.author && activeSeries.includes(model.author));
+    const matchesOrganization =
+      !activeOrganization.length ||
+      (model.organization && activeOrganization.includes(model.organization));
 
-    // Model must match both conditions
-    return matchesQuery && matchesSeries;
+    const matchesModality =
+      !activeModality.length ||
+      (model.modality && activeModality.includes(model.modality));
+
+    // Model must match all conditions
+    return matchesQuery && matchesOrganization && matchesModality;
   });
 
   return (
@@ -52,7 +55,7 @@ export default function Page() {
               Models
             </div>
             <div className="text-2xl font-normal leading-loose text-[#d0d5dd]">
-              {count?.[0]?.count} Models
+              {modelsInfo?.length} Models
             </div>
           </div>
 
@@ -76,14 +79,14 @@ export default function Page() {
               </Combobox>
             </div>
           </div>
-          {modelInfo && (
+          {modelsInfo && (
             <div className="flex animate-slideIn flex-col gap-4 p-8">
               {filteredModels?.map((model) => (
                 <ModelCard
-                  key={model.id}
-                  name={model.id}
-                  author={model.author ?? null}
-                  category={model.category ?? null}
+                  key={model.name}
+                  name={model.name ?? ""}
+                  organization={model.organization ?? ""}
+                  modality={model.modality ?? ""}
                 />
               ))}
             </div>

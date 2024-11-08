@@ -8,6 +8,7 @@ import {
   mysqlEnum,
   mysqlTable,
   serial,
+  text,
   timestamp,
   varchar,
 } from "drizzle-orm/mysql-core";
@@ -138,6 +139,8 @@ export const TaoTransfers = mysqlTable("tao_transfers", {
   success: boolean("success").default(true),
 });
 
+const MODALITIES = ["text-generation", "text-to-image"] as const;
+
 export const Model = mysqlTable("model", {
   id: serial("id").primaryKey(),
   name: varchar("name", {
@@ -151,4 +154,8 @@ export const Model = mysqlTable("model", {
   createdAt: timestamp("created_at", { mode: "date" })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
+  requiredGpus: int("required_gpus").default(0).notNull(),
+  modality: mysqlEnum("modality", MODALITIES).notNull(),
+  description: text("description").default("No description provided"),
+  supportedEndpoints: json("supported_endpoints").notNull(),
 });

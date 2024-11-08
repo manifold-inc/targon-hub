@@ -4,8 +4,8 @@ import { UserRoundIcon } from "lucide-react";
 
 interface ModelCardProps {
   name: string;
-  category: string | null;
-  author: string;
+  organization: string;
+  modality: string;
 }
 
 const authorImages: Record<string, string> = {
@@ -15,8 +15,13 @@ const authorImages: Record<string, string> = {
   nvidia: "/models/Nvidia.png",
 };
 
-export default function ModelCard({ name, category, author }: ModelCardProps) {
-  const imageUrl = authorImages[author.toLowerCase()];
+export default function ModelCard({
+  name,
+  modality,
+  organization,
+}: ModelCardProps) {
+  const imageUrl = authorImages[organization?.toLowerCase() ?? ""];
+  console.log(name);
 
   return (
     <div className="flex h-40 items-center gap-10 bg-white p-5">
@@ -24,7 +29,7 @@ export default function ModelCard({ name, category, author }: ModelCardProps) {
         {imageUrl ? (
           <Image
             src={imageUrl}
-            alt={`${author} logo`}
+            alt={`${organization} logo`}
             width={160}
             height={112}
             className="h-full w-full object-contain"
@@ -39,8 +44,10 @@ export default function ModelCard({ name, category, author }: ModelCardProps) {
         {/* Top row with name, tokens, and category */}
         <div className="flex h-8 w-full items-center justify-between">
           <div className="text-lg font-medium leading-7 text-[#101828]">
-            <Link href={`/models/${encodeURIComponent(name)}`}>
-              {name.split("/")[1]?.toUpperCase()}
+            <Link
+              href={`/models/${encodeURIComponent(organization + "/" + name)}`}
+            >
+              {name}
             </Link>
           </div>
           <div className="flex items-center gap-4">
@@ -54,7 +61,9 @@ export default function ModelCard({ name, category, author }: ModelCardProps) {
                 <div className="absolute left-px top-px h-1.5 w-1.5 rounded-full bg-[#155dee]" />
               </div>
               <div className="text-center text-sm font-medium leading-tight text-[#004eea]">
-                {category}
+                {modality === "text-generation"
+                  ? "Text Generation"
+                  : "Text to Image"}
               </div>
             </div>
           </div>
@@ -71,7 +80,7 @@ export default function ModelCard({ name, category, author }: ModelCardProps) {
           <div className="flex items-center gap-3">
             <UserRoundIcon className="h-4 w-4" />
             <div className="text-sm leading-tight text-[#667085]">
-              {author?.charAt(0).toUpperCase() + author?.slice(1)}
+              {organization.charAt(0).toUpperCase() + organization.slice(1)}
             </div>
           </div>
           <div className="h-5 w-px bg-[#e4e7ec]" />

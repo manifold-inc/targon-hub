@@ -7,6 +7,7 @@ import { Star, UserRound } from "lucide-react";
 import CodeBlock from "@/app/_components/CodeBlock";
 import ModelsNav from "@/app/_components/ModelsNav";
 import { useAuth } from "@/app/_components/providers";
+import { API_BASE_URL } from "@/constants";
 import { reactClient } from "@/trpc/react";
 
 type Props = {
@@ -15,11 +16,23 @@ type Props = {
   };
 };
 
+// Add this type definition
+type ModelInfo = {
+  name: string;
+  organization: string;
+  cpt: number;
+  enabled: boolean;
+  createdAt: Date;
+  modality: "text-generation" | "text-to-image";
+  description: string;
+  supportedEndpoints: Array<"CHAT" | "COMPLETION">;
+};
+
 export default function Page({ params }: Props) {
   const auth = useAuth();
-  const { data } = reactClient.model.getModel.useQuery({
-    slug: decodeURIComponent(params.slug),
-  });
+  const { data } = reactClient.model.getModelInfo.useQuery<ModelInfo>(
+    decodeURIComponent(params.slug),
+  );
 
   const modelName = params.slug
     ? decodeURIComponent(params.slug).charAt(0).toUpperCase() +
@@ -41,20 +54,38 @@ export default function Page({ params }: Props) {
     return gradients[seed % gradients.length];
   };
 
-  const exampleCode = `import { OpenAI } from 'openai';
+  const getChatExampleCode = () => `from openai import OpenAI
 
-const openai = new OpenAI({
-  apiKey: 'your-api-key',
-});
+client = OpenAI(
+    base_url="https://hub-api.sybil.com/v1", api_key="[your api token]"
+)
 
-const response = await openai.chat.completions.create({
-  model: "${modelName}",
-  messages: [
-    { role: "system", content: "You are a helpful assistant." },
-    { role: "user", content: "Hello!" }
-  ],
-});
-`;
+response = client.chat.completions.create(
+    model="${modelName}",
+    stream=True,
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Whose a good little assistant"},
+    ],
+)
+for chunk in response:
+    if chunk.choices[0].delta.content is not None:
+        print(chunk.choices[0].delta.content, end="")`;
+
+  const getCompletionExampleCode = () => `from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://hub-api.sybil.com/v1", api_key="[your api token]"
+)
+
+response = client.completions.create(
+    model="${modelName}",
+    stream=True,
+    prompt="The x y problem is",
+)
+for chunk in response:
+    if chunk.choices[0].text is not None:
+        print(chunk.choices[0].text, end="")`;
 
   return (
     <div className="relative flex">
@@ -90,7 +121,7 @@ const response = await openai.chat.completions.create({
               <div className="flex items-center gap-3">
                 <UserRound width={16} height={16} />
                 <span className="text-sm leading-tight text-[#667085]">
-                  {data?.author}
+                  {data?.organization}
                 </span>
               </div>
             </div>
@@ -120,46 +151,20 @@ const response = await openai.chat.completions.create({
             </div>
 
             <p className="py-6 text-sm leading-tight text-[#101828]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
-              efficitur sollicitudin orci in luctus. Vivamus aliquet ligula et
-              volutpat faucibus. Lorem ipsum dolor sit amet, consectetur
-              adipiscing elit. In efficitur sollicitudin orci in luctus. Vivamus
-              aliquet ligula et volutpat faucibus. Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit. In efficitur sollicitudin orci in
-              luctus. Vivamus aliquet ligula et volutpat faucibus.
+              {data?.description}
             </p>
 
             <div className="flex gap-4">
-              {[
-                { color: "blue", label: "Category 1" },
-                { color: "green", label: "Category 2" },
-              ].map((category) => (
-                <div
-                  key={category.label}
-                  className={`inline-flex h-6 items-center justify-start gap-1.5 rounded-full border ${
-                    category.color === "blue"
-                      ? "border-[#155dee]"
-                      : "border-green-500"
-                  } py-0.5 pl-2 pr-2.5`}
-                >
-                  <div
-                    className={`h-1.5 w-1.5 rounded-full ${
-                      category.color === "blue"
-                        ? "bg-[#155dee]"
-                        : "bg-green-500"
-                    }`}
-                  />
-                  <span
-                    className={`text-center text-sm font-medium leading-tight ${
-                      category.color === "blue"
-                        ? "text-[#004eea]"
-                        : "text-green-500"
-                    }`}
-                  >
-                    {category.label}
+              {data?.modality && (
+                <div className="inline-flex h-6 items-center justify-start gap-1.5 rounded-full border border-[#155dee] py-0.5 pl-2 pr-2.5">
+                  <div className="h-1.5 w-1.5 rounded-full bg-[#155dee]" />
+                  <span className="text-center text-sm font-medium leading-tight text-[#004eea]">
+                    {data.modality === "text-generation"
+                      ? "Text Generation"
+                      : "Text to Image"}
                   </span>
                 </div>
-              ))}
+              )}
             </div>
 
             <div className="py-10">
@@ -282,11 +287,59 @@ const response = await openai.chat.completions.create({
                 </div>
               </div>
             ))}
-            <div className="py-10">
-              <p className="text-sm font-medium leading-tight text-[#344054]">
-                Sample Code
-              </p>
-              <CodeBlock code={exampleCode} language="python" />
+            <div className="flex flex-col gap-4 py-10">
+              {data?.supportedEndpoints?.includes("CHAT") && (
+                <>
+                  <p className="text-sm font-medium leading-tight text-[#344054]">
+                    Sample Code for Chat
+                  </p>
+                  <div className="w-fit whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3 dark:bg-neutral-900">
+                    POST {API_BASE_URL}/v1/chat/completions
+                  </div>
+                  <div className="pb-4">
+                    Creates a model response for the given chat conversation.
+                    Generally Reference{" "}
+                    <a
+                      className="text-blue-500"
+                      href="https://platform.openai.com/docs/api-reference/chat/create"
+                    >
+                      OpenAI{"'"}s api endpoint
+                    </a>{" "}
+                    for the definition behind each field.
+                  </div>
+                  <CodeBlock code={getChatExampleCode()} language="python" />
+                </>
+              )}
+
+              {data?.supportedEndpoints?.includes("COMPLETION") && (
+                <>
+                  {data?.supportedEndpoints?.includes("CHAT") && (
+                    <div className="h-6" />
+                  )}{" "}
+                  {/* Spacing between blocks */}
+                  <p className="text-sm font-medium leading-tight text-[#344054]">
+                    Sample Code for Completion
+                  </p>
+                  <div className="w-fit whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3 dark:bg-neutral-900">
+                    POST {API_BASE_URL}/v1/completions
+                  </div>
+                  <div className="pb-4">
+                    Creates a model completion for the given text. Generally
+                    Reference{" "}
+                    <a
+                      className="text-blue-500"
+                      href="https://platform.openai.com/docs/api-reference/completion/create"
+                    >
+                      OpenAI{"'"}s api endpoint
+                    </a>{" "}
+                    for the definition behind each field.
+                  </div>
+                  <CodeBlock
+                    code={getCompletionExampleCode()}
+                    language="python"
+                  />
+                </>
+              )}
             </div>
           </section>
         </div>

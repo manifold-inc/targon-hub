@@ -34,7 +34,7 @@ export default function RootLayout({
     >
       <head>
         <link rel="manifest" href="/site.webmanifest" />
-        <link rel="icon" href="/Delta.png" />
+        <link rel="icon" href="/ManifoldMarkTransparentGreenSVG.svg" />
       </head>
       <body>
         <WithGlobalProvider>
@@ -44,7 +44,7 @@ export default function RootLayout({
           </ThemeProvider>
         </WithGlobalProvider>
 
-        <Toaster />
+        <Toaster richColors />
         <Analytics />
       </body>
     </html>
