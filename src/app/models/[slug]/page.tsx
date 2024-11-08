@@ -48,7 +48,7 @@ export default function Page({ params }: Props) {
     ];
 
     // Use the slug as a seed
-    const seed = params.slug
+    const seed = modelName
       .split("")
       .reduce((acc, char) => acc + char.charCodeAt(0), 0);
     return gradients[seed % gradients.length];

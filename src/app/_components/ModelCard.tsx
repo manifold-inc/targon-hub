@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { UserRoundIcon } from "lucide-react";
 
@@ -8,35 +7,31 @@ interface ModelCardProps {
   modality: string;
 }
 
-const authorImages: Record<string, string> = {
-  "deepseek-ai": "/models/DeepSeek.png",
-  gryphe: "/models/Gryphe.png",
-  ntqai: "/models/NTQA.png",
-  nvidia: "/models/Nvidia.png",
-};
-
 export default function ModelCard({
   name,
   modality,
   organization,
 }: ModelCardProps) {
-  const imageUrl = authorImages[organization?.toLowerCase() ?? ""];
-  console.log(name);
+  const getRandomGradient = () => {
+    const gradients = [
+      "from-indigo-500 via-sky-500 to-violet-500",
+      "from-sky-500 via-emerald-500 to-teal-500",
+      "from-violet-500 via-rose-500 to-amber-500",
+      "from-rose-500 via-fuchsia-500 to-indigo-500",
+    ];
+
+    const seed = (organization + "/" + name)
+      .split("")
+      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    return gradients[seed % gradients.length];
+  };
 
   return (
     <div className="flex h-40 items-center gap-10 bg-white p-5">
       <div className="h-28 w-40 shrink-0 overflow-hidden rounded-lg">
-        {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt={`${organization} logo`}
-            width={160}
-            height={112}
-            className="h-full w-full object-contain"
-          />
-        ) : (
-          <div className="h-full w-full bg-gradient-to-br from-blue-500 to-purple-500" />
-        )}
+        <div
+          className={`h-full w-full bg-gradient-to-br ${getRandomGradient()}`}
+        />
       </div>
 
       {/* Second column - content structure */}
