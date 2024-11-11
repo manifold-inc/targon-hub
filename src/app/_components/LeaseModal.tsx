@@ -22,6 +22,8 @@ interface LeaseModalProps {
   onClose: () => void;
   savedModel: string | null;
   step: number | null;
+  successUrl?: boolean;
+  canceledUrl?: boolean;
 }
 
 export default function LeaseModal({
@@ -29,6 +31,8 @@ export default function LeaseModal({
   onClose,
   savedModel,
   step,
+  successUrl,
+  canceledUrl,
 }: LeaseModalProps) {
   const [currentStep, setCurrentStep] = useState(step ?? 0);
   const [model, setModel] = useState(savedModel ?? "");
@@ -86,11 +90,18 @@ export default function LeaseModal({
           // TODO: add redirect paramater so stripe knows to redirect us back here
           checkout.mutate({
             purchaseAmount: 1000 * Number(requiredGPUs),
+            redirectTo: `/models?openLeaseModal=true&model=${encodeURIComponent(model)}&step=3`,
           });
         }
+        if (!successUrl || canceledUrl) {
+          toast.error("Failed to purchase credits");
+          return;
+        }
+        toast.success("Purchase successful");
         setCurrentStep(currentStep + 1);
         break;
       case 2:
+
         // TODO add mutation to subtract credits
         // Paramaters:
         //  - model

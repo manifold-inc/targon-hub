@@ -9,7 +9,7 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const creditsRouter = createTRPCRouter({
   checkout: protectedProcedure
-    .input(z.object({ purchaseAmount: z.number() }))
+    .input(z.object({ purchaseAmount: z.number(), redirectTo: z.string().optional() }))
     .mutation(async ({ ctx, input }) => {
       if (input.purchaseAmount % 1 !== 0) {
         throw new TRPCError({
@@ -41,8 +41,8 @@ export const creditsRouter = createTRPCRouter({
           },
           customer: user!.customerId ?? undefined, // this should always be there, but in case its not.
           mode: "payment",
-          success_url: `${ctx.req!.nextUrl.origin}/dashboard?success=true`,
-          cancel_url: `${ctx.req!.nextUrl.origin}/dashboard?canceled=true`,
+          success_url: `${ctx.req!.nextUrl.origin}${input.redirectTo ?? "/models"}`,
+          cancel_url: `${ctx.req!.nextUrl.origin}${input.redirectTo ?? "/models"}`,
         });
         return session.url!;
       } catch (err) {

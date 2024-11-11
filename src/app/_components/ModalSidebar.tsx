@@ -21,6 +21,8 @@ interface ModalSidebarProps {
   setIsLeaseModalOpen: (open: boolean) => void;
   savedModel: string | null;
   step: number | null;
+  successUrl?: boolean;
+  canceledUrl?: boolean;
 }
 
 export default function ModalSidebar({
@@ -28,6 +30,8 @@ export default function ModalSidebar({
   setIsLeaseModalOpen,
   savedModel,
   step,
+  successUrl,
+  canceledUrl,
 }: ModalSidebarProps) {
   const {
     openSections,
@@ -582,6 +586,8 @@ export default function ModalSidebar({
         onClose={() => setIsLeaseModalOpen(false)}
         savedModel={savedModel}
         step={step}
+        successUrl={successUrl}
+        canceledUrl={canceledUrl}
       />
     </aside>
   );

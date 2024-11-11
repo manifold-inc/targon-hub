@@ -18,6 +18,8 @@ export default function Page() {
   });
   const savedModel = searchParams.get("model");
   const step = Number(searchParams.get("step")) || null;
+  const successUrl = searchParams.get("success") === "true";
+  const canceledUrl = searchParams.get("canceled") === "true";
 
   const { data: modelsInfo } = reactClient.model.getModelsInfo.useQuery();
   const { activeOrganization, activeModality } = useModalSidebarStore();
@@ -57,6 +59,8 @@ export default function Page() {
             setIsLeaseModalOpen={setIsLeaseModalOpen}
             savedModel={savedModel}
             step={step}
+            successUrl={successUrl}
+            canceledUrl={canceledUrl}
           />
         </div>
 
