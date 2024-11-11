@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import { CheckIcon, ChevronLeftIcon, ChevronRightIcon, Loader2 } from "lucide-react";
+import {
+  CheckIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  Loader2,
+} from "lucide-react";
 import { toast } from "sonner";
 
 import { COST_PER_GPU } from "@/constants";
@@ -36,7 +41,6 @@ export default function LeaseModal({
 }: LeaseModalProps) {
   const [currentStep, setCurrentStep] = useState(step ?? 0);
   const [model, setModel] = useState(savedModel ?? "");
-  const [requiredGPUs, setRequiredGPUs] = useState(0n);
   const router = useRouter();
 
   // Update steps array with current status
@@ -51,11 +55,12 @@ export default function LeaseModal({
   }));
 
   const user = reactClient.account.getUser.useQuery();
+  const utils = reactClient.useUtils();
 
   const addModelMutation = reactClient.model.addModel.useMutation({
     onSuccess: (gpus) => {
       toast.success("Model added successfully");
-      setRequiredGPUs(BigInt(gpus));
+      utils.model.getRequiredGpus.setData(model, gpus);
       setCurrentStep(currentStep + 1);
     },
     onError: (error) => {
@@ -93,16 +98,17 @@ export default function LeaseModal({
           );
           return;
         }
-        if (BigInt(user.data.credits) < COST_PER_GPU * requiredGPUs) {
+        console.log(user.data.credits);
+        if (BigInt(user.data.credits) < COST_PER_GPU * requiredGPUS) {
           checkout.mutate({
-            purchaseAmount: 1000 * Number(requiredGPUs),
+            purchaseAmount: 250 * Number(requiredGPUS),
             redirectTo: `/models?openLeaseModal=true&model=${encodeURIComponent(model)}&step=1`,
           });
+          return;
         }
         setCurrentStep(currentStep + 1);
         break;
       case 2:
-
         // TODO add mutation to subtract credits
         // Paramaters:
         //  - model
@@ -122,6 +128,10 @@ export default function LeaseModal({
       setCurrentStep(currentStep - 1);
     }
   };
+
+  const requiredGPUS = BigInt(dbRequiredGpus.data ?? 0);
+  const totalCost = requiredGPUS * COST_PER_GPU;
+  const amountNeeded = totalCost - BigInt(user.data?.credits ?? 0)
 
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
@@ -245,19 +255,21 @@ export default function LeaseModal({
                   <h4 className="font-semibold">Model Cost Summary</h4>
                   <p className="text-sm text-gray-500">{model}</p>
                 </div>
-                
+
                 <div className="flex flex-col gap-3 border-b py-4 text-sm">
                   <p className="flex justify-between">
                     <span className="text-gray-500">Required GPUs:</span>
-                    <span>{dbRequiredGpus.data?.[0]?.gpus.toString()}</span>
+                    <span>{requiredGPUS.toString()}</span>
                   </p>
                   <p className="flex justify-between">
                     <span className="text-gray-500">Cost per GPU:</span>
                     <span>{COST_PER_GPU.toString()} credits</span>
                   </p>
-                  <p className="flex justify-between font-medium">
-                    <span className="text-gray-500">Total Cost:</span>
-                    <span>{(COST_PER_GPU * BigInt(dbRequiredGpus.data?.[0]?.gpus ?? 0)).toString()} credits</span>
+                  <p className="flex justify-between">
+                    <span className="text-gray-500 font-medium">Total Cost:</span>
+                    <span>
+                      {(totalCost).toString()} credits
+                    </span>
                   </p>
                 </div>
 
@@ -266,9 +278,14 @@ export default function LeaseModal({
                     <span className="text-gray-500">Your Balance:</span>
                     <span>{user.data?.credits ?? 0} credits</span>
                   </p>
-                  <p className="flex justify-between font-medium text-red-600">
-                    <span>Additional Credits Needed:</span>
-                    <span>{((COST_PER_GPU * BigInt(dbRequiredGpus.data?.[0]?.gpus ?? 0)) - BigInt(user.data?.credits ?? 0)).toString()} Credits</span>
+                  <p className="flex justify-between text-red-600">
+                    <span className='font-medium '>Additional Credits Needed:</span>
+                    <span>
+                      {(
+                        amountNeeded
+                      ).toString()}{" "}
+                      Credits
+                    </span>
                   </p>
                 </div>
               </div>
@@ -283,19 +300,21 @@ export default function LeaseModal({
                   <h4 className="font-semibold">Model Lease Summary</h4>
                   <p className="text-sm text-gray-500">{model}</p>
                 </div>
-                
+
                 <div className="flex flex-col gap-3 border-b py-4 text-sm">
                   <p className="flex justify-between">
                     <span className="text-gray-500">Required GPUs:</span>
-                    <span>{dbRequiredGpus.data?.[0]?.gpus.toString()}</span>
+                    <span>{requiredGPUS.toString()}</span>
                   </p>
                   <p className="flex justify-between">
                     <span className="text-gray-500">Cost per GPU:</span>
                     <span>{COST_PER_GPU.toString()} credits</span>
                   </p>
-                  <p className="flex justify-between font-medium">
-                    <span className="text-gray-500">Total Cost:</span>
-                    <span>{(COST_PER_GPU * BigInt(dbRequiredGpus.data?.[0]?.gpus ?? 0)).toString()} credits</span>
+                  <p className="flex justify-between">
+                    <span className="text-gray-500 font-medium">Total Cost:</span>
+                    <span>
+                      {(totalCost).toString()} credits
+                    </span>
                   </p>
                 </div>
 
@@ -306,7 +325,15 @@ export default function LeaseModal({
                   </p>
                   <p className="flex justify-between font-medium">
                     <span className="text-gray-500">Remaining Balance:</span>
-                    <span>{user.data ? (BigInt(user.data.credits) - (COST_PER_GPU * BigInt(dbRequiredGpus.data?.[0]?.gpus ?? 0))).toString() : 0} credits</span>
+                    <span>
+                      {user.data
+                        ? (
+                          BigInt(user.data.credits) -
+                          COST_PER_GPU * requiredGPUS
+                        ).toString()
+                        : 0}{" "}
+                      credits
+                    </span>
                   </p>
                 </div>
               </div>
