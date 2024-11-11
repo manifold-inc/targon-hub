@@ -86,8 +86,7 @@ for chunk in response:
           <section id="overview" data-section>
             <header className="flex w-full justify-between pb-6">
               <h1 className="text-3xl leading-9 text-[#101828]">
-                {modelName.split("/")[1]!.charAt(0).toUpperCase() +
-                  modelName.split("/")[1]?.slice(1)}
+                {modelName}
               </h1>
               <Link
                 href={user?.id ? `/docs` : "/sign-in"}
