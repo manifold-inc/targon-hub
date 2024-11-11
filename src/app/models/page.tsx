@@ -66,7 +66,7 @@ export default function Page() {
 
         {/* Main content area */}
         <div className="flex-1 p-8">
-          <div className="inline-flex h-16 w-full animate-slideIn items-center justify-between p-8">
+          <div className="inline-flex h-16 w-full animate-slide-in items-center justify-between p-8">
             <div className="text-2xl font-medium leading-loose text-[#101828]">
               Models
             </div>
@@ -76,7 +76,7 @@ export default function Page() {
           </div>
 
           {/* Search Bar */}
-          <div className="flex animate-slideIn justify-center px-8 py-3">
+          <div className="flex animate-slide-in justify-center px-8 py-3">
             <div className="relative w-full">
               <Combobox
                 value={query}
@@ -96,7 +96,7 @@ export default function Page() {
             </div>
           </div>
           {modelsInfo && (
-            <div className="flex animate-slideIn flex-col gap-4 p-8">
+            <div className="flex animate-slide-in flex-col gap-4 p-8">
               {filteredModels?.map((model) => (
                 <ModelCard
                   key={model.name}

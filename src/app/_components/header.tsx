@@ -161,7 +161,7 @@ export const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-10 animate-slideIn ${
+      className={`sticky top-0 z-10 animate-slide-in ${
         pathName !== "/" ? "border-b border-gray-200 bg-white" : ""
       }`}
     >

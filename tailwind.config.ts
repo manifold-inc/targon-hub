@@ -106,20 +106,20 @@ export default {
         "tremor-metric": ["1.875rem", { lineHeight: "2.25rem" }],
       },
       animation: {
-        fadeIn: "fadeIn 0.14s ease-in forwards",
-        slideIn: "slideIn 0.6s ease-in forwards",
-        slideInDelay: "slideIn 0.6s ease-in backwards 0.5s",
+        "fade-in": "fade-in 0.14s ease-in forwards",
+        "slide-in": "slide-in .6s ease-out backwards 0.2s",
+        "slide-in-delay": "slide-in 0.6s ease-in backwards 0.5s",
       },
       keyframes: {
-        fadeIn: {
+        "fade-in": {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
-        slideIn: {
-          "0%": { transform: "translateY(-24px)", opacity: "0" },
+        "slide-in": {
+          "0%": { transform: "translateY(-24px)", opacity: "0"},
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
-        slideInDelay: {
+        "slide-in-delay": {
           "0%, 50%": { transform: "translateY(-24px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },

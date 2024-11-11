@@ -53,7 +53,7 @@ export const useAuth = () => {
 
 export function WithGlobalProvider(props: { children: React.ReactNode }) {
   return (
-    <div suppressHydrationWarning>
+    <div>
       <TRPCReactProvider>
         <AuthProvider>{props.children}</AuthProvider>
       </TRPCReactProvider>

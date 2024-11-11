@@ -1,14 +1,14 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { Star, UserRound } from "lucide-react";
 
 import CodeBlock from "@/app/_components/CodeBlock";
 import ModelsNav from "@/app/_components/ModelsNav";
-import { useAuth } from "@/app/_components/providers";
 import { API_BASE_URL } from "@/constants";
-import { reactClient } from "@/trpc/react";
+import { db } from "@/schema/db";
+import { createCaller } from "@/server/api/root";
+import { validateRequest } from "@/server/auth";
+import { redirect } from "next/navigation";
 
 type Props = {
   params: {
@@ -17,27 +17,15 @@ type Props = {
 };
 
 // Add this type definition
-type ModelInfo = {
-  name: string;
-  organization: string;
-  cpt: number;
-  enabled: boolean;
-  createdAt: Date;
-  modality: "text-generation" | "text-to-image";
-  description: string;
-  supportedEndpoints: Array<"CHAT" | "COMPLETION">;
-};
-
-export default function Page({ params }: Props) {
-  const auth = useAuth();
-  const { data } = reactClient.model.getModelInfo.useQuery<ModelInfo>(
-    decodeURIComponent(params.slug),
-  );
-
-  const modelName = params.slug
-    ? decodeURIComponent(params.slug).charAt(0).toUpperCase() +
-      decodeURIComponent(params.slug).slice(1).toLowerCase()
-    : "";
+export default async function Page({ params }: Props) {
+  const { user, session } = await validateRequest();
+  const caller = createCaller({ user, db: db, req: null, session: session });
+  const data = await caller.model.getModelInfo({ model: decodeURIComponent(params.slug)});
+  const modelName = data.organization + '/' + data.name
+  console.log(modelName)
+  if(!modelName){
+    redirect('/models')
+  }
 
   const getRandomGradient = () => {
     const gradients = [
@@ -92,7 +80,8 @@ for chunk in response:
       <div className="fixed right-20 top-32">
         <ModelsNav />
       </div>
-      <div className="mx-auto w-1/2 animate-slideIn py-20">
+      <div className='animate-slide-in w-full h-fit'>
+      <div className="mx-auto w-1/2 py-20">
         <div className="mx-auto">
           <section id="overview" data-section>
             <header className="flex w-full justify-between pb-6">
@@ -101,13 +90,13 @@ for chunk in response:
                   modelName.split("/")[1]?.slice(1)}
               </h1>
               <Link
-                href={auth.status === "AUTHED" ? `/docs` : "/sign-in"}
+                href={user?.id ? `/docs` : "/sign-in"}
                 className="group relative flex h-12 w-28 items-center justify-center"
               >
                 <div className="absolute h-11 w-24 rounded-full border-2 border-black opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <span className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-white group-hover:border-0">
                   <span className="w-16 text-center text-sm font-semibold leading-tight">
-                    {auth.status === "AUTHED" ? "Use Now!" : "Sign in!"}
+                    {user?.id ? "Use Now!" : "Sign in!"}
                   </span>
                 </span>
               </Link>
@@ -288,7 +277,7 @@ for chunk in response:
               </div>
             ))}
             <div className="flex flex-col gap-4 py-10">
-              {data?.supportedEndpoints?.includes("CHAT") && (
+              {data.supportedEndpoints?.includes("CHAT") && (
                 <>
                   <p className="text-sm font-medium leading-tight text-[#344054]">
                     Sample Code for Chat
@@ -343,6 +332,7 @@ for chunk in response:
             </div>
           </section>
         </div>
+      </div>
       </div>
     </div>
   );

@@ -157,5 +157,5 @@ export const Model = mysqlTable("model", {
   requiredGpus: int("required_gpus").default(0).notNull(),
   modality: mysqlEnum("modality", MODALITIES).notNull(),
   description: text("description").default("No description provided"),
-  supportedEndpoints: json("supported_endpoints").notNull(),
+  supportedEndpoints: json("supported_endpoints").notNull().$type<string[]>(),
 });

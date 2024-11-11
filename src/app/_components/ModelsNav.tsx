@@ -60,7 +60,7 @@ const ModelsNav = () => {
   };
 
   return (
-    <nav className="sticky h-fit animate-slideInDelay py-4">
+    <nav className="sticky h-fit animate-slide-in-delay py-4">
       <ul className="flex flex-col">
         {navItems.map((item) => (
           <li key={item.label}>

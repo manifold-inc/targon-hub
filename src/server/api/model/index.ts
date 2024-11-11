@@ -81,7 +81,7 @@ export const modelRouter = createTRPCRouter({
     });
   }),
   getModelInfo: publicAuthlessProcedure
-    .input(z.string())
+    .input(z.object({ model: z.string() }))
     .query(async ({ ctx, input }) => {
       const model = await ctx.db
         .select({
@@ -94,7 +94,7 @@ export const modelRouter = createTRPCRouter({
           supportedEndpoints: Model.supportedEndpoints,
         })
         .from(Model)
-        .where(eq(Model.name, input));
+        .where(eq(Model.name, input.model));
 
       const [organization, name] = model[0]?.name?.split("/") ?? [];
       return {

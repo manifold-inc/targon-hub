@@ -111,7 +111,7 @@ export default function Page() {
     <div className="relative">
       <div className="relative -top-20 h-4/5 overflow-hidden">
         <Image
-          className="b absolute inset-0 h-full w-full animate-fadeIn rounded-xl object-cover
+          className="b absolute inset-0 h-full w-full animate-fade-in rounded-xl object-cover
         p-2"
           src="/gradientFigma.png"
           alt="background"
@@ -121,18 +121,18 @@ export default function Page() {
 
         {/* Content with background */}
         <div className="relative flex h-full flex-col items-start justify-center gap-6 pb-20 pl-10 pt-96">
-          <div className="animation-delay-[0.5s] flex h-36 animate-slideIn flex-col items-start justify-start self-stretch">
+          <div className="animation-delay-[0.5s] flex h-36 animate-slide-in flex-col items-start justify-start self-stretch">
             <div className="leading-18 self-stretch text-6xl font-light text-[#1c3836]">
               Decentralized LLMs
             </div>
-            <div className="leading-18 animate-slideIn self-stretch text-6xl font-light text-[#1c3836] delay-300">
+            <div className="leading-18 animate-slide-in self-stretch text-6xl font-light text-[#1c3836] delay-300">
               at your fingertips
             </div>
           </div>
-          <div className="animate-slideIn self-stretch leading-loose text-[#667085] delay-300">
+          <div className="animate-slide-in self-stretch leading-loose text-[#667085] delay-300">
             Cheaper, better, faster. Powered by Bittensor on subnet 4.
           </div>
-          <div className="inline-flex animate-slideIn items-center justify-start gap-6 delay-700">
+          <div className="inline-flex animate-slide-in items-center justify-start gap-6 delay-700">
             <Link
               href="/models"
               className="group relative flex h-12 w-44 items-center justify-center"
@@ -165,7 +165,7 @@ export default function Page() {
 
       {/* Content without background */}
       <div className="-mt-10 px-10">
-        <div className="animate-slideInDelay">
+        <div className="animate-slide-in-delay">
           <TabGroup>
             <TabList className="inline-flex h-12 w-full items-center justify-start gap-2 rounded-full border border-[#e4e7ec] bg-white p-2">
               {tabs.map((tab, index) => (
@@ -185,7 +185,7 @@ export default function Page() {
           </TabGroup>
         </div>
 
-        <div className="animate-slideInDelay py-4">
+        <div className="animate-slide-in-delay py-4">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {filteredApps.map((app) => (
               <AppCard key={app.id} {...app} />

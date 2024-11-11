@@ -7,7 +7,7 @@ import typescript from "highlight.js/lib/languages/typescript";
 import { API_BASE_URL } from "@/constants";
 import { db } from "@/schema/db";
 import { User } from "@/schema/schema";
-import { uncachedValidateRequest } from "@/server/auth";
+import { validateRequest } from "@/server/auth";
 import { ApiSection, WatchForSuccess } from "./ClientCards";
 import { AddMoreCredits } from "./CreditsDialog";
 import MinerTable from "./MinerTable";
@@ -23,7 +23,7 @@ const Container = (props: PropsWithChildren & HTMLProps<HTMLDivElement>) => {
 };
 
 export default async function Page() {
-  const { user } = await uncachedValidateRequest();
+  const { user } = await validateRequest();
   if (!user) redirect("/");
   const [credits] = await db
     .select({ credits: User.credits })
