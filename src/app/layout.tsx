@@ -37,8 +37,8 @@ export default function RootLayout({
       </head>
       <body>
         <WithGlobalProvider>
-            <Header />
-            <main>{children}</main>
+          <Header />
+          <main>{children}</main>
         </WithGlobalProvider>
 
         <Toaster richColors />

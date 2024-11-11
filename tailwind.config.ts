@@ -116,7 +116,7 @@ export default {
           "100%": { opacity: "1" },
         },
         "slide-in": {
-          "0%": { transform: "translateY(-24px)", opacity: "0"},
+          "0%": { transform: "translateY(-24px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
         "slide-in-delay": {

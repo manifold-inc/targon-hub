@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Combobox, ComboboxInput } from "@headlessui/react";
 import { Search } from "lucide-react";
 
@@ -8,7 +9,6 @@ import { useModalSidebarStore } from "@/store/modelSidebarStore";
 import { reactClient } from "@/trpc/react";
 import ModalSidebar from "../_components/ModalSidebar";
 import ModelCard from "../_components/ModelCard";
-import { useSearchParams } from "next/navigation";
 
 export default function Page() {
   const [query, setQuery] = useState("");
@@ -54,7 +54,7 @@ export default function Page() {
       <div className="flex">
         {/* Left sidebar */}
         <div className="w-80 border-r border-[#f2f4f7]">
-          <ModalSidebar 
+          <ModalSidebar
             isLeaseModalOpen={isLeaseModalOpen}
             setIsLeaseModalOpen={setIsLeaseModalOpen}
             savedModel={savedModel}

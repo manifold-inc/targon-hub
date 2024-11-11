@@ -14,9 +14,7 @@ export const ApiSection = () => {
   return (
     <div className="flex flex-col gap-8 lg:flex-row">
       <div>
-        <label className="text-sm font-medium text-gray-500">
-          Endpoint
-        </label>
+        <label className="text-sm font-medium text-gray-500">Endpoint</label>
         <div className="font-mono">{API_BASE_URL}</div>
       </div>
       {apiKeys.data?.length ? (
@@ -43,9 +41,7 @@ export const ApiKey = ({ apiKey }: { apiKey: string }) => {
   }
   return (
     <div>
-      <label className="text-sm font-medium text-gray-500">
-        API Key
-      </label>
+      <label className="text-sm font-medium text-gray-500">API Key</label>
       <div className="overflow-x-scroll pb-4">
         <div className="flex w-fit items-center gap-2 bg-neutral-200 px-2 py-0.5 text-gray-800">
           <button

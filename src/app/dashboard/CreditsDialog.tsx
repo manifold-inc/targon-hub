@@ -74,10 +74,7 @@ export function AddMoreCredits() {
                 leaveTo="opacity-0 transform-[scale(95%)]"
               >
                 <DialogPanel className="w-full max-w-md rounded-xl bg-white p-6 shadow-2xl backdrop-blur-2xl">
-                  <DialogTitle
-                    as="h3"
-                    className="text-base/7 font-medium"
-                  >
+                  <DialogTitle as="h3" className="text-base/7 font-medium">
                     Purchase More Credits
                   </DialogTitle>
                   <div className="flex items-end gap-4 pt-2">

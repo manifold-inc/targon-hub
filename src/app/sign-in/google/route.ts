@@ -5,7 +5,7 @@ import { google } from "@/server/auth";
 
 export async function GET(request: Request): Promise<Response> {
   const { searchParams } = new URL(request.url);
-  const returnTo = searchParams.get('returnTo');
+  const returnTo = searchParams.get("returnTo");
 
   const state = generateState();
   const codeVerifier = generateCodeVerifier();

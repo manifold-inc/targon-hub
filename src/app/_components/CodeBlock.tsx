@@ -1,4 +1,5 @@
-'use client'
+"use client";
+
 import type { CSSProperties } from "react";
 import { Copy } from "lucide-react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";

@@ -1,15 +1,20 @@
 import { TRPCError } from "@trpc/server";
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 
 import { MIN_PURCHASE_IN_DOLLARS } from "@/constants";
 import { env } from "@/env.mjs";
-import { User } from "@/schema/schema";
+import { Model, User } from "@/schema/schema";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const creditsRouter = createTRPCRouter({
   checkout: protectedProcedure
-    .input(z.object({ purchaseAmount: z.number(), redirectTo: z.string().optional() }))
+    .input(
+      z.object({
+        purchaseAmount: z.number(),
+        redirectTo: z.string().optional(),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
       if (input.purchaseAmount % 1 !== 0) {
         throw new TRPCError({
@@ -51,5 +56,108 @@ export const creditsRouter = createTRPCRouter({
           code: "INTERNAL_SERVER_ERROR",
         });
       }
+    }),
+  leaseModel: protectedProcedure
+    .input(z.object({ model: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const [requiredGPU, enabledModels] = await Promise.all([
+        ctx.db
+          .select({
+            gpu: Model.requiredGpus,
+          })
+          .from(Model)
+          .where(eq(Model.name, input.model)),
+
+        ctx.db
+          .select({
+            name: Model.name,
+            requiredGpus: Model.requiredGpus,
+            enabledDate: Model.enabledDate,
+          })
+          .from(Model)
+          .where(eq(Model.enabled, true)),
+      ]);
+
+      if (requiredGPU[0] && requiredGPU[0].gpu > 8) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: `Cannot lease more than 8 GPUs`,
+        });
+      }
+
+      // calculate total gpu and eligible models
+      const immunityPeriod = 7 * 24 * 60 * 60 * 1000;
+      const now = new Date();
+
+      const eligibleForRemoval = enabledModels
+        .filter((model) => {
+          const timeSinceEnabled = now.getTime() - model.enabledDate!.getTime();
+          return timeSinceEnabled > immunityPeriod;
+        })
+        .sort((a, b) => a.enabledDate!.getTime() - b.enabledDate!.getTime());
+
+      const currentGPUUsage = enabledModels.reduce(
+        (sum, model) => sum + (model.requiredGpus ?? 0),
+        0,
+      );
+      const requestedGPU = requiredGPU[0]?.gpu ?? 0;
+
+      if (currentGPUUsage + requestedGPU <= 8) {
+        // we have enough capacity without removal
+        await ctx.db
+          .update(Model)
+          .set({
+            enabled: true,
+            enabledDate: now,
+          })
+          .where(eq(Model.name, input.model));
+        return {
+          success: true,
+        };
+      }
+
+      // need to remove to make room
+      let gpuToRemove = currentGPUUsage + requestedGPU - 8;
+      const modelsToDisable = [];
+
+      for (const model of eligibleForRemoval) {
+        if (gpuToRemove <= 0) break;
+        modelsToDisable.push(model.name);
+        gpuToRemove -= model.requiredGpus;
+      }
+
+      if (gpuToRemove > 0) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: `Cannot free enough GPU capacity while respecting immunity period`,
+        });
+      }
+
+      await Promise.all([
+        ctx.db
+          .update(Model)
+          .set({
+            enabled: false,
+            enabledDate: null,
+          })
+          .where(
+            inArray(
+              Model.name,
+              modelsToDisable.filter((name): name is string => name !== null),
+            ),
+          ),
+
+        ctx.db
+          .update(Model)
+          .set({
+            enabled: true,
+            enabledDate: now,
+          })
+          .where(eq(Model.name, input.model)),
+      ]);
+
+      return {
+        success: true,
+      };
     }),
 });

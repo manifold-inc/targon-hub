@@ -150,7 +150,7 @@ export const Model = mysqlTable("model", {
   success: int("success").default(0).notNull(),
   failure: int("failure").default(0).notNull(),
   cpt: int("cpt").default(1).notNull(), // cpt: credits per token
-  enabled: boolean("enabled").default(true),
+  enabled: boolean("enabled").default(false),
   createdAt: timestamp("created_at", { mode: "date" })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
@@ -158,4 +158,5 @@ export const Model = mysqlTable("model", {
   modality: mysqlEnum("modality", MODALITIES).notNull(),
   description: text("description").default("No description provided"),
   supportedEndpoints: json("supported_endpoints").notNull().$type<string[]>(),
+  enabledDate: timestamp("enabled_date", { mode: "date" }),
 });

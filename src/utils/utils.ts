@@ -22,16 +22,16 @@ export async function copyToClipboard(text: string) {
 export function formatLargeNumber(n: number | bigint) {
   const num = Number(n);
   if (num >= 1_000_000_000_000) {
-    return (num / 1_000_000_000_000) + ' T';
+    return num / 1_000_000_000_000 + " T";
   }
   if (num >= 1_000_000_000) {
-    return (num / 1_000_000_000) + ' B';
+    return num / 1_000_000_000 + " B";
   }
   if (num >= 1_000_000) {
-    return (num / 1_000_000) + ' M';
+    return num / 1_000_000 + " M";
   }
   if (num >= 1_000) {
-    return (num / 1_000) + ' k';
+    return num / 1_000 + " k";
   }
   return num.toString();
 }
