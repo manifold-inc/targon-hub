@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
@@ -16,6 +16,7 @@ type Inputs = {
 };
 export default function Page() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [visable, setVisable] = useState(false);
   const { refetch } = useAuth();
 
@@ -26,7 +27,8 @@ export default function Page() {
     },
     onSuccess: () => {
       refetch();
-      router.push("/");
+      const returnTo = searchParams.get("returnTo");
+      router.push(returnTo ?? "/");
     },
   });
   const onSubmit: SubmitHandler<Inputs> = (data) => {
@@ -149,7 +151,13 @@ export default function Page() {
 
               <div className="mt-6">
                 <Link
-                  href="/sign-in/google"
+                  href={`/sign-in/google${
+                    searchParams.get("returnTo")
+                      ? `?returnTo=${encodeURIComponent(
+                          searchParams.get("returnTo") ?? "",
+                        )}`
+                      : ""
+                  }`}
                   className="border-1 flex w-full items-center justify-center gap-3 whitespace-nowrap rounded-md border border-gray-400 py-2"
                 >
                   <svg

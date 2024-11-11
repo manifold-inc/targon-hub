@@ -8,9 +8,16 @@ import { useModalSidebarStore } from "@/store/modelSidebarStore";
 import { reactClient } from "@/trpc/react";
 import ModalSidebar from "../_components/ModalSidebar";
 import ModelCard from "../_components/ModelCard";
+import { useSearchParams } from "next/navigation";
 
 export default function Page() {
   const [query, setQuery] = useState("");
+  const searchParams = useSearchParams();
+  const [isLeaseModalOpen, setIsLeaseModalOpen] = useState(() => {
+    return searchParams.get("openLeaseModal") === "true";
+  });
+  const savedModel = searchParams.get("model");
+  const step = Number(searchParams.get("step")) || null;
 
   const { data: modelsInfo } = reactClient.model.getModelsInfo.useQuery();
   const { activeOrganization, activeModality } = useModalSidebarStore();
@@ -45,7 +52,12 @@ export default function Page() {
       <div className="flex">
         {/* Left sidebar */}
         <div className="w-80 border-r border-[#f2f4f7]">
-          <ModalSidebar />
+          <ModalSidebar 
+            isLeaseModalOpen={isLeaseModalOpen}
+            setIsLeaseModalOpen={setIsLeaseModalOpen}
+            savedModel={savedModel}
+            step={step}
+          />
         </div>
 
         {/* Main content area */}

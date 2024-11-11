@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import {
   AlignVerticalSpaceAround,
@@ -17,7 +16,19 @@ import { useModalSidebarStore } from "@/store/modelSidebarStore";
 import { reactClient } from "@/trpc/react";
 import LeaseModal from "./LeaseModal";
 
-export default function ModalSidebar() {
+interface ModalSidebarProps {
+  isLeaseModalOpen: boolean;
+  setIsLeaseModalOpen: (open: boolean) => void;
+  savedModel: string | null;
+  step: number | null;
+}
+
+export default function ModalSidebar({
+  isLeaseModalOpen,
+  setIsLeaseModalOpen,
+  savedModel,
+  step,
+}: ModalSidebarProps) {
   const {
     openSections,
     toggleSection,
@@ -40,7 +51,6 @@ export default function ModalSidebar() {
     showAllParameters,
     setShowAllParameters,
   } = useModalSidebarStore();
-  const [isLeaseModalOpen, setIsLeaseModalOpen] = useState(false);
 
   const contextTickLabels = ["4k", "64k", "1M"];
   const contextTotalTicks = 8;
@@ -570,6 +580,8 @@ export default function ModalSidebar() {
       <LeaseModal
         isOpen={isLeaseModalOpen}
         onClose={() => setIsLeaseModalOpen(false)}
+        savedModel={savedModel}
+        step={step}
       />
     </aside>
   );

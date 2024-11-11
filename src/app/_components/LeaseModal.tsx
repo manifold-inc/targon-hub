@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import { CheckIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { CheckIcon, ChevronLeftIcon, ChevronRightIcon, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
-import { COST_PER_GPU, CREDIT_PER_DOLLAR } from "@/constants";
+import { COST_PER_GPU } from "@/constants";
 import { reactClient } from "@/trpc/react";
 
 const steps = [
-  { name: "Select Model", href: "#", status: "current" },
-  { name: "Review Pricing", href: "#", status: "upcoming" },
-  { name: "Complete", href: "#", status: "upcoming" },
+  { name: "Select Model", status: "current" },
+  { name: "Review Pricing", status: "upcoming" },
+  { name: "Complete", status: "upcoming" },
 ];
 
 function classNames(...classes: string[]) {
@@ -20,11 +20,18 @@ function classNames(...classes: string[]) {
 interface LeaseModalProps {
   isOpen: boolean;
   onClose: () => void;
+  savedModel: string | null;
+  step: number | null;
 }
 
-export default function LeaseModal({ isOpen, onClose }: LeaseModalProps) {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [model, setModel] = useState("");
+export default function LeaseModal({
+  isOpen,
+  onClose,
+  savedModel,
+  step,
+}: LeaseModalProps) {
+  const [currentStep, setCurrentStep] = useState(step ?? 0);
+  const [model, setModel] = useState(savedModel ?? "");
   const [requiredGPUs, setRequiredGPUs] = useState(0n);
   const router = useRouter();
 
@@ -67,9 +74,12 @@ export default function LeaseModal({ isOpen, onClose }: LeaseModalProps) {
         addModelMutation.mutate(model);
         break;
       case 1:
-        // TODO: This should redirect back here upon sign in
         if (!user.data) {
-          router.push("/sign-in");
+          router.push(
+            `/sign-in?returnTo=${encodeURIComponent(
+              `/models?openLeaseModal=true&model=${encodeURIComponent(model)}&step=2`,
+            )}`,
+          );
           return;
         }
         if (BigInt(user.data.credits) < COST_PER_GPU * requiredGPUs) {
@@ -277,7 +287,9 @@ export default function LeaseModal({ isOpen, onClose }: LeaseModalProps) {
               type="button"
               onClick={handleNext}
               disabled={
-                currentStep === steps.length - 1 || addModelMutation.isLoading
+                currentStep === steps.length - 1 ||
+                addModelMutation.isLoading ||
+                checkout.isLoading
               }
               className={classNames(
                 "relative inline-flex h-10 w-36 items-center justify-center gap-1.5 rounded-full border-2 px-4 py-2.5 text-sm font-semibold",
@@ -286,8 +298,14 @@ export default function LeaseModal({ isOpen, onClose }: LeaseModalProps) {
                   : "border-white bg-[#101828] text-white hover:bg-[#101828]/90",
               )}
             >
-              <span>Next</span>
-              <ChevronRightIcon className="h-5 w-5" />
+              {addModelMutation.isLoading || checkout.isLoading ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : (
+                <>
+                  <span>Next</span>
+                  <ChevronRightIcon className="h-5 w-5" />
+                </>
+              )}
             </button>
           </div>
         </DialogPanel>
