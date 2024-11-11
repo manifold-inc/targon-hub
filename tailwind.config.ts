@@ -15,7 +15,6 @@ export default {
     current: "currentColor",
     extend: {
       colors: {
-        // light mode
         tremor: {
           brand: {
             faint: colors.blue[50],
@@ -44,12 +43,13 @@ export default {
             strong: colors.gray[900],
             inverted: colors.white,
           },
-          manifold: {
-            green: "#1c3836",
-            grey: "#98A1B2",
-          },
         },
-        // dark mode
+        // manifold colors
+        mf: {
+          green: "#1c3836",
+          gray: "#98A1B2",
+          "gray-600": "#475467",
+        },
         "dark-tremor": {
           brand: {
             faint: "#0B1229",
@@ -116,7 +116,7 @@ export default {
           "100%": { opacity: "1" },
         },
         "slide-in": {
-          "0%": { transform: "translateY(-24px)", opacity: "0"},
+          "0%": { transform: "translateY(-24px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
         "slide-in-delay": {
