@@ -43,7 +43,7 @@ export default function Page() {
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-gray-50">
+          <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign Up
           </h2>
         </div>
@@ -111,7 +111,7 @@ export default function Page() {
                       e.preventDefault();
                       setVisable((s) => !s);
                     }}
-                    className="absolute bottom-0 right-3 top-0 text-gray-500 dark:text-gray-400"
+                    className="absolute bottom-0 right-3 top-0 text-gray-500"
                   >
                     {visable ? (
                       <Eye className="h-5 w-5" />
@@ -158,7 +158,7 @@ export default function Page() {
                       e.preventDefault();
                       setVisable((s) => !s);
                     }}
-                    className="absolute bottom-0 right-3 top-0 text-gray-500 dark:text-gray-400"
+                    className="absolute bottom-0 right-3 top-0 text-gray-500"
                   >
                     {visable ? (
                       <Eye className="h-5 w-5" />

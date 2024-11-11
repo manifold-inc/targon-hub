@@ -14,7 +14,7 @@ export const ApiSection = () => {
   return (
     <div className="flex flex-col gap-8 lg:flex-row">
       <div>
-        <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
+        <label className="text-sm font-medium text-gray-500">
           Endpoint
         </label>
         <div className="font-mono">{API_BASE_URL}</div>
@@ -22,7 +22,7 @@ export const ApiSection = () => {
       {apiKeys.data?.length ? (
         <ApiKey apiKey={apiKeys.data[0]!.key} />
       ) : (
-        <div className="mt-auto flex h-6 w-72 animate-pulse items-center gap-2 bg-neutral-200 px-2 py-0.5 text-gray-800 dark:bg-neutral-700 dark:text-gray-300" />
+        <div className="mt-auto flex h-6 w-72 animate-pulse items-center gap-2 bg-neutral-200 px-2 py-0.5 text-gray-800" />
       )}
     </div>
   );
@@ -43,11 +43,11 @@ export const ApiKey = ({ apiKey }: { apiKey: string }) => {
   }
   return (
     <div>
-      <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
+      <label className="text-sm font-medium text-gray-500">
         API Key
       </label>
       <div className="overflow-x-scroll pb-4">
-        <div className="flex w-fit items-center gap-2 bg-neutral-200 px-2 py-0.5 text-gray-800 dark:bg-neutral-700 dark:text-gray-300">
+        <div className="flex w-fit items-center gap-2 bg-neutral-200 px-2 py-0.5 text-gray-800">
           <button
             disabled={visable}
             onClick={() => {

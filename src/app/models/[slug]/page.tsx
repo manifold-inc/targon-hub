@@ -293,7 +293,7 @@ for chunk in response:
                   <p className="text-sm font-medium leading-tight text-[#344054]">
                     Sample Code for Chat
                   </p>
-                  <div className="w-fit whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3 dark:bg-neutral-900">
+                  <div className="w-fit whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3">
                     POST {API_BASE_URL}/v1/chat/completions
                   </div>
                   <div className="pb-4">
@@ -320,7 +320,7 @@ for chunk in response:
                   <p className="text-sm font-medium leading-tight text-[#344054]">
                     Sample Code for Completion
                   </p>
-                  <div className="w-fit whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3 dark:bg-neutral-900">
+                  <div className="w-fit whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3">
                     POST {API_BASE_URL}/v1/completions
                   </div>
                   <div className="pb-4">

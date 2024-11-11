@@ -16,7 +16,7 @@ export const dynamic = "force-dynamic";
 
 const Container = (props: PropsWithChildren & HTMLProps<HTMLDivElement>) => {
   return (
-    <div className="rounded bg-white px-8 py-6 text-gray-800 shadow-lg dark:bg-neutral-800 dark:text-gray-100">
+    <div className="rounded bg-white px-8 py-6 text-gray-800 shadow-lg">
       <div {...props}>{props.children}</div>
     </div>
   );
@@ -38,10 +38,10 @@ export default async function Page() {
         <Container>
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div>
-              <dt className="truncate text-sm font-medium text-gray-500 dark:text-gray-400">
+              <dt className="truncate text-sm font-medium text-gray-500">
                 Credits Left
               </dt>
-              <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-gray-50">
+              <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
                 {credits?.credits.toLocaleString()}
               </dd>
             </div>
@@ -51,7 +51,7 @@ export default async function Page() {
         <Container>
           <div className="flex flex-col justify-between gap-4 sm:flex-row">
             <div className="w-full">
-              <div className="truncate pb-4 text-3xl font-medium text-gray-900 dark:text-gray-50">
+              <div className="truncate pb-4 text-3xl font-medium text-gray-900">
                 Current Models
               </div>
               <MinerTable />
@@ -59,21 +59,21 @@ export default async function Page() {
           </div>
         </Container>
         <Container>
-          <h3 className="pb-8 text-3xl font-semibold leading-6 text-gray-900 dark:text-gray-50">
+          <h3 className="pb-8 text-3xl font-semibold leading-6 text-gray-900">
             Api
           </h3>
           <ApiSection />
         </Container>
         <Container>
-          <h3 className="pb-8 text-3xl font-semibold leading-6 text-gray-900 dark:text-gray-50">
+          <h3 className="pb-8 text-3xl font-semibold leading-6 text-gray-900">
             Docs
           </h3>
 
-          <h4 className="pb-2 text-xl font-semibold leading-6 text-gray-900 dark:text-gray-50">
+          <h4 className="pb-2 text-xl font-semibold leading-6 text-gray-900">
             Chat Completion
           </h4>
           <div className="overflow-x-scroll pb-4">
-            <div className="w-fit whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3 dark:bg-neutral-900">
+            <div className="w-fit whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3">
               POST {API_BASE_URL}/v1/chat/completions
             </div>
           </div>
@@ -89,7 +89,7 @@ export default async function Page() {
             for the definition behind each field.
           </div>
           <div className="pt-2">
-            <pre className="hljs prose-sm overflow-x-scroll rounded bg-gray-800 px-2 py-2 dark:bg-neutral-900">
+            <pre className="hljs prose-sm overflow-x-scroll rounded bg-gray-800 px-2 py-2">
               <code
                 dangerouslySetInnerHTML={{
                   __html: hljs.highlight(
@@ -118,11 +118,11 @@ for chunk in response:
             </pre>
           </div>
 
-          <h4 className="pb-2 pt-12 text-xl font-semibold leading-6 text-gray-900 dark:text-gray-50">
+          <h4 className="pb-2 pt-12 text-xl font-semibold leading-6 text-gray-900">
             Completion
           </h4>
           <div className="overflow-x-scroll pb-4">
-            <div className="w-fit whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3 dark:bg-neutral-900">
+            <div className="w-fit whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3">
               POST {API_BASE_URL}/v1/completions
             </div>
           </div>
@@ -137,7 +137,7 @@ for chunk in response:
             for the definition behind each field.
           </div>
           <div className="pt-2">
-            <pre className="hljs prose-sm overflow-x-scroll rounded bg-gray-800 px-2 py-2 dark:bg-neutral-900">
+            <pre className="hljs prose-sm overflow-x-scroll rounded bg-gray-800 px-2 py-2">
               <code
                 dangerouslySetInnerHTML={{
                   __html: hljs.highlight(

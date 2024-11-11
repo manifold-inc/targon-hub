@@ -63,7 +63,7 @@ export function AddMoreCredits() {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0 "
               >
-                <div className="absolute h-full w-full bg-neutral-300 bg-opacity-30 backdrop-blur-sm dark:bg-neutral-800 dark:bg-opacity-40" />
+                <div className="absolute h-full w-full bg-neutral-300 bg-opacity-30 backdrop-blur-sm" />
               </TransitionChild>
               <TransitionChild
                 enter="ease-out duration-300"
@@ -73,10 +73,10 @@ export function AddMoreCredits() {
                 leaveFrom="opacity-100 transform-[scale(100%)]"
                 leaveTo="opacity-0 transform-[scale(95%)]"
               >
-                <DialogPanel className="w-full max-w-md rounded-xl bg-white p-6 shadow-2xl backdrop-blur-2xl dark:bg-white/5">
+                <DialogPanel className="w-full max-w-md rounded-xl bg-white p-6 shadow-2xl backdrop-blur-2xl">
                   <DialogTitle
                     as="h3"
-                    className="text-base/7 font-medium dark:text-white"
+                    className="text-base/7 font-medium"
                   >
                     Purchase More Credits
                   </DialogTitle>
@@ -84,10 +84,10 @@ export function AddMoreCredits() {
                     <div className="w-full">
                       <label
                         htmlFor="price"
-                        className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
+                        className="block text-sm font-medium leading-6 text-gray-900"
                       >
                         Price
-                        <span className="pl-2 text-sm leading-6 text-gray-500 dark:text-gray-400">
+                        <span className="pl-2 text-sm leading-6 text-gray-500">
                           ({CREDIT_PER_DOLLAR} Credits/Dollar)
                         </span>
                       </label>
@@ -105,13 +105,13 @@ export function AddMoreCredits() {
                           type="text"
                           name="price"
                           id="price"
-                          className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:text-white sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           placeholder="0.00"
                           aria-describedby="price-currency"
                         />
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                           <span
-                            className="text-gray-500 dark:text-gray-300 sm:text-sm"
+                            className="text-gray-500 sm:text-sm"
                             id="price-currency"
                           >
                             USD

@@ -287,7 +287,7 @@ export const Header = () => {
                       {getIconForPath()}
                       <User
                         aria-hidden="true"
-                        className="h-4 w-4 rounded-full bg-gray-700 text-white dark:bg-gray-300"
+                        className="h-4 w-4 rounded-full bg-gray-700 text-white"
                       />
                     </MenuButton>
 
