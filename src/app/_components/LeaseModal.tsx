@@ -72,6 +72,13 @@ export default function LeaseModal({
     },
   });
 
+  const dbRequiredGpus = reactClient.model.getRequiredGpus.useQuery(
+    model ?? "",
+    {
+      enabled: !!model && (currentStep === 1 || currentStep === 2),
+    },
+  );
+
   const handleNext = () => {
     switch (currentStep) {
       case 0:
@@ -81,23 +88,17 @@ export default function LeaseModal({
         if (!user.data) {
           router.push(
             `/sign-in?returnTo=${encodeURIComponent(
-              `/models?openLeaseModal=true&model=${encodeURIComponent(model)}&step=2`,
+              `/models?openLeaseModal=true&model=${encodeURIComponent(model)}&step=1`,
             )}`,
           );
           return;
         }
         if (BigInt(user.data.credits) < COST_PER_GPU * requiredGPUs) {
-          // TODO: add redirect paramater so stripe knows to redirect us back here
           checkout.mutate({
             purchaseAmount: 1000 * Number(requiredGPUs),
-            redirectTo: `/models?openLeaseModal=true&model=${encodeURIComponent(model)}&step=3`,
+            redirectTo: `/models?openLeaseModal=true&model=${encodeURIComponent(model)}&step=1`,
           });
         }
-        if (!successUrl || canceledUrl) {
-          toast.error("Failed to purchase credits");
-          return;
-        }
-        toast.success("Purchase successful");
         setCurrentStep(currentStep + 1);
         break;
       case 2:
@@ -239,43 +240,76 @@ export default function LeaseModal({
           {/* Step 1 */}
           {currentStep === 1 && (
             <div className="mx-auto flex w-full max-w-xl flex-col items-center py-8">
-              <form
-                className="w-full space-y-4"
-                onSubmit={(e) => e.preventDefault()}
-              >
-                <div className="flex flex-col space-y-2">
-                  <label
-                    htmlFor="modelUrl"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Price
-                  </label>
+              <div className="w-full rounded-lg border bg-gray-50 px-6 pt-6 shadow-md">
+                <div className="flex flex-col items-center justify-center gap-2 border-b pb-4">
+                  <h4 className="font-semibold">Model Cost Summary</h4>
                   <p className="text-sm text-gray-500">{model}</p>
-                  {(COST_PER_GPU * requiredGPUs).toString()} tokens
                 </div>
-              </form>
+                
+                <div className="flex flex-col gap-3 border-b py-4 text-sm">
+                  <p className="flex justify-between">
+                    <span className="text-gray-500">Required GPUs:</span>
+                    <span>{dbRequiredGpus.data?.[0]?.gpus.toString()}</span>
+                  </p>
+                  <p className="flex justify-between">
+                    <span className="text-gray-500">Cost per GPU:</span>
+                    <span>{COST_PER_GPU.toString()} credits</span>
+                  </p>
+                  <p className="flex justify-between font-medium">
+                    <span className="text-gray-500">Total Cost:</span>
+                    <span>{(COST_PER_GPU * BigInt(dbRequiredGpus.data?.[0]?.gpus ?? 0)).toString()} credits</span>
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-2 py-4 text-sm">
+                  <p className="flex justify-between">
+                    <span className="text-gray-500">Your Balance:</span>
+                    <span>{user.data?.credits ?? 0} credits</span>
+                  </p>
+                  <p className="flex justify-between font-medium text-red-600">
+                    <span>Additional Credits Needed:</span>
+                    <span>{((COST_PER_GPU * BigInt(dbRequiredGpus.data?.[0]?.gpus ?? 0)) - BigInt(user.data?.credits ?? 0)).toString()} Credits</span>
+                  </p>
+                </div>
+              </div>
             </div>
           )}
 
-          {/* Step 1 */}
+          {/* Step 2 */}
           {currentStep === 2 && (
             <div className="mx-auto flex w-full max-w-xl flex-col items-center py-8">
-              <form
-                className="w-full space-y-4"
-                onSubmit={(e) => e.preventDefault()}
-              >
-                <div className="flex flex-col space-y-2">
-                  <label
-                    htmlFor="modelUrl"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Purchase
-                  </label>
+              <div className="w-full rounded-lg border bg-gray-50 px-6 pt-6 shadow-md">
+                <div className="flex flex-col items-center justify-center gap-2 border-b pb-4">
+                  <h4 className="font-semibold">Model Lease Summary</h4>
                   <p className="text-sm text-gray-500">{model}</p>
-                  {(COST_PER_GPU * requiredGPUs).toString()} tokens (Purchase
-                  button)
                 </div>
-              </form>
+                
+                <div className="flex flex-col gap-3 border-b py-4 text-sm">
+                  <p className="flex justify-between">
+                    <span className="text-gray-500">Required GPUs:</span>
+                    <span>{dbRequiredGpus.data?.[0]?.gpus.toString()}</span>
+                  </p>
+                  <p className="flex justify-between">
+                    <span className="text-gray-500">Cost per GPU:</span>
+                    <span>{COST_PER_GPU.toString()} credits</span>
+                  </p>
+                  <p className="flex justify-between font-medium">
+                    <span className="text-gray-500">Total Cost:</span>
+                    <span>{(COST_PER_GPU * BigInt(dbRequiredGpus.data?.[0]?.gpus ?? 0)).toString()} credits</span>
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-2 py-4 text-sm">
+                  <p className="flex justify-between">
+                    <span className="text-gray-500">Your Balance:</span>
+                    <span>{user.data?.credits ?? 0} credits</span>
+                  </p>
+                  <p className="flex justify-between font-medium">
+                    <span className="text-gray-500">Remaining Balance:</span>
+                    <span>{user.data ? (BigInt(user.data.credits) - (COST_PER_GPU * BigInt(dbRequiredGpus.data?.[0]?.gpus ?? 0))).toString() : 0} credits</span>
+                  </p>
+                </div>
+              </div>
             </div>
           )}
 

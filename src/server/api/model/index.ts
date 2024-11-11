@@ -103,6 +103,14 @@ export const modelRouter = createTRPCRouter({
         name,
       };
     }),
+  getRequiredGpus: publicAuthlessProcedure
+    .input(z.string())
+    .query(async ({ ctx, input }) => {
+      return await ctx.db
+        .select({ gpus: Model.requiredGpus })
+        .from(Model)
+        .where(eq(Model.name, input));
+    }),
   addModel: publicAuthlessProcedure
     .input(z.string())
     .mutation(async ({ ctx, input }) => {

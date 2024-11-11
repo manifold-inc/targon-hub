@@ -41,8 +41,8 @@ export const creditsRouter = createTRPCRouter({
           },
           customer: user!.customerId ?? undefined, // this should always be there, but in case its not.
           mode: "payment",
-          success_url: `${ctx.req!.nextUrl.origin}${input.redirectTo ?? "/models"}`,
-          cancel_url: `${ctx.req!.nextUrl.origin}${input.redirectTo ?? "/models"}`,
+          success_url: `${ctx.req!.nextUrl.origin}${input.redirectTo ?? "/models"}&success=true`,
+          cancel_url: `${ctx.req!.nextUrl.origin}${input.redirectTo ?? "/models"}?&canceled=true`,
         });
         return session.url!;
       } catch (err) {
