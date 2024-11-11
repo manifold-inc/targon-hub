@@ -251,8 +251,8 @@ export default function LeaseModal({ isOpen, onClose }: LeaseModalProps) {
                     Purchase
                   </label>
                   <p className="text-sm text-gray-500">{model}</p>
-                  {(COST_PER_GPU * requiredGPUs).toString()} tokens
-                  (Purchase button)
+                  {(COST_PER_GPU * requiredGPUs).toString()} tokens (Purchase
+                  button)
                 </div>
               </form>
             </div>

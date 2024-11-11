@@ -109,9 +109,10 @@ export const modelRouter = createTRPCRouter({
       const [organization, modelName] = input.split("/");
 
       if (!modelName || !organization) {
-        throw new Error(
-          "Invalid model ID format. Expected: organization/modelName",
-        );
+        throw new TRPCError({
+          message: "Invalid model ID format. Expected: organization/modelName",
+          code: "BAD_REQUEST",
+        });
       }
 
       // check if model already exists
@@ -135,7 +136,10 @@ export const modelRouter = createTRPCRouter({
       );
 
       if (!response.ok) {
-        throw new Error("Model not found on HuggingFace");
+        throw new TRPCError({
+          message: "Model not found on HuggingFace",
+          code: "BAD_REQUEST",
+        });
       }
 
       const modelInfo = (await response.json()) as HuggingFaceModelInfo;
@@ -144,9 +148,10 @@ export const modelRouter = createTRPCRouter({
         !modelInfo.pipeline_tag ||
         !Modality.includes(modelInfo.pipeline_tag as ModalityType)
       ) {
-        throw new Error(
-          `Unsupported model type. Model must be either text-generation or text-to-image. Got: ${modelInfo.pipeline_tag}`,
-        );
+        throw new TRPCError({
+          message: `Unsupported model type. Model must be either text-generation or text-to-image. Got: ${modelInfo.pipeline_tag}`,
+          code: "BAD_REQUEST",
+        });
       }
 
       const supportedEndpoints = ["COMPLETION"];
@@ -166,7 +171,10 @@ export const modelRouter = createTRPCRouter({
       });
 
       if (!gpuResponse.ok) {
-        throw new Error("Failed to estimate GPU requirements");
+        throw new TRPCError({
+          message: "Failed to estimate GPU requirements",
+          code: "INTERNAL_SERVER_ERROR",
+        });
       }
 
       const gpuData = (await gpuResponse.json()) as {
