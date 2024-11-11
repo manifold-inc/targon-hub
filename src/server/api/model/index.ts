@@ -123,7 +123,6 @@ export const modelRouter = createTRPCRouter({
         .from(Model)
         .where(eq(Model.name, input));
       if (existingModel.length > 0) {
-        console.log(existingModel.at(0)!.gpus);
         return existingModel.at(0)!.gpus;
       }
 
