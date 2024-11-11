@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ThemeProvider } from "next-themes";
 
 import "@/styles/globals.css";
 
@@ -38,10 +37,8 @@ export default function RootLayout({
       </head>
       <body>
         <WithGlobalProvider>
-          <ThemeProvider attribute="class">
             <Header />
             <main>{children}</main>
-          </ThemeProvider>
         </WithGlobalProvider>
 
         <Toaster richColors />

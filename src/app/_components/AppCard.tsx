@@ -31,7 +31,7 @@ export const AppCard = ({
               "bg-green-500",
               "bg-yellow-500",
               "bg-purple-500",
-            ][Math.floor(Math.random() * 5)]
+            ][1]
           }`}
         >
           <div className="flex items-center justify-start gap-1">
