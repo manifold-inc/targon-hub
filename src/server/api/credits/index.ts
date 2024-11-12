@@ -77,9 +77,12 @@ export const creditsRouter = createTRPCRouter({
           .from(Model)
           .where(eq(Model.enabled, true)),
 
-        ctx.db.select({
-          credits: User.credits,
-        }).from(User).where(eq(User.id, ctx.user.id))
+        ctx.db
+          .select({
+            credits: User.credits,
+          })
+          .from(User)
+          .where(eq(User.id, ctx.user.id)),
       ]);
 
       if (requiredGPU[0] && requiredGPU[0].gpu > 8) {
@@ -94,8 +97,8 @@ export const creditsRouter = createTRPCRouter({
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Insufficient credits to lease this model",
-      });
-    }
+        });
+      }
 
       // calculate total gpu and eligible models
       const immunityPeriod = 7 * 24 * 60 * 60 * 1000;
@@ -128,7 +131,8 @@ export const creditsRouter = createTRPCRouter({
         await ctx.db
           .update(User)
           .set({
-            credits: user[0].credits - requiredGPU[0]!.gpu * Number(COST_PER_GPU),
+            credits:
+              user[0].credits - requiredGPU[0]!.gpu * Number(COST_PER_GPU),
           })
           .where(eq(User.id, ctx.user.id));
         return {
@@ -180,8 +184,7 @@ export const creditsRouter = createTRPCRouter({
           .update(User)
           .set({
             credits:
-              user[0].credits -
-              requiredGPU[0]!.gpu * Number(COST_PER_GPU),
+              user[0].credits - requiredGPU[0]!.gpu * Number(COST_PER_GPU),
           })
           .where(eq(User.id, ctx.user.id)),
       ]);

@@ -142,10 +142,10 @@ export default function LeaseModal({
     setModel("");
     setUseCredits(true);
     setPurchaseAmount(250 * Number(requiredGPUS));
-    
+
     // New URL
-    router.push("/models")
-    
+    router.push("/models");
+
     // Call the provided onClose
     onClose();
   };
@@ -292,7 +292,7 @@ export default function LeaseModal({
 
           {/* Step 1 */}
           {currentStep === 1 && (
-            <div className="mx-auto flex w-full max-w-xl flex-col items-center py-8 gap-4">
+            <div className="mx-auto flex w-full max-w-xl flex-col items-center gap-4 py-8">
               <div className="w-full rounded-lg border bg-gray-50 px-6 pt-6 shadow-md">
                 <div className="flex flex-col items-center justify-center gap-2 border-b pb-4">
                   <h4 className="font-semibold">Model Cost Summary</h4>
@@ -386,27 +386,28 @@ export default function LeaseModal({
                         </span>
                       </div>
                     </div>
-                    
                   </div>
                   <div className="flex items-center justify-center">
-                  <button
-                    onClick={() => {
-                      checkout.mutate({
-                        purchaseAmount: Number(
-                          (Number(amountNeeded) / CREDIT_PER_DOLLAR).toFixed(2),
-                        ),
-                        redirectTo: `/models?openLeaseModal=true&model=${encodeURIComponent(model)}&step=1`,
-                      });
-                    }}
-                    disabled={checkout.isLoading}
-                    className="relative inline-flex h-10 items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#101828]/90"
-                  >
-                    {checkout.isLoading ? (
-                      <Loader2 className="h-5 w-5 animate-spin" />
-                    ) : (
-                      `Purchase Exact Amount - (${(Number(amountNeeded) / CREDIT_PER_DOLLAR).toFixed(2)} USD)`
-                    )}
-                  </button>
+                    <button
+                      onClick={() => {
+                        checkout.mutate({
+                          purchaseAmount: Number(
+                            (Number(amountNeeded) / CREDIT_PER_DOLLAR).toFixed(
+                              2,
+                            ),
+                          ),
+                          redirectTo: `/models?openLeaseModal=true&model=${encodeURIComponent(model)}&step=1`,
+                        });
+                      }}
+                      disabled={checkout.isLoading}
+                      className="relative inline-flex h-10 items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#101828]/90"
+                    >
+                      {checkout.isLoading ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
+                        `Purchase Exact Amount - (${(Number(amountNeeded) / CREDIT_PER_DOLLAR).toFixed(2)} USD)`
+                      )}
+                    </button>
                   </div>
                 </div>
               ) : null}
@@ -523,7 +524,7 @@ export default function LeaseModal({
                     {checkout.isLoading ? (
                       <Loader2 className="h-5 w-5 animate-spin" />
                     ) : (
-                      `Purchase ${purchaseAmount === 0 ? (useCredits ? 'Credits' : 'Dollars') : (useCredits ? formatLargeNumber(BigInt(purchaseAmount)) + ' Credits' : '$' + purchaseAmount)}`
+                      `Purchase ${purchaseAmount === 0 ? (useCredits ? "Credits" : "Dollars") : useCredits ? formatLargeNumber(BigInt(purchaseAmount)) + " Credits" : "$" + purchaseAmount}`
                     )}
                   </button>
                 </div>
