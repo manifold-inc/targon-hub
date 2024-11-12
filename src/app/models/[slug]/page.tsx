@@ -83,7 +83,7 @@ for chunk in response:
         <ModelsNav />
       </div>
       <div className="h-fit w-full animate-slide-in">
-        <div className="mx-auto w-3/4 py-20 lg:w-1/2">
+        <div className="mx-auto w-10/12 py-20 lg:w-1/2">
           <div className="mx-auto">
             <section id="overview" data-section>
               <header className="flex w-full justify-between pb-6">
@@ -311,7 +311,7 @@ for chunk in response:
                     <p className="text-sm font-medium leading-tight text-[#344054]">
                       Sample Code for Completion
                     </p>
-                    <div className="w-fit whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3">
+                    <div className="w-full overflow-scroll whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3">
                       POST {API_BASE_URL}/v1/completions
                     </div>
                     <div className="pb-4">
