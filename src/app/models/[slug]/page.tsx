@@ -86,10 +86,9 @@ for chunk in response:
         <div className="mx-auto w-10/12 py-20 lg:w-1/2">
           <div className="mx-auto">
             <section id="overview" data-section>
-              <header className="flex w-full justify-between pb-6">
-                <h1 className="text-3xl leading-9 text-[#101828]">
-                  {modelName.split("/")[1]!.charAt(0).toUpperCase() +
-                    modelName.split("/")[1]?.slice(1)}
+              <header className="flex w-full justify-between pb-6 pr-4">
+                <h1 className="text-xl sm:text-2xl md:text-3xl leading-9 text-[#101828]">
+                  {modelName}
                 </h1>
                 <Link
                   href={user?.id ? `/docs` : "/sign-in"}

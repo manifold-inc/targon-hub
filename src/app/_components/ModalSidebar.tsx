@@ -19,8 +19,6 @@ interface ModalSidebarProps {
   setIsLeaseModalOpen: (open: boolean) => void;
   savedModel: string | null;
   step: number | null;
-  successUrl?: boolean;
-  canceledUrl?: boolean;
 }
 
 export default function ModalSidebar({

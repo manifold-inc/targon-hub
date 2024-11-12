@@ -28,8 +28,6 @@ interface LeaseModalProps {
   onClose: () => void;
   savedModel: string | null;
   step: number | null;
-  successUrl?: boolean;
-  canceledUrl?: boolean;
 }
 
 export default function LeaseModal({
@@ -76,6 +74,16 @@ export default function LeaseModal({
     },
   });
 
+  const leaseModelMutation = reactClient.credits.leaseModel.useMutation({
+    onSuccess: () => {
+      toast.success("Model leased successfully");
+      router.push(`/models?model=${encodeURIComponent(model)}`);
+    },
+    onError: (e) => {
+      toast.error(`Failed to lease model: ${e.message}`);
+    },
+  });
+
   const dbRequiredGpus = reactClient.model.getRequiredGpus.useQuery(
     model ?? "",
     {
@@ -107,16 +115,7 @@ export default function LeaseModal({
         setCurrentStep(currentStep + 1);
         break;
       case 2:
-        // TODO add mutation to subtract credits
-        // Paramaters:
-        //  - model
-        //  make sure to check that we have enough GPUs. MAX 8
-        //
-        //  1. grap all models running
-        //  2. see if there is an exact match on num gpus
-        //  3. start suming lowest gpu models untill you have enough
-        //
-        //  redirect to model page
+        leaseModelMutation.mutate({ model });
         break;
     }
   };
@@ -206,6 +205,7 @@ export default function LeaseModal({
                         </span>
                       </div>
                     </div>
+
                   ) : (
                     <>
                       <div
@@ -285,9 +285,9 @@ export default function LeaseModal({
                     <span className="text-gray-500">Cost per GPU:</span>
                     <span>
                       {formatLargeNumber(COST_PER_GPU)} credits /{" "}
-                      {formatLargeNumber(
-                        COST_PER_GPU / BigInt(CREDIT_PER_DOLLAR),
-                      )}{" "}
+                      {(
+                        COST_PER_GPU / BigInt(CREDIT_PER_DOLLAR)
+                      ).toString()}{" "}
                       $
                     </span>
                   </p>
@@ -297,7 +297,7 @@ export default function LeaseModal({
                     </span>
                     <span>
                       {formatLargeNumber(totalCost)} credits /{" "}
-                      {formatLargeNumber(totalCost / BigInt(CREDIT_PER_DOLLAR))}{" "}
+                      {(totalCost / BigInt(CREDIT_PER_DOLLAR)).toString()}{" "}
                       $
                     </span>
                   </p>
@@ -321,7 +321,7 @@ export default function LeaseModal({
                 </div>
               </div>
               {!user.data ? null : amountNeeded > 0 ? (
-                <div className="mt-4 space-y-3">
+                <div className="py-4 space-y-3">
                   <div className="flex items-center justify-center gap-4">
                     <button
                       onClick={() => handleCurrencyToggle(false)}
@@ -370,8 +370,15 @@ export default function LeaseModal({
                   </div>
                 </div>
               ) : null}
-            </div>
-          )}
+              {requiredGPUS > 8 && (
+                <p className="rounded-md bg-yellow-50 p-3 text-yellow-700">
+                  Warning: This model requires{" "}
+                  {formatLargeNumber(requiredGPUS)} GPUs, which exceeds our
+                  limit of 8 GPUs. We will not be able to run this model.
+                </p>
+            )}
+          </div>
+        )}
 
           {/* Step 2 */}
           {currentStep === 2 && (
@@ -391,9 +398,9 @@ export default function LeaseModal({
                     <span className="text-gray-500">Cost per GPU:</span>
                     <span>
                       {formatLargeNumber(COST_PER_GPU)} credits /{" "}
-                      {formatLargeNumber(
-                        COST_PER_GPU / BigInt(CREDIT_PER_DOLLAR),
-                      )}{" "}
+                      {(
+                        COST_PER_GPU / BigInt(CREDIT_PER_DOLLAR)
+                      ).toString()}{" "}
                       $
                     </span>
                   </p>
@@ -403,7 +410,7 @@ export default function LeaseModal({
                     </span>
                     <span>
                       {formatLargeNumber(totalCost)} credits /{" "}
-                      {formatLargeNumber(totalCost / BigInt(CREDIT_PER_DOLLAR))}{" "}
+                      {(totalCost / BigInt(CREDIT_PER_DOLLAR)).toString()}{" "}
                       $
                     </span>
                   </p>
@@ -488,6 +495,7 @@ export default function LeaseModal({
                 <button
                   type="button"
                   onClick={handleNext}
+                  disabled={leaseModelMutation.isLoading}
                   className="relative inline-flex h-10 w-36 items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#101828]/90"
                 >
                   <span>Next</span>

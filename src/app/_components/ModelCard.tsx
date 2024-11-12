@@ -5,12 +5,14 @@ interface ModelCardProps {
   name: string;
   organization: string;
   modality: string;
+  description: string;
 }
 
 export default function ModelCard({
   name,
   modality,
   organization,
+  description,
 }: ModelCardProps) {
   const getRandomGradient = () => {
     const gradients = [
@@ -43,7 +45,7 @@ export default function ModelCard({
             className='sm:whitespace-nowrap'
               href={`/models/${encodeURIComponent(organization + "/" + name)}`}
             >
-              {name}
+              {organization}/{name}
             </Link>
           </div>
           <div className="flex flex-wrap md:justify-normal justify-between items-center gap-4">
@@ -66,9 +68,8 @@ export default function ModelCard({
         </div>
 
         {/* Description row */}
-        <div className="self-stretch text-sm font-normal leading-tight text-[#667085]">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. In efficitur
-          sollicitudin orci in luctus.
+        <div className="self-stretch text-sm leading-tight text-[#667085] line-clamp-2">
+          {description}
         </div>
 
         {/* Bottom row with metadata */}

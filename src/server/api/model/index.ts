@@ -40,7 +40,7 @@ interface HuggingFaceModelInfo {
 
 export const modelRouter = createTRPCRouter({
   getModels: publicAuthlessProcedure.query(async ({ ctx }) => {
-    return await ctx.db.select().from(Model).where(eq(Model.enabled, true));
+    return await ctx.db.select().from(Model);
   }),
   getModelFilters: publicAuthlessProcedure.query(async ({ ctx }) => {
     const models = await ctx.db
@@ -67,9 +67,12 @@ export const modelRouter = createTRPCRouter({
   }),
   getModelsInfo: publicAuthlessProcedure.query(async ({ ctx }) => {
     const models = await ctx.db
-      .select({ modelName: Model.name, modality: Model.modality })
-      .from(Model)
-      .where(eq(Model.enabled, true));
+      .select({
+        modelName: Model.name,
+        modality: Model.modality,
+        description: Model.description,
+      })
+      .from(Model);
 
     return models.map((model) => {
       const [organization, name] = model.modelName?.split("/") ?? [];
@@ -77,6 +80,7 @@ export const modelRouter = createTRPCRouter({
         ...model,
         organization,
         name,
+        description: model.description,
       };
     });
   }),
@@ -195,11 +199,39 @@ export const modelRouter = createTRPCRouter({
         });
       }
 
+      // Try to get description from README
+      let description: string | undefined;
+      try {
+        const readmeResponse = await fetch(
+          `https://huggingface.co/${organization}/${modelName}/raw/main/README.md`
+        );
+        if (readmeResponse.ok) {
+          const readmeContent = await readmeResponse.text();
+          const modelDescMatch = readmeContent.match(
+            /#+\s*Model Description\s*(.*?)(?=\n#|\Z)/si
+          );
+          description = modelDescMatch?.[1]?.trim() || 
+            readmeContent.split('\n')
+              .filter(line => 
+                line.trim() && 
+                !line.startsWith('#') && 
+                !line.startsWith('---') &&
+                !line.startsWith('<')
+              )
+              .slice(0, 3)
+              .join(' ')
+              .slice(0, 1000);
+        }
+      } catch (error) {
+        console.error('Error fetching README:', error);
+      }
+
       await ctx.db.insert(Model).values({
         name: modelInfo.id,
         modality: modelInfo.pipeline_tag as ModalityType,
         requiredGpus: gpuData.required_gpus,
         supportedEndpoints: supportedEndpoints,
+        ...(description && { description }), // Only include if we found one
       });
 
       return gpuData.required_gpus;

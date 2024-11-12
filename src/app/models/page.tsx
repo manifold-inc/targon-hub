@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Combobox, ComboboxInput } from "@headlessui/react";
 import { Filter, Search } from "lucide-react";
 
@@ -9,6 +9,7 @@ import { useModalSidebarStore } from "@/store/modelSidebarStore";
 import { reactClient } from "@/trpc/react";
 import ModalSidebar from "../_components/ModalSidebar";
 import ModelCard from "../_components/ModelCard";
+import { toast } from "sonner";
 
 export default function Page() {
   const [query, setQuery] = useState("");
@@ -19,10 +20,9 @@ export default function Page() {
   });
   const savedModel = searchParams.get("model");
   const step = Number(searchParams.get("step")) || null;
-  const successUrl = searchParams.get("success") === "true";
-  const canceledUrl = searchParams.get("canceled") === "true";
 
   const { data: modelsInfo } = reactClient.model.getModelsInfo.useQuery();
+  console.log(modelsInfo);
   const { activeOrganization, activeModality } = useModalSidebarStore();
 
   // Filter models based on search query and active series
@@ -53,6 +53,7 @@ export default function Page() {
   return (
     <>
       <div className='sm:hidden'>
+        <WatchForSuccess />
         <button onClick={() => setIsMobileOpen((s) => !s)} className='flex w-full justify-between px-5 py-2'>
           <div className="font-medium text-xl leading-normal text-[#101828]">
             Filters
@@ -69,8 +70,6 @@ export default function Page() {
             setIsLeaseModalOpen={setIsLeaseModalOpen}
             savedModel={savedModel}
             step={step}
-            successUrl={successUrl}
-            canceledUrl={canceledUrl}
           />
         )}
       </div>
@@ -82,8 +81,6 @@ export default function Page() {
             setIsLeaseModalOpen={setIsLeaseModalOpen}
             savedModel={savedModel}
             step={step}
-            successUrl={successUrl}
-            canceledUrl={canceledUrl}
           />
         </div>
 
@@ -126,6 +123,7 @@ export default function Page() {
                   name={model.name ?? ""}
                   organization={model.organization ?? ""}
                   modality={model.modality ?? ""}
+                  description={model.description ?? ""}
                 />
               ))}
             </div>
@@ -135,3 +133,19 @@ export default function Page() {
     </>
   );
 }
+
+export const WatchForSuccess = () => {
+  const params = useSearchParams();
+  const router = useRouter();
+  useEffect(() => {
+    if (params.get("success")) {
+      router.push(params.get("redirectTo") ?? "/models");
+      setTimeout(() => toast.success("Successfully purchased more credits"));  
+    }
+    if (params.get("canceled")) {
+      router.push(params.get("redirectTo") ?? "/models");
+      setTimeout(() => toast.info("Canceled transaction"));
+    }
+  }, [params, router]);
+  return null;
+};
