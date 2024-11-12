@@ -1,14 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
-  Combobox,
-  ComboboxInput,
-  ComboboxOption,
-  ComboboxOptions,
+  Dialog,
+  DialogPanel,
   Menu,
   MenuButton,
   MenuItem,
@@ -22,31 +20,89 @@ import {
   HomeIcon,
   Key,
   Lock,
-  Menu as MenuIcon,
-  Search,
+  MenuIcon,
   Settings,
   SignalHigh,
   Trophy,
   User,
   Wallet,
+  XIcon,
 } from "lucide-react";
-import moment from "moment";
 
-import { reactClient } from "@/trpc/react";
 import { useAuth } from "./providers";
+import SearchBar from "./SearchBar";
 import SettingsModal from "./SettingsModal";
+
+const NAVIGATION = [
+  { slug: "/models", title: "Browse" },
+  { slug: "/rankings", title: "Rankings" },
+  { slug: "/docs", title: "Docs" },
+];
+
+const getIconForPath = (pathname: string) => {
+  switch (pathname) {
+    case "/":
+      return (
+        <HomeIcon aria-hidden="true" className="text-manifold-green h-4 w-4" />
+      );
+    case "/credits":
+      return (
+        <Wallet aria-hidden="true" className="text-manifold-green h-4 w-4" />
+      );
+    case pathname.startsWith("/models") && pathname:
+      return (
+        <BrainCog aria-hidden="true" className="text-manifold-green h-4 w-4" />
+      );
+    case "/activity":
+      return (
+        <SignalHigh
+          aria-hidden="true"
+          className="text-manifold-green h-4 w-4"
+        />
+      );
+    case "/rankings":
+      return (
+        <Trophy aria-hidden="true" className="text-manifold-green h-4 w-4 " />
+      );
+    case pathname.startsWith("/docs") && pathname:
+      return (
+        <BookOpenText
+          aria-hidden="true"
+          className="text-manifold-green h-4 w-4"
+        />
+      );
+    case "/settings/preferences":
+      return (
+        <Settings aria-hidden="true" className="text-manifold-green h-4 w-4" />
+      );
+    case "/settings/keys":
+      return <Key aria-hidden="true" className="text-manifold-green h-4 w-4" />;
+    case "/settings/integrations":
+      return (
+        <Blocks aria-hidden="true" className="text-manifold-green h-4 w-4" />
+      );
+    case "/settings/privacy":
+      return (
+        <Lock aria-hidden="true" className="text-manifold-green h-4 w-4" />
+      );
+  }
+};
 
 export const Header = () => {
   const auth = useAuth();
   const pathName = usePathname();
-  const router = useRouter();
-  const [query, setQuery] = useState("");
-  const searchInputRef = useRef<HTMLInputElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<
     "dashboard" | "credits" | "activity" | "keys" | "integrations" | "settings"
   >("dashboard");
 
+  const handleSettingsModalClose = () => {
+    setIsModalOpen(false);
+    setActiveTab("dashboard");
+  };
+
+  // keydown controller
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Ignore if user is typing in an input or textarea
@@ -59,7 +115,14 @@ export const Header = () => {
 
       if (e.key === "/" && !e.ctrlKey && !e.metaKey) {
         e.preventDefault();
-        searchInputRef.current?.focus();
+
+        // Finds the visible search bar and highlights it
+        const elements = document.getElementsByName("search_input");
+        elements.forEach((el) => {
+          if (window.getComputedStyle(el).display !== "none") {
+            el.focus();
+          }
+        });
       }
     };
 
@@ -67,106 +130,13 @@ export const Header = () => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const getIconForPath = () => {
-    switch (pathName) {
-      case "/":
-        return (
-          <HomeIcon
-            aria-hidden="true"
-            className="text-manifold-green h-4 w-4"
-          />
-        );
-      case "/credits":
-        return (
-          <Wallet aria-hidden="true" className="text-manifold-green h-4 w-4" />
-        );
-      case pathName.startsWith("/models") && pathName:
-        return (
-          <BrainCog
-            aria-hidden="true"
-            className="text-manifold-green h-4 w-4"
-          />
-        );
-      case "/activity":
-        return (
-          <SignalHigh
-            aria-hidden="true"
-            className="text-manifold-green h-4 w-4"
-          />
-        );
-      case "/rankings":
-        return (
-          <Trophy aria-hidden="true" className="text-manifold-green h-4 w-4 " />
-        );
-      case pathName.startsWith("/docs") && pathName:
-        return (
-          <BookOpenText
-            aria-hidden="true"
-            className="text-manifold-green h-4 w-4"
-          />
-        );
-      case "/settings/preferences":
-        return (
-          <Settings
-            aria-hidden="true"
-            className="text-manifold-green h-4 w-4"
-          />
-        );
-      case "/settings/keys":
-        return (
-          <Key aria-hidden="true" className="text-manifold-green h-4 w-4" />
-        );
-      case "/settings/integrations":
-        return (
-          <Blocks aria-hidden="true" className="text-manifold-green h-4 w-4" />
-        );
-      case "/settings/privacy":
-        return (
-          <Lock aria-hidden="true" className="text-manifold-green h-4 w-4" />
-        );
-    }
-  };
-
-  const models = reactClient.model.getModels.useQuery();
-  const filteredModels =
-    query === ""
-      ? models.data || []
-      : (models.data ?? []).filter((model) => {
-          const modelName = model.name?.toLowerCase() || "";
-          const searchQuery = query.toLowerCase();
-          return modelName.includes(searchQuery);
-        });
-
-  const groupedModels = filteredModels.reduce(
-    (acc, model) => {
-      const date = moment(model.createdAt);
-      const monthYear = date.format("MMMM YYYY");
-      if (!acc[monthYear]) {
-        acc[monthYear] = [];
-      }
-      acc[monthYear].push(model);
-      return acc;
-    },
-    {} as Record<string, typeof filteredModels>,
-  );
-
-  const sortedMonthYears = Object.keys(groupedModels).sort(
-    (a, b) => moment(b).valueOf() - moment(a).valueOf(),
-  );
-
-  const handleSettingsModalClose = () => {
-    setIsModalOpen(false);
-    setActiveTab("dashboard");
-  };
-
   return (
     <header
-      className={`sticky top-0 z-10 animate-slide-in ${
-        pathName !== "/" ? "border-b border-gray-200 bg-white" : ""
-      }`}
+      className={`sticky top-0 z-10 animate-slide-in ${pathName !== "/" ? "border-b border-gray-200 bg-white" : ""
+        }`}
     >
-      <nav className="text-manifold-green flex items-center p-4">
-        <div className="w-52">
+      <nav className="text-manifold-green flex items-center justify-between p-4">
+        <div className="w-60">
           <Link
             href="/"
             className="flex h-11 w-fit items-center justify-start gap-2 rounded-full p-2 hover:bg-gray-200"
@@ -181,92 +151,22 @@ export const Header = () => {
             <p className="text-md font-semibold">Targon</p>
           </Link>
         </div>
-        <div className="flex flex-grow justify-center">
-          <div className="relative w-2/5">
-            <Combobox
-              immediate
-              value={query}
-              onChange={(value: string) => {
-                const selectedModel = filteredModels.find(
-                  (m) => m.name === value,
-                );
-                if (selectedModel?.name) {
-                  router.push(
-                    `/models/${encodeURIComponent(selectedModel.name)}`,
-                  );
-                }
-              }}
-            >
-              <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-5 flex items-center">
-                  <Search
-                    aria-hidden="true"
-                    className="h-5 w-5 text-[#98a1b2]"
-                  />
-                </div>
-                <ComboboxInput
-                  className="text-md flex h-11 w-full items-center rounded-full border-0 bg-gray-50 pb-2.5 pl-11 pr-3 pt-3 placeholder:text-[#98a1b2] focus:ring-gray-200"
-                  ref={searchInputRef}
-                  placeholder="Search models or dates (September 2024)"
-                  displayValue={(model: { name: string } | null) =>
-                    model?.name ?? ""
-                  }
-                  onChange={(event) => setQuery(event.target.value)}
-                />
-                <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                  <div className="flex h-6 items-center rounded border border-[#D0D5DD] px-1 py-0.5">
-                    <span className="text-sm leading-tight text-[#475467]">
-                      /
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {models.data?.length === 0 ? (
-                  <div className="relative cursor-default select-none px-4 py-2">
-                    Nothing found.
-                  </div>
-                ) : (
-                  sortedMonthYears.map((monthYear) => (
-                    <div key={monthYear}>
-                      <div className="sticky top-0 bg-gray-100 px-4 py-2 font-semibold">
-                        {monthYear}
-                      </div>
-                      {groupedModels[monthYear]?.map((model) => (
-                        <ComboboxOption
-                          key={model.id}
-                          value={model.name}
-                          className="group flex cursor-pointer select-none items-center gap-2 bg-white px-4 py-2 hover:bg-blue-100"
-                        >
-                          <span>{model.name}</span>
-                        </ComboboxOption>
-                      ))}
-                    </div>
-                  ))
-                )}
-              </ComboboxOptions>
-            </Combobox>
+        <div className="hidden flex-grow justify-center lg:flex">
+
+    <div className="relative w-2/5">
+          <SearchBar />
           </div>
         </div>
-        <div className="flex w-52 items-center justify-end gap-4">
-          <Link
-            href="/models"
-            className="inline-flex h-9 items-center justify-center gap-1 rounded-full px-3 py-2 text-sm leading-tight text-[#475467] hover:underline"
-          >
-            Browse
-          </Link>
-          <Link
-            href="/rankings"
-            className="inline-flex h-9 items-center justify-center gap-1 rounded-full px-3 py-2 text-sm leading-tight text-[#475467] hover:underline"
-          >
-            Rankings
-          </Link>
-          <Link
-            href="/docs"
-            className="inline-flex h-9 items-center justify-center gap-1 rounded-full px-3 py-2 text-sm leading-tight text-[#475467] hover:underline"
-          >
-            Docs
-          </Link>
+        <div className="hidden w-52 items-center justify-end gap-4 sm:flex">
+          {NAVIGATION.map((page) => (
+            <Link
+              key={page.slug}
+              href={page.slug}
+              className="inline-flex h-9 items-center justify-center gap-1 rounded-full px-3 py-2 text-sm leading-tight text-mf-gray-600 hover:underline"
+            >
+              {page.title}
+            </Link>
+          ))}
           {auth.status === "AUTHED" ? (
             <>
               <Menu as="div" className="relative inline-block text-left">
@@ -284,7 +184,7 @@ export const Header = () => {
                           className="text-manifold-green h-4 w-4"
                         />
                       )}
-                      {getIconForPath()}
+                      {getIconForPath(pathName)}
                       <User
                         aria-hidden="true"
                         className="h-4 w-4 rounded-full bg-gray-700 text-white"
@@ -368,6 +268,76 @@ export const Header = () => {
               </span>
             </Link>
           )}
+        </div>
+        <div className="flex sm:hidden">
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(true)}
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+          >
+            <span className="sr-only">Open main menu</span>
+            <MenuIcon aria-hidden="true" className="h-6 w-6 text-mf-gray-600" />
+          </button>
+          <Dialog
+            open={mobileMenuOpen}
+            onClose={setMobileMenuOpen}
+            className="lg:hidden"
+          >
+            <div className="fixed inset-0 z-10" />
+            <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+              <div className="flex items-center justify-between">
+                <Link
+                  href="/"
+                  className="flex h-11 w-fit items-center justify-start gap-2 rounded-full p-2 hover:bg-gray-200"
+                >
+                  <Image
+                    src="/ManifoldMarkTransparentGreenSVG.svg"
+                    width={32}
+                    height={28}
+                    alt="Targon"
+                    className="block"
+                  />
+                  <p className="text-md font-semibold">Targon</p>
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="-m-2.5 rounded-md p-2.5 text-gray-700"
+                >
+                  <span className="sr-only">Close menu</span>
+                  <XIcon
+                    aria-hidden="true"
+                    className="h-6 w-6 text-mf-gray-600"
+                  />
+                </button>
+              </div>
+              <div className="mt-6 flow-root">
+                <div className="-my-6 divide-y divide-gray-500/10">
+                  <div className="space-y-2 py-6">
+                    {NAVIGATION.map((item) => (
+                      <Link
+                        key={item.title}
+                        href={item.slug}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                      >
+                        {item.title}
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="py-6">
+                    <Link
+                      href="/sign-in"
+                        onClick={() => setMobileMenuOpen(false)}
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                    >
+                      Log in
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </DialogPanel>
+          </Dialog>
         </div>
       </nav>
     </header>

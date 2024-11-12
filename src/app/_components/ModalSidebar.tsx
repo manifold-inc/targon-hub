@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import {
   AlignVerticalSpaceAround,
@@ -30,8 +28,6 @@ export default function ModalSidebar({
   setIsLeaseModalOpen,
   savedModel,
   step,
-  successUrl,
-  canceledUrl,
 }: ModalSidebarProps) {
   const {
     openSections,
@@ -81,7 +77,7 @@ export default function ModalSidebar({
     };
 
   return (
-    <aside className="h-full animate-slide-in-delay pr-8 pt-10">
+    <aside className="h-full sm:animate-slide-in-delay pr-2 sm:pr-8 pt-2 sm:pt-10">
       <div className="flex flex-col gap-2.5">
         <div className="p-3">
           <div
@@ -568,11 +564,11 @@ export default function ModalSidebar({
         </div>
         <div className="flex justify-center p-3">
           <button
-            className="group relative flex h-12 w-44 items-center justify-center"
+            className="group relative flex h-12 w-full sm:w-44 items-center justify-center"
             onClick={() => setIsLeaseModalOpen(true)}
           >
             <div className="absolute h-11 w-40 rounded-full border-2 border-black opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-            <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-white group-hover:border-0">
+            <div className="inline-flex w-full sm:w-fit items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-white group-hover:border-0">
               <span className="flex items-center gap-2 text-sm font-semibold leading-tight">
                 Lease a Model
                 <BadgeDollarSign className="h-4 w-4 opacity-50" />
@@ -586,8 +582,6 @@ export default function ModalSidebar({
         onClose={() => setIsLeaseModalOpen(false)}
         savedModel={savedModel}
         step={step}
-        successUrl={successUrl}
-        canceledUrl={canceledUrl}
       />
     </aside>
   );

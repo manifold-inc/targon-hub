@@ -37,8 +37,6 @@ export default function LeaseModal({
   onClose,
   savedModel,
   step,
-  successUrl,
-  canceledUrl,
 }: LeaseModalProps) {
   const [currentStep, setCurrentStep] = useState(step ?? 0);
   const [model, setModel] = useState(savedModel ?? "");

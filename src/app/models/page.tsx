@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Combobox, ComboboxInput } from "@headlessui/react";
-import { Search } from "lucide-react";
+import { Filter, Search } from "lucide-react";
 
 import { useModalSidebarStore } from "@/store/modelSidebarStore";
 import { reactClient } from "@/trpc/react";
@@ -12,6 +12,7 @@ import ModelCard from "../_components/ModelCard";
 
 export default function Page() {
   const [query, setQuery] = useState("");
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
   const searchParams = useSearchParams();
   const [isLeaseModalOpen, setIsLeaseModalOpen] = useState(() => {
     return searchParams.get("openLeaseModal") === "true";
@@ -51,9 +52,31 @@ export default function Page() {
 
   return (
     <>
+      <div className='sm:hidden'>
+        <button onClick={() => setIsMobileOpen((s) => !s)} className='flex w-full justify-between px-5 py-2'>
+          <div className="font-medium text-xl leading-normal text-[#101828]">
+            Filters
+          </div>
+          <div
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+          >
+            <Filter aria-hidden="true" className="h-6 w-6 text-mf-gray-600" />
+          </div>
+        </button>
+        {isMobileOpen && (
+          <ModalSidebar
+            isLeaseModalOpen={isLeaseModalOpen}
+            setIsLeaseModalOpen={setIsLeaseModalOpen}
+            savedModel={savedModel}
+            step={step}
+            successUrl={successUrl}
+            canceledUrl={canceledUrl}
+          />
+        )}
+      </div>
       <div className="flex">
         {/* Left sidebar */}
-        <div className="w-80 border-r border-[#f2f4f7]">
+        <div className="hidden w-80 border-r border-[#f2f4f7] sm:block">
           <ModalSidebar
             isLeaseModalOpen={isLeaseModalOpen}
             setIsLeaseModalOpen={setIsLeaseModalOpen}
@@ -65,18 +88,18 @@ export default function Page() {
         </div>
 
         {/* Main content area */}
-        <div className="flex-1 p-8">
-          <div className="inline-flex h-16 w-full animate-slide-in items-center justify-between p-8">
+        <div className="flex-1 p-3 w-full sm:p-8">
+          <div className="inline-flex flex-wrap w-full animate-slide-in items-center justify-between p-3 sm:p-8">
             <div className="text-2xl font-medium leading-loose text-[#101828]">
               Models
             </div>
-            <div className="text-2xl font-normal leading-loose text-[#d0d5dd]">
+            <div className="text-2xl whitespace-nowrap font-normal leading-loose text-[#d0d5dd]">
               {modelsInfo?.length} Models
             </div>
           </div>
 
           {/* Search Bar */}
-          <div className="flex animate-slide-in justify-center px-8 py-3">
+          <div className="flex animate-slide-in justify-center p-3 sm:px-8 py-3">
             <div className="relative w-full">
               <Combobox
                 value={query}
@@ -96,7 +119,7 @@ export default function Page() {
             </div>
           </div>
           {modelsInfo && (
-            <div className="flex animate-slide-in flex-col gap-4 p-8">
+            <div className="flex animate-slide-in flex-col gap-4 p-3 sm:p-8">
               {filteredModels?.map((model) => (
                 <ModelCard
                   key={model.name}

@@ -7,6 +7,7 @@ import { Tab, TabGroup, TabList } from "@headlessui/react";
 import { ChevronRight } from "lucide-react";
 
 import { AppCard } from "./_components/AppCard";
+import SearchBar from "./_components/SearchBar";
 
 export interface App {
   id: number;
@@ -120,25 +121,28 @@ export default function Page() {
         />
 
         {/* Content with background */}
-        <div className="relative flex h-full flex-col items-start justify-center gap-6 pb-20 pl-10 pt-96">
-          <div className="animation-delay-[0.5s] flex h-36 animate-slide-in flex-col items-start justify-start self-stretch">
-            <div className="leading-18 self-stretch text-6xl font-light text-[#1c3836]">
+        <div className="relative flex h-full flex-col items-start justify-center gap-6 pb-12 pl-10 pr-10 pt-36 sm:pb-20 sm:pt-96">
+          <div className="animation-delay-[0.5s] flex animate-slide-in flex-col items-start justify-between self-stretch sm:justify-start">
+            <div className="leading-18 self-stretch text-3xl font-light text-[#1c3836] sm:text-6xl">
               Decentralized LLMs
             </div>
-            <div className="leading-18 animate-slide-in self-stretch text-6xl font-light text-[#1c3836] delay-300">
+            <div className="leading-18 animate-slide-in self-stretch text-3xl font-light text-[#1c3836] delay-300 sm:text-6xl">
               at your fingertips
             </div>
           </div>
           <div className="animate-slide-in self-stretch leading-loose text-[#667085] delay-300">
             Cheaper, better, faster. Powered by Bittensor on subnet 4.
           </div>
-          <div className="inline-flex animate-slide-in items-center justify-start gap-6 delay-700">
+          <div className="relative w-full max-w-80 pt-10 lg:hidden">
+            <SearchBar />
+          </div>
+          <div className="flex w-full animate-slide-in flex-col items-center justify-start gap-6 pt-10 delay-700 sm:w-fit sm:flex-row lg:pt-20">
             <Link
               href="/models"
-              className="group relative flex h-12 w-44 items-center justify-center"
+              className="group relative flex h-12 w-full items-center justify-center sm:w-44"
             >
-              <div className="absolute h-11 w-40 rounded-full border-2 border-black opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-white group-hover:border-0">
+              <div className="absolute h-11 w-full rounded-full border-2 border-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:w-40" />
+              <div className="inline-flex w-full items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-white group-hover:border-0">
                 <span className="flex items-center gap-2 text-sm font-semibold leading-tight">
                   Browse Models
                   <ChevronRight className="h-4 w-4 opacity-50" />
@@ -147,9 +151,9 @@ export default function Page() {
             </Link>
             <Link
               href="https://discord.gg/manifold"
-              className="flex items-center justify-center gap-2 rounded-full border border-[#e4e7ec] bg-white px-3.5 py-2.5 text-[#344054] shadow shadow-inner hover:border-[#d0d5dd]"
+              className="flex w-full items-center justify-center gap-2 rounded-full border border-[#e4e7ec] bg-white px-3.5 py-2.5 text-[#344054] shadow shadow-inner hover:border-[#d0d5dd]"
             >
-              <span className="flex items-center gap-2 text-sm font-semibold leading-tight">
+              <span className="flex items-center gap-2 whitespace-nowrap text-sm font-semibold leading-tight">
                 Learn about SN4
                 <Image
                   src="/DiscordIcon.svg"
@@ -164,18 +168,17 @@ export default function Page() {
       </div>
 
       {/* Content without background */}
-      <div className="-mt-10 px-10">
+      <div className="-mt-10 px-4 sm:px-10">
         <div className="animate-slide-in-delay">
           <TabGroup>
-            <TabList className="inline-flex h-12 w-full items-center justify-start gap-2 rounded-full border border-[#e4e7ec] bg-white p-2">
+            <TabList className="inline-flex w-full items-center justify-start gap-2 overflow-x-scroll rounded-full border border-[#e4e7ec] bg-white p-2">
               {tabs.map((tab, index) => (
                 <Tab
                   key={index}
-                  className={`flex h-9 items-center justify-center gap-1 rounded-full px-3 py-2 text-sm font-semibold leading-tight ${
-                    selectedIndex === index
+                  className={`flex h-fit items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold leading-tight ${selectedIndex === index
                       ? "bg-[#f2f4f7] text-[#475467]"
                       : "text-[#475467] opacity-80 hover:bg-gray-100"
-                  }`}
+                    }`}
                   onClick={() => setSelectedIndex(index)}
                 >
                   {tab}

@@ -12,7 +12,7 @@ export const AppCard = ({
   rating,
 }: AppCardProps) => {
   return (
-    <div className="flex h-44 w-80 flex-col items-start justify-start gap-3 rounded-xl border border-[#e4e7ec] bg-white p-5 shadow">
+    <div className="flex w-full h-44 sm:w-80 flex-col items-start justify-start gap-3 rounded-xl border border-[#e4e7ec] bg-white p-5 shadow">
       <div className="h-5 self-stretch text-lg font-medium leading-7 text-[#667085]">
         {title}
       </div>
