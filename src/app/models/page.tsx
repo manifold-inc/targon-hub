@@ -51,15 +51,16 @@ export default function Page() {
 
   return (
     <>
-      <div className='sm:hidden'>
+      <div className="sm:hidden">
         <WatchForSuccess />
-        <button onClick={() => setIsMobileOpen((s) => !s)} className='flex w-full justify-between px-5 py-2'>
-          <div className="font-medium text-xl leading-normal text-[#101828]">
+        <button
+          onClick={() => setIsMobileOpen((s) => !s)}
+          className="flex w-full justify-between px-5 py-2"
+        >
+          <div className="text-xl font-medium leading-normal text-[#101828]">
             Filters
           </div>
-          <div
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-          >
+          <div className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
             <Filter aria-hidden="true" className="h-6 w-6 text-mf-gray-600" />
           </div>
         </button>
@@ -84,18 +85,18 @@ export default function Page() {
         </div>
 
         {/* Main content area */}
-        <div className="flex-1 p-3 w-full sm:p-8">
-          <div className="inline-flex flex-wrap w-full animate-slide-in items-center justify-between p-3 sm:p-8">
+        <div className="w-full flex-1 p-3 sm:p-8">
+          <div className="inline-flex w-full animate-slide-in flex-wrap items-center justify-between p-3 sm:p-8">
             <div className="text-2xl font-medium leading-loose text-[#101828]">
               Models
             </div>
-            <div className="text-2xl whitespace-nowrap font-normal leading-loose text-[#d0d5dd]">
+            <div className="whitespace-nowrap text-2xl font-normal leading-loose text-[#d0d5dd]">
               {modelsInfo?.length} Models
             </div>
           </div>
 
           {/* Search Bar */}
-          <div className="flex animate-slide-in justify-center p-3 sm:px-8 py-3">
+          <div className="flex animate-slide-in justify-center p-3 py-3 sm:px-8">
             <div className="relative w-full">
               <Combobox
                 value={query}

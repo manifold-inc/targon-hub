@@ -7,11 +7,11 @@ export const WatchForSuccess = () => {
   const router = useRouter();
   useEffect(() => {
     if (params.get("success")) {
-      router.push(params.get("redirectTo") ?? "/models");
+      router.push(params.get("redirect") ?? "/models");
       setTimeout(() => toast.success("Successfully purchased more credits"));  
     }
     if (params.get("canceled")) {
-      router.push(params.get("redirectTo") ?? "/models");
+      router.push(params.get("redirect") ?? "/models");
       setTimeout(() => toast.info("Canceled transaction"));
     }
   }, [params, router]);
