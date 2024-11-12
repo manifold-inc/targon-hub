@@ -97,11 +97,11 @@ for chunk in response:
                         : `/models?openLeaseModal=true&model=${encodeURIComponent(params.slug)}&step=0`
                       : `/sign-in?redirect=${encodeURIComponent("/models/" + params.slug)}`
                   }
-                  className="group relative flex h-12 w-28 items-center justify-center"
+                  className="group relative flex h-12 w-32 items-center justify-center"
                 >
-                  <div className="absolute h-11 w-24 rounded-full border-2 border-black opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="absolute h-11 w-32 rounded-full border-2 border-black opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   <span className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-white group-hover:border-0">
-                    <span className="w-16 text-center text-sm font-semibold leading-tight">
+                    <span className="w-24 text-center text-sm font-semibold leading-tight">
                       {user?.id ? (data.enabled ? "Use Now!" : "Lease Model") : "Sign in!"}
                     </span>
                   </span>

@@ -70,6 +70,7 @@ export const modelRouter = createTRPCRouter({
         modelName: Model.name,
         modality: Model.modality,
         description: Model.description,
+        enabled: Model.enabled,
       })
       .from(Model);
 

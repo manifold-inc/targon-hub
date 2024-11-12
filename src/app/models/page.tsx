@@ -124,6 +124,7 @@ export default function Page() {
                   organization={model.organization ?? ""}
                   modality={model.modality ?? ""}
                   description={model.description ?? ""}
+                  enabled={model.enabled ?? false}
                 />
               ))}
             </div>

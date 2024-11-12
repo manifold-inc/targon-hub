@@ -6,6 +6,7 @@ interface ModelCardProps {
   organization: string;
   modality: string;
   description: string;
+  enabled: boolean;
 }
 
 export default function ModelCard({
@@ -13,6 +14,7 @@ export default function ModelCard({
   modality,
   organization,
   description,
+  enabled,
 }: ModelCardProps) {
   const getRandomGradient = () => {
     const gradients = [
@@ -82,15 +84,22 @@ export default function ModelCard({
           </div>
           <div className="h-5 w-px bg-[#e4e7ec]" />
           <div className="text-sm leading-tight text-[#667085]">
-            $0.252 /M Input Tokens
-          </div>
-          <div className="h-5 w-px bg-[#e4e7ec]" />
-          <div className="text-sm leading-tight text-[#667085]">
             $0.15 /M Output Tokens
           </div>
           <div className="h-5 w-px bg-[#e4e7ec]" />
-          <div className="text-sm leading-tight text-[#667085]">
-            $0.11 /K input imgs
+          <div
+            className={`inline-flex h-6 items-center justify-start gap-1.5 rounded-full border py-0.5 pl-2 pr-2.5 ${
+              enabled ? "border-[#16a34a] text-[#16a34a]" : "border-[#dc2626] text-[#dc2626]"
+                  }`}
+                >
+                  <div
+                    className={`h-1.5 w-1.5 rounded-full ${
+              enabled ? "bg-[#16a34a]" : "bg-[#dc2626]"
+            }`}
+          />
+            <span className="text-center text-sm font-medium leading-tight">
+              {enabled ? "Enabled" : "Disabled"}
+            </span>
           </div>
         </div>
       </div>
