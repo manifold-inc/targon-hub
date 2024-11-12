@@ -18,7 +18,7 @@ export default function Page() {
   const [isLeaseModalOpen, setIsLeaseModalOpen] = useState(() => {
     return searchParams.get("openLeaseModal") === "true";
   });
-  const savedModel = searchParams.get("model");
+  const savedModel = decodeURIComponent(searchParams.get("model") ?? "");
   const step = Number(searchParams.get("step")) || null;
 
   const { data: modelsInfo } = reactClient.model.getModelsInfo.useQuery();
