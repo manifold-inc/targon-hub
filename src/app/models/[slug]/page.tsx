@@ -130,26 +130,26 @@ for chunk in response:
               </div>
 
               <div className="py-8">
-                <div className={`h-64 w-full rounded-lg bg-gradient-to-r ${gradient}`} />
+                <div
+                  className={`h-64 w-full rounded-lg bg-gradient-to-r ${gradient}`}
+                />
               </div>
 
               <div className="flex flex-wrap justify-center gap-4">
-                {[
-                  { label: "Output Tokens", price: `${data.cpt} C/T` },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="inline-flex h-20 max-w-64 flex-grow flex-col items-start justify-center gap-2 rounded-xl bg-gray-50 px-5 py-4"
-                  >
-                    <span className="whitespace-nowrap text-sm leading-tight text-[#667085]">
-                      {item.label}
-                    </span>
-                    <span className="text-[#344054]">{item.price}</span>
-                  </div>
-                ))}
+                {[{ label: "Output Tokens", price: `${data.cpt} C/T` }].map(
+                  (item) => (
+                    <div
+                      key={item.label}
+                      className="inline-flex h-20 max-w-64 flex-grow flex-col items-start justify-center gap-2 rounded-xl bg-gray-50 px-5 py-4"
+                    >
+                      <span className="whitespace-nowrap text-sm leading-tight text-[#667085]">
+                        {item.label}
+                      </span>
+                      <span className="text-[#344054]">{item.price}</span>
+                    </div>
+                  ),
+                )}
               </div>
-
-
 
               <p className="py-6 text-sm leading-tight text-[#101828]">
                 {data?.description}
@@ -225,11 +225,11 @@ for chunk in response:
                 ))}
               </ol>
             </section>
-            <section  id="parameters" data-section>
+            <section id="parameters" data-section>
               <div className="py-10">
                 <div className="h-px w-full bg-[#e4e7ec]" />
               </div>
-              <p className="text-2xl leading-loose hidden text-[#101828]">
+              <p className="hidden text-2xl leading-loose text-[#101828]">
                 Parameters
               </p>
 
@@ -261,7 +261,7 @@ for chunk in response:
               ].map((param) => (
                 <div
                   key={param.name}
-                  className="flex w-full hidden flex-col items-start justify-between py-6 sm:flex-row"
+                  className="flex hidden w-full flex-col items-start justify-between py-6 sm:flex-row"
                 >
                   <div className="flex-1 pb-4 sm:pb-0">
                     <div className="mb-2 flex items-center gap-3">

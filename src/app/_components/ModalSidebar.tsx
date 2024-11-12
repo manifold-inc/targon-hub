@@ -77,7 +77,7 @@ export default function ModalSidebar({
   return (
     <aside className="h-full pr-2 pt-2 sm:animate-slide-in-delay sm:pr-8 sm:pt-10">
       <div className="flex flex-col gap-2.5">
-        <div className="p-3 animate-slide-in-1 sm:animate-none">
+        <div className="animate-slide-in-1 p-3 sm:animate-none">
           <div
             className="flex cursor-pointer items-center justify-between"
             onClick={() => toggleSection("modality")}
@@ -135,7 +135,7 @@ export default function ModalSidebar({
           )}
         </div>
 
-        <div className="p-3 animate-slide-in-2 sm:animate-none">
+        <div className="animate-slide-in-2 p-3 sm:animate-none">
           <div
             className="flex cursor-pointer items-center justify-between"
             onClick={() => toggleSection("contextLength")}
@@ -215,7 +215,7 @@ export default function ModalSidebar({
           )}
         </div>
 
-        <div className="p-3 animate-slide-in-3 sm:animate-none">
+        <div className="animate-slide-in-3 p-3 sm:animate-none">
           <div
             className="flex cursor-pointer items-center justify-between"
             onClick={() => toggleSection("promptPricing")}
@@ -333,7 +333,7 @@ export default function ModalSidebar({
           )}
         </div>
 
-        <div className="p-3 animate-slide-in-4 sm:animate-none">
+        <div className="animate-slide-in-4 p-3 sm:animate-none">
           <div
             className="flex cursor-pointer items-center justify-between"
             onClick={() => toggleSection("organization")}
@@ -414,7 +414,7 @@ export default function ModalSidebar({
           )}
         </div>
 
-        <div className="p-3 animate-slide-in-5 sm:animate-none">
+        <div className="animate-slide-in-5 p-3 sm:animate-none">
           <div
             className="flex cursor-pointer items-center justify-between"
             onClick={() => toggleSection("category")}
@@ -491,7 +491,7 @@ export default function ModalSidebar({
           )}
         </div>
 
-        <div className="p-3 animate-slide-in-6 sm:animate-none">
+        <div className="animate-slide-in-6 p-3 sm:animate-none">
           <div
             className="flex cursor-pointer items-center justify-between"
             onClick={() => toggleSection("parameters")}
@@ -561,7 +561,7 @@ export default function ModalSidebar({
           )}
         </div>
 
-        <div className="flex justify-center p-3 animate-slide-in-7 sm:animate-none">
+        <div className="flex animate-slide-in-7 justify-center p-3 sm:animate-none">
           <button
             className="group relative flex h-12 w-full items-center justify-center sm:w-44"
             onClick={() => setIsLeaseModalOpen(true)}

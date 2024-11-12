@@ -5,8 +5,8 @@ import {
   CheckIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  Loader2,
   InfoIcon,
+  Loader2,
   XIcon,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -186,11 +186,13 @@ export default function LeaseModal({
         <DialogPanel className="w-full max-w-3xl space-y-4 rounded-xl border bg-white p-8">
           <div className="flex items-center justify-between">
             <div className="flex-1" /> {/* Spacer */}
-            <p className="text-center text-xl whitespace-nowrap font-semibold flex-1">Lease a Model</p>
-            <div className="flex-1 flex justify-end">
+            <p className="flex-1 whitespace-nowrap text-center text-xl font-semibold">
+              Lease a Model
+            </p>
+            <div className="flex flex-1 justify-end">
               <button
                 onClick={handleClose}
-                className="sm:hidden p-2 text-gray-500 hover:text-gray-700"
+                className="p-2 text-gray-500 hover:text-gray-700 sm:hidden"
               >
                 <XIcon className="h-5 w-5" />
               </button>
@@ -268,7 +270,7 @@ export default function LeaseModal({
 
           {/* Step Content */}
           {currentStep === 0 && (
-            <div className="mx-auto flex w-full max-w-xl flex-col items-center py-8 px-4 sm:px-0">
+            <div className="mx-auto flex w-full max-w-xl flex-col items-center px-4 py-8 sm:px-0">
               <form
                 className="w-full space-y-4"
                 onSubmit={(e) => e.preventDefault()}
@@ -276,17 +278,17 @@ export default function LeaseModal({
                 <div className="flex flex-col space-y-2">
                   <label
                     htmlFor="modelUrl"
-                    className="text-center sm:text-left text-sm font-medium text-gray-700"
+                    className="text-center text-sm font-medium text-gray-700 sm:text-left"
                   >
                     HuggingFace Model{" "}
                     <span className="text-red-500">Required</span>
                   </label>
-                  <p className="text-center sm:text-left text-sm text-gray-500">
+                  <p className="text-center text-sm text-gray-500 sm:text-left">
                     HuggingFace Model Repository (e.g.,
                     NousResearch/Hermes-3-Llama-3.1-8B).
                   </p>
                   <div className="flex w-full items-center rounded-lg border border-gray-300 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500">
-                    <span className="hidden sm:block whitespace-nowrap pl-4 text-sm sm:text-base text-gray-500">
+                    <span className="hidden whitespace-nowrap pl-4 text-sm text-gray-500 sm:block sm:text-base">
                       https://huggingface.co/
                     </span>
                     <div className="relative sm:hidden">
@@ -309,7 +311,7 @@ export default function LeaseModal({
                       value={model}
                       onChange={(e) => setModel(e.target.value)}
                       placeholder="organization/model-name"
-                      className="w-full border-0 px-0 py-2 text-sm sm:text-base outline-none focus:ring-0"
+                      className="w-full border-0 px-0 py-2 text-sm outline-none focus:ring-0 sm:text-base"
                     />
                   </div>
                 </div>
@@ -351,13 +353,15 @@ export default function LeaseModal({
 
                 <div className="flex flex-col gap-2 py-4 text-sm">
                   <div className="flex flex-row justify-between">
-                    <span className="text-gray-500 whitespace-nowrap">Your Balance:</span>
+                    <span className="whitespace-nowrap text-gray-500">
+                      Your Balance:
+                    </span>
                     <span className="whitespace-nowrap">
                       {formatLargeNumber(user.data?.credits ?? 0)} credits
                     </span>
                   </div>
                   {amountNeeded > 0 && (
-                    <div className="flex flex-col sm:flex-row sm:justify-between text-red-600">
+                    <div className="flex flex-col text-red-600 sm:flex-row sm:justify-between">
                       <span className="font-medium">
                         Additional Credits Needed:
                       </span>
@@ -419,13 +423,15 @@ export default function LeaseModal({
                       onClick={() => {
                         checkout.mutate({
                           purchaseAmount: Number(
-                            (Number(amountNeeded) / CREDIT_PER_DOLLAR).toFixed(2)
+                            (Number(amountNeeded) / CREDIT_PER_DOLLAR).toFixed(
+                              2,
+                            ),
                           ),
                           redirectTo: `/models?openLeaseModal=true&model=${encodeURIComponent(model)}&step=1`,
                         });
                       }}
                       disabled={checkout.isLoading}
-                      className="relative inline-flex h-10 items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-2 py-2 text-[11px] sm:px-4 sm:py-2.5 sm:text-sm font-semibold text-white hover:bg-[#101828]/90"
+                      className="relative inline-flex h-10 items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-2 py-2 text-[11px] font-semibold text-white hover:bg-[#101828]/90 sm:px-4 sm:py-2.5 sm:text-sm"
                     >
                       {checkout.isLoading ? (
                         <Loader2 className="h-5 w-5 animate-spin" />
@@ -480,15 +486,17 @@ export default function LeaseModal({
 
                 <div className="flex flex-col gap-2 py-4 text-sm">
                   <div className="flex flex-row justify-between">
-
-                    
-                    <span className="text-gray-500 whitespace-nowrap">Your Balance:</span>
+                    <span className="whitespace-nowrap text-gray-500">
+                      Your Balance:
+                    </span>
                     <span className="whitespace-nowrap">
                       {formatLargeNumber(user.data?.credits ?? 0)} credits
                     </span>
                   </div>
                   <p className="flex justify-between font-medium">
-                    <span className="text-gray-500 whitespace-nowrap">Remaining Balance:</span>
+                    <span className="whitespace-nowrap text-gray-500">
+                      Remaining Balance:
+                    </span>
                     <span className="whitespace-nowrap">
                       {formatLargeNumber(
                         user.data
@@ -546,7 +554,7 @@ export default function LeaseModal({
                       })
                     }
                     disabled={checkout.isLoading}
-                    className="relative inline-flex h-10 items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-2 py-2 text-[11px] sm:px-4 sm:py-2.5 sm:text-sm font-semibold text-white hover:bg-[#101828]/90"
+                    className="relative inline-flex h-10 items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-2 py-2 text-[11px] font-semibold text-white hover:bg-[#101828]/90 sm:px-4 sm:py-2.5 sm:text-sm"
                   >
                     {checkout.isLoading ? (
                       <Loader2 className="h-5 w-5 animate-spin" />

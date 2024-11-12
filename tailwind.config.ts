@@ -116,7 +116,6 @@ export default {
         "slide-in-5": "slide-in 0.5s ease-out both 0.8s",
         "slide-in-6": "slide-in 0.5s ease-out both 1.0s",
         "slide-in-7": "slide-in 0.5s ease-out both 1.2s",
-        
       },
       keyframes: {
         "fade-in": {
