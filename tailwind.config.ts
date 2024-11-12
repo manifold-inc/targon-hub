@@ -111,12 +111,12 @@ export default {
         "slide-in": "slide-in .6s ease-out backwards 0.2s",
         "slide-in-delay": "slide-in 0.6s ease-in backwards 0.5s",
         "slide-in-1": "slide-in 0.5s ease-out both 0s",
-        "slide-in-2": "slide-in 0.5s ease-out both 0.2s",
-        "slide-in-3": "slide-in 0.5s ease-out both 0.4s",
-        "slide-in-4": "slide-in 0.5s ease-out both 0.6s",
-        "slide-in-5": "slide-in 0.5s ease-out both 0.8s",
-        "slide-in-6": "slide-in 0.5s ease-out both 1.0s",
-        "slide-in-7": "slide-in 0.5s ease-out both 1.2s",
+        "slide-in-2": "slide-in 0.5s ease-out both 0.05s",
+        "slide-in-3": "slide-in 0.5s ease-out both 0.1s",
+        "slide-in-4": "slide-in 0.5s ease-out both 0.15s",
+        "slide-in-5": "slide-in 0.5s ease-out both 0.2s",
+        "slide-in-6": "slide-in 0.5s ease-out both 0.25s",
+        "slide-in-7": "slide-in 0.5s ease-out both 0.3s",
       },
       keyframes: {
         "fade-in": {
