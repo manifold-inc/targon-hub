@@ -268,7 +268,7 @@ export default function LeaseModal({
 
           {/* Step 1 */}
           {currentStep === 1 && (
-            <div className="mx-auto flex w-full max-w-xl flex-col items-center py-8">
+            <div className="mx-auto flex w-full max-w-xl flex-col items-center py-8 gap-4">
               <div className="w-full rounded-lg border bg-gray-50 px-6 pt-6 shadow-md">
                 <div className="flex flex-col items-center justify-center gap-2 border-b pb-4">
                   <h4 className="font-semibold">Model Cost Summary</h4>
@@ -486,8 +486,12 @@ export default function LeaseModal({
                 <button
                   type="button"
                   onClick={handleNext}
-                  disabled={leaseModelMutation.isLoading}
-                  className="relative inline-flex h-10 w-36 items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#101828]/90"
+                  disabled={leaseModelMutation.isLoading || requiredGPUS > 8}
+                  className={`relative inline-flex h-10 w-36 items-center justify-center gap-1.5 rounded-full border-2 px-4 py-2.5 text-sm font-semibold ${
+                    requiredGPUS > 8
+                      ? "cursor-not-allowed border-transparent bg-gray-100 text-gray-400"
+                      : "border-white bg-[#101828] text-white hover:bg-[#101828]/90"
+                  }`}
                 >
                   <span>Next</span>
                   <ChevronRightIcon className="h-5 w-5" />
