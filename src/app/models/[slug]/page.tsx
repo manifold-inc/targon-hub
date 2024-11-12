@@ -72,7 +72,7 @@ for chunk in response:
         <div className="mx-auto w-10/12 py-20 lg:w-1/2">
           <div className="mx-auto">
             <section id="overview" data-section>
-              <header className="flex w-full justify-between pb-6 pr-4">
+              <header className="flex w-full flex-col gap-4 pb-6 pr-4 sm:flex-row sm:justify-between">
                 <h1 className="text-xl leading-9 text-[#101828] sm:text-2xl md:text-3xl">
                   {modelName}
                 </h1>
@@ -84,7 +84,7 @@ for chunk in response:
                         : `/models?openLeaseModal=true&model=${encodeURIComponent(params.slug)}&step=0`
                       : `/sign-in?redirect=${encodeURIComponent("/models/" + params.slug)}`
                   }
-                  className="group relative flex h-12 w-32 items-center justify-center"
+                  className="group relative flex h-12 w-32 items-center justify-center self-center sm:self-auto"
                 >
                   <div className="absolute h-11 w-32 rounded-full border-2 border-black opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   <span className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-white group-hover:border-0">

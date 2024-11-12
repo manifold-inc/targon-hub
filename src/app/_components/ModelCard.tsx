@@ -22,11 +22,11 @@ export default function ModelCard({
   const gradient = getModelGradient(organization + "/" + name);
 
   return (
-    <div className="flex min-h-40 items-center gap-10 bg-white py-5 sm:p-5">
+    <div className="flex min-h-40 items-center gap-10 bg-white py-5 sm:p-5 animate-slide-in">
       <div className="hidden h-28 w-40 shrink-0 overflow-hidden rounded-lg lg:block">
         <div className={`h-full w-full bg-gradient-to-br ${gradient}`} />
       </div>
-      
+
 
       {/* Second column - content structure */}
       <div className="inline-flex w-full flex-col items-start justify-start gap-4">
@@ -74,7 +74,7 @@ export default function ModelCard({
           </div>
           <div className="h-5 w-px bg-[#e4e7ec]" />
           <div className="text-sm leading-tight text-[#667085]">
-            {cpt} Credits Per Output Token
+            {cpt} C/T
           </div>
           <div className="h-5 w-px bg-[#e4e7ec]" />
           <div
