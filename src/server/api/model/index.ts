@@ -48,8 +48,7 @@ export const modelRouter = createTRPCRouter({
         name: Model.name,
         modality: Model.modality,
       })
-      .from(Model)
-      .where(eq(Model.enabled, true));
+      .from(Model);
 
     // Extract unique organizations and modalities
     const organizations = new Set(
