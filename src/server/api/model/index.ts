@@ -200,6 +200,7 @@ export const modelRouter = createTRPCRouter({
       const gpuData = (await gpuResponse.json()) as {
         required_gpus: number;
       };
+      console.log(gpuData)
       if (!gpuData.required_gpus) {
         throw new TRPCError({
           message: "Failed getting required GPUS",

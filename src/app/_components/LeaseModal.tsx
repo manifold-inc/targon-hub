@@ -158,8 +158,9 @@ export default function LeaseModal({
 
   // Add conversion helper
   const convertDollarsToCredits = (dollars: number) =>
-    dollars * CREDIT_PER_DOLLAR;
-  const convertCreditsToUsd = (credits: number) => credits / CREDIT_PER_DOLLAR;
+    Number(BigInt(dollars) * BigInt(CREDIT_PER_DOLLAR));
+  const convertCreditsToUsd = (credits: number) => 
+    Number(BigInt(credits) / BigInt(CREDIT_PER_DOLLAR));
 
   // Update the purchase amount handling
   const [useCredits, setUseCredits] = useState(true);
@@ -375,13 +376,13 @@ export default function LeaseModal({
                   <div className="flex items-center justify-center gap-4">
                     <button
                       onClick={() => handleCurrencyToggle(false)}
-                      className={`rounded-lg px-4 py-2 text-sm ${!useCredits ? "bg-green-500 text-white" : "bg-gray-100"}`}
+                      className={`rounded-lg px-4 py-2 text-sm ${!useCredits ? "bg-blue-500 text-white" : "bg-gray-100"}`}
                     >
                       Dollars
                     </button>
                     <button
                       onClick={() => handleCurrencyToggle(true)}
-                      className={`rounded-lg px-4 py-2 text-sm ${useCredits ? "bg-green-500 text-white" : "bg-gray-100"}`}
+                      className={`rounded-lg px-4 py-2 text-sm ${useCredits ? "bg-blue-500 text-white" : "bg-gray-100"}`}
                     >
                       Credits
                     </button>
@@ -512,13 +513,13 @@ export default function LeaseModal({
             </div>
           )}
 
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <button
               type="button"
               onClick={handlePrevious}
               disabled={currentStep === 0}
               className={classNames(
-                "relative inline-flex h-10 w-36 items-center justify-center gap-1.5 rounded-full border-2 border-gray-100 px-4 py-2.5 text-sm font-semibold",
+                "relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-gray-100 px-4 py-2.5 text-sm font-semibold sm:w-36",
                 currentStep === 0
                   ? "cursor-not-allowed border-transparent bg-gray-100 text-gray-400"
                   : "border-[#e4e7ec] bg-white text-[#344054] hover:border-gray-300",
@@ -538,12 +539,12 @@ export default function LeaseModal({
                       )}`,
                     )
                   }
-                  className="relative inline-flex h-10 w-36 items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#101828]/90"
+                  className="relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#101828]/90 sm:w-36"
                 >
                   Sign In
                 </button>
               ) : amountNeeded > 0 ? (
-                <div className="flex gap-2">
+                <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
                   <button
                     onClick={() =>
                       checkout.mutate({
@@ -554,7 +555,7 @@ export default function LeaseModal({
                       })
                     }
                     disabled={checkout.isLoading}
-                    className="relative inline-flex h-10 items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-2 py-2 text-[11px] font-semibold text-white hover:bg-[#101828]/90 sm:px-4 sm:py-2.5 sm:text-sm"
+                    className="relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-2 py-2 text-[11px] font-semibold text-white hover:bg-[#101828]/90 sm:w-auto sm:px-4 sm:py-2.5 sm:text-sm"
                   >
                     {checkout.isLoading ? (
                       <Loader2 className="h-5 w-5 animate-spin" />
@@ -568,7 +569,7 @@ export default function LeaseModal({
                   type="button"
                   onClick={handleNext}
                   disabled={leaseModelMutation.isLoading || requiredGPUS > 8}
-                  className={`relative inline-flex h-10 w-36 items-center justify-center gap-1.5 rounded-full border-2 px-4 py-2.5 text-sm font-semibold ${
+                  className={`relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 px-4 py-2.5 text-sm font-semibold sm:w-36 ${
                     requiredGPUS > 8
                       ? "cursor-not-allowed border-transparent bg-gray-100 text-gray-400"
                       : "border-white bg-[#101828] text-white hover:bg-[#101828]/90"
@@ -582,7 +583,7 @@ export default function LeaseModal({
               <button
                 type="button"
                 onClick={handleNext}
-                className="relative inline-flex h-10 w-36 items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#101828]/90"
+                className="relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#101828]/90 sm:w-36"
               >
                 <span>Confirm</span>
               </button>
@@ -594,7 +595,7 @@ export default function LeaseModal({
                   currentStep === steps.length - 1 || addModelMutation.isLoading
                 }
                 className={classNames(
-                  "relative inline-flex h-10 w-36 items-center justify-center gap-1.5 rounded-full border-2 px-4 py-2.5 text-sm font-semibold",
+                  "relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 px-4 py-2.5 text-sm font-semibold sm:w-36",
                   currentStep === steps.length - 1
                     ? "cursor-not-allowed border-transparent bg-gray-100 text-gray-400"
                     : "border-white bg-[#101828] text-white hover:bg-[#101828]/90",
