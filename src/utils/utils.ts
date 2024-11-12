@@ -48,8 +48,12 @@ export const getModelGradient = (modelFullName: string) => {
     "from-blue-500 via-indigo-500 to-violet-500",
   ];
 
-  const seed = modelFullName
+  const hash = modelFullName
     .split("")
-    .reduce((acc, char, i) => acc + char.charCodeAt(0) * (i + 1), 0);
-  return gradients[seed % gradients.length];
+    .reduce((acc, char) => {
+      const hash = ((acc << 5) - acc) + char.charCodeAt(0);
+      return hash & hash;
+    }, 0);
+  
+  return gradients[Math.abs(hash) % gradients.length];
 };
