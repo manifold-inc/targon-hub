@@ -47,6 +47,7 @@ export const modelRouter = createTRPCRouter({
       .select({
         name: Model.name,
         modality: Model.modality,
+        supportedEndpoints: Model.supportedEndpoints,
       })
       .from(Model);
 
@@ -59,9 +60,14 @@ export const modelRouter = createTRPCRouter({
       models.map((model) => model.modality).filter(Boolean),
     );
 
+    const supportedEndpoints = new Set(
+      models.map((model) => model.supportedEndpoints).filter(Boolean),
+    );
+
     return {
       organizations: Array.from(organizations),
       modalities: Array.from(modalities),
+      supportedEndpoints: Array.from(supportedEndpoints),
     };
   }),
   getModelsInfo: publicAuthlessProcedure.query(async ({ ctx }) => {
@@ -72,6 +78,7 @@ export const modelRouter = createTRPCRouter({
         description: Model.description,
         enabled: Model.enabled,
         cpt: Model.cpt,
+        supportedEndpoints: Model.supportedEndpoints,
       })
       .from(Model);
 

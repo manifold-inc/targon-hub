@@ -22,13 +22,12 @@ export default function Page() {
   const step = Number(searchParams.get("step")) || null;
 
   const { data: modelsInfo } = reactClient.model.getModelsInfo.useQuery();
-  const { activeOrganization, activeModality } = useModalSidebarStore();
+  const { activeOrganization, activeModality, activeSupportedEndpoints } = useModalSidebarStore();
+  console.log(activeSupportedEndpoints);
+  console.log(modelsInfo);
 
   // Filter models based on search query and active series
   const filteredModels = modelsInfo?.filter((model) => {
-    // If no query and no active series, include all models
-    if (!query && !activeOrganization.length) return true;
-
     // Check if model matches search query
     const matchesQuery =
       !query ||
@@ -36,17 +35,25 @@ export default function Page() {
       model.organization?.toLowerCase().includes(query.toLowerCase()) ||
       (model.modality?.toLowerCase() || "").includes(query.toLowerCase());
 
-    // Check if model matches active series
+    // Check if model matches organization filter
     const matchesOrganization =
-      !activeOrganization.length ||
+      activeOrganization.length === 0 ||
       (model.organization && activeOrganization.includes(model.organization));
 
+    // Check if model matches modality filter
     const matchesModality =
-      !activeModality.length ||
+      activeModality.length === 0 ||
       (model.modality && activeModality.includes(model.modality));
+    
+    // Check if model matches supported endpoints filter
+    const matchesSupportedEndpoints = 
+      activeSupportedEndpoints.length === 0 ||
+      activeSupportedEndpoints.every((endpoint) =>
+        model.supportedEndpoints?.includes(endpoint)
+      );
 
     // Model must match all conditions
-    return matchesQuery && matchesOrganization && matchesModality;
+    return matchesQuery && matchesOrganization && matchesModality && matchesSupportedEndpoints;
   });
 
   return (

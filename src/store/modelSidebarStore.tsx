@@ -7,7 +7,7 @@ interface ModalSidebarState {
     contextLength: boolean;
     promptPricing: boolean;
     organization: boolean;
-    category: boolean;
+    supportedEndpoints: boolean;
     parameters: boolean;
   };
   toggleSection: (section: keyof ModalSidebarState["openSections"]) => void;
@@ -34,13 +34,13 @@ interface ModalSidebarState {
   showAllOrganization: boolean;
   setShowAllOrganization: (show: boolean) => void;
 
-  // Category state
-  activeCategory: string[];
-  setActiveCategory: (
-    categoryOrUpdater: string[] | ((prev: string[]) => string[]),
+  // Supported endpoints state
+  activeSupportedEndpoints: string[];
+  setActiveSupportedEndpoints: (
+    supportedEndpointsOrUpdater: string[] | ((prev: string[]) => string[]),
   ) => void;
-  showAllCategory: boolean;
-  setShowAllCategory: (show: boolean) => void;
+  showAllSupportedEndpoints: boolean;
+  setShowAllSupportedEndpoints: (show: boolean) => void;
 
   // Parameters state
   activeParameters: string[];
@@ -58,7 +58,7 @@ export const useModalSidebarStore = create<ModalSidebarState>((set) => ({
     contextLength: false,
     promptPricing: false,
     organization: false,
-    category: false,
+    supportedEndpoints: false,
     parameters: false,
   },
   toggleSection: (section) =>
@@ -99,17 +99,17 @@ export const useModalSidebarStore = create<ModalSidebarState>((set) => ({
   showAllOrganization: false,
   setShowAllOrganization: (show) => set({ showAllOrganization: show }),
 
-  // Category
-  activeCategory: [] as string[],
-  setActiveCategory: (categoryOrUpdater) =>
+  // Supported endpoints
+  activeSupportedEndpoints: [] as string[],
+  setActiveSupportedEndpoints: (supportedEndpointsOrUpdater) =>
     set((state) => ({
-      activeCategory:
-        typeof categoryOrUpdater === "function"
-          ? categoryOrUpdater(state.activeCategory)
-          : categoryOrUpdater,
+      activeSupportedEndpoints:
+        typeof supportedEndpointsOrUpdater === "function"
+          ? supportedEndpointsOrUpdater(state.activeSupportedEndpoints)
+          : supportedEndpointsOrUpdater,
     })),
-  showAllCategory: false,
-  setShowAllCategory: (show) => set({ showAllCategory: show }),
+  showAllSupportedEndpoints: false,
+  setShowAllSupportedEndpoints: (show) => set({ showAllSupportedEndpoints: show }),
 
   // Parameters
   activeParameters: [] as string[],

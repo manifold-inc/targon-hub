@@ -40,10 +40,8 @@ export default function ModalSidebar({
     setActiveOrganization,
     showAllOrganization,
     setShowAllOrganization,
-    activeCategory,
-    setActiveCategory,
-    showAllCategory,
-    setShowAllCategory,
+    activeSupportedEndpoints,
+    setActiveSupportedEndpoints,
     activeParameters,
     setActiveParameters,
     showAllParameters,
@@ -55,13 +53,6 @@ export default function ModalSidebar({
   const priceTickLabels = ["$0", "$0.5", "$10+"];
   const priceTotalTicks = 8;
 
-  const categoryList: Record<string, string> = {
-    General: "#fde272",
-    Image: "#fac414",
-    Audio: "#ca8403",
-    Video: "#f79009",
-    Code: "#dc6803",
-  };
   const parametersList = [
     "temperature",
     "top_p",
@@ -71,8 +62,13 @@ export default function ModalSidebar({
 
   const { data: modelFilters } =
     reactClient.model.getModelFilters.useQuery() as {
-      data: { organizations: string[]; modalities: string[] } | undefined;
+      data: { organizations: string[]; modalities: string[]; supportedEndpoints: string[] } | undefined;
     };
+
+  const endpointColors: Record<string, string> = {
+    "chat": "#0284c7",
+    "completion": "#ea580c",
+  };
 
   return (
     <aside className="h-full pr-2 pt-2 sm:animate-slide-in-delay sm:pr-8 sm:pt-10">
@@ -135,7 +131,7 @@ export default function ModalSidebar({
           )}
         </div>
 
-        <div className="animate-slide-in-2 p-3 sm:animate-none">
+        <div className="animate-slide-in-2 p-3 hidden sm:animate-none">
           <div
             className="flex cursor-pointer items-center justify-between"
             onClick={() => toggleSection("contextLength")}
@@ -215,7 +211,7 @@ export default function ModalSidebar({
           )}
         </div>
 
-        <div className="animate-slide-in-3 p-3 sm:animate-none">
+        <div className="animate-slide-in-3 p-3 hidden sm:animate-none">
           <div
             className="flex cursor-pointer items-center justify-between"
             onClick={() => toggleSection("promptPricing")}
@@ -417,81 +413,64 @@ export default function ModalSidebar({
         <div className="animate-slide-in-5 p-3 sm:animate-none">
           <div
             className="flex cursor-pointer items-center justify-between"
-            onClick={() => toggleSection("category")}
+            onClick={() => toggleSection("supportedEndpoints")}
           >
             <div className="flex items-center gap-5">
               <Tag width={20} height={20} className="text-[#98a1b2]" />
               <div className="font-medium leading-normal text-[#101828]">
-                Category
+                Supported Endpoints
               </div>
             </div>
-            {openSections.category ? (
+            {openSections.supportedEndpoints ? (
               <ChevronDown width={20} height={20} className="text-black" />
             ) : (
               <ChevronUp width={20} height={20} className="text-black" />
             )}
           </div>
-          {openSections.category && (
+          {openSections.supportedEndpoints && (
             <div className="pt-2">
               <div className="inline-flex flex-col items-start justify-start gap-2 px-2">
                 <div className="flex flex-col items-start justify-start gap-2 border-l border-[#e4e7ec] px-4">
-                  {Object.entries(categoryList)
-                    .slice(
-                      0,
-                      showAllCategory ? Object.entries(categoryList).length : 3,
-                    )
-                    .map(([category, color]) => (
-                      <button
-                        key={category}
-                        onClick={() => {
-                          setActiveCategory((prev) =>
-                            prev.includes(category)
-                              ? prev.filter((s) => s !== category)
-                              : [...prev, category],
-                          );
-                        }}
-                        className={`inline-flex h-9 w-full items-center justify-start gap-1 rounded-full px-3 py-2 ${
-                          activeCategory.includes(category)
-                            ? "bg-[#f2f4f7]"
-                            : ""
-                        }`}
-                      >
-                        <div className="flex w-48 items-center justify-between px-0.5">
-                          <div
-                            className={`text-sm leading-tight ${
-                              activeCategory.includes(category)
-                                ? "text-[#344054]"
-                                : "text-[#475467]"
-                            }`}
-                          >
-                            {category}
-                          </div>
-                          <div
-                            className={`h-3 w-3 rounded-full border-2 border-white`}
-                            style={{ backgroundColor: color }}
-                          />
-                        </div>
-                      </button>
-                    ))}
-                  {Object.entries(categoryList).length > 3 && (
+                  {["chat", "completion"].map((endpoint) => (
                     <button
-                      onClick={() => setShowAllCategory(!showAllCategory)}
-                      className="inline-flex h-9 w-full items-center justify-start gap-1 rounded-full px-3 py-2 opacity-50"
+                      key={endpoint}
+                      onClick={() => {
+                        setActiveSupportedEndpoints((prev) =>
+                          prev.includes(endpoint.toUpperCase())
+                            ? prev.filter((s) => s !== endpoint.toUpperCase())
+                            : [...prev, endpoint.toUpperCase()],
+                        );
+                      }}
+                      className={`inline-flex h-9 w-full items-center justify-start gap-1 rounded-full px-3 py-2 ${
+                        activeSupportedEndpoints.includes(endpoint.toUpperCase())
+                          ? "bg-[#f2f4f7]"
+                          : ""
+                      }`}
                     >
-                      <div className="flex items-center justify-start px-0.5">
-                        <div className="text-sm font-normal leading-tight text-[#475467]">
-                          {showAllCategory ? "Show less" : "Show more"}
+                      <div className="flex w-48 items-center justify-between px-0.5">
+                        <div
+                          className={`text-sm leading-tight ${
+                            activeSupportedEndpoints.includes(endpoint.toUpperCase())
+                              ? "text-[#344054]"
+                              : "text-[#475467]"
+                          }`}
+                        >
+                          {endpoint.charAt(0).toUpperCase() + endpoint.slice(1)}
                         </div>
+                        <div
+                          className="h-3 w-3 rounded-full border-2 border-white"
+                          style={{ backgroundColor: endpointColors[endpoint] }}
+                        />
                       </div>
                     </button>
-                  )}
+                  ))}
                 </div>
               </div>
             </div>
           )}
         </div>
 
-        <div className="animate-slide-in-6 p-3 sm:animate-none">
+        <div className="animate-slide-in-6 p-3 hidden sm:animate-none">
           <div
             className="flex cursor-pointer items-center justify-between"
             onClick={() => toggleSection("parameters")}
