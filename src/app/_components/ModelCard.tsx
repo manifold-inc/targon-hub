@@ -39,16 +39,16 @@ export default function ModelCard({
       {/* Second column - content structure */}
       <div className="inline-flex w-full flex-col items-start justify-start gap-4">
         {/* Top row with name, tokens, and category */}
-        <div className="flex flex-col justify-start md:flex-row w-full md:items-center md:justify-between">
+        <div className="flex w-full flex-col justify-start md:flex-row md:items-center md:justify-between">
           <div className="text-lg font-medium leading-7 text-[#101828]">
             <Link
-            className='sm:whitespace-nowrap'
+              className="sm:whitespace-nowrap"
               href={`/models/${encodeURIComponent(organization + "/" + name)}`}
             >
               {organization}/{name}
             </Link>
           </div>
-          <div className="flex flex-wrap md:justify-normal justify-between items-center gap-4">
+          <div className="flex flex-wrap items-center justify-between gap-4 md:justify-normal">
             <div className="flex items-center justify-center gap-1.5 rounded-md md:px-3 md:py-1.5">
               <div className="text-center text-sm font-semibold leading-tight text-[#667085]">
                 1.62M tokens
@@ -58,7 +58,7 @@ export default function ModelCard({
               <div className="relative h-2 w-2">
                 <div className="absolute left-px top-px h-1.5 w-1.5 rounded-full bg-[#155dee]" />
               </div>
-              <div className="text-center whitespace-nowrap text-sm font-medium leading-tight text-[#004eea]">
+              <div className="whitespace-nowrap text-center text-sm font-medium leading-tight text-[#004eea]">
                 {modality === "text-generation"
                   ? "Text Generation"
                   : "Text to Image"}
@@ -68,12 +68,12 @@ export default function ModelCard({
         </div>
 
         {/* Description row */}
-        <div className="self-stretch text-sm leading-tight text-[#667085] line-clamp-2">
+        <div className="line-clamp-2 self-stretch text-sm leading-tight text-[#667085]">
           {description}
         </div>
 
         {/* Bottom row with metadata */}
-        <div className="flex h-5 w-full items-center flex-wrap whitespace-nowrap justify-between">
+        <div className="flex h-5 w-full flex-wrap items-center justify-between whitespace-nowrap">
           <div className="flex items-center gap-3">
             <UserRoundIcon className="h-4 w-4" />
             <div className="text-sm leading-tight text-[#667085]">

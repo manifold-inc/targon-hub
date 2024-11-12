@@ -205,7 +205,6 @@ export default function LeaseModal({
                         </span>
                       </div>
                     </div>
-
                   ) : (
                     <>
                       <div
@@ -285,10 +284,7 @@ export default function LeaseModal({
                     <span className="text-gray-500">Cost per GPU:</span>
                     <span>
                       {formatLargeNumber(COST_PER_GPU)} credits /{" "}
-                      {(
-                        COST_PER_GPU / BigInt(CREDIT_PER_DOLLAR)
-                      ).toString()}{" "}
-                      $
+                      {(COST_PER_GPU / BigInt(CREDIT_PER_DOLLAR)).toString()} $
                     </span>
                   </p>
                   <p className="flex justify-between">
@@ -297,8 +293,7 @@ export default function LeaseModal({
                     </span>
                     <span>
                       {formatLargeNumber(totalCost)} credits /{" "}
-                      {(totalCost / BigInt(CREDIT_PER_DOLLAR)).toString()}{" "}
-                      $
+                      {(totalCost / BigInt(CREDIT_PER_DOLLAR)).toString()} $
                     </span>
                   </p>
                 </div>
@@ -321,7 +316,7 @@ export default function LeaseModal({
                 </div>
               </div>
               {!user.data ? null : amountNeeded > 0 ? (
-                <div className="py-4 space-y-3">
+                <div className="space-y-3 py-4">
                   <div className="flex items-center justify-center gap-4">
                     <button
                       onClick={() => handleCurrencyToggle(false)}
@@ -372,13 +367,13 @@ export default function LeaseModal({
               ) : null}
               {requiredGPUS > 8 && (
                 <p className="rounded-md bg-yellow-50 p-3 text-yellow-700">
-                  Warning: This model requires{" "}
-                  {formatLargeNumber(requiredGPUS)} GPUs, which exceeds our
-                  limit of 8 GPUs. We will not be able to run this model.
+                  Warning: This model requires {formatLargeNumber(requiredGPUS)}{" "}
+                  GPUs, which exceeds our limit of 8 GPUs. We will not be able
+                  to run this model.
                 </p>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
 
           {/* Step 2 */}
           {currentStep === 2 && (
@@ -398,10 +393,7 @@ export default function LeaseModal({
                     <span className="text-gray-500">Cost per GPU:</span>
                     <span>
                       {formatLargeNumber(COST_PER_GPU)} credits /{" "}
-                      {(
-                        COST_PER_GPU / BigInt(CREDIT_PER_DOLLAR)
-                      ).toString()}{" "}
-                      $
+                      {(COST_PER_GPU / BigInt(CREDIT_PER_DOLLAR)).toString()} $
                     </span>
                   </p>
                   <p className="flex justify-between">
@@ -410,8 +402,7 @@ export default function LeaseModal({
                     </span>
                     <span>
                       {formatLargeNumber(totalCost)} credits /{" "}
-                      {(totalCost / BigInt(CREDIT_PER_DOLLAR)).toString()}{" "}
-                      $
+                      {(totalCost / BigInt(CREDIT_PER_DOLLAR)).toString()} $
                     </span>
                   </p>
                 </div>

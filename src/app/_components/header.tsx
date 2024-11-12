@@ -33,9 +33,7 @@ import { useAuth } from "./providers";
 import SearchBar from "./SearchBar";
 import SettingsModal from "./SettingsModal";
 
-const NAVIGATION = [
-  { slug: "/models", title: "Browse" },
-];
+const NAVIGATION = [{ slug: "/models", title: "Browse" }];
 
 const getIconForPath = (pathname: string) => {
   switch (pathname) {
@@ -119,8 +117,9 @@ export const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-10 animate-slide-in ${pathName !== "/" ? "border-b border-gray-200 bg-white" : ""
-        }`}
+      className={`sticky top-0 z-10 animate-slide-in ${
+        pathName !== "/" ? "border-b border-gray-200 bg-white" : ""
+      }`}
     >
       <nav className="text-manifold-green flex items-center justify-between p-4">
         <div className="w-60">
@@ -139,9 +138,8 @@ export const Header = () => {
           </Link>
         </div>
         <div className="hidden flex-grow justify-center lg:flex">
-
-    <div className="relative w-2/5">
-          <SearchBar />
+          <div className="relative w-2/5">
+            <SearchBar />
           </div>
         </div>
         <div className="hidden w-52 items-center justify-end gap-4 sm:flex">
@@ -315,7 +313,7 @@ export const Header = () => {
                   <div className="py-6">
                     <Link
                       href="/sign-in"
-                        onClick={() => setMobileMenuOpen(false)}
+                      onClick={() => setMobileMenuOpen(false)}
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                     >
                       Log in

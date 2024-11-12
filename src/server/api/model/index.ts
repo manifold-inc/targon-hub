@@ -202,27 +202,30 @@ export const modelRouter = createTRPCRouter({
       let description: string | undefined;
       try {
         const readmeResponse = await fetch(
-          `https://huggingface.co/${organization}/${modelName}/raw/main/README.md`
+          `https://huggingface.co/${organization}/${modelName}/raw/main/README.md`,
         );
         if (readmeResponse.ok) {
           const readmeContent = await readmeResponse.text();
           const modelDescMatch = readmeContent.match(
-            /#+\s*Model Description\s*(.*?)(?=\n#|\Z)/si
+            /#+\s*Model Description\s*(.*?)(?=\n#|\Z)/is,
           );
-          description = modelDescMatch?.[1]?.trim() || 
-            readmeContent.split('\n')
-              .filter(line => 
-                line.trim() && 
-                !line.startsWith('#') && 
-                !line.startsWith('---') &&
-                !line.startsWith('<')
+          description =
+            modelDescMatch?.[1]?.trim() ||
+            readmeContent
+              .split("\n")
+              .filter(
+                (line) =>
+                  line.trim() &&
+                  !line.startsWith("#") &&
+                  !line.startsWith("---") &&
+                  !line.startsWith("<"),
               )
               .slice(0, 3)
-              .join(' ')
+              .join(" ")
               .slice(0, 1000);
         }
       } catch (error) {
-        console.error('Error fetching README:', error);
+        console.error("Error fetching README:", error);
       }
 
       await ctx.db.insert(Model).values({

@@ -1,5 +1,5 @@
-import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
 export const WatchForSuccess = () => {
@@ -8,7 +8,7 @@ export const WatchForSuccess = () => {
   useEffect(() => {
     if (params.get("success")) {
       router.push(params.get("redirect") ?? "/models");
-      setTimeout(() => toast.success("Successfully purchased more credits"));  
+      setTimeout(() => toast.success("Successfully purchased more credits"));
     }
     if (params.get("canceled")) {
       router.push(params.get("redirect") ?? "/models");

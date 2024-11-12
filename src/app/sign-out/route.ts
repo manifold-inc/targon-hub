@@ -1,8 +1,8 @@
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { lucia, validateRequest } from "@/server/auth";
-import { revalidatePath } from "next/cache";
 
 export async function GET(): Promise<Response> {
   const { session } = await validateRequest();
@@ -17,6 +17,6 @@ export async function GET(): Promise<Response> {
     sessionCookie.value,
     sessionCookie.attributes,
   );
-  revalidatePath('/', 'layout')
+  revalidatePath("/", "layout");
   return redirect("/");
 }

@@ -21,10 +21,10 @@ export default function SearchBar() {
     query === ""
       ? models.data || []
       : (models.data ?? []).filter((model) => {
-        const modelName = model.name?.toLowerCase() || "";
-        const searchQuery = query.toLowerCase();
-        return modelName.includes(searchQuery);
-      });
+          const modelName = model.name?.toLowerCase() || "";
+          const searchQuery = query.toLowerCase();
+          return modelName.includes(searchQuery);
+        });
 
   const groupedModels = filteredModels.reduce(
     (acc, model) => {
@@ -65,7 +65,7 @@ export default function SearchBar() {
           displayValue={(model: { name: string } | null) => model?.name ?? ""}
           onChange={(event) => setQuery(event.target.value)}
         />
-        <div className="absolute hidden md:block right-3 top-1/2 -translate-y-1/2">
+        <div className="absolute right-3 top-1/2 hidden -translate-y-1/2 md:block">
           <div className="flex h-6 items-center rounded border border-[#D0D5DD] px-1 py-0.5">
             <span className="text-sm leading-tight text-[#475467]">/</span>
           </div>

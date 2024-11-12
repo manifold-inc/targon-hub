@@ -175,10 +175,11 @@ export default function Page() {
               {tabs.map((tab, index) => (
                 <Tab
                   key={index}
-                  className={`flex h-fit items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold leading-tight ${selectedIndex === index
+                  className={`flex h-fit items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold leading-tight ${
+                    selectedIndex === index
                       ? "bg-[#f2f4f7] text-[#475467]"
                       : "text-[#475467] opacity-80 hover:bg-gray-100"
-                    }`}
+                  }`}
                   onClick={() => setSelectedIndex(index)}
                 >
                   {tab}
