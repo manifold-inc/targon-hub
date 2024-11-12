@@ -77,11 +77,11 @@ for chunk in response:
 
   return (
     <div className="relative flex">
-      <div className="fixed right-20 top-32">
+      <div className="fixed lg:block hidden right-20 top-32">
         <ModelsNav />
       </div>
       <div className='animate-slide-in w-full h-fit'>
-      <div className="mx-auto w-1/2 py-20">
+      <div className="mx-auto w-3/4 lg:w-1/2 py-20">
         <div className="mx-auto">
           <section id="overview" data-section>
             <header className="flex w-full justify-between pb-6">
@@ -121,7 +121,7 @@ for chunk in response:
               />
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex gap-4 flex-wrap">
               {[
                 { label: "Input Tokens", price: "$0.252 /M" },
                 { label: "Output Tokens", price: "$0.15 /M" },
@@ -129,9 +129,9 @@ for chunk in response:
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="inline-flex h-20 w-64 flex-col items-start justify-center gap-2 rounded-xl bg-gray-50 px-5 py-4"
+                  className="inline-flex h-20 max-w-64 flex-grow flex-col items-start justify-center gap-2 rounded-xl bg-gray-50 px-5 py-4"
                 >
-                  <span className="text-sm leading-tight text-[#667085]">
+                  <span className="text-sm whitespace-nowrap leading-tight text-[#667085]">
                     {item.label}
                   </span>
                   <span className="text-[#344054]">{item.price}</span>
@@ -188,7 +188,7 @@ for chunk in response:
                 },
               ].map((app) => (
                 <li key={app.name}>
-                  <div className="flex h-[68px] w-full items-center gap-6 rounded-xl p-3">
+                  <div className="flex flex-wrap w-full items-center gap-3 sm:gap-6 rounded-xl py-3 sm:p-3">
                     <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gray-50 p-1.5">
                       <Image
                         src={app.image}
@@ -204,8 +204,11 @@ for chunk in response:
                       <span className="text-[13.02px] leading-tight text-[#667085]">
                         {app.description}
                       </span>
+                      <span className="text-[13.02px] sm:hidden leading-tight text-[#667085]">
+                        {app.tokens}
+                      </span>
                     </div>
-                    <span className="text-[13.02px] leading-tight text-[#667085]">
+                    <span className="text-[13.02px] sm:block hidden leading-tight text-[#667085]">
                       {app.tokens}
                     </span>
                   </div>
@@ -251,9 +254,9 @@ for chunk in response:
             ].map((param) => (
               <div
                 key={param.name}
-                className="flex w-full items-start justify-between py-6"
+                className="flex flex-col sm:flex-row w-full items-start justify-between py-6"
               >
-                <div className="flex-1">
+                <div className="flex-1 pb-4 sm:pb-0">
                   <div className="mb-2 flex items-center gap-3">
                     <Star width={16} height={16} className="text-[#d0d5dd]" />
                     <div className="text-sm font-medium text-[#344054]">
@@ -264,7 +267,7 @@ for chunk in response:
                     {param.description}
                   </div>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex gap-4 pl-3 sm:pl-0">
                   {["p10", "p50", "p90"].map((p) => (
                     <div key={p} className="w-[53px] text-center">
                       <div className="mb-2 text-xs text-[#98a1b2]">{p}</div>
