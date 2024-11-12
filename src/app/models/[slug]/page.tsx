@@ -225,11 +225,11 @@ for chunk in response:
                 ))}
               </ol>
             </section>
-            <section id="parameters" data-section>
+            <section  id="parameters" data-section>
               <div className="py-10">
                 <div className="h-px w-full bg-[#e4e7ec]" />
               </div>
-              <p className="text-2xl leading-loose text-[#101828]">
+              <p className="text-2xl leading-loose hidden text-[#101828]">
                 Parameters
               </p>
 
@@ -261,7 +261,7 @@ for chunk in response:
               ].map((param) => (
                 <div
                   key={param.name}
-                  className="flex w-full flex-col items-start justify-between py-6 sm:flex-row"
+                  className="flex w-full hidden flex-col items-start justify-between py-6 sm:flex-row"
                 >
                   <div className="flex-1 pb-4 sm:pb-0">
                     <div className="mb-2 flex items-center gap-3">
@@ -288,7 +288,7 @@ for chunk in response:
                   </div>
                 </div>
               ))}
-              <div className="flex flex-col gap-4 py-10">
+              <div className="flex flex-col gap-4 py-4">
                 {data.supportedEndpoints?.includes("CHAT") && (
                   <>
                     <p className="text-sm font-medium leading-tight text-[#344054]">
