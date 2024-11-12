@@ -99,7 +99,7 @@ export default function LeaseModal({
       case 1:
         if (!user.data) {
           router.push(
-            `/sign-in?returnTo=${encodeURIComponent(
+            `/sign-in?redirect=${encodeURIComponent(
               `/models?openLeaseModal=true&model=${encodeURIComponent(model)}&step=1`,
             )}`,
           );
@@ -461,7 +461,7 @@ export default function LeaseModal({
                 <button
                   onClick={() =>
                     router.push(
-                      `/sign-in?returnTo=${encodeURIComponent(
+                      `/sign-in?redirect=${encodeURIComponent(
                         `/models?openLeaseModal=true&model=${encodeURIComponent(model)}&step=1`,
                       )}`,
                     )

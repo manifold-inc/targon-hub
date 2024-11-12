@@ -15,7 +15,7 @@ async function handle(req: NextRequest): Promise<Response> {
   const storedState = cookies().get("google_oauth_state")?.value ?? null;
   const storedCodeVerifier =
     cookies().get("google_code_verifier")?.value ?? null;
-  const storedReturnTo = cookies().get("google_return_to")?.value ?? null;
+  const storedRedirect = cookies().get("google_redirect")?.value ?? null;
   if (!code || !storedCodeVerifier || !storedState || state !== storedState) {
     return new Response(null, {
       status: 400,
@@ -70,7 +70,7 @@ async function handle(req: NextRequest): Promise<Response> {
   return new Response(null, {
     status: 302,
     headers: {
-      Location: storedReturnTo ?? "/models",
+      Location: storedRedirect ?? "/models",
     },
   });
 }

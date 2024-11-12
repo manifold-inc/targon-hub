@@ -27,8 +27,8 @@ export default function Page() {
     },
     onSuccess: () => {
       refetch();
-      const returnTo = searchParams.get("returnTo");
-      router.push(returnTo ?? "/");
+      const redirect = searchParams.get("redirect");
+      router.push(redirect ?? "/");
     },
   });
   const onSubmit: SubmitHandler<Inputs> = (data) => {
@@ -152,9 +152,9 @@ export default function Page() {
               <div className="mt-6">
                 <Link
                   href={`/sign-in/google${
-                    searchParams.get("returnTo")
-                      ? `?returnTo=${encodeURIComponent(
-                          searchParams.get("returnTo") ?? "",
+                    searchParams.get("redirect")
+                      ? `?redirect=${encodeURIComponent(
+                          searchParams.get("redirect") ?? "",
                         )}`
                       : ""
                   }`}

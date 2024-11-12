@@ -5,7 +5,7 @@ import { google } from "@/server/auth";
 
 export async function GET(request: Request): Promise<Response> {
   const { searchParams } = new URL(request.url);
-  const returnTo = searchParams.get("returnTo");
+  const redirect = searchParams.get("redirect");
 
   const state = generateState();
   const codeVerifier = generateCodeVerifier();
@@ -13,7 +13,7 @@ export async function GET(request: Request): Promise<Response> {
     scopes: ["profile", "email"],
   });
 
-  cookies().set("google_return_to", returnTo ?? "/", {
+  cookies().set("google_redirect", redirect ?? "/", {
     path: "/",
     secure: process.env.NODE_ENV === "production",
     httpOnly: true,

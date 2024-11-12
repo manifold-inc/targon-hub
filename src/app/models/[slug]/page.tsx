@@ -8,7 +8,7 @@ import ModelsNav from "@/app/_components/ModelsNav";
 import { API_BASE_URL } from "@/constants";
 import { db } from "@/schema/db";
 import { createCaller } from "@/server/api/root";
-import { validateRequest } from "@/server/auth";
+import { uncachedValidateRequest } from "@/server/auth";
 
 type Props = {
   params: {
@@ -18,7 +18,7 @@ type Props = {
 
 // Add this type definition
 export default async function Page({ params }: Props) {
-  const { user, session } = await validateRequest();
+  const { user, session } = await uncachedValidateRequest();
   const caller = createCaller({ user, db: db, req: null, session: session });
   const data = await caller.model.getModelInfo({
     model: decodeURIComponent(params.slug),
@@ -86,11 +86,15 @@ for chunk in response:
           <div className="mx-auto">
             <section id="overview" data-section>
               <header className="flex w-full justify-between pb-6 pr-4">
-                <h1 className="text-xl sm:text-2xl md:text-3xl leading-9 text-[#101828]">
+                <h1 className="text-xl leading-9 text-[#101828] sm:text-2xl md:text-3xl">
                   {modelName}
                 </h1>
                 <Link
-                  href={user?.id ? `/docs` : "/sign-in"}
+                  href={
+                    user?.id
+                      ? `#parameters`
+                      : `/sign-in?redirect=${encodeURIComponent("/models/" + params.slug)}`
+                  }
                   className="group relative flex h-12 w-28 items-center justify-center"
                 >
                   <div className="absolute h-11 w-24 rounded-full border-2 border-black opacity-0 transition-opacity duration-300 group-hover:opacity-100" />

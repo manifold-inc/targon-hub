@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Combobox, ComboboxInput } from "@headlessui/react";
 import { Filter, Search } from "lucide-react";
 
@@ -9,7 +9,7 @@ import { useModalSidebarStore } from "@/store/modelSidebarStore";
 import { reactClient } from "@/trpc/react";
 import ModalSidebar from "../_components/ModalSidebar";
 import ModelCard from "../_components/ModelCard";
-import { toast } from "sonner";
+import { WatchForSuccess } from "../_components/WatchForStripeSuccess";
 
 export default function Page() {
   const [query, setQuery] = useState("");
@@ -22,7 +22,6 @@ export default function Page() {
   const step = Number(searchParams.get("step")) || null;
 
   const { data: modelsInfo } = reactClient.model.getModelsInfo.useQuery();
-  console.log(modelsInfo);
   const { activeOrganization, activeModality } = useModalSidebarStore();
 
   // Filter models based on search query and active series
@@ -133,19 +132,3 @@ export default function Page() {
     </>
   );
 }
-
-export const WatchForSuccess = () => {
-  const params = useSearchParams();
-  const router = useRouter();
-  useEffect(() => {
-    if (params.get("success")) {
-      router.push(params.get("redirectTo") ?? "/models");
-      setTimeout(() => toast.success("Successfully purchased more credits"));  
-    }
-    if (params.get("canceled")) {
-      router.push(params.get("redirectTo") ?? "/models");
-      setTimeout(() => toast.info("Canceled transaction"));
-    }
-  }, [params, router]);
-  return null;
-};

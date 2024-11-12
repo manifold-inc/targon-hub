@@ -35,8 +35,6 @@ import SettingsModal from "./SettingsModal";
 
 const NAVIGATION = [
   { slug: "/models", title: "Browse" },
-  { slug: "/rankings", title: "Rankings" },
-  { slug: "/docs", title: "Docs" },
 ];
 
 const getIconForPath = (pathname: string) => {
@@ -56,17 +54,6 @@ const getIconForPath = (pathname: string) => {
     case "/activity":
       return (
         <SignalHigh
-          aria-hidden="true"
-          className="text-manifold-green h-4 w-4"
-        />
-      );
-    case "/rankings":
-      return (
-        <Trophy aria-hidden="true" className="text-manifold-green h-4 w-4 " />
-      );
-    case pathname.startsWith("/docs") && pathname:
-      return (
-        <BookOpenText
           aria-hidden="true"
           className="text-manifold-green h-4 w-4"
         />
