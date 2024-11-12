@@ -26,6 +26,7 @@ export default function ModelCard({
       <div className="hidden h-28 w-40 shrink-0 overflow-hidden rounded-lg lg:block">
         <div className={`h-full w-full bg-gradient-to-br ${gradient}`} />
       </div>
+      
 
       {/* Second column - content structure */}
       <div className="inline-flex w-full flex-col items-start justify-start gap-4">

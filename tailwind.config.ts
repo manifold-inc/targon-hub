@@ -109,6 +109,14 @@ export default {
         "fade-in": "fade-in 0.14s ease-in forwards",
         "slide-in": "slide-in .6s ease-out backwards 0.2s",
         "slide-in-delay": "slide-in 0.6s ease-in backwards 0.5s",
+        "slide-in-1": "slide-in 0.5s ease-out both 0s",
+        "slide-in-2": "slide-in 0.5s ease-out both 0.2s",
+        "slide-in-3": "slide-in 0.5s ease-out both 0.4s",
+        "slide-in-4": "slide-in 0.5s ease-out both 0.6s",
+        "slide-in-5": "slide-in 0.5s ease-out both 0.8s",
+        "slide-in-6": "slide-in 0.5s ease-out both 1.0s",
+        "slide-in-7": "slide-in 0.5s ease-out both 1.2s",
+        
       },
       keyframes: {
         "fade-in": {
@@ -153,6 +161,10 @@ export default {
     {
       pattern:
         /^(fill-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+    },
+    {
+      pattern:
+        /^(from|via|to)-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950)$/,
     },
   ],
   plugins: [

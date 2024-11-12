@@ -480,6 +480,8 @@ export default function LeaseModal({
 
                 <div className="flex flex-col gap-2 py-4 text-sm">
                   <div className="flex flex-row justify-between">
+
+                    
                     <span className="text-gray-500 whitespace-nowrap">Your Balance:</span>
                     <span className="whitespace-nowrap">
                       {formatLargeNumber(user.data?.credits ?? 0)} credits
