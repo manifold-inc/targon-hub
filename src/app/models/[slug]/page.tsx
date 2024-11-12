@@ -9,6 +9,7 @@ import { API_BASE_URL } from "@/constants";
 import { db } from "@/schema/db";
 import { createCaller } from "@/server/api/root";
 import { uncachedValidateRequest } from "@/server/auth";
+import { getModelGradient } from "@/utils/utils";
 
 type Props = {
   params: {
@@ -27,21 +28,7 @@ export default async function Page({ params }: Props) {
   if (!modelName) {
     redirect("/models");
   }
-
-  const getRandomGradient = () => {
-    const gradients = [
-      "from-indigo-500 via-sky-500 to-violet-500",
-      "from-sky-500 via-emerald-500 to-teal-500",
-      "from-violet-500 via-rose-500 to-amber-500",
-      "from-rose-500 via-fuchsia-500 to-indigo-500",
-    ];
-
-    // Use the slug as a seed
-    const seed = modelName
-      .split("")
-      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    return gradients[seed % gradients.length];
-  };
+  const gradient = getModelGradient(modelName);
 
   const getChatExampleCode = () => `from openai import OpenAI
 
@@ -143,9 +130,7 @@ for chunk in response:
               </div>
 
               <div className="py-8">
-                <div
-                  className={`h-64 w-full rounded-lg bg-gradient-to-r ${getRandomGradient()}`}
-                />
+                <div className={`h-64 w-full rounded-lg bg-gradient-to-r ${gradient}`} />
               </div>
 
               <div className="flex flex-wrap justify-center gap-4">
@@ -163,6 +148,8 @@ for chunk in response:
                   </div>
                 ))}
               </div>
+
+
 
               <p className="py-6 text-sm leading-tight text-[#101828]">
                 {data?.description}

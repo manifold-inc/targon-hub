@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { UserRoundIcon } from "lucide-react";
+import { getModelGradient } from "@/utils/utils";
 
 interface ModelCardProps {
   name: string;
@@ -18,26 +19,12 @@ export default function ModelCard({
   enabled,
   cpt,
 }: ModelCardProps) {
-  const getRandomGradient = () => {
-    const gradients = [
-      "from-indigo-500 via-sky-500 to-violet-500",
-      "from-sky-500 via-emerald-500 to-teal-500",
-      "from-violet-500 via-rose-500 to-amber-500",
-      "from-rose-500 via-fuchsia-500 to-indigo-500",
-    ];
-
-    const seed = (organization + "/" + name)
-      .split("")
-      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    return gradients[seed % gradients.length];
-  };
+  const gradient = getModelGradient(organization + "/" + name);
 
   return (
     <div className="flex min-h-40 items-center gap-10 bg-white py-5 sm:p-5">
       <div className="hidden h-28 w-40 shrink-0 overflow-hidden rounded-lg lg:block">
-        <div
-          className={`h-full w-full bg-gradient-to-br ${getRandomGradient()}`}
-        />
+        <div className={`h-full w-full bg-gradient-to-br ${gradient}`} />
       </div>
 
       {/* Second column - content structure */}
