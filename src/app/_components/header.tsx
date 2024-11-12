@@ -14,7 +14,6 @@ import {
 } from "@headlessui/react";
 import {
   Blocks,
-  BookOpenText,
   BrainCog,
   ChevronDown,
   HomeIcon,
@@ -23,7 +22,6 @@ import {
   MenuIcon,
   Settings,
   SignalHigh,
-  Trophy,
   User,
   Wallet,
   XIcon,
