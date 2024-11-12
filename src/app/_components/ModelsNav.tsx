@@ -21,8 +21,8 @@ const ModelsNav = () => {
       const sectionHeight = (section as HTMLElement).offsetHeight;
 
       if (
-        pageYOffset >= sectionOffsetTop - 100 && // offset for header
-        pageYOffset < sectionOffsetTop + sectionHeight - 100
+        pageYOffset >= sectionOffsetTop - 200 && // offset for header
+        pageYOffset < sectionOffsetTop + sectionHeight - 200
       ) {
         newActiveSection = section.id;
       }
@@ -70,11 +70,10 @@ const ModelsNav = () => {
               className={`
                 flex items-center border-l-2 px-6
                 py-2 transition-colors hover:bg-gray-50
-                ${
-                  activeSection ===
+                ${activeSection ===
                   item.label.toLowerCase().replace(/\s+/g, "-")
-                    ? "border-black text-black"
-                    : "border-gray-400 text-gray-400 hover:text-gray-600"
+                  ? "border-black text-black"
+                  : "border-gray-400 text-gray-400 hover:text-gray-600"
                 }
               `}
             >

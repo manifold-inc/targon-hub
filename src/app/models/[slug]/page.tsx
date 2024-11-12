@@ -79,80 +79,40 @@ for chunk in response:
 
   return (
     <div className="relative flex">
-      <div className="fixed lg:block hidden right-20 top-32">
+      <div className="fixed right-20 top-32 hidden lg:block">
         <ModelsNav />
       </div>
-      <div className='animate-slide-in w-full h-fit'>
-      <div className="mx-auto w-3/4 lg:w-1/2 py-20">
-        <div className="mx-auto">
-          <section id="overview" data-section>
-            <header className="flex w-full justify-between pb-6">
-              <h1 className="text-3xl leading-9 text-[#101828]">
-                {modelName.split("/")[1]!.charAt(0).toUpperCase() +
-                  modelName.split("/")[1]?.slice(1)}
-              </h1>
-              <Link
-                href={user?.id ? `/docs` : "/sign-in"}
-                className="group relative flex h-12 w-28 items-center justify-center"
-              >
-                <div className="absolute h-11 w-24 rounded-full border-2 border-black opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <span className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-white group-hover:border-0">
-                  <span className="w-16 text-center text-sm font-semibold leading-tight">
-                    {user?.id ? "Use Now!" : "Sign in!"}
-                  </span>
-                </span>
-              </Link>
-            </header>
-
-            <div className="flex items-center gap-4">
-              <time className="text-sm leading-tight text-[#667085]">
-                Created {data?.createdAt?.toLocaleDateString()}
-              </time>
-              <div className="h-5 w-px bg-[#e4e7ec]" />
-              <div className="flex items-center gap-3">
-                <UserRound width={16} height={16} />
-                <span className="text-sm leading-tight text-[#667085]">
-                  {data?.organization}
-                </span>
-              </div>
-            </div>
-
-            <div className="py-8">
-              <div
-                className={`h-64 w-full rounded-lg bg-gradient-to-r ${getRandomGradient()}`}
-              />
-            </div>
-
-            <div className="flex gap-4 flex-wrap">
-              {[
-                { label: "Input Tokens", price: "$0.252 /M" },
-                { label: "Output Tokens", price: "$0.15 /M" },
-                { label: "Input IMGs", price: "$0.11 /M" },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="inline-flex h-20 max-w-64 flex-grow flex-col items-start justify-center gap-2 rounded-xl bg-gray-50 px-5 py-4"
+      <div className="h-fit w-full animate-slide-in">
+        <div className="mx-auto w-3/4 py-20 lg:w-1/2">
+          <div className="mx-auto">
+            <section id="overview" data-section>
+              <header className="flex w-full justify-between pb-6">
+                <h1 className="text-3xl leading-9 text-[#101828]">
+                  {modelName.split("/")[1]!.charAt(0).toUpperCase() +
+                    modelName.split("/")[1]?.slice(1)}
+                </h1>
+                <Link
+                  href={user?.id ? `/docs` : "/sign-in"}
+                  className="group relative flex h-12 w-28 items-center justify-center"
                 >
-                  <span className="text-sm whitespace-nowrap leading-tight text-[#667085]">
-                    {item.label}
+                  <div className="absolute h-11 w-24 rounded-full border-2 border-black opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <span className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-white group-hover:border-0">
+                    <span className="w-16 text-center text-sm font-semibold leading-tight">
+                      {user?.id ? "Use Now!" : "Sign in!"}
+                    </span>
                   </span>
-                  <span className="text-[#344054]">{item.price}</span>
-                </div>
-              ))}
-            </div>
+                </Link>
+              </header>
 
-            <p className="py-6 text-sm leading-tight text-[#101828]">
-              {data?.description}
-            </p>
-
-            <div className="flex gap-4">
-              {data?.modality && (
-                <div className="inline-flex h-6 items-center justify-start gap-1.5 rounded-full border border-[#155dee] py-0.5 pl-2 pr-2.5">
-                  <div className="h-1.5 w-1.5 rounded-full bg-[#155dee]" />
-                  <span className="text-center text-sm font-medium leading-tight text-[#004eea]">
-                    {data.modality === "text-generation"
-                      ? "Text Generation"
-                      : "Text to Image"}
+              <div className="flex items-center gap-4">
+                <time className="text-sm leading-tight text-[#667085]">
+                  Created {data?.createdAt?.toLocaleDateString()}
+                </time>
+                <div className="h-5 w-px bg-[#e4e7ec]" />
+                <div className="flex items-center gap-3">
+                  <UserRound width={16} height={16} />
+                  <span className="text-sm leading-tight text-[#667085]">
+                    {data?.organization}
                   </span>
                 </div>
               </div>
@@ -163,7 +123,7 @@ for chunk in response:
                 />
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4">
                 {[
                   { label: "Input Tokens", price: "$0.252 /M" },
                   { label: "Output Tokens", price: "$0.15 /M" },
@@ -171,9 +131,9 @@ for chunk in response:
                 ].map((item) => (
                   <div
                     key={item.label}
-                    className="inline-flex h-20 w-64 flex-col items-start justify-center gap-2 rounded-xl bg-gray-50 px-5 py-4"
+                    className="inline-flex h-20 max-w-64 flex-grow flex-col items-start justify-center gap-2 rounded-xl bg-gray-50 px-5 py-4"
                   >
-                    <span className="text-sm leading-tight text-[#667085]">
+                    <span className="whitespace-nowrap text-sm leading-tight text-[#667085]">
                       {item.label}
                     </span>
                     <span className="text-[#344054]">{item.price}</span>
@@ -181,124 +141,137 @@ for chunk in response:
                 ))}
               </div>
 
-            <ol className="list-decimal py-6 pl-4">
-              {[
-                {
-                  name: "Greenfelder, Wolff and Stehr",
-                  description: "Realigned multi-tasking solution",
-                  tokens: "901k tokens",
-                  image: "https://picsum.photos/32/32?random=1",
-                },
-                {
-                  name: "Smith and Partners",
-                  description: "Integrated analytics platform",
-                  tokens: "756k tokens",
-                  image: "https://picsum.photos/32/32?random=2",
-                },
-                {
-                  name: "Tech Solutions Inc",
-                  description: "Cloud-based workflow automation",
-                  tokens: "623k tokens",
-                  image: "https://picsum.photos/32/32?random=3",
-                },
-              ].map((app) => (
-                <li key={app.name}>
-                  <div className="flex flex-wrap w-full items-center gap-3 sm:gap-6 rounded-xl py-3 sm:p-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gray-50 p-1.5">
-                      <Image
-                        src={app.image}
-                        alt={app.name}
-                        width={32}
-                        height={32}
-                      />
-                    </div>
-                    <div className="flex flex-1 flex-col gap-1">
-                      <span className="text-sm font-medium leading-tight text-[#101828]">
-                        {app.name}
-                      </span>
-                      <span className="text-[13.02px] leading-tight text-[#667085]">
-                        {app.description}
-                      </span>
-                      <span className="text-[13.02px] sm:hidden leading-tight text-[#667085]">
-                        {app.tokens}
-                      </span>
-                    </div>
-                    <span className="text-[13.02px] sm:block hidden leading-tight text-[#667085]">
-                      {app.tokens}
+              <p className="py-6 text-sm leading-tight text-[#101828]">
+                {data?.description}
+              </p>
+
+              <div className="flex gap-4">
+                {data?.modality && (
+                  <div className="inline-flex h-6 items-center justify-start gap-1.5 rounded-full border border-[#155dee] py-0.5 pl-2 pr-2.5">
+                    <div className="h-1.5 w-1.5 rounded-full bg-[#155dee]" />
+                    <span className="text-center text-sm font-medium leading-tight text-[#004eea]">
+                      {data.modality === "text-generation"
+                        ? "Text Generation"
+                        : "Text to Image"}
                     </span>
                   </div>
                 )}
               </div>
-
+            </section>
+            <section id="apps-using-this" data-section>
               <div className="py-10">
                 <div className="h-px w-full bg-[#e4e7ec]" />
               </div>
-            </section>
-
-            <section id="apps-using-this" data-section>
               <p className="text-2xl leading-loose text-[#101828]">
                 Apps Using This
               </p>
-
-            {[
-              {
-                name: "Temperature",
-                description:
-                  "Controls randomness in the output. Higher values make the output more random, lower values make it more focused.",
-                p10: "0.7",
-                p50: "0.8",
-                p90: "0.9",
-              },
-              {
-                name: "Max Tokens",
-                description:
-                  "The maximum length of the generated response in tokens.",
-                p10: "256",
-                p50: "512",
-                p90: "1024",
-              },
-              {
-                name: "Top P",
-                description:
-                  "Controls diversity via nucleus sampling. Lower values mean less random completions.",
-                p10: "0.1",
-                p50: "0.3",
-                p90: "0.7",
-              },
-            ].map((param) => (
-              <div
-                key={param.name}
-                className="flex flex-col sm:flex-row w-full items-start justify-between py-6"
-              >
-                <div className="flex-1 pb-4 sm:pb-0">
-                  <div className="mb-2 flex items-center gap-3">
-                    <Star width={16} height={16} className="text-[#d0d5dd]" />
-                    <div className="text-sm font-medium text-[#344054]">
-                      {param.name}
+              <ol className="list-decimal py-6 pl-4">
+                {[
+                  {
+                    name: "Greenfelder, Wolff and Stehr",
+                    description: "Realigned multi-tasking solution",
+                    tokens: "901k tokens",
+                    image: "https://picsum.photos/32/32?random=1",
+                  },
+                  {
+                    name: "Smith and Partners",
+                    description: "Integrated analytics platform",
+                    tokens: "756k tokens",
+                    image: "https://picsum.photos/32/32?random=2",
+                  },
+                  {
+                    name: "Tech Solutions Inc",
+                    description: "Cloud-based workflow automation",
+                    tokens: "623k tokens",
+                    image: "https://picsum.photos/32/32?random=3",
+                  },
+                ].map((app) => (
+                  <li key={app.name}>
+                    <div className="flex w-full flex-wrap items-center gap-3 rounded-xl py-3 sm:gap-6 sm:p-3">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gray-50 p-1.5">
+                        <Image
+                          src={app.image}
+                          alt={app.name}
+                          width={32}
+                          height={32}
+                        />
+                      </div>
+                      <div className="flex flex-1 flex-col gap-1">
+                        <span className="text-sm font-medium leading-tight text-[#101828]">
+                          {app.name}
+                        </span>
+                        <span className="text-[13.02px] leading-tight text-[#667085]">
+                          {app.description}
+                        </span>
+                        <span className="text-[13.02px] leading-tight text-[#667085] sm:hidden">
+                          {app.tokens}
+                        </span>
+                      </div>
+                      <span className="hidden text-[13.02px] leading-tight text-[#667085] sm:block">
+                        {app.tokens}
+                      </span>
                     </div>
-                  </div>
-                  <div className="w-3/4 pl-7 text-sm text-[#344054]">
-                    {param.description}
-                  </div>
-                </div>
-                <div className="flex gap-4 pl-3 sm:pl-0">
-                  {["p10", "p50", "p90"].map((p) => (
-                    <div key={p} className="w-[53px] text-center">
-                      <div className="mb-2 text-xs text-[#98a1b2]">{p}</div>
-                      <div className="font-['Geist Mono'] text-sm text-[#344054]">
-                        {param[p as keyof typeof param]}
+                  </li>
+                ))}
+              </ol>
+            </section>
+            <section id="parameters" data-section>
+              <div className="py-10">
+                <div className="h-px w-full bg-[#e4e7ec]" />
+              </div>
+              <p className="text-2xl leading-loose text-[#101828]">
+                Parameters
+              </p>
+
+              {[
+                {
+                  name: "Temperature",
+                  description:
+                    "Controls randomness in the output. Higher values make the output more random, lower values make it more focused.",
+                  p10: "0.7",
+                  p50: "0.8",
+                  p90: "0.9",
+                },
+                {
+                  name: "Max Tokens",
+                  description:
+                    "The maximum length of the generated response in tokens.",
+                  p10: "256",
+                  p50: "512",
+                  p90: "1024",
+                },
+                {
+                  name: "Top P",
+                  description:
+                    "Controls diversity via nucleus sampling. Lower values mean less random completions.",
+                  p10: "0.1",
+                  p50: "0.3",
+                  p90: "0.7",
+                },
+              ].map((param) => (
+                <div
+                  key={param.name}
+                  className="flex w-full flex-col items-start justify-between py-6 sm:flex-row"
+                >
+                  <div className="flex-1 pb-4 sm:pb-0">
+                    <div className="mb-2 flex items-center gap-3">
+                      <Star width={16} height={16} className="text-[#d0d5dd]" />
+                      <div className="text-sm font-medium text-[#344054]">
+                        {param.name}
                       </div>
                     </div>
                     <div className="w-3/4 pl-7 text-sm text-[#344054]">
                       {param.description}
                     </div>
                   </div>
-                  <div className="flex gap-4">
+                  <div className="flex gap-4 pl-3 sm:pl-0">
                     {["p10", "p50", "p90"].map((p) => (
-                      <div key={p} className="w-[53px] text-center">
-                        <div className="mb-2 text-xs text-[#98a1b2]">{p}</div>
-                        <div className="font-['Geist Mono'] text-sm text-[#344054]">
-                          {param[p as keyof typeof param]}
+                      <div key={p}>
+                        <div className="w-[53px] text-center">
+                          <div className="mb-2 text-xs text-[#98a1b2]">{p}</div>
+                          <div className="font-['Geist Mono'] text-sm text-[#344054]">
+                            {param[p as keyof typeof param]}
+                          </div>
                         </div>
                       </div>
                     ))}
