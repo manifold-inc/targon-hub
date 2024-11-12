@@ -2,7 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 
-import { MIN_PURCHASE_IN_DOLLARS } from "@/constants";
+import { COST_PER_GPU, MIN_PURCHASE_IN_DOLLARS } from "@/constants";
 import { env } from "@/env.mjs";
 import { Model, User } from "@/schema/schema";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
@@ -60,7 +60,7 @@ export const creditsRouter = createTRPCRouter({
   leaseModel: protectedProcedure
     .input(z.object({ model: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const [requiredGPU, enabledModels] = await Promise.all([
+      const [requiredGPU, enabledModels, user] = await Promise.all([
         ctx.db
           .select({
             gpu: Model.requiredGpus,
@@ -76,6 +76,10 @@ export const creditsRouter = createTRPCRouter({
           })
           .from(Model)
           .where(eq(Model.enabled, true)),
+
+        ctx.db.select({
+          credits: User.credits,
+        }).from(User).where(eq(User.id, ctx.user.id))
       ]);
 
       if (requiredGPU[0] && requiredGPU[0].gpu > 8) {
@@ -84,6 +88,14 @@ export const creditsRouter = createTRPCRouter({
           message: `Cannot lease more than 8 GPUs`,
         });
       }
+
+      // Check if user has enough credits
+      if (!user[0] || user[0].credits < (requiredGPU[0]?.gpu ?? 0)) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Insufficient credits to lease this model",
+      });
+    }
 
       // calculate total gpu and eligible models
       const immunityPeriod = 7 * 24 * 60 * 60 * 1000;
@@ -111,6 +123,14 @@ export const creditsRouter = createTRPCRouter({
             enabledDate: now,
           })
           .where(eq(Model.name, input.model));
+
+        // deduct from user credits
+        await ctx.db
+          .update(User)
+          .set({
+            credits: user[0].credits - requiredGPU[0]!.gpu * Number(COST_PER_GPU),
+          })
+          .where(eq(User.id, ctx.user.id));
         return {
           success: true,
         };
@@ -154,6 +174,16 @@ export const creditsRouter = createTRPCRouter({
             enabledDate: now,
           })
           .where(eq(Model.name, input.model)),
+
+        //deduct from user credits
+        ctx.db
+          .update(User)
+          .set({
+            credits:
+              user[0].credits -
+              requiredGPU[0]!.gpu * Number(COST_PER_GPU),
+          })
+          .where(eq(User.id, ctx.user.id)),
       ]);
 
       return {

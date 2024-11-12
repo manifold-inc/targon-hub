@@ -77,7 +77,7 @@ export default function LeaseModal({
   const leaseModelMutation = reactClient.credits.leaseModel.useMutation({
     onSuccess: () => {
       toast.success("Model leased successfully");
-      router.push(`/models?model=${encodeURIComponent(model)}`);
+      router.push(`/models/${encodeURIComponent(model)}`);
     },
     onError: (e) => {
       toast.error(`Failed to lease model: ${e.message}`);
@@ -122,8 +122,32 @@ export default function LeaseModal({
 
   const handlePrevious = () => {
     if (currentStep > 0) {
+      if (currentStep === 2) {
+        // Reset any step 2 specific state if needed
+      } else if (currentStep === 1) {
+        // Reset model and purchase related state when going back to step 0
+        router.push(`/models?openLeaseModal=true&step=0`);
+        setModel("");
+        setUseCredits(true);
+        setPurchaseAmount(250 * Number(requiredGPUS));
+      }
       setCurrentStep(currentStep - 1);
     }
+  };
+
+  // Add handler for modal close
+  const handleClose = () => {
+    // Reset states
+    setCurrentStep(0);
+    setModel("");
+    setUseCredits(true);
+    setPurchaseAmount(250 * Number(requiredGPUS));
+    
+    // New URL
+    router.push("/models")
+    
+    // Call the provided onClose
+    onClose();
   };
 
   const requiredGPUS = BigInt(dbRequiredGpus.data ?? 0);
@@ -153,7 +177,7 @@ export default function LeaseModal({
   };
 
   return (
-    <Dialog open={isOpen} onClose={onClose} className="relative z-50">
+    <Dialog open={isOpen} onClose={handleClose} className="relative z-50">
       <DialogBackdrop className="fixed inset-0 bg-black/30" />
 
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
@@ -249,7 +273,7 @@ export default function LeaseModal({
                     NousResearch/Hermes-3-Llama-3.1-8B).
                   </p>
                   <div className="flex w-full items-center rounded-lg border border-gray-300 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500">
-                    <span className="whitespace-nowrap pl-4 text-black">
+                    <span className="whitespace-nowrap pl-4 text-gray-500">
                       https://huggingface.co/
                     </span>
                     <input
@@ -316,7 +340,7 @@ export default function LeaseModal({
                 </div>
               </div>
               {!user.data ? null : amountNeeded > 0 ? (
-                <div className="space-y-3 py-4">
+                <div className="flex flex-col gap-4">
                   <div className="flex items-center justify-center gap-4">
                     <button
                       onClick={() => handleCurrencyToggle(false)}
@@ -362,6 +386,27 @@ export default function LeaseModal({
                         </span>
                       </div>
                     </div>
+                    
+                  </div>
+                  <div className="flex items-center justify-center">
+                  <button
+                    onClick={() => {
+                      checkout.mutate({
+                        purchaseAmount: Number(
+                          (Number(amountNeeded) / CREDIT_PER_DOLLAR).toFixed(2),
+                        ),
+                        redirectTo: `/models?openLeaseModal=true&model=${encodeURIComponent(model)}&step=1`,
+                      });
+                    }}
+                    disabled={checkout.isLoading}
+                    className="relative inline-flex h-10 items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#101828]/90"
+                  >
+                    {checkout.isLoading ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      `Purchase Exact Amount - (${(Number(amountNeeded) / CREDIT_PER_DOLLAR).toFixed(2)} USD)`
+                    )}
+                  </button>
                   </div>
                 </div>
               ) : null}
@@ -431,7 +476,7 @@ export default function LeaseModal({
             </div>
           )}
 
-          <div className="flex justify-center gap-4 py-4">
+          <div className="flex justify-center gap-4">
             <button
               type="button"
               onClick={handlePrevious}
@@ -478,7 +523,7 @@ export default function LeaseModal({
                     {checkout.isLoading ? (
                       <Loader2 className="h-5 w-5 animate-spin" />
                     ) : (
-                      "Purchase Credits"
+                      `Purchase ${purchaseAmount === 0 ? (useCredits ? 'Credits' : 'Dollars') : (useCredits ? formatLargeNumber(BigInt(purchaseAmount)) + ' Credits' : '$' + purchaseAmount)}`
                     )}
                   </button>
                 </div>
