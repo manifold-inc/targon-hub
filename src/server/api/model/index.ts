@@ -71,6 +71,7 @@ export const modelRouter = createTRPCRouter({
         modality: Model.modality,
         description: Model.description,
         enabled: Model.enabled,
+        cpt: Model.cpt,
       })
       .from(Model);
 
@@ -234,6 +235,7 @@ export const modelRouter = createTRPCRouter({
         modality: modelInfo.pipeline_tag as ModalityType,
         requiredGpus: gpuData.required_gpus,
         supportedEndpoints: supportedEndpoints,
+        cpt: 1 * gpuData.required_gpus,
         ...(description && { description }), // Only include if we found one
       });
 

@@ -148,11 +148,9 @@ for chunk in response:
                 />
               </div>
 
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap justify-center gap-4">
                 {[
-                  { label: "Input Tokens", price: "$0.252 /M" },
-                  { label: "Output Tokens", price: "$0.15 /M" },
-                  { label: "Input IMGs", price: "$0.11 /M" },
+                  { label: "Output Tokens", price: `${data.cpt} C/T` },
                 ].map((item) => (
                   <div
                     key={item.label}
@@ -183,7 +181,7 @@ for chunk in response:
                 )}
               </div>
             </section>
-            <section id="apps-using-this" data-section>
+            <section className="hidden" id="apps-using-this" data-section>
               <div className="py-10">
                 <div className="h-px w-full bg-[#e4e7ec]" />
               </div>

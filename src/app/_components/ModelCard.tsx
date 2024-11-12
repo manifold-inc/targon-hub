@@ -7,6 +7,7 @@ interface ModelCardProps {
   modality: string;
   description: string;
   enabled: boolean;
+  cpt: number;
 }
 
 export default function ModelCard({
@@ -15,6 +16,7 @@ export default function ModelCard({
   organization,
   description,
   enabled,
+  cpt,
 }: ModelCardProps) {
   const getRandomGradient = () => {
     const gradients = [
@@ -84,7 +86,7 @@ export default function ModelCard({
           </div>
           <div className="h-5 w-px bg-[#e4e7ec]" />
           <div className="text-sm leading-tight text-[#667085]">
-            $0.15 /M Output Tokens
+            {cpt} Credits Per Output Token
           </div>
           <div className="h-5 w-px bg-[#e4e7ec]" />
           <div

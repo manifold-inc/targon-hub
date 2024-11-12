@@ -125,6 +125,7 @@ export default function Page() {
                   modality={model.modality ?? ""}
                   description={model.description ?? ""}
                   enabled={model.enabled ?? false}
+                  cpt={model.cpt ?? 0}
                 />
               ))}
             </div>
