@@ -42,7 +42,7 @@ export default function ModelCard({
           </div>
           <div className="flex flex-wrap items-center justify-between gap-4 md:justify-normal">
             <div className="flex items-center justify-center gap-1.5 rounded-md md:px-3 md:py-1.5">
-              <div className="text-center text-sm font-semibold leading-tight text-[#667085]">
+              <div className="text-center hidden text-sm font-semibold leading-tight text-[#667085]">
                 1.62M tokens
               </div>
             </div>
@@ -65,7 +65,7 @@ export default function ModelCard({
         </div>
 
         {/* Bottom row with metadata */}
-        <div className="flex h-5 w-full flex-wrap items-center justify-between whitespace-nowrap">
+        <div className="flex h-5 w-full flex-wrap items-center gap-2 whitespace-nowrap">
           <div className="flex items-center gap-3">
             <UserRoundIcon className="h-4 w-4" />
             <div className="text-sm leading-tight text-[#667085]">
@@ -76,18 +76,14 @@ export default function ModelCard({
           <div className="text-sm leading-tight text-[#667085]">{cpt} C/T</div>
           <div className="h-5 w-px bg-[#e4e7ec]" />
           <div
-            className={`inline-flex h-6 items-center justify-start gap-1.5 rounded-full border py-0.5 pl-2 pr-2.5 ${
-              enabled
-                ? "border-[#16a34a] text-[#16a34a]"
-                : "border-[#dc2626] text-[#dc2626]"
-            }`}
+            className="inline-flex h-6 items-center justify-start gap-1.5 rounded-full py-0.5 pl-2 pr-2.5"
           >
             <div
               className={`h-1.5 w-1.5 rounded-full ${
                 enabled ? "bg-[#16a34a]" : "bg-[#dc2626]"
               }`}
             />
-            <span className="text-center text-sm font-medium leading-tight">
+            <span className={`text-center text-sm font-medium leading-tight ${enabled ? "text-[#16a34a]" : "text-[#dc2626]"}`}>
               {enabled ? "Enabled" : "Disabled"}
             </span>
           </div>
