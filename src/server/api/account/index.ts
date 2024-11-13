@@ -1,10 +1,10 @@
 import { cookies } from "next/headers";
 import { TRPCError } from "@trpc/server";
-import { eq } from "drizzle-orm";
+import { count, eq } from "drizzle-orm";
 import { Scrypt } from "lucia";
 import { z } from "zod";
 
-import { User } from "@/schema/schema";
+import { ApiKey, User } from "@/schema/schema";
 import { createAccount, lucia } from "@/server/auth";
 import { createTRPCRouter, publicProcedure, stripeProcedure } from "../trpc";
 
@@ -98,4 +98,20 @@ export const accountRouter = createTRPCRouter({
       );
       return;
     }),
+  getUserDashboard: publicProcedure.query(async ({ ctx }) => {
+    if (!ctx.user?.id) return null;
+
+    const [user] = await ctx.db
+      .select({
+        email: User.email,
+        credits: User.credits,
+        apiKeyCount: count(ApiKey.key),
+      })
+      .from(User)
+      .leftJoin(ApiKey, eq(ApiKey.userId, User.id))
+      .where(eq(User.id, ctx.user.id))
+      .groupBy(User.id);
+
+    return user ?? null;
+  }),
 });

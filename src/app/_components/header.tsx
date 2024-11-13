@@ -77,7 +77,7 @@ export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<
-    "dashboard" | "credits" | "activity" | "keys" | "integrations" | "settings"
+    "dashboard" | "credits" | "activity" | "keys"
   >("dashboard");
 
   const handleSettingsModalClose = () => {
@@ -238,6 +238,7 @@ export const Header = () => {
                 isOpen={isModalOpen}
                 onClose={handleSettingsModalClose}
                 activeTab={activeTab}
+                onTabChange={setActiveTab}
               />
             </>
           ) : (
