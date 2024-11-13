@@ -140,7 +140,7 @@ for chunk in response:
                   (item) => (
                     <div
                       key={item.label}
-                      className="inline-flex h-20 max-w-64 flex-grow flex-col items-start justify-center gap-2 rounded-xl bg-gray-50 px-5 py-4"
+                      className="inline-flex h-20 max-w-64 flex-grow flex-col items-center justify-center gap-2 rounded-xl bg-gray-50 px-5 py-4"
                     >
                       <span className="whitespace-nowrap text-sm leading-tight text-[#667085]">
                         {item.label}
