@@ -44,7 +44,7 @@ export default function CreditsTab({ user }: CreditsTabProps) {
             >
               Add Credits
             </button>
-            <button className="rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow shadow-inner">
+            <button disabled={true} className="disabled:cursor-not-allowed disabled:opacity-50 rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow shadow-inner">
               Use Crypto
             </button>
           </div>

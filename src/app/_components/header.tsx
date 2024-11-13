@@ -13,17 +13,11 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import {
-  Blocks,
   BrainCog,
   ChevronDown,
   HomeIcon,
-  Key,
-  Lock,
   MenuIcon,
-  Settings,
-  SignalHigh,
   User,
-  Wallet,
   XIcon,
 } from "lucide-react";
 
@@ -39,34 +33,9 @@ const getIconForPath = (pathname: string) => {
       return (
         <HomeIcon aria-hidden="true" className="text-manifold-green h-4 w-4" />
       );
-    case "/credits":
-      return (
-        <Wallet aria-hidden="true" className="text-manifold-green h-4 w-4" />
-      );
     case pathname.startsWith("/models") && pathname:
       return (
         <BrainCog aria-hidden="true" className="text-manifold-green h-4 w-4" />
-      );
-    case "/activity":
-      return (
-        <SignalHigh
-          aria-hidden="true"
-          className="text-manifold-green h-4 w-4"
-        />
-      );
-    case "/settings/preferences":
-      return (
-        <Settings aria-hidden="true" className="text-manifold-green h-4 w-4" />
-      );
-    case "/settings/keys":
-      return <Key aria-hidden="true" className="text-manifold-green h-4 w-4" />;
-    case "/settings/integrations":
-      return (
-        <Blocks aria-hidden="true" className="text-manifold-green h-4 w-4" />
-      );
-    case "/settings/privacy":
-      return (
-        <Lock aria-hidden="true" className="text-manifold-green h-4 w-4" />
       );
   }
 };
@@ -191,30 +160,30 @@ export const Header = () => {
                           <button
                             onClick={() => {
                               setIsSettingsOpen(true);
-                              setActiveTab("credits");
+                              setActiveTab("dashboard");
                               router.push(
-                                `${pathName}?settings=true&tab=credits`,
+                                `${pathName}?settings=true&tab=dashboard`,
                                 { scroll: false },
                               );
                             }}
-                            className="block w-full px-4 py-2 text-sm  hover:bg-gray-100"
+                            className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
                           >
-                            Credits
+                            Settings
                           </button>
                         </MenuItem>
                         <MenuItem>
                           <button
                             onClick={() => {
                               setIsSettingsOpen(true);
-                              setActiveTab("keys");
+                              setActiveTab("credits");
                               router.push(
-                                `${pathName}?settings=true&tab=keys`,
+                                `${pathName}?settings=true&tab=credits`,
                                 { scroll: false },
                               );
                             }}
-                            className="block w-full px-4 py-2 text-sm  hover:bg-gray-100"
+                            className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
                           >
-                            Keys
+                            Credits
                           </button>
                         </MenuItem>
                         <MenuItem>
@@ -227,7 +196,7 @@ export const Header = () => {
                                 { scroll: false },
                               );
                             }}
-                            className="block w-full px-4 py-2 text-sm  hover:bg-gray-100"
+                            className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
                           >
                             Activity
                           </button>
@@ -236,15 +205,15 @@ export const Header = () => {
                           <button
                             onClick={() => {
                               setIsSettingsOpen(true);
-                              setActiveTab("dashboard");
+                              setActiveTab("keys");
                               router.push(
-                                `${pathName}?settings=true&tab=dashboard`,
+                                `${pathName}?settings=true&tab=keys`,
                                 { scroll: false },
                               );
                             }}
                             className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
                           >
-                            Settings
+                            Keys
                           </button>
                         </MenuItem>
                         <MenuItem>
