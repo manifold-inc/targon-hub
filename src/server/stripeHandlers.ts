@@ -39,6 +39,16 @@ export const checkoutSuccess = async (
   ) {
     throw new Error("Checkout has unexpected line items");
   }
+  const session = (await stripe.checkout.sessions.retrieve(data.id, {
+    expand: ["payment_intent.payment_method"],
+  })) as Stripe.Checkout.Session & {
+    payment_intent: Stripe.PaymentIntent & {
+      payment_method: Stripe.PaymentMethod;
+    };
+  };
+  const last4 = session.payment_intent?.payment_method?.card?.last4 ?? null;
+  const cardBrand = session.payment_intent?.payment_method?.card?.brand ?? null;
+
   await db
     .update(User)
     .set({ credits: user.credits + line_item.quantity * CREDIT_PER_DOLLAR })
@@ -47,6 +57,8 @@ export const checkoutSuccess = async (
     id: data.id,
     credits: line_item.quantity * CREDIT_PER_DOLLAR,
     userId,
+    cardLast4: last4 ?? null,
+    cardBrand: cardBrand ?? null,
   });
 
   return;

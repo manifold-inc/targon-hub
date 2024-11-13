@@ -1,6 +1,7 @@
 import { useState } from "react";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { Loader2, Wallet } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { CREDIT_PER_DOLLAR, MIN_PURCHASE_IN_DOLLARS } from "@/constants";
@@ -146,24 +147,59 @@ export default function CreditsTab({ user }: CreditsTabProps) {
       <div className="flex max-h-40 flex-col gap-1 overflow-y-auto">
         {paymentHistory.data?.map((payment) => (
           <div
-            key={payment.id}
-            className="inline-flex h-12 items-center justify-between bg-white py-3"
+            key={payment.createdAt?.getTime()}
+            className="inline-flex h-12 flex-wrap items-center justify-between bg-white py-3 sm:inline-flex sm:flex-nowrap"
           >
-            <div className="w-[100px] text-sm leading-tight text-[#101828]">
+            <div className="w-16 text-xs leading-tight text-[#101828] sm:w-24 sm:text-sm">
               {formatDate(payment.createdAt!)}
             </div>
-            <div className="w-[88px] text-right text-sm leading-tight text-[#101828]">
+            <div className="w-16 text-right text-xs leading-tight text-[#101828] sm:w-20 sm:text-sm">
               {formatLargeNumber(payment.credits)}
             </div>
-            <div className="w-[95px] text-right text-sm leading-tight text-[#101828]">
+            <div className="hidden w-24 text-right text-sm leading-tight text-[#101828] sm:block">
               via Stripe
             </div>
-            <div className="flex h-6 items-center justify-end gap-3">
-              <div className="relative h-6 w-[34px] rounded border border-[#e4e7ec] bg-white">
-                <Wallet className="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 transform" />
+            <div className="flex h-6 items-center justify-end gap-1 sm:gap-3">
+              <div className="relative flex h-5 w-8 items-center justify-center rounded border border-[#e4e7ec] bg-white p-1 sm:h-6 sm:w-10">
+                {payment.cardBrand?.toLowerCase() === "amex" && (
+                  <Image
+                    src="/cards/Amex.svg"
+                    alt="American Express"
+                    width={28}
+                    height={28}
+                    className="sm:h-[36px] sm:w-[36px]"
+                  />
+                )}
+                {payment.cardBrand?.toLowerCase() === "mastercard" && (
+                  <Image
+                    src="/cards/Mastercard.svg"
+                    alt="Mastercard"
+                    width={28}
+                    height={28}
+                    className="sm:h-[36px] sm:w-[36px]"
+                  />
+                )}
+                {payment.cardBrand?.toLowerCase() === "visa" && (
+                  <Image
+                    src="/cards/Visa.svg"
+                    alt="Visa"
+                    width={28}
+                    height={28}
+                    className="sm:h-[36px] sm:w-[36px]"
+                  />
+                )}
+                {payment.cardBrand?.toLowerCase() === "discover" && (
+                  <Image
+                    src="/cards/Discover.svg"
+                    alt="Discover"
+                    width={28}
+                    height={28}
+                    className="sm:h-[36px] sm:w-[36px]"
+                  />
+                )}
               </div>
-              <div className="text-right text-sm leading-tight text-[#101828]">
-                *** {payment.id.slice(-4)}
+              <div className="text-right text-xs leading-tight text-[#101828] sm:text-sm">
+                *** {payment.cardLast4 ?? "N/A"}
               </div>
             </div>
           </div>

@@ -117,7 +117,12 @@ export const accountRouter = createTRPCRouter({
   getUserPaymentHistory: publicProcedure.query(async ({ ctx }) => {
     if (!ctx.user?.id) return null;
     const payments = await ctx.db
-      .select()
+      .select({
+        credits: CheckoutSession.credits,
+        cardLast4: CheckoutSession.cardLast4,
+        cardBrand: CheckoutSession.cardBrand,
+        createdAt: CheckoutSession.createdAt,
+      })
       .from(CheckoutSession)
       .where(eq(CheckoutSession.userId, ctx.user.id))
       .orderBy(desc(CheckoutSession.createdAt));

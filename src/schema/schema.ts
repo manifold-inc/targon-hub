@@ -120,6 +120,8 @@ export const CheckoutSession = mysqlTable("checkout_sessions", {
   createdAt: timestamp("created_at", { mode: "date" }).default(
     sql`CURRENT_TIMESTAMP`,
   ),
+  cardLast4: varchar("card_last4", { length: 4 }),
+  cardBrand: varchar("card_brand", { length: 20 }),
 });
 
 export const TaoTransfers = mysqlTable("tao_transfers", {
