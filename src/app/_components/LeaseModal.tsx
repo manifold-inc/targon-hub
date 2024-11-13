@@ -58,7 +58,6 @@ export default function LeaseModal({
 
   const addModelMutation = reactClient.model.addModel.useMutation({
     onSuccess: (gpus) => {
-      console.log(gpus);
       if (gpus > 8) {
         toast.error(
           "This model requires more than 8 GPUs, which exceeds our limit of 8 GPUs. We will not be able to run this model.",

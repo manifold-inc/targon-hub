@@ -31,12 +31,57 @@ interface HuggingFaceModelInfo {
   createdAt: string;
   modelId: string;
   siblings: ModelSibling[];
+  cardData?: {
+    license?: string;
+    extra_gated_prompt?: string;
+  }
   config?: {
     tokenizer_config?: {
       chat_template?: string;
     };
   };
 }
+
+const UNRESTRICTED_LICENSES = [
+  // Highly permissive - no API key needed
+  'mit',
+  'apache-2.0',
+  'bsd',
+  'bsd-2-clause',
+  'bsd-3-clause',
+  'bsd-3-clause-clear',
+  'cc0-1.0',
+  'unlicense',
+  'bsl-1.0',
+  'isc',
+  'zlib',
+  
+  // Additional open source - should work without API key
+  'gpl-2.0',
+  'gpl-3.0',
+  'lgpl-2.1',
+  'lgpl-3.0',
+  'mpl-2.0',
+  'artistic-2.0',
+  'eupl-1.1',
+  'postgresql',
+  'ncsa',
+] as const;
+
+const RESTRICTED_ACCESS_LICENSES = [
+  // Likely needs API key or authentication
+  'openrail',
+  'bigscience-openrail-m',
+  'creativeml-openrail-m',
+  'bigscience-bloom-rail-1.0',
+  'bigcode-openrail-m',
+  'llama2',
+  'llama3',
+  'llama3.1',
+  'llama3.2',
+  'deepfloyd-if-license',
+  'gemma',
+] as const;
 
 export const modelRouter = createTRPCRouter({
   getModels: publicAuthlessProcedure.query(async ({ ctx }) => {
@@ -168,6 +213,46 @@ export const modelRouter = createTRPCRouter({
 
       const modelInfo = (await response.json()) as HuggingFaceModelInfo;
 
+      if (modelInfo.private || modelInfo.gated || modelInfo.cardData?.extra_gated_prompt) {
+        throw new TRPCError({
+          message: "Private or gated models are not supported",
+          code: "BAD_REQUEST",
+        });
+      }
+
+      // Get license from model card or tags
+      const modelLicense = modelInfo.cardData?.license?.toLowerCase() || '';
+      const licenseTags = modelInfo.tags
+        .filter(tag => tag.startsWith('license:'))
+        .map(tag => tag.replace('license:', '').toLowerCase());
+
+      const allLicenses = [modelLicense, ...licenseTags];
+      
+      // Check if any license is unrestricted
+      const hasUnrestrictedLicense = allLicenses.some(license =>
+        UNRESTRICTED_LICENSES.includes(license as typeof UNRESTRICTED_LICENSES[number])
+      );
+
+      // Check if any license requires authentication
+      const hasRestrictedLicense = allLicenses.some(license =>
+        RESTRICTED_ACCESS_LICENSES.includes(license as typeof RESTRICTED_ACCESS_LICENSES[number])
+      );
+
+      if (!hasUnrestrictedLicense || hasRestrictedLicense) {
+        throw new TRPCError({
+          message: "Only models with unrestricted licenses that don't require API keys are supported",
+          code: "BAD_REQUEST",
+        });
+      }
+
+      // If license is "unknown" or "other", reject it to be safe
+      if (allLicenses.some(license => ['unknown', 'other'].includes(license))) {
+        throw new TRPCError({
+          message: "Models with unknown or unspecified licenses are not supported",
+          code: "BAD_REQUEST",
+        });
+      }
+
       if (
         !modelInfo.pipeline_tag ||
         !Modality.includes(modelInfo.pipeline_tag as ModalityType)
@@ -250,13 +335,13 @@ export const modelRouter = createTRPCRouter({
       }
 
       await ctx.db.insert(Model).values({
-        name: modelInfo.id,
-        modality: modelInfo.pipeline_tag as ModalityType,
-        requiredGpus: gpuData.required_gpus,
-        supportedEndpoints: supportedEndpoints,
-        cpt: 1 * gpuData.required_gpus,
-        ...(description && { description }), // Only include if we found one
-      });
+          name: modelInfo.id,
+          modality: modelInfo.pipeline_tag as ModalityType,
+          requiredGpus: gpuData.required_gpus,
+          supportedEndpoints: supportedEndpoints,
+          cpt: 1 * gpuData.required_gpus,
+          ...(description && { description }), // Only include if we found one
+        });
 
       return gpuData.required_gpus;
     }),
