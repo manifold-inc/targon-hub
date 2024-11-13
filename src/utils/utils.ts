@@ -55,3 +55,11 @@ export const getModelGradient = (modelFullName: string) => {
 
   return gradients[Math.abs(hash) % gradients.length];
 };
+
+export const formatDate = (date: Date) => {
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+};

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { Loader2, Wallet } from "lucide-react";
 import { toast } from "sonner";
 
 import { CREDIT_PER_DOLLAR, MIN_PURCHASE_IN_DOLLARS } from "@/constants";
 import { reactClient } from "@/trpc/react";
 import { type RouterOutputs } from "@/trpc/shared";
-import { formatLargeNumber } from "@/utils/utils";
+import { formatDate, formatLargeNumber } from "@/utils/utils";
 import { WatchForSuccess } from "./WatchForStripeSuccess";
 
 type CreditsTabProps = {
@@ -28,11 +28,13 @@ export default function CreditsTab({ user }: CreditsTabProps) {
     },
   });
 
+  const paymentHistory = reactClient.account.getUserPaymentHistory.useQuery();
+
   return (
-    <div className="py-2 sm:py-4">
+    <div className="max-h-full overflow-y-auto py-2 sm:py-2">
       <WatchForSuccess />
       <div className="flex flex-col items-center justify-start gap-6">
-        <span className="py-6 text-6xl leading-[72px] text-black">
+        <span className="py-1 text-6xl leading-[72px] text-black">
           {formatLargeNumber(user?.credits ?? 0)}
         </span>
 
@@ -44,13 +46,16 @@ export default function CreditsTab({ user }: CreditsTabProps) {
             >
               Add Credits
             </button>
-            <button disabled={true} className="disabled:cursor-not-allowed disabled:opacity-50 rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow shadow-inner">
+            <button
+              disabled={true}
+              className="rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow shadow-inner disabled:cursor-not-allowed disabled:opacity-50"
+            >
               Use Crypto
             </button>
           </div>
 
           {showPurchaseInput && (
-            <div className="mt-2 flex flex-col gap-4">
+            <div className="flex flex-col gap-4 pt-2">
               <div className="flex items-center justify-center gap-4">
                 <button
                   onClick={() => setUseCredits(false)}
@@ -134,6 +139,35 @@ export default function CreditsTab({ user }: CreditsTabProps) {
             </div>
           )}
         </div>
+      </div>
+      <div className="py-4 text-sm font-semibold leading-tight text-[#101828]">
+        Payment History
+      </div>
+      <div className="flex max-h-40 flex-col gap-1 overflow-y-auto">
+        {paymentHistory.data?.map((payment) => (
+          <div
+            key={payment.id}
+            className="inline-flex h-12 items-center justify-between bg-white py-3"
+          >
+            <div className="w-[100px] text-sm leading-tight text-[#101828]">
+              {formatDate(payment.createdAt!)}
+            </div>
+            <div className="w-[88px] text-right text-sm leading-tight text-[#101828]">
+              {formatLargeNumber(payment.credits)}
+            </div>
+            <div className="w-[95px] text-right text-sm leading-tight text-[#101828]">
+              via Stripe
+            </div>
+            <div className="flex h-6 items-center justify-end gap-3">
+              <div className="relative h-6 w-[34px] rounded border border-[#e4e7ec] bg-white">
+                <Wallet className="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 transform" />
+              </div>
+              <div className="text-right text-sm leading-tight text-[#101828]">
+                *** {payment.id.slice(-4)}
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

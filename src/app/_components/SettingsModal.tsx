@@ -85,7 +85,7 @@ export default function SettingsModal({
               </div>
 
               {/* Content area for each tab */}
-              <div className="pt-4 h-96">
+              <div className="h-96 pt-4">
                 <div className="h-full">
                   {activeTab === "dashboard" && (
                     <DashboardTab
