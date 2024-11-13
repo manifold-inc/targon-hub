@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Dialog,
   DialogPanel,
@@ -74,15 +74,26 @@ const getIconForPath = (pathname: string) => {
 export const Header = () => {
   const auth = useAuth();
   const pathName = usePathname();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(() => {
+    return searchParams.get("settings") === "true";
+  });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<
-    "dashboard" | "credits" | "activity" | "keys"
-  >("dashboard");
+  const [activeTab, setActiveTab] = useState(() => {
+    return (
+      (searchParams.get("tab") as
+        | "dashboard"
+        | "credits"
+        | "activity"
+        | "keys") || "dashboard"
+    );
+  });
 
   const handleSettingsModalClose = () => {
-    setIsModalOpen(false);
+    setIsSettingsOpen(false);
     setActiveTab("dashboard");
+    router.push(pathName, { scroll: false });
   };
 
   // keydown controller
@@ -179,8 +190,12 @@ export const Header = () => {
                         <MenuItem>
                           <button
                             onClick={() => {
-                              setIsModalOpen(true);
+                              setIsSettingsOpen(true);
                               setActiveTab("credits");
+                              router.push(
+                                `${pathName}?settings=true&tab=credits`,
+                                { scroll: false },
+                              );
                             }}
                             className="block w-full px-4 py-2 text-sm  hover:bg-gray-100"
                           >
@@ -190,8 +205,12 @@ export const Header = () => {
                         <MenuItem>
                           <button
                             onClick={() => {
-                              setIsModalOpen(true);
+                              setIsSettingsOpen(true);
                               setActiveTab("keys");
+                              router.push(
+                                `${pathName}?settings=true&tab=keys`,
+                                { scroll: false },
+                              );
                             }}
                             className="block w-full px-4 py-2 text-sm  hover:bg-gray-100"
                           >
@@ -201,8 +220,12 @@ export const Header = () => {
                         <MenuItem>
                           <button
                             onClick={() => {
-                              setIsModalOpen(true);
+                              setIsSettingsOpen(true);
                               setActiveTab("activity");
+                              router.push(
+                                `${pathName}?settings=true&tab=activity`,
+                                { scroll: false },
+                              );
                             }}
                             className="block w-full px-4 py-2 text-sm  hover:bg-gray-100"
                           >
@@ -212,8 +235,12 @@ export const Header = () => {
                         <MenuItem>
                           <button
                             onClick={() => {
-                              setIsModalOpen(true);
+                              setIsSettingsOpen(true);
                               setActiveTab("dashboard");
+                              router.push(
+                                `${pathName}?settings=true&tab=dashboard`,
+                                { scroll: false },
+                              );
                             }}
                             className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
                           >
@@ -235,10 +262,15 @@ export const Header = () => {
                 )}
               </Menu>
               <SettingsModal
-                isOpen={isModalOpen}
+                isOpen={isSettingsOpen}
                 onClose={handleSettingsModalClose}
                 activeTab={activeTab}
-                onTabChange={setActiveTab}
+                onTabChange={(tab) => {
+                  setActiveTab(tab);
+                  router.push(`${pathName}?settings=true&tab=${tab}`, {
+                    scroll: false,
+                  });
+                }}
               />
             </>
           ) : (

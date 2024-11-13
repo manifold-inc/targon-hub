@@ -92,7 +92,9 @@ export default function SettingsModal({
                     onTabChange={onTabChange}
                   />
                 )}
-                {activeTab === "credits" && <CreditsTab />}
+                {activeTab === "credits" && (
+                  <CreditsTab user={user.data ?? null} />
+                )}
                 {activeTab === "activity" && <ActivityTab />}
                 {activeTab === "keys" && <KeysTab />}
               </div>
