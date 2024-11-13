@@ -85,18 +85,20 @@ export default function SettingsModal({
               </div>
 
               {/* Content area for each tab */}
-              <div className="mt-4">
-                {activeTab === "dashboard" && (
-                  <DashboardTab
-                    user={user.data ?? null}
-                    onTabChange={onTabChange}
-                  />
-                )}
-                {activeTab === "credits" && (
-                  <CreditsTab user={user.data ?? null} />
-                )}
-                {activeTab === "activity" && <ActivityTab />}
-                {activeTab === "keys" && <KeysTab />}
+              <div className="pt-4 h-96">
+                <div className="h-full">
+                  {activeTab === "dashboard" && (
+                    <DashboardTab
+                      user={user.data ?? null}
+                      onTabChange={onTabChange}
+                    />
+                  )}
+                  {activeTab === "credits" && (
+                    <CreditsTab user={user.data ?? null} />
+                  )}
+                  {activeTab === "activity" && <ActivityTab />}
+                  {activeTab === "keys" && <KeysTab />}
+                </div>
               </div>
             </div>
           </div>
