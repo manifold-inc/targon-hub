@@ -86,7 +86,7 @@ export default function Page() {
       </div>
       <div className="flex">
         {/* Left sidebar */}
-        <div className="sticky top-0 hidden h-full w-80 border-r border-[#f2f4f7] pt-8 sm:block">
+        <div className="sticky top-0 hidden pt-8 h-full w-80 border-r border-[#f2f4f7] sm:block">
           <ModalSidebar
             isLeaseModalOpen={isLeaseModalOpen}
             setIsLeaseModalOpen={setIsLeaseModalOpen}
