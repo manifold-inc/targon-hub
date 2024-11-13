@@ -19,7 +19,7 @@ export const coreRouter = createTRPCRouter({
   }),
   getApiKeys: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.db
-      .select({ key: ApiKey.key })
+      .select({ key: ApiKey.key, createdAt: ApiKey.createdAt })
       .from(ApiKey)
       .where(eq(ApiKey.userId, ctx.user.id));
   }),
@@ -37,5 +37,20 @@ export const coreRouter = createTRPCRouter({
         key: apiKey,
       });
       return apiKey;
+    }),
+
+  createApiKey: protectedProcedure.mutation(async ({ ctx }) => {
+    const apiKey = genId.apikey();
+    await ctx.db.insert(ApiKey).values({ userId: ctx.user.id, key: apiKey });
+    return apiKey;
+  }),
+  deleteApiKey: protectedProcedure
+    .input(z.object({ apiKey: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .delete(ApiKey)
+        .where(
+          and(eq(ApiKey.userId, ctx.user.id), eq(ApiKey.key, input.apiKey)),
+        );
     }),
 });

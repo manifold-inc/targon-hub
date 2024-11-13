@@ -88,6 +88,9 @@ export const ApiKey = mysqlTable("api_key", {
   })
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at", { mode: "date" }).default(
+    sql`CURRENT_TIMESTAMP`,
+  ),
 });
 
 export const Session = mysqlTable("session", {
