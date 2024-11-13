@@ -24,8 +24,6 @@ export default function Page() {
   const { data: modelsInfo } = reactClient.model.getModelsInfo.useQuery();
   const { activeOrganization, activeModality, activeSupportedEndpoints } =
     useModalSidebarStore();
-  console.log(activeSupportedEndpoints);
-  console.log(modelsInfo);
 
   // Filter models based on search query and active series
   const filteredModels = modelsInfo?.filter((model) => {
@@ -88,7 +86,7 @@ export default function Page() {
       </div>
       <div className="flex">
         {/* Left sidebar */}
-        <div className="hidden w-80 border-r border-[#f2f4f7] sm:block">
+        <div className="sticky top-0 hidden pt-8 h-full w-80 border-r border-[#f2f4f7] sm:block">
           <ModalSidebar
             isLeaseModalOpen={isLeaseModalOpen}
             setIsLeaseModalOpen={setIsLeaseModalOpen}
