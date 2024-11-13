@@ -4,7 +4,7 @@ import { count, desc, eq } from "drizzle-orm";
 import { Scrypt } from "lucia";
 import { z } from "zod";
 
-import { ApiKey, CheckoutSession, User } from "@/schema/schema";
+import { ApiKey, CheckoutSession, Model, Request, User } from "@/schema/schema";
 import { createAccount, lucia } from "@/server/auth";
 import { createTRPCRouter, publicProcedure, stripeProcedure } from "../trpc";
 
@@ -127,5 +127,20 @@ export const accountRouter = createTRPCRouter({
       .where(eq(CheckoutSession.userId, ctx.user.id))
       .orderBy(desc(CheckoutSession.createdAt));
     return payments ?? null;
+  }),
+  getUserActivity: publicProcedure.query(async ({ ctx }) => {
+    if (!ctx.user?.id) return null;
+    const activity = await ctx.db
+      .select({
+        createdAt: Request.createdAt,
+        model: Model.name,
+        tokens: Request.tokens,
+        creditsUsed: Request.creditsUsed,
+      })
+      .from(Request)
+      .leftJoin(Model, eq(Request.model, Model.id))
+      .where(eq(Request.userId, ctx.user.id))
+      .orderBy(desc(Request.createdAt));
+    return activity ?? null;
   }),
 });
