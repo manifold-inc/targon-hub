@@ -144,7 +144,7 @@ export default function CreditsTab({ user }: CreditsTabProps) {
       <div className="py-4 text-sm font-semibold leading-tight text-[#101828]">
         Payment History
       </div>
-      <div className="flex max-h-40 flex-col gap-1 overflow-y-auto">
+      <div className="flex max-h-40 flex-col gap-1 overflow-y-auto whitespace-nowrap">
         {paymentHistory.data?.map((payment) => (
           <div
             key={payment.createdAt?.getTime()}
@@ -154,7 +154,7 @@ export default function CreditsTab({ user }: CreditsTabProps) {
               {formatDate(payment.createdAt!)}
             </div>
             <div className="w-16 text-right text-xs leading-tight text-[#101828] sm:w-20 sm:text-sm">
-              {formatLargeNumber(payment.credits)}
+              {formatLargeNumber(payment.credits)} (${Math.ceil(Number(payment.credits) / CREDIT_PER_DOLLAR)})
             </div>
             <div className="hidden w-24 text-right text-sm leading-tight text-[#101828] sm:block">
               via Stripe
