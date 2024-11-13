@@ -58,6 +58,12 @@ export default function LeaseModal({
 
   const addModelMutation = reactClient.model.addModel.useMutation({
     onSuccess: (gpus) => {
+      if (gpus > 8) {
+        toast.error(
+          "This model requires more than 8 GPUs, which exceeds our limit of 8 GPUs. We will not be able to run this model.",
+        );
+        return;
+      }
       toast.success("Model added successfully");
       utils.model.getRequiredGpus.setData(model, gpus);
       setCurrentStep(currentStep + 1);
@@ -159,7 +165,7 @@ export default function LeaseModal({
   // Add conversion helper
   const convertDollarsToCredits = (dollars: number) =>
     Number(BigInt(dollars) * BigInt(CREDIT_PER_DOLLAR));
-  const convertCreditsToUsd = (credits: number) => 
+  const convertCreditsToUsd = (credits: number) =>
     Number(BigInt(credits) / BigInt(CREDIT_PER_DOLLAR));
 
   // Update the purchase amount handling
@@ -371,7 +377,7 @@ export default function LeaseModal({
                   )}
                 </div>
               </div>
-              {!user.data ? null : amountNeeded > 0 ? (
+              {!user.data ? null : amountNeeded > 0 && requiredGPUS <= 8 ? (
                 <div className="flex flex-col gap-4">
                   <div className="flex items-center justify-center gap-4">
                     <button

@@ -200,11 +200,18 @@ export const modelRouter = createTRPCRouter({
       const gpuData = (await gpuResponse.json()) as {
         required_gpus: number;
       };
-      console.log(gpuData)
       if (!gpuData.required_gpus) {
         throw new TRPCError({
           message: "Failed getting required GPUS",
           code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+
+      if (gpuData.required_gpus > 8) {
+        throw new TRPCError({
+          message:
+            "This model requires more than 8 GPUs, which exceeds our limit of 8 GPUs. We will not be able to run this model.",
+          code: "BAD_REQUEST",
         });
       }
 

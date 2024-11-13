@@ -109,7 +109,8 @@ export const useModalSidebarStore = create<ModalSidebarState>((set) => ({
           : supportedEndpointsOrUpdater,
     })),
   showAllSupportedEndpoints: false,
-  setShowAllSupportedEndpoints: (show) => set({ showAllSupportedEndpoints: show }),
+  setShowAllSupportedEndpoints: (show) =>
+    set({ showAllSupportedEndpoints: show }),
 
   // Parameters
   activeParameters: [] as string[],

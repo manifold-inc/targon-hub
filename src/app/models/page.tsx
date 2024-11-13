@@ -22,7 +22,8 @@ export default function Page() {
   const step = Number(searchParams.get("step")) || null;
 
   const { data: modelsInfo } = reactClient.model.getModelsInfo.useQuery();
-  const { activeOrganization, activeModality, activeSupportedEndpoints } = useModalSidebarStore();
+  const { activeOrganization, activeModality, activeSupportedEndpoints } =
+    useModalSidebarStore();
   console.log(activeSupportedEndpoints);
   console.log(modelsInfo);
 
@@ -44,16 +45,21 @@ export default function Page() {
     const matchesModality =
       activeModality.length === 0 ||
       (model.modality && activeModality.includes(model.modality));
-    
+
     // Check if model matches supported endpoints filter
-    const matchesSupportedEndpoints = 
+    const matchesSupportedEndpoints =
       activeSupportedEndpoints.length === 0 ||
       activeSupportedEndpoints.every((endpoint) =>
-        model.supportedEndpoints?.includes(endpoint)
+        model.supportedEndpoints?.includes(endpoint),
       );
 
     // Model must match all conditions
-    return matchesQuery && matchesOrganization && matchesModality && matchesSupportedEndpoints;
+    return (
+      matchesQuery &&
+      matchesOrganization &&
+      matchesModality &&
+      matchesSupportedEndpoints
+    );
   });
 
   return (

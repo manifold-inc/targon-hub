@@ -62,12 +62,18 @@ export default function ModalSidebar({
 
   const { data: modelFilters } =
     reactClient.model.getModelFilters.useQuery() as {
-      data: { organizations: string[]; modalities: string[]; supportedEndpoints: string[] } | undefined;
+      data:
+        | {
+            organizations: string[];
+            modalities: string[];
+            supportedEndpoints: string[];
+          }
+        | undefined;
     };
 
   const endpointColors: Record<string, string> = {
-    "chat": "#0284c7",
-    "completion": "#ea580c",
+    chat: "#0284c7",
+    completion: "#ea580c",
   };
 
   return (
@@ -131,7 +137,7 @@ export default function ModalSidebar({
           )}
         </div>
 
-        <div className="animate-slide-in-2 p-3 hidden sm:animate-none">
+        <div className="hidden animate-slide-in-2 p-3 sm:animate-none">
           <div
             className="flex cursor-pointer items-center justify-between"
             onClick={() => toggleSection("contextLength")}
@@ -211,7 +217,7 @@ export default function ModalSidebar({
           )}
         </div>
 
-        <div className="animate-slide-in-3 p-3 hidden sm:animate-none">
+        <div className="hidden animate-slide-in-3 p-3 sm:animate-none">
           <div
             className="flex cursor-pointer items-center justify-between"
             onClick={() => toggleSection("promptPricing")}
@@ -442,7 +448,9 @@ export default function ModalSidebar({
                         );
                       }}
                       className={`inline-flex h-9 w-full items-center justify-start gap-1 rounded-full px-3 py-2 ${
-                        activeSupportedEndpoints.includes(endpoint.toUpperCase())
+                        activeSupportedEndpoints.includes(
+                          endpoint.toUpperCase(),
+                        )
                           ? "bg-[#f2f4f7]"
                           : ""
                       }`}
@@ -450,7 +458,9 @@ export default function ModalSidebar({
                       <div className="flex w-48 items-center justify-between px-0.5">
                         <div
                           className={`text-sm leading-tight ${
-                            activeSupportedEndpoints.includes(endpoint.toUpperCase())
+                            activeSupportedEndpoints.includes(
+                              endpoint.toUpperCase(),
+                            )
                               ? "text-[#344054]"
                               : "text-[#475467]"
                           }`}
@@ -470,7 +480,7 @@ export default function ModalSidebar({
           )}
         </div>
 
-        <div className="animate-slide-in-6 p-3 hidden sm:animate-none">
+        <div className="hidden animate-slide-in-6 p-3 sm:animate-none">
           <div
             className="flex cursor-pointer items-center justify-between"
             onClick={() => toggleSection("parameters")}
