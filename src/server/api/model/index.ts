@@ -140,10 +140,14 @@ export const modelRouter = createTRPCRouter({
       const existingModel = await ctx.db
         .select({
           gpus: Model.requiredGpus,
+          enabled: Model.enabled,
         })
         .from(Model)
         .where(eq(Model.name, input));
       if (existingModel.length > 0) {
+        if (existingModel.at(0)!.enabled) {
+          return -1;
+        }
         return existingModel.at(0)!.gpus;
       }
 
