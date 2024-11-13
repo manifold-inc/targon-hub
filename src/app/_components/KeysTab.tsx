@@ -1,8 +1,8 @@
-import { Loader2, XCircle } from "lucide-react";
+import { Copy, Loader2, XCircle } from "lucide-react";
 import { toast } from "sonner";
 
 import { reactClient } from "@/trpc/react";
-import { formatDate } from "@/utils/utils";
+import { copyToClipboard, formatDate } from "@/utils/utils";
 
 export default function KeysTab() {
   const utils = reactClient.useUtils();
@@ -26,6 +26,11 @@ export default function KeysTab() {
       toast.error("Failed to delete key");
     },
   });
+
+  const handleCopyClipboard = (copy: string) => {
+    void copyToClipboard(copy);
+    toast.success("Copied to clipboard!");
+  };
 
   return (
     <div className="py-2 sm:py-4">
@@ -62,7 +67,15 @@ export default function KeysTab() {
             {keys.data?.map((key, index) => (
               <tr key={index} className="h-8 bg-white">
                 <td className="px-2 py-1 text-center leading-tight text-[#101828]">
-                  {key.key.slice(0, 4) + "..." + key.key.slice(-4)}
+                  <div className="inline-flex items-center gap-4">
+                    {key.key.slice(0, 4) + "..." + key.key.slice(-4)}
+                    <button
+                      className="cursor-pointer"
+                      onClick={() => handleCopyClipboard(key.key)}
+                    >
+                      <Copy className="h-4 w-4 text-gray-300 hover:text-gray-500" />
+                    </button>
+                  </div>
                 </td>
                 <td className="px-2 py-1 text-center leading-tight text-[#101828]">
                   {key.createdAt ? formatDate(key.createdAt) : "-"}

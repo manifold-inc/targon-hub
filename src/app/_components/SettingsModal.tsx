@@ -45,7 +45,7 @@ export default function SettingsModal({
         <DialogPanel className="w-full max-w-3xl rounded-xl border bg-white">
           <div className="flex h-full flex-col md:flex-row">
             {/* Navigation Sidebar */}
-            <div className="rounded-t-xl border-b bg-gray-50 md:w-48 md:rounded-l-xl md:rounded-t-none md:border-b-0 md:border-r">
+            <div className="rounded-t-xl border-b bg-gray-50 md:w-48 md:rounded-l-xl md:rounded-t-xl md:border-b-0 md:border-r">
               <nav className="flex gap-2 p-3 px-4 md:flex-col md:p-3">
                 {tabs.map((tab) => (
                   <button
