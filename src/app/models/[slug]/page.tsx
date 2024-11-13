@@ -73,9 +73,10 @@ for chunk in response:
           <div className="mx-auto">
             <section id="overview" data-section>
               <header className="flex w-full flex-col gap-4 pb-6 pr-4 sm:flex-row sm:justify-between">
-                <h1 className="text-xl leading-9 text-[#101828] sm:text-2xl md:text-3xl">
+                <h1 className="text-xl leading-9 text-[#101828] sm:text-2xl md:text-3xl text-center sm:text-left">
                   {modelName}
                 </h1>
+
                 <Link
                   href={
                     user?.id
@@ -100,7 +101,7 @@ for chunk in response:
               </header>
 
               <div className="flex items-center gap-4">
-                <time className="text-sm leading-tight text-[#667085]">
+                <time className="text-xs sm:text-sm leading-tight text-[#667085] whitespace-nowrap">
                   Created {data?.createdAt?.toLocaleDateString()}
                 </time>
                 <div className="h-5 w-px bg-[#e4e7ec]" />
