@@ -103,9 +103,11 @@ export const accountRouter = createTRPCRouter({
 
     const [user] = await ctx.db
       .select({
+        id: User.id,
         email: User.email,
         credits: User.credits,
         apiKeyCount: count(ApiKey.key),
+        ss58: User.ss58,
       })
       .from(User)
       .leftJoin(ApiKey, eq(ApiKey.userId, User.id))
