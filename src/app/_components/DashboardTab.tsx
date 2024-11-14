@@ -43,7 +43,7 @@ export default function DashboardTab({ user, onTabChange }: DashboardTabProps) {
           onClick={() => onTabChange("credits")}
           className="inline-flex h-24 w-full flex-col items-start justify-center gap-2 rounded-xl bg-gray-50 p-4 hover:bg-gray-100 sm:h-32 sm:w-32 sm:gap-4 sm:p-6"
         >
-          <p className="text-lg font-medium leading-7 text-black whitespace-nowrap">
+          <p className="whitespace-nowrap text-lg font-medium leading-7 text-black">
             {formatLargeNumber(user?.credits ?? 0)}
           </p>
           <p className="text-sm leading-tight text-black">Credits</p>

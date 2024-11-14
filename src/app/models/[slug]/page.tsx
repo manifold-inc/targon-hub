@@ -137,19 +137,22 @@ for chunk in response:
               </div>
 
               <div className="flex flex-wrap justify-center gap-4">
-                {[{ label: "Output Tokens", price: `${data.cpt} Credits Per Token` }].map(
-                  (item) => (
-                    <div
-                      key={item.label}
-                      className="inline-flex h-20 max-w-64 flex-grow flex-col items-center justify-center gap-2 rounded-xl bg-gray-50 px-5 py-4"
-                    >
-                      <span className="whitespace-nowrap text-sm leading-tight text-[#667085]">
-                        {item.label}
-                      </span>
-                      <span className="text-[#344054]">{item.price}</span>
-                    </div>
-                  ),
-                )}
+                {[
+                  {
+                    label: "Output Tokens",
+                    price: `${data.cpt} Credits Per Token`,
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="inline-flex h-20 max-w-64 flex-grow flex-col items-center justify-center gap-2 rounded-xl bg-gray-50 px-5 py-4"
+                  >
+                    <span className="whitespace-nowrap text-sm leading-tight text-[#667085]">
+                      {item.label}
+                    </span>
+                    <span className="text-[#344054]">{item.price}</span>
+                  </div>
+                ))}
               </div>
 
               <p className="py-6 text-sm leading-tight text-[#101828]">

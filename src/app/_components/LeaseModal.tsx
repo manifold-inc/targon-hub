@@ -456,11 +456,11 @@ export default function LeaseModal({
                       className="h-4 w-4 text-gray-500"
                       onMouseEnter={() =>
                         toast.info(
-                            `1 USD = ${formatLargeNumber(CREDIT_PER_DOLLAR)} Credits`,
-                          )
-                        }
-                        onMouseLeave={() => toast.dismiss()}
-                      />
+                          `1 USD = ${formatLargeNumber(CREDIT_PER_DOLLAR)} Credits`,
+                        )
+                      }
+                      onMouseLeave={() => toast.dismiss()}
+                    />
                   </div>
                 </div>
               ) : null}

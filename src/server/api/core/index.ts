@@ -1,9 +1,9 @@
-import { and, eq, desc } from "drizzle-orm";
+import { TRPCError } from "@trpc/server";
+import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 
 import { ApiKey, genId, Model } from "@/schema/schema";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
-import { TRPCError } from "@trpc/server";
 
 export const coreRouter = createTRPCRouter({
   getModel: publicProcedure.query(async ({ ctx }) => {
@@ -20,7 +20,11 @@ export const coreRouter = createTRPCRouter({
   }),
   getApiKeys: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.db
-      .select({ name: ApiKey.name, key: ApiKey.key, createdAt: ApiKey.createdAt })
+      .select({
+        name: ApiKey.name,
+        key: ApiKey.key,
+        createdAt: ApiKey.createdAt,
+      })
       .from(ApiKey)
       .where(eq(ApiKey.userId, ctx.user.id))
       .orderBy(desc(ApiKey.createdAt));
@@ -57,7 +61,7 @@ export const coreRouter = createTRPCRouter({
         name: input.name,
       });
       return apiKey;
-  }),
+    }),
   deleteApiKey: protectedProcedure
     .input(z.object({ apiKey: z.string() }))
     .mutation(async ({ ctx, input }) => {

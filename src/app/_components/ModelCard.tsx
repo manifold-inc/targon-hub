@@ -73,7 +73,9 @@ export default function ModelCard({
             </div>
           </div>
           <div className="h-5 w-px bg-[#e4e7ec]" />
-          <div className="text-sm leading-tight text-[#667085]">{cpt} Credits Per Token</div>
+          <div className="text-sm leading-tight text-[#667085]">
+            {cpt} Credits Per Token
+          </div>
           <div className="h-5 w-px bg-[#e4e7ec]" />
           <div className="inline-flex h-6 items-center justify-start gap-1.5 rounded-full py-0.5 pl-2 pr-2.5">
             <div
