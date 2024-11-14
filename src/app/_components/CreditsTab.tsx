@@ -33,6 +33,8 @@ export default function CreditsTab({ user }: CreditsTabProps) {
 
   const paymentHistory = reactClient.account.getUserPaymentHistory.useQuery();
 
+  const [showAmounts, setShowAmounts] = useState<'credits' | 'amounts'>('credits');
+
   return (
     <div className="max-h-full overflow-y-auto py-2 sm:py-2">
       <WatchForSuccess />
@@ -188,70 +190,85 @@ export default function CreditsTab({ user }: CreditsTabProps) {
           )}
         </div>
       </div>
-      <div className="py-4 text-sm font-semibold leading-tight text-[#101828]">
-        Payment History
-      </div>
-      <div className="flex max-h-40 flex-col gap-1 overflow-y-auto whitespace-nowrap">
-        {paymentHistory.data?.map((payment) => (
-          <div
-            key={payment.createdAt?.getTime()}
-            className="inline-flex h-12 flex-wrap items-center justify-between bg-white py-3 sm:inline-flex sm:flex-nowrap"
+      <div className="flex items-center justify-between py-4">
+        <div className="text-sm font-semibold leading-tight text-[#101828]">
+          Payment History
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowAmounts('credits')}
+            className={`rounded-lg px-3 py-1 text-xs ${showAmounts === 'credits' ? 'bg-black text-white' : 'bg-gray-100'}`}
           >
-            <div className="w-16 text-xs leading-tight text-[#101828] sm:w-24 sm:text-sm">
-              {formatDate(payment.createdAt!)}
-            </div>
-            <div className="w-16 text-right text-xs leading-tight text-[#101828] sm:w-20 sm:text-sm">
-              {formatLargeNumber(payment.credits)} ($
-              {Math.ceil(Number(payment.credits) / CREDIT_PER_DOLLAR)})
-            </div>
-            <div className="hidden w-24 text-right text-sm leading-tight text-[#101828] sm:block">
-              via Stripe
-            </div>
-            <div className="flex h-6 items-center justify-end gap-1 sm:gap-3">
-              <div className="relative flex h-5 w-8 items-center justify-center rounded border border-[#e4e7ec] bg-white p-1 sm:h-6 sm:w-10">
-                {payment.cardBrand?.toLowerCase() === "amex" && (
-                  <Image
-                    src="/cards/Amex.svg"
-                    alt="American Express"
-                    width={28}
-                    height={28}
-                    className="sm:h-[36px] sm:w-[36px]"
-                  />
-                )}
-                {payment.cardBrand?.toLowerCase() === "mastercard" && (
-                  <Image
-                    src="/cards/Mastercard.svg"
-                    alt="Mastercard"
-                    width={28}
-                    height={28}
-                    className="sm:h-[36px] sm:w-[36px]"
-                  />
-                )}
-                {payment.cardBrand?.toLowerCase() === "visa" && (
-                  <Image
-                    src="/cards/Visa.svg"
-                    alt="Visa"
-                    width={28}
-                    height={28}
-                    className="sm:h-[36px] sm:w-[36px]"
-                  />
-                )}
-                {payment.cardBrand?.toLowerCase() === "discover" && (
-                  <Image
-                    src="/cards/Discover.svg"
-                    alt="Discover"
-                    width={28}
-                    height={28}
-                    className="sm:h-[36px] sm:w-[36px]"
-                  />
-                )}
-              </div>
-              <div className="text-right text-xs leading-tight text-[#101828] sm:text-sm">
-                *** {payment.cardLast4 ?? "N/A"}
-              </div>
-            </div>
-          </div>
-        ))}
+            Credits
+          </button>
+          <button
+            onClick={() => setShowAmounts('amounts')}
+            className={`rounded-lg px-3 py-1 text-xs ${showAmounts === 'amounts' ? 'bg-black text-white' : 'bg-gray-100'}`}
+          >
+            USD/TAO
+          </button>
+        </div>
+      </div>
+
+      <div className="max-h-40 overflow-y-auto">
+        <table className="w-full whitespace-nowrap">
+          <tbody>
+            {paymentHistory.data?.map((payment) => (
+              <tr key={payment.createdAt?.getTime()} className="h-12">
+                <td className="text-xs sm:text-sm text-[#101828] pr-4">
+                  <span className="hidden sm:inline">{formatDate(payment.createdAt!)}</span>
+                  <span className="sm:hidden">{payment.createdAt?.toLocaleDateString()}</span>
+                </td>
+                <td className="text-right text-xs sm:text-sm text-[#101828] px-4">
+                  {showAmounts === 'credits' 
+                    ? formatLargeNumber(payment.credits ?? 0)
+                    : payment.type === 'tao' 
+                      ? `${formatLargeNumber(payment.rao / 1e-9)} T` 
+                      : `$${formatLargeNumber(Math.ceil(Number(payment.credits ?? 0) / CREDIT_PER_DOLLAR))}`
+                  }
+                </td>
+                <td className="text-right text-xs sm:text-sm text-[#101828] px-4">
+                  <div>via {payment.type === 'stripe' ? 'Stripe' : 'TAO'}</div>
+                  {payment.type === 'tao' && payment.pricedAt && (
+                    <div className="text-xs text-gray-400">
+                      @ ${payment.pricedAt.toFixed(2)}
+                    </div>
+                  )}
+                </td>
+                <td className="text-center px-4">
+                  <div className="mx-auto relative flex h-5 w-8 items-center justify-center rounded border border-[#e4e7ec] bg-white p-1 sm:h-6 sm:w-10">
+                    {payment.type === 'stripe' ? (
+                      <>
+                        {payment.cardBrand?.toLowerCase() === "amex" && (
+                          <Image src="/cards/Amex.svg" alt="American Express" width={28} height={28} className="sm:h-[36px] sm:w-[36px]" />
+                        )}
+                        {payment.cardBrand?.toLowerCase() === "mastercard" && (
+                          <Image src="/cards/Mastercard.svg" alt="Mastercard" width={28} height={28} className="sm:h-[36px] sm:w-[36px]" />
+                        )}
+                        {payment.cardBrand?.toLowerCase() === "visa" && (
+                          <Image src="/cards/Visa.svg" alt="Visa" width={28} height={28} className="sm:h-[36px] sm:w-[36px]" />
+                        )}
+                        {payment.cardBrand?.toLowerCase() === "discover" && (
+                          <Image src="/cards/Discover.svg" alt="Discover" width={28} height={28} className="sm:h-[36px] sm:w-[36px]" />
+                        )}
+                      </>
+                    ) : (
+                      <Image src="TAO.svg" alt="TAO" width={16} height={16} className="sm:h-[20px] sm:w-[20px]" />
+                    )}
+                  </div>
+                </td>
+                <td className="text-right text-xs sm:text-sm font-mono text-[#101828] pl-4">
+                  {payment.type === 'stripe' 
+                    ? `***${payment.cardLast4 ?? "N/A"}`
+                    : payment.txHash 
+                      ? `${payment.txHash.slice(0, 3)}...${payment.txHash.slice(-3)}`
+                      : "Pending"
+                  }
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
