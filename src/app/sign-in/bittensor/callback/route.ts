@@ -1,15 +1,15 @@
 import { type NextRequest } from "next/server";
 import { hexToU8a } from "@polkadot/util";
 import { cryptoWaitReady, signatureVerify } from "@polkadot/util-crypto";
-import { eq, and } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 import { db } from "@/schema/db";
-import {  User } from "@/schema/schema";
+import { User } from "@/schema/schema";
 
 export async function GET(request: NextRequest): Promise<Response> {
   const ss58 = request.nextUrl.searchParams.get("ss58");
   const signature = request.nextUrl.searchParams.get("signature");
-  
+
   if (!ss58 || ss58.length != 48 || !signature) {
     return Response.json(
       { error: "Missing or improper ss58 address or signature" },
@@ -23,17 +23,12 @@ export async function GET(request: NextRequest): Promise<Response> {
       verified: User.verified,
     })
     .from(User)
-    .where(
-      and(
-        eq(User.ss58, ss58),
-        eq(User.verified, true)
-      )
-    );
+    .where(and(eq(User.ss58, ss58), eq(User.verified, true)));
 
   if (existingVerifiedUser) {
     return Response.json(
       { error: "This SS58 address is already linked to a verified account" },
-      { status: 409 }
+      { status: 409 },
     );
   }
 
