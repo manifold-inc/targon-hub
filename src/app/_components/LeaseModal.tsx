@@ -142,7 +142,7 @@ export default function LeaseModal({
         // Reset model and purchase related state when going back to step 0
         router.push(`/models?openLeaseModal=true&step=0`);
         setModel("");
-        setUseCredits(true);
+        setUseCredits(false);
         setPurchaseAmount(250 * Number(requiredGPUS));
       }
       setCurrentStep(currentStep - 1);
@@ -154,7 +154,7 @@ export default function LeaseModal({
     // Reset states
     setCurrentStep(0);
     setModel("");
-    setUseCredits(true);
+    setUseCredits(false);
     setPurchaseAmount(250 * Number(requiredGPUS));
 
     // New URL
@@ -175,7 +175,7 @@ export default function LeaseModal({
     Number(BigInt(credits) / BigInt(CREDIT_PER_DOLLAR));
 
   // Update the purchase amount handling
-  const [useCredits, setUseCredits] = useState(true);
+  const [useCredits, setUseCredits] = useState(false);
   const [purchaseAmount, setPurchaseAmount] = useState(
     250 * Number(requiredGPUS),
   );
@@ -431,7 +431,7 @@ export default function LeaseModal({
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-center">
+                  <div className="flex w-full items-center justify-center gap-2">
                     <button
                       onClick={() => {
                         checkout.mutate({
@@ -452,6 +452,15 @@ export default function LeaseModal({
                         `Purchase Exact Amount - (${(Number(amountNeeded) / CREDIT_PER_DOLLAR).toFixed(2)} USD)`
                       )}
                     </button>
+                    <InfoIcon
+                      className="h-4 w-4 text-gray-500"
+                      onMouseEnter={() =>
+                        toast.info(
+                            `1 USD = ${formatLargeNumber(CREDIT_PER_DOLLAR)} Credits`,
+                          )
+                        }
+                        onMouseLeave={() => toast.dismiss()}
+                      />
                   </div>
                 </div>
               ) : null}
