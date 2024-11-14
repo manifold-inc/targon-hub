@@ -1,13 +1,14 @@
 import { useState } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { InfoIcon, Loader2 } from "lucide-react";
+import { CopyIcon, InfoIcon, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { CREDIT_PER_DOLLAR, MIN_PURCHASE_IN_DOLLARS } from "@/constants";
+import { env } from "@/env.mjs";
 import { reactClient } from "@/trpc/react";
 import { type RouterOutputs } from "@/trpc/shared";
-import { formatDate, formatLargeNumber } from "@/utils/utils";
+import { copyToClipboard, formatDate, formatLargeNumber } from "@/utils/utils";
 import { WatchForSuccess } from "./WatchForStripeSuccess";
 
 type CreditsTabProps = {
@@ -16,6 +17,7 @@ type CreditsTabProps = {
 
 export default function CreditsTab({ user }: CreditsTabProps) {
   const [showPurchaseInput, setShowPurchaseInput] = useState(false);
+  const [showCryptoInput, setShowCryptoInput] = useState(false);
   const [useCredits, setUseCredits] = useState(false);
   const [purchaseAmount, setPurchaseAmount] = useState(0);
   const pathName = usePathname();
@@ -39,17 +41,24 @@ export default function CreditsTab({ user }: CreditsTabProps) {
           {formatLargeNumber(user?.credits ?? 0)}
         </span>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col items-center gap-4">
           <div className="flex gap-6">
             <button
-              onClick={() => setShowPurchaseInput(!showPurchaseInput)}
-              className="rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow shadow-inner"
+              onClick={() => {
+                setShowPurchaseInput(!showPurchaseInput);
+                setShowCryptoInput(false);
+              }}
+              className="rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow shadow-inner hover:bg-gray-800"
             >
               Add Credits
             </button>
             <button
-              disabled={true}
-              className="rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow shadow-inner disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={!user?.ss58}
+              onClick={() => {
+                setShowCryptoInput(!showCryptoInput);
+                setShowPurchaseInput(false);
+              }}
+              className="rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow shadow-inner hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Use Crypto
             </button>
@@ -147,6 +156,33 @@ export default function CreditsTab({ user }: CreditsTabProps) {
                   }
                   onMouseLeave={() => toast.dismiss()}
                 />
+              </div>
+            </div>
+          )}
+
+          {showCryptoInput && (
+            <div className="flex flex-col gap-4 rounded-lg bg-gray-100 p-4">
+              <p className="text-sm text-gray-700">
+                Please send your payment to the following address:
+              </p>
+              <div className="flex items-center justify-between rounded bg-gray-200 p-3">
+                <p className="font-mono text-sm text-gray-700">
+                  {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(0, 6)}...
+                  {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(-4)}
+                </p>
+                <CopyIcon
+                  className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700"
+                  onClick={() =>
+                    copyToClipboard(env.NEXT_PUBLIC_DEPOSIT_ADDRESS)
+                  }
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <InfoIcon className="h-4 w-4 text-gray-500" />
+                <p className="text-sm text-gray-700">
+                  The funds will be credited to your account once they are
+                  confirmed on the blockchain.
+                </p>
               </div>
             </div>
           )}

@@ -26,7 +26,9 @@ export const env = createEnv({
     HUB_API_ENDPOINT: z.string(),
     VERCEL_URL: z.string(),
   },
-  client: {},
+  client: {
+    NEXT_PUBLIC_DEPOSIT_ADDRESS: z.string(),
+  },
 
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
@@ -38,6 +40,7 @@ export const env = createEnv({
     DATABASE_USERNAME: process.env.DATABASE_USERNAME,
     DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
     DEPOSIT_ADDRESS: process.env.DEPOSIT_ADDRESS,
+    NEXT_PUBLIC_DEPOSIT_ADDRESS: process.env.NEXT_PUBLIC_DEPOSIT_ADDRESS,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
     STRIPE_CREDIT_PRICE_ID: process.env.STRIPE_CREDIT_PRICE_ID,
