@@ -5,18 +5,12 @@ import { formatDate, formatLargeNumber } from "@/utils/utils";
 export default function ActivityTab() {
   const activity = reactClient.account.getUserActivity.useQuery();
   return (
-    <div className="max-h-full overflow-y-auto py-2 sm:py-2">
+    <div className="max-h-full overflow-auto whitespace-nowrap py-2 sm:py-2">
       <div className="flex flex-col items-center justify-start gap-6">
         <div className="w-full">
           {activity.data?.length ? (
             <div className="relative overflow-x-auto">
-              <table className="min-w-full text-xs sm:text-sm">
-                <colgroup>
-                  <col className="w-24 sm:w-[25%]" />
-                  <col className="w-24 sm:w-[25%]" />
-                  <col className="w-20 sm:w-[25%]" />
-                  <col className="w-20 sm:w-[25%]" />
-                </colgroup>
+              <table className="w-full text-xs sm:text-sm">
                 <thead>
                   <tr className="h-8 border-b border-t border-[#e4e7ec] bg-gray-50">
                     <th className="px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
@@ -44,10 +38,8 @@ export default function ActivityTab() {
                           ? activity.createdAt.toLocaleDateString()
                           : formatDate(activity.createdAt)}
                       </td>
-                      <td className="px-2 py-1 text-center text-xs leading-tight text-[#101828]">
-                        {window.innerWidth < 640
-                          ? activity.model?.split("/").pop()
-                          : activity.model}
+                      <td className="px-2 py-1 text-center  leading-tight text-[#101828]">
+                        {activity.model}
                       </td>
                       <td className="px-2 py-1 text-center leading-tight text-[#101828]">
                         {activity.tokens}
