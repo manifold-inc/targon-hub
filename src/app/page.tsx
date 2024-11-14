@@ -8,105 +8,28 @@ import { ChevronRight } from "lucide-react";
 
 import { AppCard } from "./_components/AppCard";
 import SearchBar from "./_components/SearchBar";
-
-export interface App {
-  id: number;
-  title: string;
-  description: string;
-  tokens: string;
-  rating: string;
-  category: string;
-}
-
-const apps: App[] = [
-  {
-    id: 1,
-    title: "ChatMaster",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In efficitur sollicitudin orci in luctus. Vivamus aliquet ligula et volutpat faucibus.",
-    tokens: "50 tokens",
-    rating: "4.5",
-    category: "Trending",
-  },
-  {
-    id: 2,
-    title: "FitnessPro",
-    description: "Track your workouts and stay fit.",
-    tokens: "30 tokens",
-    rating: "4.0",
-    category: "Health",
-  },
-  {
-    id: 3,
-    title: "PhotoSnap",
-    description: "Capture and edit your photos with ease.",
-    tokens: "40 tokens",
-    rating: "4.2",
-    category: "Photography",
-  },
-  {
-    id: 4,
-    title: "TaskTrack",
-    description: "Manage your tasks and increase productivity.",
-    tokens: "20 tokens",
-    rating: "4.8",
-    category: "Productivity",
-  },
-  {
-    id: 5,
-    title: "TravelBuddy",
-    description: "Plan your trips and explore new places.",
-    tokens: "35 tokens",
-    rating: "4.3",
-    category: "Travel",
-  },
-  {
-    id: 6,
-    title: "MusicFlow",
-    description: "Stream and organize your favorite music.",
-    tokens: "25 tokens",
-    rating: "4.6",
-    category: "Entertainment",
-  },
-  {
-    id: 7,
-    title: "EduLearn",
-    description: "Enhance your learning with interactive courses.",
-    tokens: "45 tokens",
-    rating: "4.7",
-    category: "Education",
-  },
-  {
-    id: 8,
-    title: "FinanceGuru",
-    description: "Manage your finances and investments.",
-    tokens: "55 tokens",
-    rating: "4.4",
-    category: "Finance",
-  },
-];
+import { reactClient } from "@/trpc/react";
 
 export default function Page() {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const tabs = [
-    "Trending",
-    "All Apps",
-    "Health",
-    "Photography",
-    "Productivity",
-    "Travel",
-    "Entertainment",
-    "Education",
-    "Finance",
-  ];
-  const selectedCategory = tabs[selectedIndex];
+  const models = reactClient.model.getModels.useQuery();
 
-  // Filter apps based on selected category
-  const filteredApps: App[] =
-    selectedCategory === "All Apps"
-      ? apps
-      : apps.filter((app) => app.category === selectedCategory);
+  const endpoints = models.data
+    ? ["All", ...new Set(models.data.map((model) => 
+        model.supportedEndpoints.map(endpoint => endpoint)
+      ).flat())]
+    : ["All"];
+
+  const filteredModels = models.data
+    ? selectedIndex === 0
+      ? models.data // Show all models when "All" is selected
+      : models.data.filter((model) =>
+          model.supportedEndpoints
+            .map((e) => e.toLowerCase())
+            .includes(endpoints[selectedIndex]!.toLowerCase()),
+      )
+    : [];
 
   return (
     <div className="relative">
@@ -141,8 +64,8 @@ export default function Page() {
               href="/models"
               className="group relative flex h-12 w-full items-center justify-center sm:w-44"
             >
-              <div className="absolute h-11 w-full rounded-full border-2 border-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:w-40" />
-              <div className="inline-flex w-full items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-white group-hover:border-0">
+              <div className="absolute h-11 w-full rounded-full border-2 border-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:w-40 box-border" />
+              <div className="inline-flex w-full items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-white group-hover:border-2 box-border">
                 <span className="flex items-center gap-2 text-sm font-semibold leading-tight">
                   Browse Models
                   <ChevronRight className="h-4 w-4 opacity-50" />
@@ -172,17 +95,17 @@ export default function Page() {
         <div className="animate-slide-in-delay">
           <TabGroup>
             <TabList className="inline-flex w-full items-center justify-start gap-2 overflow-x-scroll rounded-full border border-[#e4e7ec] bg-white p-2">
-              {tabs.map((tab, index) => (
+              {endpoints.map((endpoint, index) => (
                 <Tab
                   key={index}
-                  className={`flex h-fit items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold leading-tight ${
+                  className={`flex h-fit w-32 items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold leading-tight ${
                     selectedIndex === index
                       ? "bg-[#f2f4f7] text-[#475467]"
                       : "text-[#475467] opacity-80 hover:bg-gray-100"
                   }`}
                   onClick={() => setSelectedIndex(index)}
                 >
-                  {tab}
+                  {endpoint}
                 </Tab>
               ))}
             </TabList>
@@ -191,8 +114,15 @@ export default function Page() {
 
         <div className="animate-slide-in-delay py-4">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {filteredApps.map((app) => (
-              <AppCard key={app.id} {...app} />
+            {filteredModels.map((model) => (
+              <AppCard
+                key={model.id}
+                name={model.name ?? ""}
+                cpt={model.cpt}
+                requiredGPUs={model.requiredGpus}
+                modality={model.modality}
+                enabled={model.enabled ?? false}
+              />
             ))}
           </div>
         </div>
