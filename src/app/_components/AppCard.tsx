@@ -20,7 +20,7 @@ export const AppCard = ({
       href={`/models/${encodeURIComponent(name)}`}
       className="flex h-44 w-full flex-col items-start justify-between rounded-xl border border-[#e4e7ec] bg-white p-5 shadow sm:w-80"
     >
-      <div className="flex flex-col justify-between h-full">
+      <div className="flex h-full flex-col justify-between">
         <div className="flex gap-4">
           <p className="h-5 text-lg font-medium text-[#667085]">{name}</p>
         </div>

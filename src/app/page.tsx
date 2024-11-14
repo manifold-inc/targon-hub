@@ -6,9 +6,9 @@ import Link from "next/link";
 import { Tab, TabGroup, TabList } from "@headlessui/react";
 import { ChevronRight } from "lucide-react";
 
+import { reactClient } from "@/trpc/react";
 import { AppCard } from "./_components/AppCard";
 import SearchBar from "./_components/SearchBar";
-import { reactClient } from "@/trpc/react";
 
 export default function Page() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -16,9 +16,16 @@ export default function Page() {
   const models = reactClient.model.getModels.useQuery();
 
   const endpoints = models.data
-    ? ["All", ...new Set(models.data.map((model) => 
-        model.supportedEndpoints.map(endpoint => endpoint)
-      ).flat())]
+    ? [
+        "All",
+        ...new Set(
+          models.data
+            .map((model) =>
+              model.supportedEndpoints.map((endpoint) => endpoint),
+            )
+            .flat(),
+        ),
+      ]
     : ["All"];
 
   const filteredModels = models.data
@@ -28,7 +35,7 @@ export default function Page() {
           model.supportedEndpoints
             .map((e) => e.toLowerCase())
             .includes(endpoints[selectedIndex]!.toLowerCase()),
-      )
+        )
     : [];
 
   return (
@@ -64,8 +71,8 @@ export default function Page() {
               href="/models"
               className="group relative flex h-12 w-full items-center justify-center sm:w-44"
             >
-              <div className="absolute h-11 w-full rounded-full border-2 border-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:w-40 box-border" />
-              <div className="inline-flex w-full items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-white group-hover:border-2 box-border">
+              <div className="absolute box-border h-11 w-full rounded-full border-2 border-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:w-40" />
+              <div className="box-border inline-flex w-full items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-white group-hover:border-2">
                 <span className="flex items-center gap-2 text-sm font-semibold leading-tight">
                   Browse Models
                   <ChevronRight className="h-4 w-4 opacity-50" />
