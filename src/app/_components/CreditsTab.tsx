@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { InfoIcon, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { CREDIT_PER_DOLLAR, MIN_PURCHASE_IN_DOLLARS } from "@/constants";
@@ -16,7 +16,7 @@ type CreditsTabProps = {
 
 export default function CreditsTab({ user }: CreditsTabProps) {
   const [showPurchaseInput, setShowPurchaseInput] = useState(false);
-  const [useCredits, setUseCredits] = useState(true);
+  const [useCredits, setUseCredits] = useState(false);
   const [purchaseAmount, setPurchaseAmount] = useState(0);
   const pathName = usePathname();
   const router = useRouter();
@@ -98,45 +98,56 @@ export default function CreditsTab({ user }: CreditsTabProps) {
                 </div>
               </div>
 
-              <button
-                onClick={() => {
-                  const dollarAmount = useCredits
-                    ? Math.ceil(purchaseAmount / CREDIT_PER_DOLLAR)
-                    : purchaseAmount;
+              <div className="flex w-full items-center justify-center gap-2">
+                <button
+                  onClick={() => {
+                    const dollarAmount = useCredits
+                      ? Math.ceil(purchaseAmount / CREDIT_PER_DOLLAR)
+                      : purchaseAmount;
 
-                  if (dollarAmount < MIN_PURCHASE_IN_DOLLARS) {
-                    toast.error(
-                      `Must purchase a minimum of $${MIN_PURCHASE_IN_DOLLARS} or ${formatLargeNumber(MIN_PURCHASE_IN_DOLLARS * CREDIT_PER_DOLLAR)} credits`,
-                    );
-                    return;
+                    if (dollarAmount < MIN_PURCHASE_IN_DOLLARS) {
+                      toast.error(
+                        `Must purchase a minimum of $${MIN_PURCHASE_IN_DOLLARS} or ${formatLargeNumber(MIN_PURCHASE_IN_DOLLARS * CREDIT_PER_DOLLAR)} credits`,
+                      );
+                      return;
+                    }
+
+                    checkout.mutate({
+                      purchaseAmount: dollarAmount,
+                      redirectTo: pathName + "?settings=true&tab=credits",
+                    });
+                  }}
+                  disabled={checkout.isLoading}
+                  className="w-full rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow shadow-inner disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {checkout.isLoading ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Processing...
+                    </div>
+                  ) : (
+                    <>
+                      Purchase{" "}
+                      {purchaseAmount === 0
+                        ? useCredits
+                          ? "Credits"
+                          : "Dollars"
+                        : useCredits
+                          ? `${formatLargeNumber(BigInt(purchaseAmount))} Credits`
+                          : `$${purchaseAmount}`}
+                    </>
+                  )}
+                </button>
+                <InfoIcon
+                  className="h-4 w-4 text-gray-500"
+                  onMouseEnter={() =>
+                    toast.info(
+                      `1 USD = ${formatLargeNumber(CREDIT_PER_DOLLAR)} Credits`,
+                    )
                   }
-
-                  checkout.mutate({
-                    purchaseAmount: dollarAmount,
-                    redirectTo: pathName + "?settings=true&tab=credits",
-                  });
-                }}
-                disabled={checkout.isLoading}
-                className="rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow shadow-inner disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {checkout.isLoading ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Processing...
-                  </div>
-                ) : (
-                  <>
-                    Purchase{" "}
-                    {purchaseAmount === 0
-                      ? useCredits
-                        ? "Credits"
-                        : "Dollars"
-                      : useCredits
-                        ? `${formatLargeNumber(BigInt(purchaseAmount))} Credits`
-                        : `$${purchaseAmount}`}
-                  </>
-                )}
-              </button>
+                  onMouseLeave={() => toast.dismiss()}
+                />
+              </div>
             </div>
           )}
         </div>
