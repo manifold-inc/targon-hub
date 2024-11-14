@@ -65,7 +65,7 @@ export default function ModelCard({
         </div>
 
         {/* Bottom row with metadata */}
-        <div className="flex h-5 w-full flex-wrap items-center gap-2 whitespace-nowrap">
+        <div className="flex h-5 w-full  items-center gap-2 whitespace-nowrap text-sm sm:text-base">
           <div className="flex items-center gap-3">
             <UserRoundIcon className="h-4 w-4" />
             <div className="text-sm leading-tight text-[#667085]">
@@ -73,7 +73,7 @@ export default function ModelCard({
             </div>
           </div>
           <div className="h-5 w-px bg-[#e4e7ec]" />
-          <div className="text-sm leading-tight text-[#667085]">{cpt} C/T</div>
+          <div className="text-sm leading-tight text-[#667085]">{cpt} Credits Per Token</div>
           <div className="h-5 w-px bg-[#e4e7ec]" />
           <div className="inline-flex h-6 items-center justify-start gap-1.5 rounded-full py-0.5 pl-2 pr-2.5">
             <div

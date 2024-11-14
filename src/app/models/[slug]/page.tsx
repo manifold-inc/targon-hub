@@ -137,7 +137,7 @@ for chunk in response:
               </div>
 
               <div className="flex flex-wrap justify-center gap-4">
-                {[{ label: "Output Tokens", price: `${data.cpt} C/T` }].map(
+                {[{ label: "Output Tokens", price: `${data.cpt} Credits Per Token` }].map(
                   (item) => (
                     <div
                       key={item.label}
