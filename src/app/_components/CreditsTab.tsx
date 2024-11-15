@@ -78,13 +78,13 @@ export default function CreditsTab({ user }: CreditsTabProps) {
               <div className="flex items-center justify-center gap-4">
                 <button
                   onClick={() => setUseCredits(false)}
-                  className={`rounded-lg px-4 py-2 text-sm ${!useCredits ? "bg-blue-500 text-white" : "bg-gray-100"}`}
+                  className={`rounded-lg px-4 py-2 text-sm ${!useCredits ? "bg-green-500 text-white" : "bg-gray-100"}`}
                 >
                   Dollars
                 </button>
                 <button
                   onClick={() => setUseCredits(true)}
-                  className={`rounded-lg px-4 py-2 text-sm ${useCredits ? "bg-blue-500 text-white" : "bg-gray-100"}`}
+                  className={`rounded-lg px-4 py-2 text-sm ${useCredits ? "bg-green-500 text-white" : "bg-gray-100"}`}
                 >
                   Credits
                 </button>
@@ -193,6 +193,7 @@ export default function CreditsTab({ user }: CreditsTabProps) {
                   )}
                   <div className="flex items-center gap-2">
                     <QrCode
+
                       onClick={() => setShowQR(!showQR)}
                       className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700"
                       onMouseEnter={() => toast.info("Show/Hide QR Code")}

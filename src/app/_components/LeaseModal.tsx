@@ -388,13 +388,13 @@ export default function LeaseModal({
                   <div className="flex items-center justify-center gap-4">
                     <button
                       onClick={() => handleCurrencyToggle(false)}
-                      className={`rounded-lg px-4 py-2 text-sm ${!useCredits ? "bg-blue-500 text-white" : "bg-gray-100"}`}
+                      className={`rounded-lg px-4 py-2 text-sm ${!useCredits ? "bg-green-500 text-white" : "bg-gray-100"}`}
                     >
                       Dollars
                     </button>
                     <button
                       onClick={() => handleCurrencyToggle(true)}
-                      className={`rounded-lg px-4 py-2 text-sm ${useCredits ? "bg-blue-500 text-white" : "bg-gray-100"}`}
+                      className={`rounded-lg px-4 py-2 text-sm ${useCredits ? "bg-green-500 text-white" : "bg-gray-100"}`}
                     >
                       Credits
                     </button>
