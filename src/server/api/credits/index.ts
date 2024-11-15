@@ -153,7 +153,7 @@ export const creditsRouter = createTRPCRouter({
       if (gpuToRemove > 0) {
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: `Cannot free enough GPU capacity while respecting immunity period`,
+          message: `Server capacity is currently full. Please try again later.`,
         });
       }
 

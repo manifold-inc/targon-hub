@@ -40,6 +40,7 @@ export default function LeaseModal({
 }: LeaseModalProps) {
   const [currentStep, setCurrentStep] = useState(step ?? 0);
   const [model, setModel] = useState(savedModel ?? "");
+  const [leaseError, setLeaseError] = useState<string | null>(null);
   const router = useRouter();
 
   // Update steps array with current status
@@ -94,7 +95,7 @@ export default function LeaseModal({
       router.push(`/models/${encodeURIComponent(model)}`);
     },
     onError: (e) => {
-      toast.error(`Failed to lease model: ${e.message}`);
+      setLeaseError(e.message);
     },
   });
 
@@ -476,7 +477,7 @@ export default function LeaseModal({
 
           {/* Step 2 */}
           {currentStep === 2 && (
-            <div className="mx-auto flex w-full max-w-xl flex-col items-center py-8">
+            <div className="mx-auto flex w-full max-w-xl flex-col items-center py-8 gap-4">
               <div className="w-full rounded-lg border bg-gray-50 px-6 pt-6 shadow-md">
                 <div className="flex flex-col items-center justify-center gap-2 border-b pb-4">
                   <h4 className="font-semibold">Model Lease Summary</h4>
@@ -531,6 +532,11 @@ export default function LeaseModal({
                   </p>
                 </div>
               </div>
+              {leaseError && (
+              <p className="rounded-md bg-yellow-50 p-4 text-yellow-700">
+                {leaseError}
+              </p>
+            )}
             </div>
           )}
 
