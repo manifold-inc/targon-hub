@@ -80,13 +80,13 @@ export default function ModelCard({
           <div className="inline-flex h-6 items-center justify-start gap-1.5 rounded-full py-0.5 pl-2 pr-2.5">
             <div
               className={`h-1.5 w-1.5 rounded-full ${
-                enabled ? "bg-[#16a34a]" : "bg-[#dc2626]"
+                enabled ? "bg-[#16a34a]" : "bg-[#d97706]"
               }`}
             />
             <span
-              className={`text-center text-sm font-medium leading-tight ${enabled ? "text-[#16a34a]" : "text-[#dc2626]"}`}
+              className={`text-center text-sm font-medium leading-tight ${enabled ? "text-[#16a34a]" : "text-[#d97706]"}`}
             >
-              {enabled ? "Enabled" : "Disabled"}
+              {enabled ? "Live" : "Available to Lease"}
             </span>
           </div>
         </div>
