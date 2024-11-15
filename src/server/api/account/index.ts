@@ -4,7 +4,14 @@ import { count, desc, eq, sql } from "drizzle-orm";
 import { Scrypt } from "lucia";
 import { z } from "zod";
 
-import { ApiKey, CheckoutSession, Model, Request, User, TaoTransfers } from "@/schema/schema";
+import {
+  ApiKey,
+  CheckoutSession,
+  Model,
+  Request,
+  TaoTransfers,
+  User,
+} from "@/schema/schema";
 import { createAccount, lucia } from "@/server/auth";
 import { createTRPCRouter, publicProcedure, stripeProcedure } from "../trpc";
 
@@ -118,18 +125,18 @@ export const accountRouter = createTRPCRouter({
   }),
   getUserPaymentHistory: publicProcedure.query(async ({ ctx }) => {
     if (!ctx.user?.id) return null;
-    
+
     // Get Stripe payments
     const checkoutSessions = await ctx.db
       .select({
-        type: sql<'stripe'>`'stripe'`.as('type'),
+        type: sql<"stripe">`'stripe'`.as("type"),
         credits: CheckoutSession.credits,
         cardLast4: CheckoutSession.cardLast4,
         cardBrand: CheckoutSession.cardBrand,
         createdAt: CheckoutSession.createdAt,
-        txHash: sql<null>`NULL`.as('txHash'),
-        rao: sql<null>`NULL`.as('rao'),
-        pricedAt: sql<null>`NULL`.as('pricedAt'), // Stripe payments don't have priced_at
+        txHash: sql<null>`NULL`.as("txHash"),
+        rao: sql<null>`NULL`.as("rao"),
+        pricedAt: sql<null>`NULL`.as("pricedAt"), // Stripe payments don't have priced_at
       })
       .from(CheckoutSession)
       .where(eq(CheckoutSession.userId, ctx.user.id));
@@ -137,10 +144,10 @@ export const accountRouter = createTRPCRouter({
     // Get TAO transfers
     const taoTransfers = await ctx.db
       .select({
-        type: sql<'tao'>`'tao'`.as('type'),
+        type: sql<"tao">`'tao'`.as("type"),
         credits: TaoTransfers.credits,
-        cardLast4: sql<null>`NULL`.as('cardLast4'),
-        cardBrand: sql<null>`NULL`.as('cardBrand'),
+        cardLast4: sql<null>`NULL`.as("cardLast4"),
+        cardBrand: sql<null>`NULL`.as("cardBrand"),
         createdAt: TaoTransfers.createdAt,
         txHash: TaoTransfers.tx_hash,
         rao: TaoTransfers.rao,
@@ -150,10 +157,10 @@ export const accountRouter = createTRPCRouter({
       .where(eq(TaoTransfers.userId, ctx.user.id));
 
     // Combine and sort both payment types
-    const allPayments = [...checkoutSessions, ...taoTransfers].sort((a, b) => 
-      (b.createdAt?.getTime() ?? 0) - (a.createdAt?.getTime() ?? 0)
+    const allPayments = [...checkoutSessions, ...taoTransfers].sort(
+      (a, b) => (b.createdAt?.getTime() ?? 0) - (a.createdAt?.getTime() ?? 0),
     );
-    
+
     return allPayments;
   }),
   getUserActivity: publicProcedure.query(async ({ ctx }) => {

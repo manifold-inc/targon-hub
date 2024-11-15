@@ -2,8 +2,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { CopyIcon, InfoIcon, Loader2, QrCode } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 import { toast } from "sonner";
-import { QRCodeSVG } from 'qrcode.react';
 
 import { CREDIT_PER_DOLLAR, MIN_PURCHASE_IN_DOLLARS } from "@/constants";
 import { env } from "@/env.mjs";
@@ -34,7 +34,9 @@ export default function CreditsTab({ user }: CreditsTabProps) {
 
   const paymentHistory = reactClient.account.getUserPaymentHistory.useQuery();
 
-  const [showAmounts, setShowAmounts] = useState<'credits' | 'amounts'>('credits');
+  const [showAmounts, setShowAmounts] = useState<"credits" | "amounts">(
+    "credits",
+  );
   const [showQR, setShowQR] = useState(false);
 
   const handleCopyAddress = () => {
@@ -193,7 +195,6 @@ export default function CreditsTab({ user }: CreditsTabProps) {
                   )}
                   <div className="flex items-center gap-2">
                     <QrCode
-
                       onClick={() => setShowQR(!showQR)}
                       className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700"
                       onMouseEnter={() => toast.info("Show/Hide QR Code")}
@@ -202,7 +203,9 @@ export default function CreditsTab({ user }: CreditsTabProps) {
                     <CopyIcon
                       className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700"
                       onClick={handleCopyAddress}
-                      onMouseEnter={() => toast.info("Copy Address to Clipboard")}
+                      onMouseEnter={() =>
+                        toast.info("Copy Address to Clipboard")
+                      }
                       onMouseLeave={() => toast.dismiss()}
                     />
                   </div>
@@ -225,14 +228,14 @@ export default function CreditsTab({ user }: CreditsTabProps) {
         </div>
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setShowAmounts('credits')}
-            className={`rounded-lg px-3 py-1 text-xs ${showAmounts === 'credits' ? 'bg-black text-white' : 'bg-gray-100'}`}
+            onClick={() => setShowAmounts("credits")}
+            className={`rounded-lg px-3 py-1 text-xs ${showAmounts === "credits" ? "bg-black text-white" : "bg-gray-100"}`}
           >
             Credits
           </button>
           <button
-            onClick={() => setShowAmounts('amounts')}
-            className={`rounded-lg px-3 py-1 text-xs ${showAmounts === 'amounts' ? 'bg-black text-white' : 'bg-gray-100'}`}
+            onClick={() => setShowAmounts("amounts")}
+            className={`rounded-lg px-3 py-1 text-xs ${showAmounts === "amounts" ? "bg-black text-white" : "bg-gray-100"}`}
           >
             USD/TAO
           </button>
@@ -244,36 +247,59 @@ export default function CreditsTab({ user }: CreditsTabProps) {
           <tbody>
             {paymentHistory.data?.map((payment) => (
               <tr key={payment.createdAt?.getTime()} className="h-12">
-                <td className="text-xs sm:text-sm text-[#101828] pr-4">
-                  <span className="hidden sm:inline">{formatDate(payment.createdAt!)}</span>
-                  <span className="sm:hidden">{payment.createdAt?.toLocaleDateString()}</span>
+                <td className="pr-4 text-xs text-[#101828] sm:text-sm">
+                  <span className="hidden sm:inline">
+                    {formatDate(payment.createdAt!)}
+                  </span>
+                  <span className="sm:hidden">
+                    {payment.createdAt?.toLocaleDateString()}
+                  </span>
                 </td>
-                <td className="text-right text-xs sm:text-sm text-[#101828] px-4">
-                  {showAmounts === 'credits' 
+                <td className="px-4 text-right text-xs text-[#101828] sm:text-sm">
+                  {showAmounts === "credits"
                     ? formatLargeNumber(payment.credits ?? 0)
-                    : payment.type === 'tao' 
-                      ? `${formatLargeNumber(payment.rao / 1e-9)} T` 
-                      : `$${formatLargeNumber(Math.ceil(Number(payment.credits ?? 0) / CREDIT_PER_DOLLAR))}`
-                  }
+                    : payment.type === "tao"
+                      ? `${formatLargeNumber(payment.rao / 1e-9)} T`
+                      : `$${formatLargeNumber(Math.ceil(Number(payment.credits ?? 0) / CREDIT_PER_DOLLAR))}`}
                 </td>
-                <td className="text-right text-xs sm:text-sm text-[#101828] px-4">
-                  <div>via {payment.type === 'stripe' ? 'Stripe' : 'TAO'}</div>
+                <td className="px-4 text-right text-xs text-[#101828] sm:text-sm">
+                  <div>via {payment.type === "stripe" ? "Stripe" : "TAO"}</div>
                 </td>
-                <td className="text-center px-4">
-                  <div className="mx-auto relative flex h-5 w-8 items-center justify-center rounded border border-[#e4e7ec] bg-white p-1 sm:h-6 sm:w-10">
-                    {payment.type === 'stripe' ? (
+                <td className="px-4 text-center">
+                  <div className="relative mx-auto flex h-5 w-8 items-center justify-center rounded border border-[#e4e7ec] bg-white p-1 sm:h-6 sm:w-10">
+                    {payment.type === "stripe" ? (
                       <>
                         {payment.cardBrand?.toLowerCase() === "amex" && (
-                          <Image src="/cards/Amex.svg" alt="American Express" width={32} height={32} />
+                          <Image
+                            src="/cards/Amex.svg"
+                            alt="American Express"
+                            width={32}
+                            height={32}
+                          />
                         )}
                         {payment.cardBrand?.toLowerCase() === "mastercard" && (
-                          <Image src="/cards/Mastercard.svg" alt="Mastercard" width={32} height={32} />
+                          <Image
+                            src="/cards/Mastercard.svg"
+                            alt="Mastercard"
+                            width={32}
+                            height={32}
+                          />
                         )}
                         {payment.cardBrand?.toLowerCase() === "visa" && (
-                          <Image src="/cards/Visa.svg" alt="Visa" width={32} height={32} />
+                          <Image
+                            src="/cards/Visa.svg"
+                            alt="Visa"
+                            width={32}
+                            height={32}
+                          />
                         )}
                         {payment.cardBrand?.toLowerCase() === "discover" && (
-                          <Image src="/cards/Discover.svg" alt="Discover" width={32} height={32} />
+                          <Image
+                            src="/cards/Discover.svg"
+                            alt="Discover"
+                            width={32}
+                            height={32}
+                          />
                         )}
                       </>
                     ) : (
@@ -281,13 +307,12 @@ export default function CreditsTab({ user }: CreditsTabProps) {
                     )}
                   </div>
                 </td>
-                <td className="text-right text-xs sm:text-sm font-mono text-[#101828] pl-4">
-                  {payment.type === 'stripe' 
+                <td className="pl-4 text-right font-mono text-xs text-[#101828] sm:text-sm">
+                  {payment.type === "stripe"
                     ? `***${payment.cardLast4 ?? "N/A"}`
-                    : payment.txHash 
+                    : payment.txHash
                       ? `${payment.txHash.slice(0, 3)}...${payment.txHash.slice(-3)}`
-                      : "Pending"
-                  }
+                      : "Pending"}
                 </td>
               </tr>
             ))}

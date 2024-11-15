@@ -38,11 +38,18 @@ export const AppCard = ({
           </p>
           <div className="h-5 w-px bg-[#e4e7ec]" />
           <p className="text-xs leading-4 text-[#667085]">
-            {supportedEndpoints.map(endpoint => 
-              endpoint.split(' ').map(word => 
-                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-              ).join(' ')
-            ).join(", ")}
+            {supportedEndpoints
+              .map((endpoint) =>
+                endpoint
+                  .split(" ")
+                  .map(
+                    (word) =>
+                      word.charAt(0).toUpperCase() +
+                      word.slice(1).toLowerCase(),
+                  )
+                  .join(" "),
+              )
+              .join(", ")}
           </p>
         </div>
         <div className="flex h-5 items-center gap-2 whitespace-nowrap">

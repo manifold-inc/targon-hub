@@ -140,7 +140,7 @@ for chunk in response:
                 {[
                   {
                     label: "Output Tokens",
-                    price: `${data.cpt} ${Number(data.cpt) === 1 ? 'Credit' : 'Credits'} Per Token`,
+                    price: `${data.cpt} ${Number(data.cpt) === 1 ? "Credit" : "Credits"} Per Token`,
                   },
                 ].map((item) => (
                   <div
