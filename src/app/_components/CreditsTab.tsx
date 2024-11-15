@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { CopyIcon, InfoIcon, Loader2 } from "lucide-react";
+import { CopyIcon, InfoIcon, Loader2, QrCode } from "lucide-react";
 import { toast } from "sonner";
+import { QRCodeSVG } from 'qrcode.react';
 
 import { CREDIT_PER_DOLLAR, MIN_PURCHASE_IN_DOLLARS } from "@/constants";
 import { env } from "@/env.mjs";
@@ -34,6 +35,12 @@ export default function CreditsTab({ user }: CreditsTabProps) {
   const paymentHistory = reactClient.account.getUserPaymentHistory.useQuery();
 
   const [showAmounts, setShowAmounts] = useState<'credits' | 'amounts'>('credits');
+  const [showQR, setShowQR] = useState(false);
+
+  const handleCopyAddress = () => {
+    void copyToClipboard(env.NEXT_PUBLIC_DEPOSIT_ADDRESS);
+    toast.success("Address copied to Clipboard");
+  };
 
   return (
     <div className="max-h-full overflow-y-auto py-2 sm:py-2">
@@ -167,17 +174,38 @@ export default function CreditsTab({ user }: CreditsTabProps) {
               <p className="text-sm text-gray-700">
                 Please send your payment to the following address:
               </p>
-              <div className="flex items-center justify-between rounded bg-gray-200 p-3">
-                <p className="font-mono text-sm text-gray-700">
-                  {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(0, 6)}...
-                  {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(-4)}
-                </p>
-                <CopyIcon
-                  className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700"
-                  onClick={() =>
-                    copyToClipboard(env.NEXT_PUBLIC_DEPOSIT_ADDRESS)
-                  }
-                />
+              <div className="flex flex-col items-center gap-4">
+                <div className="flex w-full items-center justify-between rounded bg-gray-200 p-3">
+                  {showQR ? (
+                    <QRCodeSVG
+                      value={env.NEXT_PUBLIC_DEPOSIT_ADDRESS}
+                      size={120}
+                      bgColor="#f3f4f6"
+                      fgColor="#101828"
+                      level="L"
+                      className="mx-auto"
+                    />
+                  ) : (
+                    <p className="font-mono text-sm text-gray-700">
+                      {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(0, 6)}...
+                      {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(-4)}
+                    </p>
+                  )}
+                  <div className="flex items-center gap-2">
+                    <QrCode
+                      onClick={() => setShowQR(!showQR)}
+                      className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700"
+                      onMouseEnter={() => toast.info("Show/Hide QR Code")}
+                      onMouseLeave={() => toast.dismiss()}
+                    />
+                    <CopyIcon
+                      className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700"
+                      onClick={handleCopyAddress}
+                      onMouseEnter={() => toast.info("Copy Address to Clipboard")}
+                      onMouseLeave={() => toast.dismiss()}
+                    />
+                  </div>
+                </div>
               </div>
               <div className="flex items-center gap-2">
                 <InfoIcon className="h-4 w-4 text-gray-500" />
@@ -229,31 +257,26 @@ export default function CreditsTab({ user }: CreditsTabProps) {
                 </td>
                 <td className="text-right text-xs sm:text-sm text-[#101828] px-4">
                   <div>via {payment.type === 'stripe' ? 'Stripe' : 'TAO'}</div>
-                  {payment.type === 'tao' && payment.pricedAt && (
-                    <div className="text-xs text-gray-400">
-                      @ ${payment.pricedAt.toFixed(2)}
-                    </div>
-                  )}
                 </td>
                 <td className="text-center px-4">
                   <div className="mx-auto relative flex h-5 w-8 items-center justify-center rounded border border-[#e4e7ec] bg-white p-1 sm:h-6 sm:w-10">
                     {payment.type === 'stripe' ? (
                       <>
                         {payment.cardBrand?.toLowerCase() === "amex" && (
-                          <Image src="/cards/Amex.svg" alt="American Express" width={28} height={28} className="sm:h-[36px] sm:w-[36px]" />
+                          <Image src="/cards/Amex.svg" alt="American Express" width={32} height={32} />
                         )}
                         {payment.cardBrand?.toLowerCase() === "mastercard" && (
-                          <Image src="/cards/Mastercard.svg" alt="Mastercard" width={28} height={28} className="sm:h-[36px] sm:w-[36px]" />
+                          <Image src="/cards/Mastercard.svg" alt="Mastercard" width={32} height={32} />
                         )}
                         {payment.cardBrand?.toLowerCase() === "visa" && (
-                          <Image src="/cards/Visa.svg" alt="Visa" width={28} height={28} className="sm:h-[36px] sm:w-[36px]" />
+                          <Image src="/cards/Visa.svg" alt="Visa" width={32} height={32} />
                         )}
                         {payment.cardBrand?.toLowerCase() === "discover" && (
-                          <Image src="/cards/Discover.svg" alt="Discover" width={28} height={28} className="sm:h-[36px] sm:w-[36px]" />
+                          <Image src="/cards/Discover.svg" alt="Discover" width={32} height={32} />
                         )}
                       </>
                     ) : (
-                      <Image src="TAO.svg" alt="TAO" width={16} height={16} className="sm:h-[20px] sm:w-[20px]" />
+                      <Image src="TAO.svg" alt="TAO" width={12} height={12} />
                     )}
                   </div>
                 </td>
