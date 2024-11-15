@@ -351,7 +351,7 @@ export default function LeaseModal({
                     <span className="text-gray-500">Cost per GPU:</span>
                     <span>
                       {formatLargeNumber(COST_PER_GPU)} credits /{" "}
-                      {(COST_PER_GPU / BigInt(CREDIT_PER_DOLLAR)).toString()} $
+                      ${(COST_PER_GPU / BigInt(CREDIT_PER_DOLLAR)).toString()} 
                     </span>
                   </p>
                   <p className="flex justify-between">
@@ -360,7 +360,7 @@ export default function LeaseModal({
                     </span>
                     <span>
                       {formatLargeNumber(totalCost)} credits /{" "}
-                      {(totalCost / BigInt(CREDIT_PER_DOLLAR)).toString()} $
+                      ${(totalCost / BigInt(CREDIT_PER_DOLLAR)).toString()} 
                     </span>
                   </p>
                 </div>
@@ -493,7 +493,7 @@ export default function LeaseModal({
                     <span className="text-gray-500">Cost per GPU:</span>
                     <span>
                       {formatLargeNumber(COST_PER_GPU)} credits /{" "}
-                      {(COST_PER_GPU / BigInt(CREDIT_PER_DOLLAR)).toString()} $
+                      ${(COST_PER_GPU / BigInt(CREDIT_PER_DOLLAR)).toString()} 
                     </span>
                   </p>
                   <p className="flex justify-between">
@@ -502,7 +502,7 @@ export default function LeaseModal({
                     </span>
                     <span>
                       {formatLargeNumber(totalCost)} credits /{" "}
-                      {(totalCost / BigInt(CREDIT_PER_DOLLAR)).toString()} $
+                     ${(totalCost / BigInt(CREDIT_PER_DOLLAR)).toString()}
                     </span>
                   </p>
                 </div>
