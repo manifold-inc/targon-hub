@@ -71,7 +71,7 @@ export default function SearchBar() {
           </div>
         </div>
       </div>
-      <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+      <ComboboxOptions className="absolute z-10 mt-1 max-h-48 md:max-h-40 lg:max-h-60 w-full overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
         {models.data?.length === 0 ? (
           <div className="relative cursor-default select-none px-4 py-2">
             Nothing found.
