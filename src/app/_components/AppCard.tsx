@@ -6,6 +6,7 @@ interface AppCardProps {
   modality: string;
   requiredGPUs: number;
   enabled: boolean;
+  supportedEndpoints: string[];
 }
 
 export const AppCard = ({
@@ -14,11 +15,12 @@ export const AppCard = ({
   modality,
   requiredGPUs,
   enabled,
+  supportedEndpoints,
 }: AppCardProps) => {
   return (
     <Link
       href={`/models/${encodeURIComponent(name)}`}
-      className="flex h-44 w-full flex-col items-start justify-between rounded-xl border border-[#e4e7ec] bg-white p-5 shadow sm:w-80"
+      className="flex h-44 w-full flex-col items-start justify-between rounded-xl border border-[#e4e7ec] bg-white p-5 shadow md:w-80"
     >
       <div className="flex h-full flex-col justify-between">
         <div className="flex gap-4">
@@ -34,10 +36,18 @@ export const AppCard = ({
           <p className="text-xs leading-4 text-[#667085]">
             {requiredGPUs} GPU{requiredGPUs !== 1 ? "s" : ""}
           </p>
+          <div className="h-5 w-px bg-[#e4e7ec]" />
+          <p className="text-xs leading-4 text-[#667085]">
+            {supportedEndpoints.map(endpoint => 
+              endpoint.split(' ').map(word => 
+                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+              ).join(' ')
+            ).join(", ")}
+          </p>
         </div>
         <div className="flex h-5 items-center gap-2">
           <div className="text-sm leading-tight text-[#667085]">
-            {cpt} Credits Per Token
+            {cpt} Credit{cpt !== 1 ? "s" : ""} Per Token
           </div>
           <div className="h-5 w-px bg-[#e4e7ec]" />
           <div className="inline-flex h-6 items-center justify-start gap-1.5 rounded-full py-0.5 pl-2 pr-2.5">

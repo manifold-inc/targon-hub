@@ -17,7 +17,7 @@ export default function Page() {
 
   const endpoints = models.data
     ? [
-        "All",
+        "ALL",
         ...new Set(
           models.data
             .map((model) =>
@@ -26,7 +26,7 @@ export default function Page() {
             .flat(),
         ),
       ]
-    : ["All"];
+    : ["ALL"];
 
   const filteredModels = models.data
     ? selectedIndex === 0
@@ -120,7 +120,7 @@ export default function Page() {
         </div>
 
         <div className="animate-slide-in-delay py-4">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             {filteredModels.map((model) => (
               <AppCard
                 key={model.id}
@@ -129,6 +129,7 @@ export default function Page() {
                 requiredGPUs={model.requiredGpus}
                 modality={model.modality}
                 enabled={model.enabled ?? false}
+                supportedEndpoints={model.supportedEndpoints}
               />
             ))}
           </div>
