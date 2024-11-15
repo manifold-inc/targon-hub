@@ -8,7 +8,6 @@ const ModelsNav = () => {
 
   const navItems = [
     { label: "Overview" },
-    { label: "Apps Using This" },
     { label: "Parameters" },
   ];
 
