@@ -92,9 +92,9 @@ for chunk in response:
                     <span className="w-full text-center text-sm font-semibold leading-tight sm:w-24">
                       {user?.id
                         ? data.enabled
-                          ? "Use Now!"
+                          ? "Use Now"
                           : "Lease Model"
-                        : "Sign in!"}
+                        : "Sign in"}
                     </span>
                   </span>
                 </Link>
@@ -140,7 +140,7 @@ for chunk in response:
                 {[
                   {
                     label: "Output Tokens",
-                    price: `${data.cpt} Credits Per Token`,
+                    price: `${data.cpt} ${Number(data.cpt) === 1 ? 'Credit' : 'Credits'} Per Token`,
                   },
                 ].map((item) => (
                   <div
