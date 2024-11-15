@@ -117,14 +117,15 @@ export default function Page() {
 
               <div className="pt-4">
                 <button
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="flex h-9 w-full items-center justify-center rounded-md bg-indigo-600 px-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   type="submit"
                   disabled={signIn.isLoading}
                 >
-                  {signIn.isLoading && (
+                  {signIn.isLoading ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    "Sign in"
                   )}
-                  Sign in
                 </button>
                 <div className="pt-1 text-center text-sm text-gray-500">
                   <Link className="underline" href="/create-account">

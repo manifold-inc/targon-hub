@@ -98,6 +98,7 @@ export const createAccount = async ({
   await db.insert(ApiKey).values({
     userId: parseInt(res.insertId),
     key: apiKey,
+    name: "Default",
   });
   return parseInt(res.insertId);
 };

@@ -100,7 +100,7 @@ export default function KeysTab() {
                 </td>
                 <td className="px-2 py-1 text-center leading-tight text-[#101828]">
                   <span className="inline-flex items-center gap-2">
-                    {key.key.slice(0, 8)}
+                    {key.key.slice(0, 3) + "..." + key.key.slice(-3)}
                     <button
                       className="cursor-pointer"
                       onClick={() => handleCopyClipboard(key.key)}
