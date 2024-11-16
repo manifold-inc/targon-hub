@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import "@/styles/globals.css";
 
+import { Suspense } from "react";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import clsx from "clsx";
@@ -36,10 +37,12 @@ export default function RootLayout({
         <link rel="icon" href="/ManifoldMarkTransparentGreenSVG.svg" />
       </head>
       <body>
-        <WithGlobalProvider>
-          <Header />
-          <main>{children}</main>
-        </WithGlobalProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <WithGlobalProvider>
+            <Header />
+            <main>{children}</main>
+          </WithGlobalProvider>
+        </Suspense>
 
         <Toaster richColors />
         <Analytics />
