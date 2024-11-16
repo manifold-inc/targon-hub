@@ -25,7 +25,10 @@ import { useAuth } from "./providers";
 import SearchBar from "./SearchBar";
 import SettingsModal from "./SettingsModal";
 
-const NAVIGATION = [{ slug: "/models", title: "Browse" }];
+const NAVIGATION = [
+  { slug: "/models", title: "Browse" },
+  { slug: "/models/immunity", title: "Immunity" },
+];
 
 const getIconForPath = (pathname: string) => {
   switch (pathname) {

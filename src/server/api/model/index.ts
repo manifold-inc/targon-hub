@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 import { z } from "zod";
 
 import { env } from "@/env.mjs";
@@ -357,4 +357,27 @@ export const modelRouter = createTRPCRouter({
 
       return gpuData.required_gpus;
     }),
+  getImmunityTimeline: publicAuthlessProcedure.query(async ({ ctx }) => {
+    const models = await ctx.db
+      .select({
+        name: Model.name,
+        enabled: Model.enabled,
+        enabledDate: Model.enabledDate,
+      })
+      .from(Model)
+      .where(eq(Model.enabled, true))
+      .orderBy(asc(Model.enabledDate));
+
+    return models.map((model) => ({
+      ...model,
+      enabledDate: model.enabledDate
+        ? new Date(model.enabledDate).toLocaleDateString()
+        : null,
+      immunityEnds: model.enabledDate
+        ? new Date(
+            new Date(model.enabledDate).getTime() + 7 * 24 * 60 * 60 * 1000,
+          ).toLocaleDateString()
+        : null,
+    }));
+  }),
 });
