@@ -1,11 +1,33 @@
+"use client";
+
 import { useState } from "react";
 import Link from "next/link";
-import { web3Enable, web3FromAddress } from "@polkadot/extension-dapp";
+import type {
+  InjectedAccountWithMeta,
+  InjectedExtension,
+} from "@polkadot/extension-inject/types";
+import type { Signer } from "@polkadot/types/types";
 import { Key, LineChart, Loader2, User, Wallet } from "lucide-react";
 import { toast } from "sonner";
 
 import { type RouterOutputs } from "@/trpc/shared";
 import { formatLargeNumber } from "@/utils/utils";
+
+let web3FromAddress: (address: string) => Promise<{ signer: Signer }>;
+let web3Enable: (appName: string) => Promise<InjectedExtension[]>;
+let web3Accounts: () => Promise<InjectedAccountWithMeta[]>;
+
+if (typeof window !== "undefined") {
+  void import("@polkadot/extension-dapp")
+    .then((ext) => {
+      web3FromAddress = ext.web3FromAddress;
+      web3Enable = ext.web3Enable;
+      web3Accounts = ext.web3Accounts;
+    })
+    .catch((error) => {
+      console.error("Failed to load Polkadot extension:", error);
+    });
+}
 
 type DashboardTabProps = {
   user: RouterOutputs["account"]["getUserDashboard"];
@@ -31,7 +53,6 @@ export default function DashboardTab({ user, onTabChange }: DashboardTabProps) {
       }
 
       // Get all accounts from the extension
-      const { web3Accounts } = await import("@polkadot/extension-dapp");
       const accounts = await web3Accounts();
 
       // Check if the provided address exists in the available accounts
