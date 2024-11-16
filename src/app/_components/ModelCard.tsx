@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { UserRoundIcon } from "lucide-react";
 
+import ModelStatusIndicator from "@/app/_components/ModelStatusIndicator";
 import { getModelGradient } from "@/utils/utils";
 
 interface ModelCardProps {
@@ -37,7 +38,7 @@ export default function ModelCard({
               {organization}/{name}
             </Link>
           </div>
-          <div className="m:gap-4 flex flex-wrap items-center md:justify-normal">
+          <div className="flex flex-wrap items-center md:justify-normal md:gap-4">
             <div className="flex items-center justify-center gap-1.5 rounded-md md:px-3 md:py-1.5">
               <div className="hidden text-center text-sm font-semibold leading-tight text-[#667085]">
                 1.62M tokens
@@ -76,18 +77,7 @@ export default function ModelCard({
             </div>
           </div>
 
-          <div className="inline-flex h-5 items-center justify-start gap-1.5 rounded-full py-0.5 pl-2 pr-2.5 sm:h-6">
-            <div
-              className={`h-1 w-1 rounded-full sm:h-1.5 sm:w-1.5 ${
-                enabled ? "bg-[#16a34a]" : "bg-[#d97706]"
-              }`}
-            />
-            <span
-              className={`text-center text-xs font-medium leading-tight sm:text-sm ${enabled ? "text-[#16a34a]" : "text-[#d97706]"}`}
-            >
-              {enabled ? "Live" : "Available to Lease"}
-            </span>
-          </div>
+          <ModelStatusIndicator enabled={enabled} showBorder={false} />
         </div>
       </div>
     </div>

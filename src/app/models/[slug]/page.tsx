@@ -5,6 +5,7 @@ import { Star, UserRound } from "lucide-react";
 
 import CodeBlock from "@/app/_components/CodeBlock";
 import ModelsNav from "@/app/_components/ModelsNav";
+import ModelStatusIndicator from "@/app/_components/ModelStatusIndicator";
 import { API_BASE_URL } from "@/constants";
 import { db } from "@/schema/db";
 import { createCaller } from "@/server/api/root";
@@ -17,7 +18,6 @@ type Props = {
   };
 };
 
-// Add this type definition
 export default async function Page({ params }: Props) {
   const { user, session } = await uncachedValidateRequest();
   const caller = createCaller({ user, db: db, req: null, session: session });
@@ -112,22 +112,10 @@ for chunk in response:
                   </span>
                 </div>
                 <div className="h-5 w-px bg-[#e4e7ec]" />
-                <div
-                  className={`inline-flex h-6 items-center justify-start gap-1.5 rounded-full border py-0.5 pl-2 pr-2.5 ${
-                    data.enabled
-                      ? "border-[#16a34a] text-[#16a34a]"
-                      : "border-[#d97706] text-[#d97706]"
-                  }`}
-                >
-                  <div
-                    className={`h-1.5 w-1.5 rounded-full ${
-                      data.enabled ? "bg-[#16a34a]" : "bg-[#d97706]"
-                    }`}
-                  />
-                  <span className="text-center text-sm font-medium leading-tight">
-                    {data.enabled ? "Live" : "Available to Lease"}
-                  </span>
-                </div>
+                <ModelStatusIndicator
+                  enabled={data.enabled ?? false}
+                  showBorder={true}
+                />
               </div>
 
               <div className="py-8">
