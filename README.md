@@ -34,7 +34,7 @@ for getting the `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`. Make sure you set
 with `http://localhost:3000` if you wish to use google OAuth in dev mode, and
 enter these in to your google console.
 
-Example: `https://hub.sybil.com/sign-in/google/callback`
+Example: `https://api.targon.com/sign-in/google/callback`
 
 ### 5. Create your Stripe account.
 

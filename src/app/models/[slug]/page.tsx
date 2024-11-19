@@ -6,11 +6,11 @@ import { Star, UserRound } from "lucide-react";
 import CodeBlock from "@/app/_components/CodeBlock";
 import ModelsNav from "@/app/_components/ModelsNav";
 import ModelStatusIndicator from "@/app/_components/ModelStatusIndicator";
-import { API_BASE_URL } from "@/constants";
 import { db } from "@/schema/db";
 import { createCaller } from "@/server/api/root";
 import { uncachedValidateRequest } from "@/server/auth";
 import { getModelGradient } from "@/utils/utils";
+import { env } from "@/env.mjs";
 
 type Props = {
   params: {
@@ -33,7 +33,7 @@ export default async function Page({ params }: Props) {
   const getChatExampleCode = () => `from openai import OpenAI
 
 client = OpenAI(
-    base_url="https://hub-api.sybil.com/v1", api_key="[your api token]"
+    base_url="${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1", api_key="[your api token]"
 )
 
 response = client.chat.completions.create(
@@ -51,7 +51,7 @@ for chunk in response:
   const getCompletionExampleCode = () => `from openai import OpenAI
 
 client = OpenAI(
-    base_url="https://hub-api.sybil.com/v1", api_key="[your api token]"
+    base_url="${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1", api_key="[your api token]"
 )
 
 response = client.completions.create(
@@ -287,7 +287,7 @@ for chunk in response:
                       Sample Code for Chat
                     </p>
                     <div className="w-fit whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3">
-                      POST {API_BASE_URL}/v1/chat/completions
+                      POST {env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1/chat/completions
                     </div>
                     <div className="pb-4">
                       Creates a model response for the given chat conversation.
@@ -314,7 +314,7 @@ for chunk in response:
                       Sample Code for Completion
                     </p>
                     <div className="w-full overflow-scroll whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3">
-                      POST {API_BASE_URL}/v1/completions
+                      POST {env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1/completions
                     </div>
                     <div className="pb-4">
                       Creates a model completion for the given text. Generally

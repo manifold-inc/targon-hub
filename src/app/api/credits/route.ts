@@ -24,7 +24,7 @@ export async function GET(request: NextRequest): Promise<Response> {
     deposit_address?: string;
   };
   if (user.ss58) {
-    body.deposit_address = env.DEPOSIT_ADDRESS;
+    body.deposit_address = env.NEXT_PUBLIC_DEPOSIT_ADDRESS;
   }
 
   return Response.json(body, { status: 200 });
