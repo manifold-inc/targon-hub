@@ -280,7 +280,7 @@ export const modelRouter = createTRPCRouter({
         supportedEndpoints.push("CHAT");
       }
 
-      const gpuResponse = await fetch(`${env.HUB_API_ENDPOINT}/estimate`, {
+      const gpuResponse = await fetch(`${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/estimate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
