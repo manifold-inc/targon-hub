@@ -248,7 +248,7 @@ export const Header = () => {
             </>
           ) : (
             <Link
-              className="inline-flex h-9 items-center justify-center gap-1 whitespace-nowrap rounded-full 
+              className="inline-flex hover:shadow-md transition-all h-9 items-center justify-center gap-1 whitespace-nowrap rounded-full 
               border-2 border-white bg-white px-3 py-2 shadow hover:bg-gray-50"
               href="/sign-in"
             >
