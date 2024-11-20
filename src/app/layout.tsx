@@ -37,14 +37,14 @@ export default function RootLayout({
         <link rel="icon" href="/ManifoldMarkTransparentGreenSVG.svg" />
       </head>
       <body>
-        <WithGlobalProvider>
-          <Header />
-          <main>
-            <Suspense>{children}</Suspense>
-          </main>
-        </WithGlobalProvider>
-        <Toaster richColors />
-        <Analytics />
+        <Suspense>
+          <WithGlobalProvider>
+            <Header />
+            <main>{children}</main>
+          </WithGlobalProvider>
+          <Toaster richColors />
+          <Analytics />
+        </Suspense>
       </body>
     </html>
   );
