@@ -302,7 +302,7 @@ export default function LeaseModal({
                     NousResearch/Hermes-3-Llama-3.1-8B).
                   </p>
                   <div className="flex w-full items-center rounded-lg border border-gray-300 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500">
-                    <span className="hidden whitespace-nowrap pl-4 text-sm text-gray-500 sm:block sm:text-base">
+                    <span className="hidden whitespace-nowrap pl-4 text-sm text-gray-500/80 sm:block sm:text-base">
                       https://huggingface.co/
                     </span>
                     <div className="relative sm:hidden">
@@ -324,7 +324,6 @@ export default function LeaseModal({
                       id="modelUrl"
                       value={model}
                       onChange={(e) => setModel(e.target.value)}
-                      placeholder="organization/model-name"
                       className="w-full border-0 px-0 py-2 text-sm outline-none focus:ring-0 sm:text-base"
                     />
                   </div>

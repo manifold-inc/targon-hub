@@ -44,24 +44,14 @@ export default function ModelCard({
                 1.62M tokens
               </div>
             </div>
-            <div className="flex items-center justify-start gap-1.5 rounded-full border border-[#155dee] py-0.5 pl-2 pr-2.5 text-xs sm:text-sm">
-              <div className="relative h-1.5 w-1.5 sm:h-2 sm:w-2">
-                <div className="absolute left-px top-px h-1 w-1 rounded-full bg-[#155dee] sm:h-1.5 sm:w-1.5" />
-              </div>
-              <div className="whitespace-nowrap text-center font-medium leading-tight text-[#004eea]">
-                {modality === "text-generation"
-                  ? "Text Generation"
-                  : "Text to Image"}
-              </div>
-            </div>
           </div>
         </div>
 
-        <div className="line-clamp-2 self-stretch text-xs leading-tight text-[#667085] sm:text-sm">
+        <div className="line-clamp-2 max-w-lg self-stretch text-xs leading-tight text-[#667085] sm:text-sm">
           {description}
         </div>
 
-        <div className="flex w-full flex-col gap-2 sm:flex-row sm:gap-3">
+        <div className="flex w-full flex-wrap whitespace-nowrap flex-col gap-2 sm:flex-row sm:gap-3">
           <div className="flex items-center gap-2 text-xs sm:text-sm">
             <div className="flex items-center gap-2">
               <UserRoundIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -73,7 +63,13 @@ export default function ModelCard({
             <div className="h-5 w-px bg-[#e4e7ec]" />
 
             <div className="text-xs leading-tight text-[#667085] sm:text-sm">
-              {cpt} {cpt === 1 ? "Credit" : "Credits"} Per Token
+              {cpt} {cpt === 1 ? "Credit" : "Credits"} / Token
+            </div>
+            <div className="h-5 w-px bg-[#e4e7ec]" />
+            <div className="text-xs leading-tight text-[#667085] sm:text-sm">
+              {modality === "text-generation"
+                ? "Text Generation"
+                : "Text to Image"}
             </div>
           </div>
 

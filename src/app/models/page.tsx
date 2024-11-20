@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Combobox, ComboboxInput } from "@headlessui/react";
 import { Filter, Search } from "lucide-react";
@@ -15,9 +15,6 @@ export default function Page() {
   const [query, setQuery] = useState("");
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const searchParams = useSearchParams();
-  const [isLeaseModalOpen, setIsLeaseModalOpen] = useState(() => {
-    return searchParams.get("openLeaseModal") === "true";
-  });
   const savedModel = decodeURIComponent(searchParams.get("model") ?? "");
   const step = Number(searchParams.get("step")) || null;
 
@@ -26,43 +23,51 @@ export default function Page() {
     useModalSidebarStore();
 
   // Filter models based on search query and active series
-  const filteredModels = modelsInfo?.filter((model) => {
-    // Check if model matches search query
-    const matchesQuery =
-      !query ||
-      model.name?.toLowerCase().includes(query.toLowerCase()) ||
-      model.organization?.toLowerCase().includes(query.toLowerCase()) ||
-      (model.modality?.toLowerCase() || "").includes(query.toLowerCase());
+  const filteredModels = useMemo(() => {
+    return modelsInfo?.filter((model) => {
+      // Check if model matches search query
+      const matchesQuery =
+        !query ||
+        model.name?.toLowerCase().includes(query.toLowerCase()) ||
+        model.organization?.toLowerCase().includes(query.toLowerCase()) ||
+        (model.modality?.toLowerCase() || "").includes(query.toLowerCase());
 
-    // Check if model matches organization filter
-    const matchesOrganization =
-      activeOrganization.length === 0 ||
-      (model.organization && activeOrganization.includes(model.organization));
+      // Check if model matches organization filter
+      const matchesOrganization =
+        activeOrganization.length === 0 ||
+        (model.organization && activeOrganization.includes(model.organization));
 
-    // Check if model matches modality filter
-    const matchesModality =
-      activeModality.length === 0 ||
-      (model.modality && activeModality.includes(model.modality));
+      // Check if model matches modality filter
+      const matchesModality =
+        activeModality.length === 0 ||
+        (model.modality && activeModality.includes(model.modality));
 
-    // Check if model matches supported endpoints filter
-    const matchesSupportedEndpoints =
-      activeSupportedEndpoints.length === 0 ||
-      activeSupportedEndpoints.every((endpoint) =>
-        model.supportedEndpoints?.includes(endpoint),
+      // Check if model matches supported endpoints filter
+      const matchesSupportedEndpoints =
+        activeSupportedEndpoints.length === 0 ||
+        activeSupportedEndpoints.every((endpoint) =>
+          model.supportedEndpoints?.includes(endpoint),
+        );
+
+      // Model must match all conditions
+      return (
+        matchesQuery &&
+        matchesOrganization &&
+        matchesModality &&
+        matchesSupportedEndpoints
       );
-
-    // Model must match all conditions
-    return (
-      matchesQuery &&
-      matchesOrganization &&
-      matchesModality &&
-      matchesSupportedEndpoints
-    );
-  });
+    });
+  }, [
+    activeModality,
+    activeOrganization,
+    activeSupportedEndpoints,
+    modelsInfo,
+    query,
+  ]);
 
   return (
     <>
-      <div className="sm:hidden">
+      <div className="md:hidden">
         <WatchForSuccess />
         <button
           onClick={() => setIsMobileOpen((s) => !s)}
@@ -75,24 +80,12 @@ export default function Page() {
             <Filter aria-hidden="true" className="h-6 w-6 text-mf-gray-600" />
           </div>
         </button>
-        {isMobileOpen && (
-          <ModalSidebar
-            isLeaseModalOpen={isLeaseModalOpen}
-            setIsLeaseModalOpen={setIsLeaseModalOpen}
-            savedModel={savedModel}
-            step={step}
-          />
-        )}
+        {isMobileOpen && <ModalSidebar savedModel={savedModel} step={step} />}
       </div>
       <div className="flex">
         {/* Left sidebar */}
-        <div className="sticky top-0 hidden h-full w-80 border-r border-[#f2f4f7] pt-8 sm:block">
-          <ModalSidebar
-            isLeaseModalOpen={isLeaseModalOpen}
-            setIsLeaseModalOpen={setIsLeaseModalOpen}
-            savedModel={savedModel}
-            step={step}
-          />
+        <div className="sticky top-0 hidden h-full w-80 border-r border-[#f2f4f7] pt-8 md:block">
+          <ModalSidebar savedModel={savedModel} step={step} />
         </div>
 
         {/* Main content area */}
