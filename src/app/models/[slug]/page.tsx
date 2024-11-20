@@ -253,7 +253,7 @@ for chunk in response:
               ].map((param) => (
                 <div
                   key={param.name}
-                  className="flex hidden w-full flex-col items-start justify-between py-6 sm:flex-row"
+                  className="hidden w-full flex-col items-start justify-between py-6 sm:flex-row"
                 >
                   <div className="flex-1 pb-4 sm:pb-0">
                     <div className="mb-2 flex items-center gap-3">
@@ -286,7 +286,7 @@ for chunk in response:
                     <p className="text-sm font-medium leading-tight text-[#344054]">
                       Sample Code for Chat
                     </p>
-                    <div className="w-fit whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3">
+                    <div className="w-full overflow-scroll whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3">
                       POST {env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1/chat/completions
                     </div>
                     <div className="pb-4">

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import "@/styles/globals.css";
 
-import { Suspense } from "react";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import clsx from "clsx";
@@ -30,20 +29,17 @@ export default function RootLayout({
     <html
       suppressHydrationWarning
       lang="en"
-      className={clsx("h-full", inter.variable)}
+      className={clsx(inter.variable, 'h-full')}
     >
       <head>
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="icon" href="/ManifoldMarkTransparentGreenSVG.svg" />
       </head>
       <body>
-        <Suspense fallback={<div>Loading...</div>}>
-          <WithGlobalProvider>
-            <Header />
-            <main>{children}</main>
-          </WithGlobalProvider>
-        </Suspense>
-
+        <WithGlobalProvider>
+          <Header />
+          <main>{children}</main>
+        </WithGlobalProvider>
         <Toaster richColors />
         <Analytics />
       </body>
