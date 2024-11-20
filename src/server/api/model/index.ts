@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { asc, eq } from "drizzle-orm";
+import { asc, eq, like } from "drizzle-orm";
 import { z } from "zod";
 
 import { env } from "@/env.mjs";
@@ -42,31 +42,32 @@ interface HuggingFaceModelInfo {
   };
 }
 
-const UNRESTRICTED_LICENSES = [
-  // Highly permissive - no API key needed
-  "mit",
-  "apache-2.0",
-  "bsd",
-  "bsd-2-clause",
-  "bsd-3-clause",
-  "bsd-3-clause-clear",
-  "cc0-1.0",
-  "unlicense",
-  "bsl-1.0",
-  "isc",
-  "zlib",
-
-  // Additional open source - should work without API key
-  "gpl-2.0",
-  "gpl-3.0",
-  "lgpl-2.1",
-  "lgpl-3.0",
-  "mpl-2.0",
-  "artistic-2.0",
-  "eupl-1.1",
-  "postgresql",
-  "ncsa",
-] as const;
+// Why are we checking these? we only need to check if it has a restrictive license
+//const UNRESTRICTED_LICENSES = [
+//  // Highly permissive - no API key needed
+//  "mit",
+//  "apache-2.0",
+//  "bsd",
+//  "bsd-2-clause",
+//  "bsd-3-clause",
+//  "bsd-3-clause-clear",
+//  "cc0-1.0",
+//  "unlicense",
+//  "bsl-1.0",
+//  "isc",
+//  "zlib",
+//
+//  // Additional open source - should work without API key
+//  "gpl-2.0",
+//  "gpl-3.0",
+//  "lgpl-2.1",
+//  "lgpl-3.0",
+//  "mpl-2.0",
+//  "artistic-2.0",
+//  "eupl-1.1",
+//  "postgresql",
+//  "ncsa",
+//] as const;
 
 const RESTRICTED_ACCESS_LICENSES = [
   // Likely needs API key or authentication
@@ -84,9 +85,24 @@ const RESTRICTED_ACCESS_LICENSES = [
 ] as const;
 
 export const modelRouter = createTRPCRouter({
-  getModels: publicAuthlessProcedure.query(async ({ ctx }) => {
-    return await ctx.db.select().from(Model);
-  }),
+  getModels: publicAuthlessProcedure
+    .input(z.object({ name: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.db
+        .select({
+          name: Model.name,
+          supportedEndpoints: Model.supportedEndpoints,
+          id: Model.id,
+          requiredGpus: Model.requiredGpus,
+          modality: Model.modality,
+          enabled: Model.enabled,
+          cpt: Model.cpt,
+          createdAt: Model.createdAt,
+        })
+        .from(Model)
+        .where(like(Model.name, `%${input.name}%`))
+        .limit(15);
+    }),
   getModelFilters: publicAuthlessProcedure.query(async ({ ctx }) => {
     const models = await ctx.db
       .select({
@@ -232,13 +248,6 @@ export const modelRouter = createTRPCRouter({
 
       const allLicenses = [modelLicense, ...licenseTags];
 
-      // Check if any license is unrestricted
-      const hasUnrestrictedLicense = allLicenses.some((license) =>
-        UNRESTRICTED_LICENSES.includes(
-          license as (typeof UNRESTRICTED_LICENSES)[number],
-        ),
-      );
-
       // Check if any license requires authentication
       const hasRestrictedLicense = allLicenses.some((license) =>
         RESTRICTED_ACCESS_LICENSES.includes(
@@ -246,7 +255,7 @@ export const modelRouter = createTRPCRouter({
         ),
       );
 
-      if (!hasUnrestrictedLicense || hasRestrictedLicense) {
+      if (hasRestrictedLicense) {
         throw new TRPCError({
           message:
             "Only models with unrestricted licenses that don't require API keys are supported",
@@ -266,8 +275,9 @@ export const modelRouter = createTRPCRouter({
       }
 
       if (
-        !modelInfo.pipeline_tag ||
-        !Modality.includes(modelInfo.pipeline_tag as ModalityType)
+        (!modelInfo.pipeline_tag ||
+          !Modality.includes(modelInfo.pipeline_tag as ModalityType)) &&
+        !modelInfo.config?.tokenizer_config
       ) {
         throw new TRPCError({
           message: `Unsupported model type. Model must be either text-generation or text-to-image. Got: ${modelInfo.pipeline_tag}`,
@@ -280,16 +290,25 @@ export const modelRouter = createTRPCRouter({
         supportedEndpoints.push("CHAT");
       }
 
-      const gpuResponse = await fetch(`${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/estimate`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      let library_name = modelInfo.library_name;
+      if (modelInfo.config?.tokenizer_config && !library_name) {
+        library_name = "transformers";
+      } else {
+        library_name = "diffusers";
+      }
+      const gpuResponse = await fetch(
+        `${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/estimate`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: modelInfo.id,
+            library_name
+          }),
         },
-        body: JSON.stringify({
-          model: modelInfo.id,
-          library_name: modelInfo.library_name,
-        }),
-      });
+      );
 
       if (!gpuResponse.ok) {
         throw new TRPCError({
@@ -375,8 +394,8 @@ export const modelRouter = createTRPCRouter({
         : null,
       immunityEnds: model.enabledDate
         ? new Date(
-            new Date(model.enabledDate).getTime() + 7 * 24 * 60 * 60 * 1000,
-          ).toLocaleDateString()
+          new Date(model.enabledDate).getTime() + 7 * 24 * 60 * 60 * 1000,
+        ).toLocaleDateString()
         : null,
     }));
   }),

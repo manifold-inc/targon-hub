@@ -13,29 +13,29 @@ import SearchBar from "./_components/SearchBar";
 export default function Page() {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const models = reactClient.model.getModels.useQuery();
+  const models = reactClient.model.getModels.useQuery({ name: "" });
 
   const endpoints = models.data
     ? [
-        "ALL",
-        ...new Set(
-          models.data
-            .map((model) =>
-              model.supportedEndpoints.map((endpoint) => endpoint),
-            )
-            .flat(),
-        ),
-      ]
+      "ALL",
+      ...new Set(
+        models.data
+          .map((model) =>
+            model.supportedEndpoints.map((endpoint) => endpoint),
+          )
+          .flat(),
+      ),
+    ]
     : ["ALL"];
 
   const filteredModels = models.data
     ? selectedIndex === 0
       ? models.data // Show all models when "All" is selected
       : models.data.filter((model) =>
-          model.supportedEndpoints
-            .map((e) => e.toLowerCase())
-            .includes(endpoints[selectedIndex]!.toLowerCase()),
-        )
+        model.supportedEndpoints
+          .map((e) => e.toLowerCase())
+          .includes(endpoints[selectedIndex]!.toLowerCase()),
+      )
     : [];
 
   return (
@@ -81,7 +81,7 @@ export default function Page() {
             </Link>
             <Link
               href="https://discord.gg/manifold"
-              className="flex w-full items-center justify-center gap-2 rounded-full border border-[#e4e7ec] bg-white px-3.5 py-2.5 text-[#344054] shadow shadow-inner hover:border-[#d0d5dd]"
+              className="flex w-full items-center justify-center gap-2 rounded-full border border-[#e4e7ec] bg-white px-3.5 py-2.5 text-[#344054] shadow-inner hover:border-[#d0d5dd]"
             >
               <span className="flex items-center gap-2 whitespace-nowrap text-sm font-semibold leading-tight">
                 Learn about SN4
@@ -105,11 +105,10 @@ export default function Page() {
               {endpoints.map((endpoint, index) => (
                 <Tab
                   key={index}
-                  className={`flex h-fit w-32 items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold leading-tight ${
-                    selectedIndex === index
+                  className={`flex h-fit w-32 items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold leading-tight ${selectedIndex === index
                       ? "bg-[#f2f4f7] text-[#475467]"
                       : "text-[#475467] opacity-80 hover:bg-gray-100"
-                  }`}
+                    }`}
                   onClick={() => setSelectedIndex(index)}
                 >
                   {endpoint}
