@@ -13,9 +13,7 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import {
-  BrainCog,
   ChevronDown,
-  HomeIcon,
   MenuIcon,
   User,
   XIcon,
@@ -30,19 +28,6 @@ const NAVIGATION = [
   { slug: "/models/immunity", title: "Immunity" },
   { slug: "/playground", title: "Playground" },
 ];
-
-const getIconForPath = (pathname: string) => {
-  switch (pathname) {
-    case "/":
-      return (
-        <HomeIcon aria-hidden="true" className="text-manifold-green h-4 w-4" />
-      );
-    case pathname.startsWith("/models") && pathname:
-      return (
-        <BrainCog aria-hidden="true" className="text-manifold-green h-4 w-4" />
-      );
-  }
-};
 
 export const Header = () => {
   const auth = useAuth();
@@ -151,7 +136,6 @@ export const Header = () => {
                           className="text-manifold-green h-4 w-4"
                         />
                       )}
-                      {getIconForPath(pathName)}
                       <User
                         aria-hidden="true"
                         className="h-4 w-4 rounded-full bg-gray-700 text-white"

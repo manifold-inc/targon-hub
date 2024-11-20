@@ -19,8 +19,7 @@ type CreditsTabProps = {
 export default function CreditsTab({ user }: CreditsTabProps) {
   const [showPurchaseInput, setShowPurchaseInput] = useState(false);
   const [showCryptoInput, setShowCryptoInput] = useState(false);
-  const [useCredits, setUseCredits] = useState(false);
-  const [purchaseAmount, setPurchaseAmount] = useState(0);
+  const [purchaseAmount, setPurchaseAmount] = useState<number | null>(null);
   const pathName = usePathname();
   const router = useRouter();
   const checkout = reactClient.credits.checkout.useMutation({
@@ -59,7 +58,7 @@ export default function CreditsTab({ user }: CreditsTabProps) {
                 setShowPurchaseInput(!showPurchaseInput);
                 setShowCryptoInput(false);
               }}
-              className="rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow shadow-inner hover:bg-gray-800"
+              className="rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow hover:bg-gray-800"
             >
               Add Credits
             </button>
@@ -69,7 +68,7 @@ export default function CreditsTab({ user }: CreditsTabProps) {
                 setShowCryptoInput(!showCryptoInput);
                 setShowPurchaseInput(false);
               }}
-              className="rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow shadow-inner hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Use Crypto
             </button>
@@ -77,43 +76,26 @@ export default function CreditsTab({ user }: CreditsTabProps) {
 
           {showPurchaseInput && (
             <div className="flex flex-col gap-4 pt-2">
-              <div className="flex items-center justify-center gap-4">
-                <button
-                  onClick={() => setUseCredits(false)}
-                  className={`rounded-lg px-4 py-2 text-sm ${!useCredits ? "bg-green-500 text-white" : "bg-gray-100"}`}
-                >
-                  Dollars
-                </button>
-                <button
-                  onClick={() => setUseCredits(true)}
-                  className={`rounded-lg px-4 py-2 text-sm ${useCredits ? "bg-green-500 text-white" : "bg-gray-100"}`}
-                >
-                  Credits
-                </button>
-              </div>
-
               <div className="flex items-center gap-2">
                 <div className="relative rounded-md shadow-sm">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <span className="text-gray-500 sm:text-sm">
-                      {useCredits ? "C" : "$"}
-                    </span>
+                    <span className="text-gray-500 sm:text-sm">{"$"}</span>
                   </div>
                   <input
                     type="text"
-                    value={purchaseAmount}
+                    value={purchaseAmount ?? ""}
                     onChange={(e) =>
                       setPurchaseAmount(
-                        Number(e.target.value.replace(/[^0-9]/g, "")),
+                        e.target.value.length === 0
+                          ? null
+                          : Number(e.target.value.replace(/[^0-9]/g, "")),
                       )
                     }
                     className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     placeholder="0"
                   />
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                    <span className="text-gray-500 sm:text-sm">
-                      {useCredits ? "Credits" : "USD"}
-                    </span>
+                    <span className="text-gray-500 sm:text-sm">{"USD"}</span>
                   </div>
                 </div>
               </div>
@@ -121,11 +103,10 @@ export default function CreditsTab({ user }: CreditsTabProps) {
               <div className="flex w-full items-center justify-center gap-2">
                 <button
                   onClick={() => {
-                    const dollarAmount = useCredits
-                      ? Math.ceil(purchaseAmount / CREDIT_PER_DOLLAR)
-                      : purchaseAmount;
-
-                    if (dollarAmount < MIN_PURCHASE_IN_DOLLARS) {
+                    if (!purchaseAmount) {
+                      return;
+                    }
+                    if (purchaseAmount < MIN_PURCHASE_IN_DOLLARS) {
                       toast.error(
                         `Must purchase a minimum of $${MIN_PURCHASE_IN_DOLLARS} or ${formatLargeNumber(MIN_PURCHASE_IN_DOLLARS * CREDIT_PER_DOLLAR)} credits`,
                       );
@@ -133,12 +114,12 @@ export default function CreditsTab({ user }: CreditsTabProps) {
                     }
 
                     checkout.mutate({
-                      purchaseAmount: dollarAmount,
+                      purchaseAmount,
                       redirectTo: pathName + "?settings=true&tab=credits",
                     });
                   }}
-                  disabled={checkout.isLoading}
-                  className="w-full rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow shadow-inner disabled:cursor-not-allowed disabled:opacity-50"
+                  disabled={checkout.isLoading || !purchaseAmount}
+                  className="w-full rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {checkout.isLoading ? (
                     <div className="flex items-center justify-center gap-2">
@@ -148,25 +129,16 @@ export default function CreditsTab({ user }: CreditsTabProps) {
                   ) : (
                     <>
                       Purchase{" "}
-                      {purchaseAmount === 0
-                        ? useCredits
-                          ? "Credits"
-                          : "Dollars"
-                        : useCredits
-                          ? `${formatLargeNumber(BigInt(purchaseAmount))} Credits`
-                          : `$${purchaseAmount}`}
+                      {!purchaseAmount ? "Credits" : `$${purchaseAmount}`}
                     </>
                   )}
                 </button>
-                <InfoIcon
-                  className="h-4 w-4 text-gray-500"
-                  onMouseEnter={() =>
-                    toast.info(
-                      `1 USD = ${formatLargeNumber(CREDIT_PER_DOLLAR)} Credits`,
-                    )
-                  }
-                  onMouseLeave={() => toast.dismiss()}
-                />
+                <div className="group relative">
+                  <span className="pointer-events-none absolute left-1/2 m-4 mx-auto hidden w-max max-w-sm -translate-x-1/2 translate-y-1/4 text-wrap rounded-md bg-gray-800 p-1.5 text-center text-sm text-gray-100 opacity-0 transition-opacity group-hover:opacity-100 sm:block">
+                    {`$1 USD is ${formatLargeNumber(CREDIT_PER_DOLLAR)} Credits`}
+                  </span>
+                  <InfoIcon className="h-4 w-4 text-gray-500" />
+                </div>
               </div>
             </div>
           )}
