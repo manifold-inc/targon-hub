@@ -28,7 +28,7 @@ import SettingsModal from "./SettingsModal";
 const NAVIGATION = [
   { slug: "/models", title: "Browse" },
   { slug: "/models/immunity", title: "Immunity" },
- // { slug: "/playground", title: "Playground" },
+  { slug: "/playground", title: "Playground" },
 ];
 
 const getIconForPath = (pathname: string) => {

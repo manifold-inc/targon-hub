@@ -53,10 +53,8 @@ export const useAuth = () => {
 
 export function WithGlobalProvider(props: { children: React.ReactNode }) {
   return (
-    <div>
-      <TRPCReactProvider>
-        <AuthProvider>{props.children}</AuthProvider>
-      </TRPCReactProvider>
-    </div>
+    <TRPCReactProvider>
+      <AuthProvider>{props.children}</AuthProvider>
+    </TRPCReactProvider>
   );
 }

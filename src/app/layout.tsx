@@ -36,11 +36,13 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="icon" href="/ManifoldMarkTransparentGreenSVG.svg" />
       </head>
-      <body>
+      <body className="h-full">
         <Suspense>
           <WithGlobalProvider>
-            <Header />
-            <main>{children}</main>
+            <div className="flex h-full flex-col justify-start">
+              <Header />
+              <main className="flex-grow">{children}</main>
+            </div>
           </WithGlobalProvider>
           <Toaster richColors />
           <Analytics />

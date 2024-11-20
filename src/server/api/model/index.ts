@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { asc, eq, like } from "drizzle-orm";
+import { and, asc, eq, like } from "drizzle-orm";
 import { z } from "zod";
 
 import { env } from "@/env.mjs";
@@ -85,6 +85,16 @@ const RESTRICTED_ACCESS_LICENSES = [
 ] as const;
 
 export const modelRouter = createTRPCRouter({
+  getActiveChatModels: publicAuthlessProcedure.query(async ({ ctx }) => {
+    const models = await ctx.db
+      .select({
+        name: Model.name,
+        supportedEndpoints: Model.supportedEndpoints,
+      })
+      .from(Model)
+      .where(and(eq(Model.enabled, true)));
+    return models.filter((m) => m.supportedEndpoints.includes("CHAT"));
+  }),
   getModels: publicAuthlessProcedure
     .input(z.object({ name: z.string() }))
     .query(async ({ ctx, input }) => {
@@ -305,7 +315,7 @@ export const modelRouter = createTRPCRouter({
           },
           body: JSON.stringify({
             model: modelInfo.id,
-            library_name
+            library_name,
           }),
         },
       );
