@@ -175,7 +175,8 @@ export const accountRouter = createTRPCRouter({
       .from(Request)
       .leftJoin(Model, eq(Request.model, Model.id))
       .where(eq(Request.userId, ctx.user.id))
-      .orderBy(desc(Request.createdAt));
+      .orderBy(desc(Request.createdAt))
+      .limit(100);
     return activity ?? null;
   }),
 });
