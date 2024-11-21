@@ -145,7 +145,7 @@ export const TaoTransfers = mysqlTable("tao_transfers", {
   success: boolean("success").default(true),
 });
 
-const MODALITIES = ["text-generation", "text-to-image"] as const;
+export const MODALITIES = ["text-generation", "text-to-image"] as const;
 
 export const Model = mysqlTable("model", {
   id: serial("id").primaryKey(),

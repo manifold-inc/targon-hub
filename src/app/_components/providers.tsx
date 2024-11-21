@@ -15,7 +15,7 @@ type AuthStates = "LOADING" | "AUTHED" | "UNAUTHED";
 const AuthContext = createContext<{
   refetch: () => unknown;
   status: AuthStates;
-  user: RouterOutputs["account"]["getUserId"];
+  user: RouterOutputs["account"]["getUser"];
 }>({
   refetch: () => null,
   status: "LOADING",
@@ -24,7 +24,7 @@ const AuthContext = createContext<{
 
 const AuthProvider = ({ children }: PropsWithChildren) => {
   const pathname = usePathname();
-  const user = reactClient.account.getUserId.useQuery();
+  const user = reactClient.account.getUser.useQuery();
   let status: AuthStates = "UNAUTHED";
   if (user.data) status = "AUTHED";
   if (user.isLoading) status = "LOADING";

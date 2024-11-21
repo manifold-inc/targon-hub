@@ -12,8 +12,8 @@ import {
   Tag,
 } from "lucide-react";
 
+import { MODALITIES } from "@/schema/schema";
 import { useModalSidebarStore } from "@/store/modelSidebarStore";
-import { reactClient } from "@/trpc/react";
 import LeaseModal from "./LeaseModal";
 
 export default function ModalSidebar({
@@ -61,22 +61,12 @@ export default function ModalSidebar({
     "stop_sequences",
   ];
 
-  const { data: modelFilters } =
-    reactClient.model.getModelFilters.useQuery() as {
-      data:
-      | {
-        organizations: string[];
-        modalities: string[];
-        supportedEndpoints: string[];
-      }
-      | undefined;
-    };
-
   const endpointColors: Record<string, string> = {
     chat: "#0284c7",
     completion: "#ea580c",
   };
 
+  const orgs = ["Nvidia", "NousResearch", "Microsoft", "Gryphe", "Qwen"];
   return (
     <aside className="h-full pr-2 pt-2 sm:animate-slide-in-delay sm:pr-8 sm:pt-10">
       <div className="flex flex-col gap-2.5">
@@ -101,7 +91,7 @@ export default function ModalSidebar({
             <div className="pt-2">
               <div className="inline-flex flex-col items-start justify-start gap-2 px-2">
                 <div className="flex flex-col items-start justify-start gap-2 border-l border-[#e4e7ec] px-4">
-                  {modelFilters?.modalities?.map((modality) => (
+                  {MODALITIES.map((modality) => (
                     <button
                       key={modality}
                       onClick={() => {
@@ -359,13 +349,8 @@ export default function ModalSidebar({
             <div className="pt-2">
               <div className="inline-flex flex-col items-start justify-start gap-2 px-2">
                 <div className="flex flex-col items-start justify-start gap-2 border-l border-[#e4e7ec] px-4">
-                  {modelFilters?.organizations
-                    .slice(
-                      0,
-                      showAllOrganization
-                        ? modelFilters?.organizations.length
-                        : 3,
-                    )
+                  {orgs
+                    .slice(0, showAllOrganization ? orgs.length : 3)
                     .map((organization) => (
                       <button
                         key={organization}
@@ -393,7 +378,7 @@ export default function ModalSidebar({
                         </div>
                       </button>
                     ))}
-                  {(modelFilters?.organizations?.length ?? 0) > 3 && (
+                  {(orgs?.length ?? 0) > 3 && (
                     <button
                       onClick={() =>
                         setShowAllOrganization(!showAllOrganization)

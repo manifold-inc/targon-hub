@@ -1,5 +1,7 @@
 import { create } from "zustand";
 
+import { type MODALITIES } from "@/schema/schema";
+
 interface ModalSidebarState {
   // Section open/close state
   openSections: {
@@ -13,9 +15,13 @@ interface ModalSidebarState {
   toggleSection: (section: keyof ModalSidebarState["openSections"]) => void;
 
   // Modality state
-  activeModality: string[];
+  activeModality: Array<(typeof MODALITIES)[number]>;
   setActiveModality: (
-    modalityOrUpdater: string[] | ((prev: string[]) => string[]),
+    modalityOrUpdater:
+      | Array<(typeof MODALITIES)[number]>
+      | ((
+        prev: Array<(typeof MODALITIES)[number]>,
+      ) => Array<(typeof MODALITIES)[number]>),
   ) => void;
 
   // Context length state
@@ -70,7 +76,7 @@ export const useModalSidebarStore = create<ModalSidebarState>((set) => ({
     })),
 
   // Modality
-  activeModality: [] as string[],
+  activeModality: [],
   setActiveModality: (modalityOrUpdater) =>
     set((state) => ({
       activeModality:

@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { TRPCError } from "@trpc/server";
-import { count, desc, eq, sql } from "drizzle-orm";
+import { count, desc, eq } from "drizzle-orm";
 import { Scrypt } from "lucia";
 import { z } from "zod";
 
@@ -16,10 +16,6 @@ import { createAccount, lucia } from "@/server/auth";
 import { createTRPCRouter, publicProcedure, stripeProcedure } from "../trpc";
 
 export const accountRouter = createTRPCRouter({
-  getUserId: publicProcedure.query(({ ctx }) => {
-    // Public so it doesnt error if not logged in
-    return ctx.user?.id ?? null;
-  }),
   getUser: publicProcedure.query(async ({ ctx }) => {
     // Public so it doesnt error if not logged in
     if (!ctx.user?.id) return null;
@@ -129,35 +125,31 @@ export const accountRouter = createTRPCRouter({
     // Get Stripe payments
     const checkoutSessions = await ctx.db
       .select({
-        type: sql<"stripe">`'stripe'`.as("type"),
         credits: CheckoutSession.credits,
         cardLast4: CheckoutSession.cardLast4,
         cardBrand: CheckoutSession.cardBrand,
         createdAt: CheckoutSession.createdAt,
-        txHash: sql<null>`NULL`.as("txHash"),
-        rao: sql<null>`NULL`.as("rao"),
-        pricedAt: sql<null>`NULL`.as("pricedAt"), // Stripe payments don't have priced_at
       })
       .from(CheckoutSession)
-      .where(eq(CheckoutSession.userId, ctx.user.id));
+      .where(eq(CheckoutSession.userId, ctx.user.id)).limit(10);
 
     // Get TAO transfers
     const taoTransfers = await ctx.db
       .select({
-        type: sql<"tao">`'tao'`.as("type"),
         credits: TaoTransfers.credits,
-        cardLast4: sql<null>`NULL`.as("cardLast4"),
-        cardBrand: sql<null>`NULL`.as("cardBrand"),
         createdAt: TaoTransfers.createdAt,
         txHash: TaoTransfers.tx_hash,
         rao: TaoTransfers.rao,
         pricedAt: TaoTransfers.priced_at,
       })
       .from(TaoTransfers)
-      .where(eq(TaoTransfers.userId, ctx.user.id));
+      .where(eq(TaoTransfers.userId, ctx.user.id)).limit(10);
 
     // Combine and sort both payment types
-    const allPayments = [...checkoutSessions, ...taoTransfers].sort(
+    const allPayments = [
+      ...checkoutSessions.map((c) => ({ ...c, type: "stripe" })),
+      ...taoTransfers.map((t) => ({ ...t, type: "tao" })),
+    ].sort(
       (a, b) => (b.createdAt?.getTime() ?? 0) - (a.createdAt?.getTime() ?? 0),
     );
 

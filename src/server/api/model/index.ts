@@ -1,9 +1,9 @@
 import { TRPCError } from "@trpc/server";
-import { and, asc, eq, like } from "drizzle-orm";
+import { and, asc, eq, inArray, like, or } from "drizzle-orm";
 import { z } from "zod";
 
 import { env } from "@/env.mjs";
-import { Model } from "@/schema/schema";
+import { MODALITIES, Model } from "@/schema/schema";
 import { createTRPCRouter, publicAuthlessProcedure } from "../trpc";
 
 const Modality = ["text-generation", "text-to-image"] as const;
@@ -96,12 +96,20 @@ export const modelRouter = createTRPCRouter({
     return models.filter((m) => m.supportedEndpoints.includes("CHAT"));
   }),
   getModels: publicAuthlessProcedure
-    .input(z.object({ name: z.string() }))
+    .input(
+      z.object({
+        name: z.string().optional(),
+        orgs: z.array(z.string()).optional(),
+        modalities: z.array(z.enum(MODALITIES)).optional(),
+        endpoints: z.array(z.string()).optional(),
+      }),
+    )
     .query(async ({ ctx, input }) => {
-      return await ctx.db
+      const query = ctx.db
         .select({
           name: Model.name,
           supportedEndpoints: Model.supportedEndpoints,
+          description: Model.description,
           id: Model.id,
           requiredGpus: Model.requiredGpus,
           modality: Model.modality,
@@ -110,63 +118,32 @@ export const modelRouter = createTRPCRouter({
           createdAt: Model.createdAt,
         })
         .from(Model)
-        .where(like(Model.name, `%${input.name}%`))
+        .$dynamic()
         .limit(15);
+      const filters = [];
+      if (input.name?.length) {
+        filters.push(like(Model.name, `%${input.name}%`));
+      }
+      if (input.orgs?.length) {
+        const or_filters = [];
+        for (const org of input.orgs) {
+          or_filters.push(like(Model.name, `${org}%`));
+        }
+        filters.push(or(...or_filters));
+      }
+      if (input.modalities?.length) {
+        filters.push(inArray(Model.modality, input.modalities));
+      }
+      if (input.endpoints?.length) {
+        filters.push(like(Model.name, `%${input.name}%`));
+      }
+
+      return await query.where(and(...filters));
     }),
-  getModelFilters: publicAuthlessProcedure.query(async ({ ctx }) => {
-    const models = await ctx.db
-      .select({
-        name: Model.name,
-        modality: Model.modality,
-        supportedEndpoints: Model.supportedEndpoints,
-      })
-      .from(Model);
-
-    // Extract unique organizations and modalities
-    const organizations = new Set(
-      models.map((model) => model.name?.split("/")[0]).filter(Boolean),
-    );
-
-    const modalities = new Set(
-      models.map((model) => model.modality).filter(Boolean),
-    );
-
-    const supportedEndpoints = new Set(
-      models.map((model) => model.supportedEndpoints).filter(Boolean),
-    );
-
-    return {
-      organizations: Array.from(organizations),
-      modalities: Array.from(modalities),
-      supportedEndpoints: Array.from(supportedEndpoints),
-    };
-  }),
-  getModelsInfo: publicAuthlessProcedure.query(async ({ ctx }) => {
-    const models = await ctx.db
-      .select({
-        modelName: Model.name,
-        modality: Model.modality,
-        description: Model.description,
-        enabled: Model.enabled,
-        cpt: Model.cpt,
-        supportedEndpoints: Model.supportedEndpoints,
-      })
-      .from(Model);
-
-    return models.map((model) => {
-      const [organization, name] = model.modelName?.split("/") ?? [];
-      return {
-        ...model,
-        organization,
-        name,
-        description: model.description,
-      };
-    });
-  }),
   getModelInfo: publicAuthlessProcedure
     .input(z.object({ model: z.string() }))
     .query(async ({ ctx, input }) => {
-      const model = await ctx.db
+      const [model] = await ctx.db
         .select({
           name: Model.name,
           cpt: Model.cpt,
@@ -178,13 +155,7 @@ export const modelRouter = createTRPCRouter({
         })
         .from(Model)
         .where(eq(Model.name, input.model));
-
-      const [organization, name] = model[0]?.name?.split("/") ?? [];
-      return {
-        ...model[0],
-        organization,
-        name,
-      };
+      return model
     }),
   getRequiredGpus: publicAuthlessProcedure
     .input(z.string())

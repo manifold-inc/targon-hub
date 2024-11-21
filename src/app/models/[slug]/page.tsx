@@ -24,11 +24,10 @@ export default async function Page({ params }: Props) {
   const data = await caller.model.getModelInfo({
     model: decodeURIComponent(params.slug),
   });
-  const modelName = data.organization + "/" + data.name;
-  if (!modelName) {
+  if (!data) {
     redirect("/models");
   }
-  const gradient = getModelGradient(modelName);
+  const gradient = getModelGradient(data.name!);
 
   const getChatExampleCode = () => `from openai import OpenAI
 
@@ -37,7 +36,7 @@ client = OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="${modelName}",
+    model="${data.name}",
     stream=True,
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
@@ -55,7 +54,7 @@ client = OpenAI(
 )
 
 response = client.completions.create(
-    model="${modelName}",
+    model="${data.name}",
     stream=True,
     prompt="The x y problem is",
 )
@@ -74,7 +73,7 @@ for chunk in response:
             <section id="overview" data-section>
               <header className="flex w-full flex-col gap-4 pb-6 pr-4 sm:flex-row sm:justify-between">
                 <h1 className="text-center text-xl leading-9 text-[#101828] sm:text-left sm:text-2xl md:text-3xl">
-                  {modelName}
+                  {data.name}
                 </h1>
 
                 <Link
@@ -108,7 +107,7 @@ for chunk in response:
                 <div className="flex items-center gap-3">
                   <UserRound width={16} height={16} />
                   <span className="text-sm leading-tight text-[#667085]">
-                    {data?.organization}
+                    {data.name!.split('/')[0]}
                   </span>
                 </div>
                 <div className="h-5 w-px bg-[#e4e7ec]" />
