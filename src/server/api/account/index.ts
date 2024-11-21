@@ -147,8 +147,8 @@ export const accountRouter = createTRPCRouter({
 
     // Combine and sort both payment types
     const allPayments = [
-      ...checkoutSessions.map((c) => ({ ...c, type: "stripe" })),
-      ...taoTransfers.map((t) => ({ ...t, type: "tao" })),
+      ...checkoutSessions.map((c) => ({ ...c, type: "stripe" as const })),
+      ...taoTransfers.map((t) => ({ ...t, type: "tao" as const })),
     ].sort(
       (a, b) => (b.createdAt?.getTime() ?? 0) - (a.createdAt?.getTime() ?? 0),
     );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -12,12 +12,7 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import {
-  ChevronDown,
-  MenuIcon,
-  User,
-  XIcon,
-} from "lucide-react";
+import { ChevronDown, MenuIcon, User, XIcon } from "lucide-react";
 
 import { useAuth } from "./providers";
 import SearchBar from "./SearchBar";
@@ -38,15 +33,28 @@ export const Header = () => {
     return searchParams.get("settings") === "true";
   });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState(() => {
-    return (
-      (searchParams.get("tab") as
-        | "dashboard"
-        | "credits"
-        | "activity"
-        | "keys") || "dashboard"
-    );
-  });
+  const activeTab = (searchParams.get("tab") ?? "dashboard") as
+    | "dashboard"
+    | "credits"
+    | "activity"
+    | "keys";
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
+  const setActiveTab = useCallback(
+    (path: string) => {
+      const query = createQueryString("tab", path);
+      router.push(pathName + "?" + query);
+    },
+    [router, pathName, createQueryString],
+  );
 
   const handleSettingsModalClose = () => {
     setIsSettingsOpen(false);
@@ -84,9 +92,8 @@ export const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-10 animate-slide-in ${
-        pathName !== "/" ? "border-b border-gray-200 bg-white" : ""
-      }`}
+      className={`sticky top-0 z-10 animate-slide-in ${pathName !== "/" ? "border-b border-gray-200 bg-white" : ""
+        }`}
     >
       <nav className="text-manifold-green flex items-center justify-between p-4">
         <div className="w-60">
@@ -147,12 +154,7 @@ export const Header = () => {
                         <MenuItem>
                           <button
                             onClick={() => {
-                              setIsSettingsOpen(true);
                               setActiveTab("dashboard");
-                              router.push(
-                                `${pathName}?settings=true&tab=dashboard`,
-                                { scroll: false },
-                              );
                             }}
                             className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
                           >
@@ -162,12 +164,7 @@ export const Header = () => {
                         <MenuItem>
                           <button
                             onClick={() => {
-                              setIsSettingsOpen(true);
                               setActiveTab("credits");
-                              router.push(
-                                `${pathName}?settings=true&tab=credits`,
-                                { scroll: false },
-                              );
                             }}
                             className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
                           >
@@ -177,12 +174,7 @@ export const Header = () => {
                         <MenuItem>
                           <button
                             onClick={() => {
-                              setIsSettingsOpen(true);
                               setActiveTab("activity");
-                              router.push(
-                                `${pathName}?settings=true&tab=activity`,
-                                { scroll: false },
-                              );
                             }}
                             className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
                           >
@@ -192,12 +184,7 @@ export const Header = () => {
                         <MenuItem>
                           <button
                             onClick={() => {
-                              setIsSettingsOpen(true);
                               setActiveTab("keys");
-                              router.push(
-                                `${pathName}?settings=true&tab=keys`,
-                                { scroll: false },
-                              );
                             }}
                             className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
                           >
@@ -224,16 +211,13 @@ export const Header = () => {
                 activeTab={activeTab}
                 onTabChange={(tab) => {
                   setActiveTab(tab);
-                  router.push(`${pathName}?settings=true&tab=${tab}`, {
-                    scroll: false,
-                  });
                 }}
               />
             </>
           ) : (
             <Link
-              className="inline-flex hover:shadow-md transition-all h-9 items-center justify-center gap-1 whitespace-nowrap rounded-full 
-              border-2 border-white bg-white px-3 py-2 shadow hover:bg-gray-50"
+              className="inline-flex h-9 items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white 
+              bg-white px-3 py-2 shadow transition-all hover:bg-gray-50 hover:shadow-md"
               href="/sign-in"
             >
               <span className="text-sm leading-tight text-[#344054]">

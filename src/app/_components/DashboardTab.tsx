@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import Link from "next/link";
 import type {
@@ -148,7 +146,7 @@ export default function DashboardTab({ user, onTabChange }: DashboardTabProps) {
           </div>
         </div>
         <div className="flex gap-2">
-          <button className="inline-flex hidden h-8 items-center justify-center gap-1 rounded-full px-3 py-2 hover:bg-blue-50 sm:h-9">
+          <button className="hidden h-8 items-center justify-center gap-1 rounded-full px-3 py-2 hover:bg-blue-50 sm:h-9">
             <span className="text-sm font-semibold leading-tight text-[#004eea]">
               Manage
             </span>

@@ -63,8 +63,11 @@ export default function CreditsTab({ user }: CreditsTabProps) {
               Add Credits
             </button>
             <button
-              disabled={!user?.ss58}
               onClick={() => {
+                if(!user?.ss58){
+                  router.push("/models?settings=true&tab=dashboard")
+                  return
+                }
                 setShowCryptoInput(!showCryptoInput);
                 setShowPurchaseInput(false);
               }}
