@@ -22,18 +22,18 @@ export async function copyToClipboard(text: string) {
 export function formatLargeNumber(n: number | bigint) {
   const num = Number(n);
   if (num >= 1_000_000_000_000) {
-    return (num / 1_000_000_000_000).toFixed(2).replace(".00", '') + "T";
+    return (num / 1_000_000_000_000).toFixed(2).replace(".00", "") + "T";
   }
   if (num >= 1_000_000_000) {
-    return (num / 1_000_000_000).toFixed(2).replace(".00", '') + "B";
+    return (num / 1_000_000_000).toFixed(2).replace(".00", "") + "B";
   }
   if (num >= 1_000_000) {
-    return (num / 1_000_000).toFixed(2).replace(".00", '') + "M";
+    return (num / 1_000_000).toFixed(2).replace(".00", "") + "M";
   }
   if (num >= 1_000) {
-    return (num / 1_000).toFixed(2).replace(".00", '') + "k";
+    return (num / 1_000).toFixed(2).replace(".00", "") + "k";
   }
-  return num.toString();
+  return num.toFixed(2).replace(".00", "").toString();
 }
 
 export const getModelGradient = (modelFullName: string) => {

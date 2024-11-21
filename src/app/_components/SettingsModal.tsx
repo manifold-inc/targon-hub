@@ -8,10 +8,10 @@ import {
 } from "lucide-react";
 
 import { reactClient } from "@/trpc/react";
-import ActivityTab from "./ActivityTab";
-import CreditsTab from "./CreditsTab";
-import DashboardTab from "./DashboardTab";
-import KeysTab from "./KeysTab";
+import ActivityTab from "./settings/ActivityTab";
+import CreditsTab from "./settings/CreditsTab";
+import DashboardTab from "./settings/DashboardTab";
+import KeysTab from "./settings/KeysTab";
 
 type SettingsModalProps = {
   isOpen: boolean;

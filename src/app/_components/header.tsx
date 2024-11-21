@@ -30,11 +30,12 @@ export const Header = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const activeTab = (searchParams.get("tab") as
-    | "dashboard"
-    | "credits"
-    | "activity"
-    | "keys") ?? null
+  const activeTab =
+    (searchParams.get("tab") as
+      | "dashboard"
+      | "credits"
+      | "activity"
+      | "keys") ?? null;
 
   const createQueryString = useCallback(
     (name: string, value: string) => {

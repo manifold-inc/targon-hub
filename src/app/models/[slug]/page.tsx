@@ -6,11 +6,12 @@ import { Star, UserRound } from "lucide-react";
 import CodeBlock from "@/app/_components/CodeBlock";
 import ModelsNav from "@/app/_components/ModelsNav";
 import ModelStatusIndicator from "@/app/_components/ModelStatusIndicator";
+import { CREDIT_PER_DOLLAR } from "@/constants";
+import { env } from "@/env.mjs";
 import { db } from "@/schema/db";
 import { createCaller } from "@/server/api/root";
 import { uncachedValidateRequest } from "@/server/auth";
 import { getModelGradient } from "@/utils/utils";
-import { env } from "@/env.mjs";
 
 type Props = {
   params: {
@@ -62,6 +63,7 @@ for chunk in response:
     if chunk.choices[0].text is not None:
         print(chunk.choices[0].text, end="")`;
 
+  const cost = (data.cpt * 1_000_000) / CREDIT_PER_DOLLAR;
   return (
     <div className="relative flex">
       <div className="fixed right-20 top-32 hidden lg:block">
@@ -107,8 +109,12 @@ for chunk in response:
                 <div className="flex items-center gap-3">
                   <UserRound width={16} height={16} />
                   <span className="text-sm leading-tight text-[#667085]">
-                    {data.name!.split('/')[0]}
+                    {data.name!.split("/")[0]}
                   </span>
+                </div>
+            <div className="h-5 w-px bg-[#e4e7ec]" />
+                <div className="text-xs leading-tight text-[#667085] sm:text-sm">
+                  ${cost} / M Tokens
                 </div>
                 <div className="h-5 w-px bg-[#e4e7ec]" />
                 <ModelStatusIndicator
@@ -122,27 +128,7 @@ for chunk in response:
                   className={`h-64 w-full rounded-lg bg-gradient-to-r ${gradient}`}
                 />
               </div>
-
-              <div className="flex flex-wrap justify-center gap-4">
-                {[
-                  {
-                    label: "Output Tokens",
-                    price: `${data.cpt} ${Number(data.cpt) === 1 ? "Credit" : "Credits"} Per Token`,
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="inline-flex h-20 max-w-64 flex-grow flex-col items-center justify-center gap-2 rounded-xl bg-gray-50 px-5 py-4"
-                  >
-                    <span className="whitespace-nowrap text-sm leading-tight text-[#667085]">
-                      {item.label}
-                    </span>
-                    <span className="text-[#344054]">{item.price}</span>
-                  </div>
-                ))}
-              </div>
-
-              <p className="py-6 text-sm leading-tight text-[#101828]">
+              <p className="pb-6 pt-3 text-sm leading-tight text-[#101828]">
                 {data?.description}
               </p>
 
@@ -286,7 +272,8 @@ for chunk in response:
                       Sample Code for Chat
                     </p>
                     <div className="w-full overflow-scroll whitespace-nowrap rounded bg-gray-200 px-2 py-2 font-mono text-sm leading-3">
-                      POST {env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1/chat/completions
+                      POST {env.NEXT_PUBLIC_HUB_API_ENDPOINT}
+                      /v1/chat/completions
                     </div>
                     <div className="pb-4">
                       Creates a model response for the given chat conversation.

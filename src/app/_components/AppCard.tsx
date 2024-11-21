@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import ModelStatusIndicator from "@/app/_components/ModelStatusIndicator";
+import { CREDIT_PER_DOLLAR } from "@/constants";
 
 interface AppCardProps {
   name: string;
@@ -19,6 +20,7 @@ export const AppCard = ({
   enabled,
   supportedEndpoints,
 }: AppCardProps) => {
+  const cost = (cpt * 1_000_000) / CREDIT_PER_DOLLAR
   return (
     <Link
       href={`/models/${encodeURIComponent(name)}`}
@@ -56,7 +58,7 @@ export const AppCard = ({
         </div>
         <div className="flex h-5 items-center gap-2 whitespace-nowrap">
           <div className="text-sm leading-tight text-[#667085]">
-            {cpt} Credit{cpt !== 1 ? "s" : ""} Per Token
+            ${cost} / M Tokens
           </div>
           <div className="h-5 w-px bg-[#e4e7ec]" />
           <ModelStatusIndicator enabled={enabled} showBorder={false} />

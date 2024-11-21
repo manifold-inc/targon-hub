@@ -10,7 +10,7 @@ import { env } from "@/env.mjs";
 import { reactClient } from "@/trpc/react";
 import { type RouterOutputs } from "@/trpc/shared";
 import { copyToClipboard, formatDate, formatLargeNumber } from "@/utils/utils";
-import { WatchForSuccess } from "./WatchForStripeSuccess";
+import { WatchForSuccess } from "./../WatchForStripeSuccess";
 
 type CreditsTabProps = {
   user: RouterOutputs["account"]["getUserDashboard"];
@@ -34,7 +34,7 @@ export default function CreditsTab({ user }: CreditsTabProps) {
   const paymentHistory = reactClient.account.getUserPaymentHistory.useQuery();
 
   const [showAmounts, setShowAmounts] = useState<"credits" | "amounts">(
-    "credits",
+    "amounts",
   );
   const [showQR, setShowQR] = useState(false);
 
@@ -48,7 +48,7 @@ export default function CreditsTab({ user }: CreditsTabProps) {
       <WatchForSuccess />
       <div className="flex flex-col items-center justify-start gap-6">
         <span className="py-1 text-6xl leading-[72px] text-black">
-          {formatLargeNumber(user?.credits ?? 0)}
+          ${formatLargeNumber((user?.credits ?? 0) / CREDIT_PER_DOLLAR)}
         </span>
 
         <div className="flex flex-col items-center gap-4">
@@ -64,9 +64,9 @@ export default function CreditsTab({ user }: CreditsTabProps) {
             </button>
             <button
               onClick={() => {
-                if(!user?.ss58){
-                  router.push("/models?settings=true&tab=dashboard")
-                  return
+                if (!user?.ss58) {
+                  router.push("/models?settings=true&tab=dashboard");
+                  return;
                 }
                 setShowCryptoInput(!showCryptoInput);
                 setShowPurchaseInput(false);

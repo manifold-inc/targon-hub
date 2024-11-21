@@ -10,6 +10,7 @@ import { toast } from "sonner";
 
 import { type RouterOutputs } from "@/trpc/shared";
 import { formatLargeNumber } from "@/utils/utils";
+import { CREDIT_PER_DOLLAR } from "@/constants";
 
 let web3FromAddress: (address: string) => Promise<{ signer: Signer }>;
 let web3Enable: (appName: string) => Promise<InjectedExtension[]>;
@@ -168,7 +169,7 @@ export default function DashboardTab({ user, onTabChange }: DashboardTabProps) {
           className="inline-flex h-24 w-full flex-col items-start justify-center gap-2 rounded-xl bg-gray-50 p-4 hover:bg-gray-100 sm:h-32 sm:w-32 sm:gap-4 sm:p-6"
         >
           <p className="whitespace-nowrap text-lg font-medium leading-7 text-black">
-            {formatLargeNumber(user?.credits ?? 0)}
+          ${formatLargeNumber((user?.credits ?? 0) / CREDIT_PER_DOLLAR)}
           </p>
           <p className="text-sm leading-tight text-black">Credits</p>
         </button>
