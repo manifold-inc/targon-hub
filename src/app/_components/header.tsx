@@ -29,15 +29,12 @@ export const Header = () => {
   const pathName = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [isSettingsOpen, setIsSettingsOpen] = useState(() => {
-    return searchParams.get("settings") === "true";
-  });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const activeTab = (searchParams.get("tab") ?? "dashboard") as
+  const activeTab = (searchParams.get("tab") as
     | "dashboard"
     | "credits"
     | "activity"
-    | "keys";
+    | "keys") ?? null
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -57,7 +54,6 @@ export const Header = () => {
   );
 
   const handleSettingsModalClose = () => {
-    setIsSettingsOpen(false);
     setActiveTab("dashboard");
     router.push(pathName, { scroll: false });
   };
@@ -206,7 +202,7 @@ export const Header = () => {
                 )}
               </Menu>
               <SettingsModal
-                isOpen={isSettingsOpen}
+                isOpen={!!activeTab}
                 onClose={handleSettingsModalClose}
                 activeTab={activeTab}
                 onTabChange={(tab) => {

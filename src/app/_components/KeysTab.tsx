@@ -46,10 +46,10 @@ export default function KeysTab() {
   };
 
   return (
-    <div className="py-2 sm:py-4">
+    <div className="relative h-full py-2 sm:py-4">
       <div className="flex items-center gap-2">
         <button
-          className="flex h-9 items-center rounded-full border-2 border-white bg-[#101828] px-3 py-4 shadow shadow-inner hover:bg-gray-700"
+          className="flex h-9 items-center rounded-full border-2 border-white bg-[#101828] px-3 py-4 shadow hover:bg-gray-700"
           onClick={handleCreate}
           disabled={createApiKey.isLoading}
         >
@@ -76,23 +76,24 @@ export default function KeysTab() {
           />
         )}
       </div>
-      <div className="w-full py-4 text-xs sm:text-sm">
-        <table className="w-full text-xs sm:text-sm">
+      <div className='overflow-hidden h-full relative pt-4'>
+      <div className="relative max-h-full overflow-hidden w-full overflow-y-scroll pb-4 text-xs sm:text-sm">
+        <table className="w-full text-xs sm:text-sm border-separate border-spacing-0">
           <thead>
-            <tr className="h-8 border-b border-t border-[#e4e7ec] bg-gray-50">
-              <th className="px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
+            <tr className="sticky top-0 h-8 w-full bg-gray-50">
+              <th className="sticky top-0 px-2 py-1 border-b border-t border-gray-200 text-center font-semibold leading-tight text-[#101828]">
                 Name
               </th>
-              <th className="px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
+              <th className="sticky top-0 px-2 py-1 border-b border-t border-gray-200 text-center font-semibold leading-tight text-[#101828]">
                 Key
               </th>
-              <th className="px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
+              <th className="sticky top-0 px-2 py-1 border-b border-t border-gray-200 text-center font-semibold leading-tight text-[#101828]">
                 Created
               </th>
-              <th className="px-2 py-1 text-center font-semibold leading-tight text-[#101828]" />
+              <th className="sticky top-0 px-2 py-1 border-b border-t border-gray-200 text-center font-semibold leading-tight text-[#101828]" />
             </tr>
           </thead>
-          <tbody className="whitespace-nowrap">
+          <tbody className="w-full whitespace-nowrap">
             {keys.data?.map((key, index) => (
               <tr key={index} className="h-8 bg-white">
                 <td className="px-2 py-1 text-center leading-tight text-[#101828]">
@@ -117,18 +118,16 @@ export default function KeysTab() {
                     type="button"
                     disabled={deleteApiKey.isLoading}
                     onClick={() => deleteApiKey.mutate({ apiKey: key.key })}
-                    className={`group rounded-full p-1.5 transition-colors ${
-                      deleteApiKey.isLoading
+                    className={`group rounded-full p-1.5 transition-colors ${deleteApiKey.isLoading
                         ? "cursor-not-allowed bg-gray-100"
                         : "hover:bg-gray-100"
-                    }`}
+                      }`}
                   >
                     <XCircle
-                      className={`h-6 w-6 ${
-                        deleteApiKey.isLoading
+                      className={`h-6 w-6 ${deleteApiKey.isLoading
                           ? "text-gray-300"
                           : "text-gray-300 group-hover:text-red-500"
-                      } transition-colors`}
+                        } transition-colors`}
                     />
                   </button>
                 </td>
@@ -136,6 +135,7 @@ export default function KeysTab() {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   );

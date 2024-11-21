@@ -86,7 +86,7 @@ export default function SettingsModal({
 
               {/* Content area for each tab */}
               <div className="h-96 pt-4">
-                <div className="h-full">
+                <div className="h-full relative">
                   {activeTab === "dashboard" && (
                     <DashboardTab
                       user={user.data ?? null}
