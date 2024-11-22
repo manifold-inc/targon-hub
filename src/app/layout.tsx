@@ -39,10 +39,8 @@ export default function RootLayout({
       <body className="h-full">
         <Suspense>
           <WithGlobalProvider>
-            <div className="flex h-full flex-col justify-start">
-              <Header />
-              <main className="flex-grow">{children}</main>
-            </div>
+            <Header />
+            <main className="h-full pt-12">{children}</main>
           </WithGlobalProvider>
           <Toaster richColors />
           <Analytics />

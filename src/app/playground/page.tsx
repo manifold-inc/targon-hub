@@ -76,7 +76,7 @@ export default function Example() {
   }
 
   return (
-    <div className="relative mx-auto flex h-full max-h-full max-w-2xl flex-grow flex-col justify-between gap-1 overflow-hidden px-5 pb-4 pt-3">
+    <div className="relative mx-auto flex h-full max-h-full max-w-2xl flex-grow flex-col justify-between gap-1 overflow-hidden px-5 pb-4 pt-12">
       <div>
         <Listbox value={current_model} onChange={setSelected}>
           <Label className="block text-sm/6 font-medium text-gray-900">

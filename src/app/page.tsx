@@ -39,7 +39,7 @@ export default function Page() {
     : [];
 
   return (
-    <div className="relative">
+    <div className="relative pt-8">
       <div className="relative -top-20 h-4/5 overflow-hidden">
         <Image
           className="b absolute inset-0 h-full w-full animate-fade-in rounded-xl object-cover

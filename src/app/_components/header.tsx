@@ -87,9 +87,26 @@ export const Header = () => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // Handle sliding header
+  useEffect(() => {
+    let prevScrollpos = window.scrollY;
+    const scrollfunc = () => {
+      const currentScrollPos = window.scrollY;
+      if (prevScrollpos > currentScrollPos) {
+        document.getElementById("navbar")!.style.top = "0";
+      } else {
+        document.getElementById("navbar")!.style.top = "-60px";
+      }
+      prevScrollpos = currentScrollPos;
+    };
+    window.addEventListener("scroll", scrollfunc);
+    return () => window.removeEventListener("scroll", scrollfunc);
+  }, []);
+
   return (
     <header
-      className={`sticky top-0 z-10 animate-slide-in ${pathName !== "/" ? "border-b border-gray-200 bg-white" : ""
+      id="navbar"
+      className={`fixed top-0 z-10 w-full animate-slide-in transition-[top_.3s] ${pathName !== "/" ? "border-b border-gray-200 bg-white" : ""
         }`}
     >
       <nav className="text-manifold-green flex items-center justify-between p-4">
