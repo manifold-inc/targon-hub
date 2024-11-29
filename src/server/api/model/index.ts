@@ -1,9 +1,10 @@
 import { TRPCError } from "@trpc/server";
-import { and, asc, eq, inArray, like, or } from "drizzle-orm";
+import { and, asc, count, eq, gte, inArray, like, or, sql } from "drizzle-orm";
+import moment from "moment";
 import { z } from "zod";
 
 import { env } from "@/env.mjs";
-import { MODALITIES, Model } from "@/schema/schema";
+import { MODALITIES, Model, Request } from "@/schema/schema";
 import { createTRPCRouter, publicAuthlessProcedure } from "../trpc";
 
 const Modality = ["text-generation", "text-to-image"] as const;
@@ -146,6 +147,7 @@ export const modelRouter = createTRPCRouter({
       const [model] = await ctx.db
         .select({
           name: Model.name,
+          id: Model.id,
           cpt: Model.cpt,
           enabled: Model.enabled,
           createdAt: Model.createdAt,
@@ -155,7 +157,37 @@ export const modelRouter = createTRPCRouter({
         })
         .from(Model)
         .where(eq(Model.name, input.model));
-      return model
+      return model;
+    }),
+  getModelUsage: publicAuthlessProcedure
+    .input(z.object({ model_id: z.number() }))
+    .query(async ({ ctx, input }) => {
+      const usage = await ctx.db
+        .select({
+          count: count(Request.id),
+          day: sql<number>`DAY(${Request.createdAt}) AS day`.mapWith(Number),
+          month: sql<number>`MONTH(${Request.createdAt}) AS month`.mapWith(
+            Number,
+          ),
+          year: sql<number>`YEAR(${Request.createdAt}) AS year`.mapWith(Number),
+        })
+        .from(Request)
+        .where(
+          and(
+            eq(Request.model, input.model_id),
+            gte(Request.createdAt, sql`NOW() - INTERVAL 1 WEEK`),
+          ),
+        )
+        .groupBy(
+          sql`DAY(${Request.createdAt}), MONTH(${Request.createdAt}), YEAR(${Request.createdAt})`,
+        )
+        .orderBy(asc(sql`year, month, day`));
+      return usage.map((u) => ({
+        Count: u.count,
+        date: moment({ year: u.year, month: u.month - 1, day: u.day }).format(
+          "MMM Do",
+        ),
+      }));
     }),
   getRequiredGpus: publicAuthlessProcedure
     .input(z.string())

@@ -12,6 +12,7 @@ import { db } from "@/schema/db";
 import { createCaller } from "@/server/api/root";
 import { uncachedValidateRequest } from "@/server/auth";
 import { getModelGradient } from "@/utils/utils";
+import UseageChart from "./UsageChart";
 
 type Props = {
   params: {
@@ -22,11 +23,19 @@ type Props = {
 export default async function Page({ params }: Props) {
   const { user, session } = await uncachedValidateRequest();
   const caller = createCaller({ user, db: db, req: null, session: session });
+
   const data = await caller.model.getModelInfo({
     model: decodeURIComponent(params.slug),
   });
   if (!data) {
     redirect("/models");
+  }
+  let usage = null;
+  if (data?.enabled) {
+    usage = await caller.model.getModelUsage({ model_id: data.id });
+
+    // Dont include the current day since its still accumulating
+    usage.pop();
   }
   const gradient = getModelGradient(data.name!);
 
@@ -64,6 +73,7 @@ for chunk in response:
         print(chunk.choices[0].text, end="")`;
 
   const cost = (data.cpt * 1_000_000) / CREDIT_PER_DOLLAR;
+  console.log(usage);
   return (
     <div className="relative flex">
       <div className="fixed right-20 top-32 hidden lg:block">
@@ -112,7 +122,7 @@ for chunk in response:
                     {data.name!.split("/")[0]}
                   </span>
                 </div>
-            <div className="h-5 w-px bg-[#e4e7ec]" />
+                <div className="h-5 w-px bg-[#e4e7ec]" />
                 <div className="text-xs leading-tight text-[#667085] sm:text-sm">
                   ${cost} / M Tokens
                 </div>
@@ -145,6 +155,19 @@ for chunk in response:
                 )}
               </div>
             </section>
+            {usage && (
+              <section id="usage">
+                <div className="py-10">
+                  <div className="h-px w-full bg-[#e4e7ec]" />
+                </div>
+                <p className="text-2xl leading-loose text-[#101828]">
+                  Model Usage
+                </p>
+                <div className="pt-8">
+                  <UseageChart data={usage} />
+                </div>
+              </section>
+            )}
             <section className="hidden" id="apps-using-this" data-section>
               <div className="py-10">
                 <div className="h-px w-full bg-[#e4e7ec]" />
