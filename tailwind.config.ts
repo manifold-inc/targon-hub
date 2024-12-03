@@ -117,6 +117,9 @@ export default {
         "slide-in-5": "slide-in 0.5s ease-out both 0.2s",
         "slide-in-6": "slide-in 0.5s ease-out both 0.25s",
         "slide-in-7": "slide-in 0.5s ease-out both 0.3s",
+        'dot-path-1': 'dot-path-1 8s infinite ease-in-out',
+        'dot-path-2': 'dot-path-2 12s infinite ease-in-out',
+        'dot-path-3': 'dot-path-3 10s infinite ease-in-out',
       },
       keyframes: {
         "fade-in": {
