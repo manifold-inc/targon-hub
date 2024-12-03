@@ -58,7 +58,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="relative pt-8">
+    <div className="relative pt-8 bg-[#fafafa]">
       <div className="relative -top-20 h-4/5 overflow-hidden">
         <div className="absolute inset-0 dot-pattern" />
 
@@ -67,7 +67,7 @@ export default function Page() {
           {/* Left Column - Glass morphic elements */}
           <div className="w-full lg:w-1/2 flex flex-col gap-6">
             <div className="animate-slide-in flex flex-col items-center gap-4 
-              rounded-lg relative overflow-hidden bg-white/20 border border-white/30 backdrop-blur-sm
+              rounded-lg relative overflow-hidden bg-gray-200 border border-gray-300 backdrop-blur-sm
               shadow-lg p-4 sm:p-8 transition-all duration-300 
               hover:shadow-xl hover:border-mf-green/50 group">
               <div className="relative z-10">
@@ -96,7 +96,7 @@ export default function Page() {
               <div className="flex flex-col items-center w-full">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 text-center font-mono w-full">
                   {/* First stat card */}
-                  <div className="flex flex-col p-4 sm:p-8 rounded-lg relative overflow-hidden border border-white/30 shadow-lg backdrop-blur-sm">
+                  <div className="flex flex-col p-4 sm:p-8 rounded-lg relative overflow-hidden border border-gray-300 shadow-lg backdrop-blur-sm bg-gray-200">
                     <div className="relative z-10 flex flex-col h-full items-center text-center">
                       <p className="text-mf-green">Greater Than</p>
                       <div className="relative inline-flex items-start justify-center">
@@ -114,7 +114,7 @@ export default function Page() {
                   </div>
 
                   {/* Second stat card */}
-                  <div className="flex flex-col p-4 sm:p-8 rounded-lg relative overflow-hidden border border-white/30 shadow-lg backdrop-blur-sm">
+                  <div className="flex flex-col p-4 sm:p-8 rounded-lg relative overflow-hidden border border-gray-300 shadow-lg backdrop-blur-sm bg-gray-200">
                     <div className="relative z-10 flex flex-col h-full items-center text-center">
                       <p className="text-mf-green">Less Than</p>
                       <div className="relative inline-flex items-start justify-center">
