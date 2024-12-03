@@ -46,7 +46,7 @@ export default function Example() {
         stream: true,
         messages: [...chatlog, { role: "user", content: chat }],
         model: current_model,
-        max_tokens: 1024
+        max_tokens: 1024,
       });
       setChats((c) => [...c, { role: "assistant", content: "" }]);
       for await (const chunk of stream) {

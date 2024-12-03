@@ -16,20 +16,24 @@ import { reactClient } from "@/trpc/react";
 export default function SearchBar() {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const models = reactClient.model.getModels.useQuery({name: query}, {keepPreviousData: true});
+  const models = reactClient.model.getModels.useQuery(
+    { name: query },
+    { keepPreviousData: true },
+  );
 
-  const groupedModels = models.data?.reduce(
-    (acc, model) => {
-      const date = moment(model.createdAt);
-      const monthYear = date.format("MMMM YYYY");
-      if (!acc[monthYear]) {
-        acc[monthYear] = [];
-      }
-      acc[monthYear].push(model);
-      return acc;
-    },
-    {} as Record<string, typeof models.data>,
-  ) ?? {};
+  const groupedModels =
+    models.data?.reduce(
+      (acc, model) => {
+        const date = moment(model.createdAt);
+        const monthYear = date.format("MMMM YYYY");
+        if (!acc[monthYear]) {
+          acc[monthYear] = [];
+        }
+        acc[monthYear].push(model);
+        return acc;
+      },
+      {} as Record<string, typeof models.data>,
+    ) ?? {};
 
   const sortedMonthYears = Object.keys(groupedModels).sort(
     (a, b) => moment(b).valueOf() - moment(a).valueOf(),
@@ -52,7 +56,7 @@ export default function SearchBar() {
         </div>
         <ComboboxInput
           name="search_input"
-          className="text-md flex h-11 w-full items-center rounded-full border-0 bg-gray-50 pb-2.5 pl-11 pr-8 pt-3 placeholder:text-[#98a1b2] focus:ring-gray-200"
+          className="text-md flex h-11 w-full items-center rounded-full border-gray-200 bg-gray-50 pb-2.5 pl-11 pr-8 pt-3 placeholder:text-[#98a1b2] focus:ring-gray-200"
           placeholder="Search models"
           displayValue={(model: { name: string } | null) => model?.name ?? ""}
           onChange={(event) => setQuery(event.target.value)}
@@ -66,7 +70,7 @@ export default function SearchBar() {
       <ComboboxOptions className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm md:max-h-40 lg:max-h-60">
         {!models.data?.length ? (
           <div className="relative cursor-default select-none px-4 py-2">
-          {models.isLoading ? "Loading..." : 'No models found.'}
+            {models.isLoading ? "Loading..." : "No models found."}
           </div>
         ) : (
           sortedMonthYears.map((monthYear) => (

@@ -131,7 +131,8 @@ export const accountRouter = createTRPCRouter({
         createdAt: CheckoutSession.createdAt,
       })
       .from(CheckoutSession)
-      .where(eq(CheckoutSession.userId, ctx.user.id)).limit(10);
+      .where(eq(CheckoutSession.userId, ctx.user.id))
+      .limit(10);
 
     // Get TAO transfers
     const taoTransfers = await ctx.db
@@ -143,7 +144,8 @@ export const accountRouter = createTRPCRouter({
         pricedAt: TaoTransfers.priced_at,
       })
       .from(TaoTransfers)
-      .where(eq(TaoTransfers.userId, ctx.user.id)).limit(10);
+      .where(eq(TaoTransfers.userId, ctx.user.id))
+      .limit(10);
 
     // Combine and sort both payment types
     const allPayments = [

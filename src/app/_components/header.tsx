@@ -102,9 +102,9 @@ export const Header = () => {
     <header
       id="navbar"
       className={`fixed top-0 z-20 w-full animate-slide-in transition-[top_.3s] ${
-        pathName !== "/" 
-          ? "border-b border-gray-200 bg-white" 
-          : hasScrolled 
+        pathName !== "/"
+          ? "border-b border-gray-200 bg-white"
+          : hasScrolled
             ? "bg-white/20 backdrop-blur-md backdrop-saturate-150"
             : "bg-transparent"
       }`}

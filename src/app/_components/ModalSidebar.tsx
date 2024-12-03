@@ -101,14 +101,16 @@ export default function ModalSidebar({
                             : [...prev, modality],
                         );
                       }}
-                      className={`flex h-9 w-full items-center rounded-full px-3 py-2 ${activeModality.includes(modality) ? "bg-[#f2f4f7]" : ""
-                        }`}
+                      className={`flex h-9 w-full items-center rounded-full px-3 py-2 ${
+                        activeModality.includes(modality) ? "bg-[#f2f4f7]" : ""
+                      }`}
                     >
                       <div
-                        className={`text-sm leading-tight ${activeModality.includes(modality)
+                        className={`text-sm leading-tight ${
+                          activeModality.includes(modality)
                             ? "text-[#344054]"
                             : "text-[#475467]"
-                          }`}
+                        }`}
                       >
                         {modality
                           .split("-")
@@ -361,17 +363,19 @@ export default function ModalSidebar({
                               : [...prev, organization],
                           );
                         }}
-                        className={`inline-flex h-9 w-full items-center justify-start gap-1 rounded-full px-3 py-2 ${activeOrganization.includes(organization)
+                        className={`inline-flex h-9 w-full items-center justify-start gap-1 rounded-full px-3 py-2 ${
+                          activeOrganization.includes(organization)
                             ? "bg-[#f2f4f7]"
                             : ""
-                          }`}
+                        }`}
                       >
                         <div className="flex w-48 items-center justify-start px-0.5">
                           <div
-                            className={`text-sm leading-tight ${activeOrganization.includes(organization)
+                            className={`text-sm leading-tight ${
+                              activeOrganization.includes(organization)
                                 ? "text-[#344054]"
                                 : "text-[#475467]"
-                              }`}
+                            }`}
                           >
                             {organization}
                           </div>
@@ -429,21 +433,23 @@ export default function ModalSidebar({
                             : [...prev, endpoint.toUpperCase()],
                         );
                       }}
-                      className={`inline-flex h-9 w-full items-center justify-start gap-1 rounded-full px-3 py-2 ${activeSupportedEndpoints.includes(
-                        endpoint.toUpperCase(),
-                      )
+                      className={`inline-flex h-9 w-full items-center justify-start gap-1 rounded-full px-3 py-2 ${
+                        activeSupportedEndpoints.includes(
+                          endpoint.toUpperCase(),
+                        )
                           ? "bg-[#f2f4f7]"
                           : ""
-                        }`}
+                      }`}
                     >
                       <div className="flex w-48 items-center justify-between px-0.5">
                         <div
-                          className={`text-sm leading-tight ${activeSupportedEndpoints.includes(
-                            endpoint.toUpperCase(),
-                          )
+                          className={`text-sm leading-tight ${
+                            activeSupportedEndpoints.includes(
+                              endpoint.toUpperCase(),
+                            )
                               ? "text-[#344054]"
                               : "text-[#475467]"
-                            }`}
+                          }`}
                         >
                           {endpoint.charAt(0).toUpperCase() + endpoint.slice(1)}
                         </div>
@@ -493,17 +499,19 @@ export default function ModalSidebar({
                               : [...prev, parameter],
                           );
                         }}
-                        className={`inline-flex h-9 w-full items-center justify-start gap-1 rounded-full px-3 py-2 ${activeParameters.includes(parameter)
+                        className={`inline-flex h-9 w-full items-center justify-start gap-1 rounded-full px-3 py-2 ${
+                          activeParameters.includes(parameter)
                             ? "bg-[#f2f4f7]"
                             : ""
-                          }`}
+                        }`}
                       >
                         <div className="flex w-48 items-center justify-start px-0.5">
                           <div
-                            className={`text-sm leading-tight ${activeParameters.includes(parameter)
+                            className={`text-sm leading-tight ${
+                              activeParameters.includes(parameter)
                                 ? "text-[#344054]"
                                 : "text-[#475467]"
-                              }`}
+                            }`}
                           >
                             {parameter}
                           </div>

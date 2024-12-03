@@ -11,7 +11,6 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_REDIRECT_URI: z.string(),
 
-
     DATABASE_HOST: z.string(),
     DATABASE_NAME: z.string(),
     DATABASE_USERNAME: z.string(),

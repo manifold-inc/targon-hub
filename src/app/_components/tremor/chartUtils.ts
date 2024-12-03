@@ -58,9 +58,12 @@ export const chartColors = {
     fill: "fill-fuchsia-500",
     text: "text-fuchsia-500",
   },
-} as const satisfies Record<string, {
-  [key in ColorUtility]: string;
-}>;
+} as const satisfies Record<
+  string,
+  {
+    [key in ColorUtility]: string;
+  }
+>;
 
 export type AvailableChartColorsKeys = keyof typeof chartColors;
 

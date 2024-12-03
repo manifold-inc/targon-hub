@@ -117,47 +117,82 @@
 }
 
 .text-stroke-mf-green {
-  text-shadow: -1px -1px 0 #007346,
-               1px -1px 0 #007346,
-               -1px 1px 0 #007346,
-               1px 1px 0 #007346;
+  text-shadow:
+    -1px -1px 0 #007346,
+    1px -1px 0 #007346,
+    -1px 1px 0 #007346,
+    1px 1px 0 #007346;
 }
 
 .dot-pattern {
-  background-image: radial-gradient(circle at center, #9ca3af 1px, transparent 1px);
+  background-image: radial-gradient(
+    circle at center,
+    #9ca3af 1px,
+    transparent 1px
+  );
   background-size: 24px 24px;
   background-color: #fafafa;
 }
 
 /* Brain-like dot animations */
 @keyframes dot-path-1 {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(-20px, 20px) scale(1.2); }
-  100% { transform: translate(0, 0); }
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-20px, 20px) scale(1.2);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
 
 @keyframes dot-path-2 {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(20px, -15px) scale(1.2); }
-  100% { transform: translate(0, 0); }
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(20px, -15px) scale(1.2);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
 
 @keyframes dot-path-3 {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(-15px, -20px) scale(1.1); }
-  100% { transform: translate(0, 0); }
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-15px, -20px) scale(1.1);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
 
 @keyframes dot-path-4 {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(25px, 15px) scale(1.3); }
-  100% { transform: translate(0, 0); }
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(25px, 15px) scale(1.3);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
 
 @keyframes dot-path-5 {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(-20px, -10px) scale(1.2); }
-  100% { transform: translate(0, 0); }
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-20px, -10px) scale(1.2);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
 
 .animate-dot-path-1 {
@@ -206,44 +241,88 @@
 
 /* Tech-inspired animations */
 @keyframes orbit-close {
-  0% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(20px, 20px) scale(1.2); }
-  50% { transform: translate(0, 40px) scale(1); }
-  75% { transform: translate(-20px, 20px) scale(1.2); }
-  100% { transform: translate(0, 0) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(20px, 20px) scale(1.2);
+  }
+  50% {
+    transform: translate(0, 40px) scale(1);
+  }
+  75% {
+    transform: translate(-20px, 20px) scale(1.2);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
 
 @keyframes orbit-far {
-  0% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(40px, 40px) scale(1.3); }
-  50% { transform: translate(0, 80px) scale(1); }
-  75% { transform: translate(-40px, 40px) scale(1.3); }
-  100% { transform: translate(0, 0) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(40px, 40px) scale(1.3);
+  }
+  50% {
+    transform: translate(0, 80px) scale(1);
+  }
+  75% {
+    transform: translate(-40px, 40px) scale(1.3);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
 
 @keyframes float-1 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(30px, -20px) scale(1.5); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(30px, -20px) scale(1.5);
+  }
 }
 
 @keyframes float-2 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-25px, 25px) scale(1.5); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-25px, 25px) scale(1.5);
+  }
 }
 
 @keyframes float-3 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(20px, 20px) scale(1.5); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(20px, 20px) scale(1.5);
+  }
 }
 
 @keyframes float-4 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-20px, -30px) scale(1.5); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-20px, -30px) scale(1.5);
+  }
 }
 
 @keyframes rotate-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .animate-orbit-close {
@@ -275,36 +354,55 @@
   transform-origin: left center;
 }
 
-/* Particle collider animations */
-@keyframes particle-1 {
-  0% { transform: translateX(100%); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateX(-100%); opacity: 0; }
+/* Add these new animations */
+@keyframes orbit-mercury {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
-@keyframes particle-2 {
-  0% { transform: translateX(100%); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateX(-100%); opacity: 0; }
+@keyframes orbit-venus {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
-@keyframes particle-3 {
-  0% { transform: translateX(100%); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateX(-100%); opacity: 0; }
+@keyframes orbit-earth {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
-.animate-particle-1 {
-  animation: particle-1 3s infinite linear;
+@keyframes orbit-mars {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
-.animate-particle-2 {
-  animation: particle-2 4s infinite linear;
+.animate-orbit-mercury {
+  animation: orbit-mercury 8s linear infinite;
 }
 
-.animate-particle-3 {
-  animation: particle-3 3.5s infinite linear;
+.animate-orbit-venus {
+  animation: orbit-venus 12s linear infinite;
+}
+
+.animate-orbit-earth {
+  animation: orbit-earth 16s linear infinite;
+}
+
+.animate-orbit-mars {
+  animation: orbit-mars 20s linear infinite;
 }

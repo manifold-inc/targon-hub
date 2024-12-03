@@ -3,7 +3,7 @@ import animation from "tailwindcss-animated";
 import colors from "tailwindcss/colors";
 
 export default {
-  darkMode: 'class',
+  darkMode: "class",
   content: [
     "./src/**/*.{ts,tsx}",
 
@@ -117,9 +117,10 @@ export default {
         "slide-in-5": "slide-in 0.5s ease-out both 0.2s",
         "slide-in-6": "slide-in 0.5s ease-out both 0.25s",
         "slide-in-7": "slide-in 0.5s ease-out both 0.3s",
-        'dot-path-1': 'dot-path-1 8s infinite ease-in-out',
-        'dot-path-2': 'dot-path-2 12s infinite ease-in-out',
-        'dot-path-3': 'dot-path-3 10s infinite ease-in-out',
+        "dot-path-1": "dot-path-1 8s infinite ease-in-out",
+        "dot-path-2": "dot-path-2 12s infinite ease-in-out",
+        "dot-path-3": "dot-path-3 10s infinite ease-in-out",
+        "scroll-horizontal": "scroll-horizontal 20s linear infinite",
       },
       keyframes: {
         "fade-in": {
@@ -133,6 +134,10 @@ export default {
         "slide-in-delay": {
           "0%, 50%": { transform: "translateY(-24px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        "scroll-horizontal": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-75%)" },
         },
       },
     },

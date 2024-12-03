@@ -20,8 +20,8 @@ interface ModalSidebarState {
     modalityOrUpdater:
       | Array<(typeof MODALITIES)[number]>
       | ((
-        prev: Array<(typeof MODALITIES)[number]>,
-      ) => Array<(typeof MODALITIES)[number]>),
+          prev: Array<(typeof MODALITIES)[number]>,
+        ) => Array<(typeof MODALITIES)[number]>),
   ) => void;
 
   // Context length state
