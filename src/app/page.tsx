@@ -164,8 +164,16 @@ export default function Page() {
       {/* Content without background */}
       <div className="-mt-10 px-4 sm:px-10">
         <div className="animate-slide-in-delay">
-          <TabGroup>
-            <TabList className="inline-flex w-full items-center justify-start gap-1 sm:gap-2 overflow-x-scroll rounded-full border border-[#e4e7ec] bg-white p-1 sm:p-2">
+          <div className="flex flex-col items-center justify-center pb-8 gap-6 text-center mx-auto">
+            <h1 className="text-gray-900 text-4xl sm:text-5xl font-semibold leading-tight whitespace-no-wrap">
+              Permissionlessly Unlock Affordable AI Inference
+            </h1>
+            <p className="text-gray-700 text-base sm:text-lg max-w-2xl">
+              Experience the power of AI without the limits. As the only place on Bittensor offering model leasing, we make decentralized, affordable AI truly accessible.
+            </p>
+          </div>
+            <TabGroup>
+              <TabList className="inline-flex w-full items-center justify-start gap-1 sm:gap-2 overflow-x-scroll rounded-full border border-[#e4e7ec] bg-white p-1 sm:p-2">
               {endpoints.map((endpoint, index) => (
                 <Tab
                   key={index}
