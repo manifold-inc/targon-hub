@@ -101,7 +101,7 @@ export const Header = () => {
   return (
     <header
       id="navbar"
-      className={`fixed top-0 z-10 w-full animate-slide-in transition-[top_.3s] ${
+      className={`fixed top-0 z-20 w-full animate-slide-in transition-[top_.3s] ${
         pathName !== "/" 
           ? "border-b border-gray-200 bg-white" 
           : hasScrolled 

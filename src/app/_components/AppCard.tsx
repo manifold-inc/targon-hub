@@ -40,7 +40,7 @@ export const AppCard = ({
   return (
     <div
       className={`relative h-44 w-full overflow-hidden rounded-xl border bg-white shadow transition-all duration-200 md:w-80 ${
-        isHovered && isHoverSupported ? 'border-blue-500 scale-[1.02]' : 'border-[#e4e7ec]'
+        isHovered && isHoverSupported ? 'border-mf-green scale-[1.02]' : 'border-[#e4e7ec]'
       }`}
       onMouseEnter={() => isHoverSupported && setIsHovered(true)}
       onMouseLeave={() => isHoverSupported && setIsHovered(false)}
@@ -85,7 +85,7 @@ export const AppCard = ({
         ) : (
           // Updated hover state with correct spacing
           <div 
-            className={`absolute inset-0 flex h-full w-full flex-col bg-blue-500 transition-all ease-in-out duration-300 p-6 ${
+            className={`absolute inset-0 flex h-full w-full flex-col bg-mf-green transition-all ease-in-out duration-300 p-6 ${
               isHovered ? 'translate-y-0' : 'translate-y-full'
             }`}
           >
