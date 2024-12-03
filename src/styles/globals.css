@@ -115,3 +115,10 @@
 .hljs-tag {
   /* purposely ignored */
 }
+
+.text-stroke-mf-green {
+  text-shadow: -1px -1px 0 #007346,
+               1px -1px 0 #007346,
+               -1px 1px 0 #007346,
+               1px 1px 0 #007346;
+}
