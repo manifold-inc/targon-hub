@@ -120,7 +120,7 @@ export default {
         "dot-path-1": "dot-path-1 8s infinite ease-in-out",
         "dot-path-2": "dot-path-2 12s infinite ease-in-out",
         "dot-path-3": "dot-path-3 10s infinite ease-in-out",
-        "scroll-horizontal": "scroll-horizontal 20s linear infinite",
+        "scroll-horizontal": "scroll-horizontal 10s linear infinite",
       },
       keyframes: {
         "fade-in": {
@@ -137,7 +137,7 @@ export default {
         },
         "scroll-horizontal": {
           "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(-75%)" },
+          "100%": { transform: "translate(calc(-250px * 3))" },
         },
       },
     },

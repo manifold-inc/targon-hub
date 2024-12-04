@@ -60,8 +60,10 @@ export default function Page() {
   return (
     <div className="relative bg-[#fafafa] pt-8">
       <div className="relative -top-20 h-4/5 overflow-hidden">
-        <div className="dot-pattern absolute inset-0" />
-
+        {/* Base dot pattern */}
+        <div className="dot-pattern absolute inset-0 animate-slide-in">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#fafafa]" />
+        </div>
         {/* Content with background */}
         <div className="relative flex h-full flex-col items-start justify-center gap-6 px-4 pb-6 pt-20 sm:px-10 sm:pb-10 sm:pt-40 lg:flex-row">
           {/* Left Column - Glass morphic elements */}
@@ -109,16 +111,12 @@ export default function Page() {
 
                   {/* Second stat card */}
                   <div className="relative flex flex-col overflow-hidden rounded-lg border border-gray-300 bg-gray-200 p-4 shadow-lg backdrop-blur-sm sm:p-8">
-                    <div className="relative z-10 flex h-full flex-col items-center text-center font-light">
+                    <div className="relative z-10 flex h-full flex-col items-center  justify-center text-center font-light">
                       <p className="text-mf-green">Currently</p>
                       <div className="relative inline-flex items-start justify-center">
                         <p className="text-5xl text-mf-green">$0.04</p>
-                        <sup className="absolute -right-3 top-0 text-mf-green">
-                          *
-                        </sup>
                       </div>
                       <p className="text-mf-green">/M Tokens</p>
-                      <p className="text-sm text-mf-green">* currently</p>
                     </div>
                   </div>
                 </div>
@@ -177,7 +175,7 @@ export default function Page() {
 
         <div className="animate-slide-in-delay py-4">
           {/* Browser chrome wrapper */}
-          <div className="relative w-full overflow-hidden rounded-xl border border-gray-200 bg-white">
+          <div className="relative mx-auto w-full overflow-hidden rounded-xl border border-gray-200 bg-white">
             {/* Add the same gradients */}
             <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent" />
@@ -185,23 +183,29 @@ export default function Page() {
             {/* Make content relative to show above gradient */}
             <div className="relative z-10">
               {/* Browser chrome header */}
-              <div className="flex items-center gap-2 border-b border-gray-200 p-2">
-                <div className="flex w-20 gap-1.5">
-                  <div className="h-3 w-3 rounded-full bg-red-400"></div>
-                  <div className="h-3 w-3 rounded-full bg-yellow-400"></div>
-                  <div className="h-3 w-3 rounded-full bg-green-400"></div>
+              <div className="flex items-center gap-2 border-b border-gray-200 p-2 sm:p-3">
+                <div className="flex w-16 gap-1.5 sm:w-20">
+                  <div className="h-2.5 w-2.5 rounded-full bg-red-400 sm:h-3 sm:w-3"></div>
+                  <div className="h-2.5 w-2.5 rounded-full bg-yellow-400 sm:h-3 sm:w-3"></div>
+                  <div className="h-2.5 w-2.5 rounded-full bg-green-400 sm:h-3 sm:w-3"></div>
                 </div>
                 <div className="flex-1 text-center">
-                  <span className="relative inline-block overflow-hidden rounded-full bg-white px-4 py-1 text-sm text-gray-600">
+                  <span className="relative inline-block overflow-hidden rounded-full bg-white px-3 py-1 text-xs text-gray-600 sm:px-4 sm:text-sm">
                     <span className="">targon.com</span>
                   </span>
                 </div>
-                <div className="w-20"></div>
+                <div className="w-16 sm:w-20"></div>
               </div>
 
               {/* Content area */}
-              <div className="p-4 lg:max-h-[70vh] lg:overflow-y-auto">
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="p-3 sm:p-4 md:p-6 lg:max-h-[70vh] lg:overflow-y-auto">
+                <div
+                  className="grid grid-cols-1 gap-4 sm:grid-cols-1 
+                              sm:gap-6 
+                              md:grid-cols-2 
+                              lg:grid-cols-3 
+                              xl:grid-cols-4"
+                >
                   {filteredModels.map((model) => (
                     <AppCard
                       key={model.id}
@@ -225,7 +229,7 @@ export default function Page() {
               {"Generative AI you can rely on".split("").map((char, index) => (
                 <span
                   key={index}
-                  className={`inline-block pb-8 text-3xl font-light text-mf-green sm:pb-16 sm:text-6xl ${
+                  className={`inline-block pb-8 text-3xl font-light text-mf-green sm:pb-16 sm:text-4xl md:text-5xl lg:text-6xl ${
                     isVisible ? "animate-slide-in" : "opacity-0"
                   }`}
                   style={{
@@ -236,22 +240,22 @@ export default function Page() {
                 </span>
               ))}
             </div>
-            <div className="mx-auto grid max-w-screen-xl grid-cols-1 gap-4 px-4 sm:gap-8 sm:px-8 md:grid-cols-3">
+            <div className="mx-auto grid max-w-screen-xl grid-cols-1 gap-4 px-4 sm:gap-6 sm:px-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
               <div
                 className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white p-4 shadow-sm 
-                transition-all duration-300 hover:shadow-lg sm:p-8"
+                transition-all duration-300 hover:shadow-lg sm:p-6 md:p-8"
               >
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent" />
                 <div className="relative z-10 p-2 sm:p-4">
-                  <h3 className="pb-4 text-2xl font-light text-gray-900 sm:pb-8 sm:text-4xl">
+                  <h3 className="pb-4 text-2xl font-light text-gray-900 sm:text-3xl lg:text-4xl">
                     Fast
                   </h3>
-                  <div className="flex items-baseline gap-2 pb-2 text-[#142900] group-hover:animate-pulse group-hover:text-mf-green sm:gap-4 sm:pb-4">
-                    <span className="text-4xl font-light transition-colors sm:text-6xl">
+                  <div className="flex items-baseline gap-2 pb-2 text-[#142900] group-hover:animate-pulse group-hover:text-mf-green sm:gap-4">
+                    <span className="text-4xl font-light transition-colors sm:text-5xl lg:text-6xl">
                       4
                     </span>
-                    <span className="text-xl font-light transition-colors sm:text-3xl">
+                    <span className="text-xl font-light transition-colors sm:text-2xl lg:text-3xl">
                       x
                     </span>
                   </div>
@@ -263,20 +267,20 @@ export default function Page() {
 
               <div
                 className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white p-4 shadow-sm 
-                transition-all duration-300 hover:shadow-lg sm:p-8"
+                transition-all duration-300 hover:shadow-lg sm:p-6 md:p-8"
               >
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent" />
                 <div className="relative z-10 p-2 sm:p-4">
-                  <h3 className="pb-4 text-2xl font-light text-gray-900 sm:pb-8 sm:text-4xl">
+                  <h3 className="pb-4 text-2xl font-light text-gray-900 sm:text-3xl lg:text-4xl">
                     Precise
                   </h3>
-                  <div className="flex items-baseline gap-2 pb-2 text-[#142900] group-hover:animate-pulse group-hover:text-mf-green sm:gap-4 sm:pb-4">
-                    <span className="text-4xl font-light transition-colors sm:text-6xl">
+                  <div className="flex items-baseline gap-2 pb-2 text-[#142900] group-hover:animate-pulse group-hover:text-mf-green sm:gap-4">
+                    <span className="text-4xl font-light transition-colors sm:text-5xl lg:text-6xl">
                       400
                     </span>
-                    <span className="text-xl font-light transition-colors sm:text-3xl">
-                      TOKENS/SEC
+                    <span className="text-xl font-light transition-colors sm:text-2xl lg:text-3xl">
+                      TPS
                     </span>
                   </div>
                   <p className="text-sm text-gray-600 sm:text-base">
@@ -287,19 +291,19 @@ export default function Page() {
 
               <div
                 className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white p-4 shadow-sm 
-                transition-all duration-300 hover:shadow-lg sm:p-8"
+                transition-all duration-300 hover:shadow-lg sm:p-6 md:col-span-2 md:mx-auto md:max-w-[50%] lg:col-span-1 lg:max-w-none"
               >
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent" />
                 <div className="relative z-10 p-2 sm:p-4">
-                  <h3 className="pb-4 text-2xl font-light text-gray-900 sm:pb-8 sm:text-4xl">
+                  <h3 className="pb-4 text-2xl font-light text-gray-900 sm:text-3xl lg:text-4xl">
                     Cost-Efficient
                   </h3>
-                  <div className="flex items-baseline gap-2 pb-2 text-[#142900] group-hover:animate-pulse group-hover:text-mf-green sm:gap-4 sm:pb-4">
-                    <span className="text-4xl font-light transition-colors sm:text-6xl">
+                  <div className="flex items-baseline gap-2 pb-2 text-[#142900] group-hover:animate-pulse group-hover:text-mf-green sm:gap-4">
+                    <span className="text-4xl font-light transition-colors sm:text-5xl lg:text-6xl">
                       ∞
                     </span>
-                    <span className="text-xl font-light transition-colors sm:text-3xl">
+                    <span className="text-xl font-light transition-colors sm:text-2xl lg:text-3xl">
                       x
                     </span>
                   </div>
@@ -323,36 +327,50 @@ export default function Page() {
             </div>
 
             {/* Logo slider */}
-            <div className="relative w-full overflow-hidden py-10">
+            <div className="relative m-auto w-full overflow-hidden py-10">
               {/* Gradient masks for smooth fade effect */}
-              <div className="absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-white to-transparent" />
-              <div className="absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-white to-transparent" />
+              <div className="absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-[#fafafa] to-transparent" />
+              <div className="absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-[#fafafa] to-transparent" />
 
-              {/* Scrolling track */}
-              <div className="flex animate-scroll-horizontal">
-                {[1, 2, 3, 4].map((set) => (
-                  <div
-                    key={set}
-                    className="flex shrink-0 items-center gap-16 px-8"
-                  >
+              <div className="flex w-[calc(250px*9)] animate-scroll-horizontal">
+                {/* Three sets of logos for smoother transition */}
+                {[1, 2, 3].map((setNum) => (
+                  <div key={setNum} className="flex">
                     {[
-                      { src: "/companies/Dippy.svg", alt: "Dippy" },
-                      { src: "/companies/sybil.png", alt: "Sybil" },
-                      { src: "/companies/taobot.png", alt: "Taobot" },
+                      {
+                        src: "/companies/Dippy.svg",
+                        alt: "Dippy",
+                        link: "https://www.dippy.ai/",
+                      },
+                      {
+                        src: "/companies/sybil.png",
+                        alt: "Sybil",
+                        link: "https://sybil.com/",
+                      },
+                      {
+                        src: "/companies/taobot.png",
+                        alt: "Taobot",
+                        link: "https://interact.tao.bot/",
+                      },
                     ].map((logo, i) => (
                       <div
-                        key={`${set}-${i}`}
-                        className="group flex h-24 w-60 items-center justify-center rounded-lg 
-                                 border border-gray-200 bg-white p-2 shadow-sm transition-all duration-300 hover:shadow-md"
+                        key={`${setNum}-${i}`}
+                        className="slide flex w-[250px] items-center justify-center px-8"
                       >
-                        <div className="relative h-full w-full">
-                          <Image
-                            src={logo.src}
-                            alt={logo.alt}
-                            fill
-                            className="object-contain opacity-60 transition-opacity duration-300 group-hover:opacity-100"
-                          />
-                        </div>
+                        <Link
+                          className="group flex h-24 w-full items-center justify-center rounded-lg 
+                                   border border-gray-200 bg-white p-2 shadow-sm transition-all duration-300 hover:shadow-md"
+                          href={logo.link}
+                        >
+                          <div className="relative h-full w-full">
+                            <Image
+                              src={logo.src}
+                              alt={logo.alt}
+                              fill
+                              className="object-contain opacity-60 transition-opacity duration-300 group-hover:opacity-100"
+                            />
+                          </div>
+                        </Link>
                       </div>
                     ))}
                   </div>
