@@ -107,7 +107,6 @@ export default {
         "tremor-metric": ["1.875rem", { lineHeight: "2.25rem" }],
       },
       animation: {
-        "fade-in": "fade-in 0.14s ease-in forwards",
         "slide-in": "slide-in .6s ease-out backwards 0.2s",
         "slide-in-delay": "slide-in 0.6s ease-in backwards 0.5s",
         "slide-in-1": "slide-in 0.5s ease-out both 0s",
@@ -117,16 +116,9 @@ export default {
         "slide-in-5": "slide-in 0.5s ease-out both 0.2s",
         "slide-in-6": "slide-in 0.5s ease-out both 0.25s",
         "slide-in-7": "slide-in 0.5s ease-out both 0.3s",
-        "dot-path-1": "dot-path-1 8s infinite ease-in-out",
-        "dot-path-2": "dot-path-2 12s infinite ease-in-out",
-        "dot-path-3": "dot-path-3 10s infinite ease-in-out",
-        "scroll-horizontal": "scroll-horizontal 10s linear infinite",
+        "scroll-horizontal": "scroll-horizontal 15s linear infinite",
       },
       keyframes: {
-        "fade-in": {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
         "slide-in": {
           "0%": { transform: "translateY(-24px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
@@ -137,7 +129,7 @@ export default {
         },
         "scroll-horizontal": {
           "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translate(calc(-250px * 3))" },
+          "100%": { transform: "translateX(calc(-250px * 3))" },
         },
       },
     },
@@ -147,5 +139,17 @@ export default {
     require("@tailwindcss/typography"),
     require("@headlessui/tailwindcss"),
     require("@tailwindcss/forms"),
+    function({ addUtilities }: { addUtilities: (utilities: Record<string, Record<string, string>>) => void }) {
+      addUtilities({
+        '.animation-play-state-paused': {
+          'animation-play-state': 'paused',
+        },
+      });
+    },
   ],
+  variants: {
+    extend: {
+      animation: ['hover', 'group-hover'],
+    },
+  },
 } satisfies Config;

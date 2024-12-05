@@ -15,7 +15,7 @@ import {
 import { ChevronDown, MenuIcon, User, XIcon } from "lucide-react";
 
 import { useAuth } from "./providers";
-import SearchBar from "./SearchBar";
+import SearchBar from "./landing/SearchBar";
 import SettingsModal from "./SettingsModal";
 
 const NAVIGATION = [
