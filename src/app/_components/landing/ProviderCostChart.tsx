@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface Provider {
   name: string;
@@ -143,7 +144,7 @@ export function ProviderCostChart() {
                     Manifold<span className="text-mf-green"> Labs</span>
                   </span>
                 </div>
-                <div>{currentData.currentTokens} TPS</div>
+                <div className="animate-pulse">{currentData.currentTokens} TPS</div>
               </div>
             </div>
           </div>
@@ -166,30 +167,10 @@ export function ProviderCostChart() {
       {/* List view for medium and smaller screens */}
       <div className="block lg:hidden">
         <div className="grid gap-6 px-6">
-          {providers.map((provider) => (
-            <div
-              key={provider.name}
-              className="flex items-center gap-4 rounded-lg border border-mf-green/20 p-4"
-            >
-              <Image
-                src={provider.logoUrl}
-                alt={provider.name}
-                width={50}
-                height={50}
-                className="h-12 w-12"
-              />
-              <div className="font-mono">
-                <div className="font-semibold">{provider.name}</div>
-                <div>{provider.tokensPerSecond} TPS</div>
-                <div className="text-neutral-400">
-                  ${provider.costPerMillion.toFixed(2)} / M Tokens
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {/* Current state in list view */}
-          <div className="flex items-center gap-4 rounded-lg border border-mf-green/20 p-4">
+          <Link
+            href="/models"
+            className="flex items-center gap-4 rounded-lg border border-mf-green/20 p-4"
+          >
             <Image
               src="/ManifoldMarkTransparentGreenSVG.svg"
               alt="Manifold Labs"
@@ -206,7 +187,32 @@ export function ProviderCostChart() {
               </div>
               <div className="text-neutral-400">As of {currentData.date}</div>
             </div>
-          </div>
+          </Link>
+
+          {providers
+            .sort((a, b) => b.tokensPerSecond - a.tokensPerSecond) // Sort providers by TPS in descending order
+            .map((provider) => (
+              <div
+                key={provider.name}
+                className="flex items-center gap-4 rounded-lg border border-mf-green/20 p-4"
+              >
+                <Image
+                  src={provider.logoUrl}
+                  alt={provider.name}
+                  width={50}
+                  height={50}
+                  className="h-12 w-12"
+                />
+                <div className="font-mono">
+                  <div className="font-semibold">{provider.name}</div>
+                  <div>{provider.tokensPerSecond} TPS</div>
+                  <div className="text-neutral-400">
+                    ${provider.costPerMillion.toFixed(2)} / M Tokens
+                  </div>
+                </div>
+              </div>
+            ))}
+
         </div>
       </div>
     </div>

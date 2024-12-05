@@ -7,7 +7,7 @@ import { TrustedBySection } from "./_components/landing/TrustedBySection";
 
 export default function Page() {
   return (
-    <div className="relative bg-[#fafafa]">
+    <div className="relative bg-[#fafafa] pt-4">
       {/* Dot pattern container */}
       <div className="absolute -top-20 left-0 right-0 h-2/5">
         <div className="dot-pattern h-full w-full animate-slide-in">
@@ -16,10 +16,10 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="relative">
+      <div className="relative py-10">
         <HeroSection />
 
-        <div className="relative -mt-20 px-4 sm:px-10">
+        <div className="relative -mt-20 px-4 pt-4 sm:px-10 sm:pt-10">
           <ModelTabs />
           <TrustedBySection />
           <MetricsSection />
@@ -27,6 +27,7 @@ export default function Page() {
 
         <div className="relative px-4 pb-20 sm:px-10">
           {/* Content without background */}
+
           <div className="animate-slide-in-delay">
             {/* provider cost chart */}
             <ProviderCostChart />
