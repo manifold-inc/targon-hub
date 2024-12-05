@@ -25,7 +25,7 @@ export default function Page() {
           <MetricsSection />
         </div>
 
-        <div className="relative px-4 sm:px-10 pb-20">
+        <div className="relative px-4 pb-20 sm:px-10">
           {/* Content without background */}
           <div className="animate-slide-in-delay">
             {/* provider cost chart */}

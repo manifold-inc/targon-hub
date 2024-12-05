@@ -8,9 +8,9 @@ import { Analytics } from "@vercel/analytics/react";
 import clsx from "clsx";
 import { Toaster } from "sonner";
 
+import { Footer } from "./_components/footer";
 import { Header } from "./_components/header";
 import { WithGlobalProvider } from "./_components/providers";
-import { Footer } from "./_components/footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,7 +37,7 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="icon" href="/ManifoldMarkTransparentGreenSVG.svg" />
       </head>
-      <body className="h-full flex flex-col">
+      <body className="flex h-full flex-col">
         <Suspense>
           <WithGlobalProvider>
             <Header />
