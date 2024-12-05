@@ -46,7 +46,7 @@ const providers: Provider[] = [
 const currentData = {
   name: "Manifold Labs",
   date: "Dec 2024",
-  currentTokens: "300+",
+  currentTokens: "400+",
   position: { left: "55%", bottom: "60%" },
   currentPosition: { left: "80%", bottom: "75%" },
 };
@@ -56,7 +56,7 @@ export function ProviderCostChart() {
     <div className="mx-auto w-full max-w-5xl">
       <div className="relative flex flex-col items-center px-6 pb-16 pt-5">
         <div className="pb-4 text-lg font-bold text-mf-green md:text-4xl">
-          Cost by TPS Per Provider - Llama 3.1 8B
+          Cost by TPS Per Provider
         </div>
         <p className="mx-auto max-w-2xl text-center text-base leading-relaxed text-mf-green sm:text-lg">
           Experience the power of AI without the limits. As the{" "}
@@ -156,7 +156,7 @@ export function ProviderCostChart() {
             <div className="relative flex items-center pl-24 pt-3 font-mono">
               <span>50</span>
               <span className="mx-auto opacity-50">Tokens Per Second</span>
-              <span>300</span>
+              <span>400</span>
               <div
                 className="absolute left-24 right-0 top-0 h-0.5 bg-gradient-to-r from-mf-green from-[0%] via-mf-green via-[40%] to-transparent to-[40%] opacity-30"
                 style={{ backgroundSize: "70px 2px" }}

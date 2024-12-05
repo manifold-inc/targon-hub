@@ -61,7 +61,7 @@ function AnimatedTitle({
       {"Generative AI you can rely on".split("").map((char, index) => (
         <span
           key={index}
-          className={`inline-block pb-8 text-3xl font-light text-mf-green sm:pb-16 sm:text-4xl md:text-5xl lg:text-6xl ${
+          className={`inline-block pb-8 text-2xl font-light text-mf-green sm:pb-16 sm:text-3xl md:text-4xl lg:text-5xl ${
             isVisible ? "animate-slide-in" : "opacity-0"
           }`}
           style={{
