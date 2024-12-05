@@ -16,7 +16,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="relative py-10">
+      <div className="relative py-14">
         <HeroSection />
 
         <div className="relative -mt-20 px-4 pt-4 sm:px-10 sm:pt-10">
