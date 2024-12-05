@@ -144,7 +144,9 @@ export function ProviderCostChart() {
                     Manifold<span className="text-mf-green"> Labs</span>
                   </span>
                 </div>
-                <div className="animate-pulse">{currentData.currentTokens} TPS</div>
+                <div className="animate-pulse">
+                  {currentData.currentTokens} TPS
+                </div>
               </div>
             </div>
           </div>
@@ -212,7 +214,6 @@ export function ProviderCostChart() {
                 </div>
               </div>
             ))}
-
         </div>
       </div>
     </div>
