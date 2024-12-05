@@ -10,6 +10,7 @@ import { Toaster } from "sonner";
 
 import { Header } from "./_components/header";
 import { WithGlobalProvider } from "./_components/providers";
+import { Footer } from "./_components/footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,11 +37,12 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="icon" href="/ManifoldMarkTransparentGreenSVG.svg" />
       </head>
-      <body className="h-full">
+      <body className="h-full flex flex-col">
         <Suspense>
           <WithGlobalProvider>
             <Header />
-            <main className="h-full pt-12">{children}</main>
+            <main className="flex-1">{children}</main>
+            <Footer />
           </WithGlobalProvider>
           <Toaster richColors />
           <Analytics />
