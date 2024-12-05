@@ -18,7 +18,8 @@ interface Path {
 // Constants
 const GRID_SIZE = 24;
 
-const snapToGrid = (value: number) => Math.round(value / GRID_SIZE) * GRID_SIZE + GRID_SIZE / 2;
+const snapToGrid = (value: number) =>
+  Math.round(value / GRID_SIZE) * GRID_SIZE + GRID_SIZE / 2;
 
 export const DataFlowAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -36,29 +37,31 @@ export const DataFlowAnimation = () => {
     function getCanvasDimensions() {
       return {
         width: canvas!.width,
-        height: canvas!.height
+        height: canvas!.height,
       };
     }
 
     // Create 5 continuous flowing paths
-    const paths: Path[] = Array(5).fill(null).map(() => ({
-      points: generatePathAcrossGrid(),
-      progress: Math.random(), // Random starting positions
-      alpha: 0.3 + Math.random() * 0.2,
-      targetLetter: null,
-      isAssigned: false
-    }));
+    const paths: Path[] = Array(5)
+      .fill(null)
+      .map(() => ({
+        points: generatePathAcrossGrid(),
+        progress: Math.random(), // Random starting positions
+        alpha: 0.3 + Math.random() * 0.2,
+        targetLetter: null,
+        isAssigned: false,
+      }));
 
     function generatePathAcrossGrid(): Point[] {
       const { width, height } = getCanvasDimensions();
       const points: Point[] = [];
-      
+
       // Start from left side
       const startY = snapToGrid(Math.random() * height);
       points.push({ x: GRID_SIZE / 2, y: startY });
-      
+
       let currentPoint = { x: GRID_SIZE / 2, y: startY };
-      
+
       // Generate path to right side with right angles
       while (currentPoint.x < width - GRID_SIZE) {
         // Randomly decide whether to move horizontally or vertically
@@ -66,19 +69,22 @@ export const DataFlowAnimation = () => {
           // Move horizontally
           currentPoint = {
             x: currentPoint.x + GRID_SIZE,
-            y: currentPoint.y
+            y: currentPoint.y,
           };
         } else {
           // Move vertically
           const step = Math.random() > 0.5 ? GRID_SIZE : -GRID_SIZE;
           currentPoint = {
             x: currentPoint.x,
-            y: Math.max(GRID_SIZE, Math.min(height - GRID_SIZE, currentPoint.y + step))
+            y: Math.max(
+              GRID_SIZE,
+              Math.min(height - GRID_SIZE, currentPoint.y + step),
+            ),
           };
         }
-        points.push({...currentPoint});
+        points.push({ ...currentPoint });
       }
-      
+
       return points;
     }
 
@@ -99,15 +105,22 @@ export const DataFlowAnimation = () => {
       const flowEnd = Math.min(totalLength, flowStart + flowLength);
 
       segments.forEach(({ start, end, length }, i) => {
-        const segmentStart = segments.slice(0, i).reduce((sum, s) => sum + s.length, 0);
+        const segmentStart = segments
+          .slice(0, i)
+          .reduce((sum, s) => sum + s.length, 0);
         const segmentEnd = segmentStart + length;
 
         if (flowEnd >= segmentStart && flowStart <= segmentEnd) {
-          const gradient = ctx.createLinearGradient(start.x, start.y, end.x, end.y);
-          gradient.addColorStop(0, 'rgba(28, 56, 54, 0)');
+          const gradient = ctx.createLinearGradient(
+            start.x,
+            start.y,
+            end.x,
+            end.y,
+          );
+          gradient.addColorStop(0, "rgba(28, 56, 54, 0)");
           gradient.addColorStop(0.3, `rgba(28, 56, 54, ${alpha})`);
           gradient.addColorStop(0.7, `rgba(28, 56, 54, ${alpha})`);
-          gradient.addColorStop(1, 'rgba(28, 56, 54, 0)');
+          gradient.addColorStop(1, "rgba(28, 56, 54, 0)");
 
           ctx.strokeStyle = gradient;
           ctx.lineWidth = 2;
@@ -127,10 +140,10 @@ export const DataFlowAnimation = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Update and draw paths
-      paths.forEach(path => {
+      paths.forEach((path) => {
         path.progress += deltaTime * 0.2; // Adjust speed here
         drawFlowingPath(ctx, path);
-        
+
         // Reset path when it reaches the end
         if (path.progress >= 1) {
           path.points = generatePathAcrossGrid();
@@ -157,10 +170,5 @@ export const DataFlowAnimation = () => {
     };
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 h-3/5 w-full"
-    />
-  );
-}; 
+  return <canvas ref={canvasRef} className="absolute inset-0 h-3/5 w-full" />;
+};

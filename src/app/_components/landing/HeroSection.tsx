@@ -6,14 +6,18 @@ export function HeroSection() {
       <div className="relative -top-20 flex flex-col items-start justify-center gap-6 px-4 pb-6 pt-20 sm:px-10 sm:pb-10 sm:pt-40 lg:flex-row">
         {/* Left Column - Glass morphic elements */}
         <div className="flex w-full flex-col gap-6 lg:w-1/2">
-          <div className="group relative flex animate-slide-in flex-col 
+          <div
+            className="group relative flex animate-slide-in flex-col 
               items-center gap-4 overflow-hidden rounded-lg border border-gray-300 bg-gray-200
               p-4 shadow-lg backdrop-blur-sm transition-all duration-300 
-              hover:border-mf-green/50 hover:shadow-xl sm:p-8">
+              hover:border-mf-green/50 hover:shadow-xl sm:p-8"
+          >
             <div className="relative z-10">
               <div className="flex flex-wrap items-center justify-center gap-2 text-center text-2xl font-light text-mf-green sm:gap-4 sm:text-4xl">
                 <span className="font-semibold text-mf-green">The</span>
-                <span className="font-semibold text-mf-green">Decentralized</span>
+                <span className="font-semibold text-mf-green">
+                  Decentralized
+                </span>
                 <span className="font-semibold text-mf-green">AI</span>
                 <span className="font-semibold text-mf-green">Cloud</span>
               </div>
@@ -48,7 +52,15 @@ function StatsCards() {
   );
 }
 
-function StatCard({ title, value, unit }: { title: string; value: string; unit: string }) {
+function StatCard({
+  title,
+  value,
+  unit,
+}: {
+  title: string;
+  value: string;
+  unit: string;
+}) {
   return (
     <div className="relative flex flex-col overflow-hidden rounded-lg border border-gray-300 bg-gray-200 p-4 shadow-lg backdrop-blur-sm sm:p-8">
       <div className="relative z-10 flex h-full flex-col items-center justify-center text-center font-light">
@@ -60,4 +72,4 @@ function StatCard({ title, value, unit }: { title: string; value: string; unit: 
       </div>
     </div>
   );
-} 
+}

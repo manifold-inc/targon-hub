@@ -11,7 +11,7 @@ export function MetricsSection() {
       ([entry]) => {
         setIsVisible(entry?.isIntersecting ?? false);
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (textRef.current) {
@@ -22,7 +22,7 @@ export function MetricsSection() {
   }, []);
 
   return (
-    <div className="py-8 sm:py-16 z-10">
+    <div className="z-10 py-8 sm:py-16">
       <AnimatedTitle textRef={textRef} isVisible={isVisible} />
       <div className="mx-auto grid max-w-screen-xl grid-cols-1 gap-4 px-4 sm:gap-6 sm:px-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
         <MetricCard
@@ -49,7 +49,13 @@ export function MetricsSection() {
   );
 }
 
-function AnimatedTitle({ textRef, isVisible }: { textRef: React.RefObject<HTMLDivElement>, isVisible: boolean }) {
+function AnimatedTitle({
+  textRef,
+  isVisible,
+}: {
+  textRef: React.RefObject<HTMLDivElement>;
+  isVisible: boolean;
+}) {
   return (
     <div ref={textRef} className="text-center">
       {"Generative AI you can rely on".split("").map((char, index) => (
@@ -77,7 +83,13 @@ interface MetricCardProps {
   className?: string;
 }
 
-function MetricCard({ title, value, unit, description, className = "" }: MetricCardProps) {
+function MetricCard({
+  title,
+  value,
+  unit,
+  description,
+  className = "",
+}: MetricCardProps) {
   return (
     <div
       className={`group relative overflow-hidden rounded-lg border border-gray-200 bg-white p-4 shadow-sm 
@@ -93,12 +105,12 @@ function MetricCard({ title, value, unit, description, className = "" }: MetricC
           <span className="text-4xl font-light transition-colors sm:text-5xl lg:text-6xl">
             {value}
           </span>
-            <span className="text-xl font-light transition-colors sm:text-2xl lg:text-3xl">
-              {unit}
-            </span>
+          <span className="text-xl font-light transition-colors sm:text-2xl lg:text-3xl">
+            {unit}
+          </span>
         </div>
         <p className="text-sm text-gray-600 sm:text-base">{description}</p>
       </div>
     </div>
   );
-} 
+}

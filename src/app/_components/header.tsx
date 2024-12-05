@@ -14,8 +14,8 @@ import {
 } from "@headlessui/react";
 import { ChevronDown, MenuIcon, User, XIcon } from "lucide-react";
 
-import { useAuth } from "./providers";
 import SearchBar from "./landing/SearchBar";
+import { useAuth } from "./providers";
 import SettingsModal from "./SettingsModal";
 
 const NAVIGATION = [

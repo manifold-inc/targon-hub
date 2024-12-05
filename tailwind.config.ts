@@ -139,17 +139,21 @@ export default {
     require("@tailwindcss/typography"),
     require("@headlessui/tailwindcss"),
     require("@tailwindcss/forms"),
-    function({ addUtilities }: { addUtilities: (utilities: Record<string, Record<string, string>>) => void }) {
+    function ({
+      addUtilities,
+    }: {
+      addUtilities: (utilities: Record<string, Record<string, string>>) => void;
+    }) {
       addUtilities({
-        '.animation-play-state-paused': {
-          'animation-play-state': 'paused',
+        ".animation-play-state-paused": {
+          "animation-play-state": "paused",
         },
       });
     },
   ],
   variants: {
     extend: {
-      animation: ['hover', 'group-hover'],
+      animation: ["hover", "group-hover"],
     },
   },
 } satisfies Config;

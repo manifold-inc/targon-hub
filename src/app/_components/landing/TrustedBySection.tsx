@@ -75,4 +75,4 @@ function LogoCard({ src, alt, link }: CompanyLogo) {
       </Link>
     </div>
   );
-} 
+}

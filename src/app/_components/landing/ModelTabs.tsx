@@ -1,10 +1,11 @@
 "use client";
 
-import { Tab, TabGroup, TabList } from "@headlessui/react";
-import Link from "next/link";
 import { useState } from "react";
-import { AppCard } from "./AppCard";
+import Link from "next/link";
+import { Tab, TabGroup, TabList } from "@headlessui/react";
+
 import { reactClient } from "@/trpc/react";
+import { AppCard } from "./AppCard";
 
 interface Model {
   id: number;
@@ -27,7 +28,9 @@ export function ModelTabs() {
         "ALL",
         ...new Set(
           models.data
-            .map((model) => model.supportedEndpoints.map((endpoint) => endpoint))
+            .map((model) =>
+              model.supportedEndpoints.map((endpoint) => endpoint),
+            )
             .flat(),
         ),
       ]
@@ -44,7 +47,7 @@ export function ModelTabs() {
     : [];
 
   return (
-    <div className="animate-slide-in-delay flex flex-col gap-4">
+    <div className="flex animate-slide-in-delay flex-col gap-4">
       <TabGroup>
         <TabList className="relative inline-flex w-full items-center justify-start gap-1 overflow-hidden overflow-x-scroll rounded-full border border-[#e4e7ec] bg-white p-1 sm:gap-2 sm:p-2">
           <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
@@ -115,4 +118,4 @@ function ModelGrid({ models }: { models: Model[] }) {
       </div>
     </div>
   );
-} 
+}
