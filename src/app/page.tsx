@@ -2,6 +2,7 @@ import { DataFlowAnimation } from "./_components/landing/DataFlowAnimation";
 import { HeroSection } from "./_components/landing/HeroSection";
 import { MetricsSection } from "./_components/landing/MetricsSection";
 import { ModelTabs } from "./_components/landing/ModelTabs";
+import { ProviderCostChart } from "./_components/landing/ProviderCostChart";
 import { TrustedBySection } from "./_components/landing/TrustedBySection";
 
 export default function Page() {
@@ -21,22 +22,13 @@ export default function Page() {
         <ModelTabs />
         <TrustedBySection />
         <MetricsSection />
+      </div>
 
+      <div className="relative px-4 sm:px-10">
         {/* Content without background */}
         <div className="animate-slide-in-delay">
-          <div className="mx-auto flex flex-col items-center justify-center gap-6 pb-8 text-center">
-            <h1 className="whitespace-no-wrap text-4xl font-semibold leading-tight text-mf-green sm:text-5xl">
-              Permissionlessly Unlock Affordable AI Inference
-            </h1>
-            <p className="max-w-2xl text-base text-mf-green sm:text-lg">
-              Experience the power of AI without the limits. As the{" "}
-              <span className="animate-pulse font-semibold">
-                only place on Bittensor
-              </span>{" "}
-              offering model leasing, we make decentralized, affordable AI truly
-              accessible.
-            </p>
-          </div>
+          {/* provider cost chart */}
+          <ProviderCostChart />
         </div>
       </div>
     </div>

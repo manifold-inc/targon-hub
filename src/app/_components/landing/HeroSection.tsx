@@ -2,12 +2,12 @@ import SearchBar from "./SearchBar";
 
 export function HeroSection() {
   return (
-    <div className="relative">
+    <div className="relative animate-slide-in">
       <div className="relative -top-20 flex flex-col items-start justify-center gap-6 px-4 pb-6 pt-20 sm:px-10 sm:pb-10 sm:pt-40 lg:flex-row">
         {/* Left Column - Glass morphic elements */}
         <div className="flex w-full flex-col gap-6 lg:w-1/2">
           <div
-            className="group relative flex animate-slide-in flex-col 
+            className="group relative flex flex-col 
               items-center gap-4 overflow-hidden rounded-lg border border-gray-300 bg-gray-200
               p-4 shadow-lg backdrop-blur-sm transition-all duration-300 
               hover:border-mf-green/50 hover:shadow-xl sm:p-8"
@@ -41,7 +41,7 @@ export function HeroSection() {
 
 function StatsCards() {
   return (
-    <div className="flex w-full animate-slide-in flex-col items-center">
+    <div className="flex w-full flex-col items-center">
       <div className="flex w-full flex-col items-center">
         <div className="grid w-full grid-cols-1 gap-4 text-center font-mono sm:grid-cols-2">
           <StatCard title="Greater Than" value="400" unit="Tokens/s" />
