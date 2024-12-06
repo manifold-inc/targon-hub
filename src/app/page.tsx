@@ -7,7 +7,7 @@ import { TrustedBySection } from "./_components/landing/TrustedBySection";
 
 export default function Page() {
   return (
-    <div className="relative bg-[#fafafa] pt-4">
+    <div className="relative bg-[#fafafa]">
       {/* Dot pattern container */}
       <div className="absolute -top-20 left-0 right-0 h-2/5">
         <div className="dot-pattern h-full w-full animate-slide-in">
