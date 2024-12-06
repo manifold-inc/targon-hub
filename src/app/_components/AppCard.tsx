@@ -20,7 +20,7 @@ export const AppCard = ({
   enabled,
   supportedEndpoints,
 }: AppCardProps) => {
-  const cost = (cpt * 1_000_000) / CREDIT_PER_DOLLAR
+  const cost = (cpt * 1_000_000) / CREDIT_PER_DOLLAR;
   return (
     <Link
       href={`/models/${encodeURIComponent(name)}`}

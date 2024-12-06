@@ -76,66 +76,68 @@ export default function KeysTab() {
           />
         )}
       </div>
-      <div className='overflow-hidden h-full relative pt-4'>
-      <div className="relative max-h-full overflow-hidden w-full overflow-y-scroll pb-4 text-xs sm:text-sm">
-        <table className="w-full text-xs sm:text-sm border-separate border-spacing-0">
-          <thead>
-            <tr className="sticky top-0 h-8 w-full bg-gray-50">
-              <th className="sticky top-0 px-2 py-1 border-b border-t border-gray-200 text-center font-semibold leading-tight text-[#101828]">
-                Name
-              </th>
-              <th className="sticky top-0 px-2 py-1 border-b border-t border-gray-200 text-center font-semibold leading-tight text-[#101828]">
-                Key
-              </th>
-              <th className="sticky top-0 px-2 py-1 border-b border-t border-gray-200 text-center font-semibold leading-tight text-[#101828]">
-                Created
-              </th>
-              <th className="sticky top-0 px-2 py-1 border-b border-t border-gray-200 text-center font-semibold leading-tight text-[#101828]" />
-            </tr>
-          </thead>
-          <tbody className="w-full whitespace-nowrap">
-            {keys.data?.map((key, index) => (
-              <tr key={index} className="h-8 bg-white">
-                <td className="px-2 py-1 text-center leading-tight text-[#101828]">
-                  {key.name}
-                </td>
-                <td className="px-2 py-1 text-center leading-tight text-[#101828]">
-                  <span className="inline-flex items-center gap-2">
-                    {key.key.slice(0, 3) + "..." + key.key.slice(-3)}
-                    <button
-                      className="cursor-pointer"
-                      onClick={() => handleCopyClipboard(key.key)}
-                    >
-                      <Copy className="h-4 w-4 text-gray-300 hover:text-gray-500" />
-                    </button>
-                  </span>
-                </td>
-                <td className="px-2 py-1 text-center leading-tight text-[#101828]">
-                  {key.createdAt ? formatDate(key.createdAt) : "-"}
-                </td>
-                <td className="px-2 py-1 text-center leading-tight text-[#101828]">
-                  <button
-                    type="button"
-                    disabled={deleteApiKey.isLoading}
-                    onClick={() => deleteApiKey.mutate({ apiKey: key.key })}
-                    className={`group rounded-full p-1.5 transition-colors ${deleteApiKey.isLoading
-                        ? "cursor-not-allowed bg-gray-100"
-                        : "hover:bg-gray-100"
-                      }`}
-                  >
-                    <XCircle
-                      className={`h-6 w-6 ${deleteApiKey.isLoading
-                          ? "text-gray-300"
-                          : "text-gray-300 group-hover:text-red-500"
-                        } transition-colors`}
-                    />
-                  </button>
-                </td>
+      <div className="relative h-full overflow-hidden pt-4">
+        <div className="relative max-h-full w-full overflow-hidden overflow-y-scroll pb-4 text-xs sm:text-sm">
+          <table className="w-full border-separate border-spacing-0 text-xs sm:text-sm">
+            <thead>
+              <tr className="sticky top-0 h-8 w-full bg-gray-50">
+                <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
+                  Name
+                </th>
+                <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
+                  Key
+                </th>
+                <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
+                  Created
+                </th>
+                <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-center font-semibold leading-tight text-[#101828]" />
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody className="w-full whitespace-nowrap">
+              {keys.data?.map((key, index) => (
+                <tr key={index} className="h-8 bg-white">
+                  <td className="px-2 py-1 text-center leading-tight text-[#101828]">
+                    {key.name}
+                  </td>
+                  <td className="px-2 py-1 text-center leading-tight text-[#101828]">
+                    <span className="inline-flex items-center gap-2">
+                      {key.key.slice(0, 3) + "..." + key.key.slice(-3)}
+                      <button
+                        className="cursor-pointer"
+                        onClick={() => handleCopyClipboard(key.key)}
+                      >
+                        <Copy className="h-4 w-4 text-gray-300 hover:text-gray-500" />
+                      </button>
+                    </span>
+                  </td>
+                  <td className="px-2 py-1 text-center leading-tight text-[#101828]">
+                    {key.createdAt ? formatDate(key.createdAt) : "-"}
+                  </td>
+                  <td className="px-2 py-1 text-center leading-tight text-[#101828]">
+                    <button
+                      type="button"
+                      disabled={deleteApiKey.isLoading}
+                      onClick={() => deleteApiKey.mutate({ apiKey: key.key })}
+                      className={`group rounded-full p-1.5 transition-colors ${
+                        deleteApiKey.isLoading
+                          ? "cursor-not-allowed bg-gray-100"
+                          : "hover:bg-gray-100"
+                      }`}
+                    >
+                      <XCircle
+                        className={`h-6 w-6 ${
+                          deleteApiKey.isLoading
+                            ? "text-gray-300"
+                            : "text-gray-300 group-hover:text-red-500"
+                        } transition-colors`}
+                      />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

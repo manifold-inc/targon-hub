@@ -13,7 +13,8 @@ are always encouraged.
 
 Example: `http://1.2.3.4:80`
 
-Fill in `NEXT_PUBLIC_HUB_API_ENDPOINT` to your hub-proxy ip address or url (if DNS is setup)
+Fill in `NEXT_PUBLIC_HUB_API_ENDPOINT` to your hub-proxy ip address or url (if
+DNS is setup)
 
 Example: `http://1.2.3.4:80`
 

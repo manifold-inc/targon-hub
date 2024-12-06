@@ -3,7 +3,7 @@ import animation from "tailwindcss-animated";
 import colors from "tailwindcss/colors";
 
 export default {
-  darkMode: 'class',
+  darkMode: "class",
   content: [
     "./src/**/*.{ts,tsx}",
 

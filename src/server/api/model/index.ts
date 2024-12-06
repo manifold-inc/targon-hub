@@ -407,8 +407,8 @@ export const modelRouter = createTRPCRouter({
         : null,
       immunityEnds: model.enabledDate
         ? new Date(
-          new Date(model.enabledDate).getTime() + 7 * 24 * 60 * 60 * 1000,
-        ).toLocaleDateString()
+            new Date(model.enabledDate).getTime() + 7 * 24 * 60 * 60 * 1000,
+          ).toLocaleDateString()
         : null,
     }));
   }),

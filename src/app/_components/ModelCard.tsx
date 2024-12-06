@@ -2,9 +2,9 @@ import Link from "next/link";
 import { UserRoundIcon } from "lucide-react";
 
 import ModelStatusIndicator from "@/app/_components/ModelStatusIndicator";
+import { CREDIT_PER_DOLLAR } from "@/constants";
 import { type MODALITIES } from "@/schema/schema";
 import { getModelGradient } from "@/utils/utils";
-import { CREDIT_PER_DOLLAR } from "@/constants";
 
 export default function ModelCard({
   name,
@@ -22,7 +22,7 @@ export default function ModelCard({
   const gradient = getModelGradient(name);
 
   const org = name.split("/").at(0) ?? "Unknown";
-  const cost = (cpt * 1_000_000) / CREDIT_PER_DOLLAR
+  const cost = (cpt * 1_000_000) / CREDIT_PER_DOLLAR;
   return (
     <div className="flex min-h-40 animate-slide-in items-center gap-4 bg-white px-4 py-3 sm:gap-10 sm:p-5">
       <div className="hidden h-20 w-28 shrink-0 overflow-hidden rounded-lg sm:h-28 sm:w-40 lg:block">
@@ -59,7 +59,7 @@ export default function ModelCard({
             <div className="h-5 w-px bg-[#e4e7ec]" />
 
             <div className="text-xs leading-tight text-[#667085] sm:text-sm">
-            ${cost} / M Tokens
+              ${cost} / M Tokens
             </div>
             <div className="h-5 w-px bg-[#e4e7ec]" />
             <div className="text-xs leading-tight text-[#667085] sm:text-sm">

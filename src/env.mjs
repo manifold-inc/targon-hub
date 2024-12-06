@@ -11,7 +11,6 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_REDIRECT_URI: z.string(),
 
-
     DATABASE_HOST: z.string(),
     DATABASE_NAME: z.string(),
     DATABASE_USERNAME: z.string(),
@@ -23,6 +22,11 @@ export const env = createEnv({
     STRIPE_ENDPOINT_SECRET: z.string(),
 
     VERCEL_URL: z.string(),
+
+    INFLUX_URL: z.string(),
+    INFLUX_TOKEN: z.string(),
+    INFLUX_ORG: z.string(),
+    INFULX_BUCKET: z.string(),
   },
   client: {
     NEXT_PUBLIC_HUB_API_ENDPOINT: z.string(),
@@ -45,6 +49,10 @@ export const env = createEnv({
     STRIPE_ENDPOINT_SECRET: process.env.STRIPE_ENDPOINT_SECRET,
     NEXT_PUBLIC_HUB_API_ENDPOINT: process.env.NEXT_PUBLIC_HUB_API_ENDPOINT,
     VERCEL_URL: process.env.VERCEL_ENV ?? "http://localhost:3000",
+    INFLUX_URL: process.env.INFLUX_URL,
+    INFLUX_TOKEN: process.env.INFLUX_TOKEN,
+    INFLUX_ORG: process.env.INFLUX_ORG,
+    INFULX_BUCKET: process.env.INFLUX_BUCKET,
   },
 
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,

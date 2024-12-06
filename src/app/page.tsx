@@ -17,25 +17,25 @@ export default function Page() {
 
   const endpoints = models.data
     ? [
-      "ALL",
-      ...new Set(
-        models.data
-          .map((model) =>
-            model.supportedEndpoints.map((endpoint) => endpoint),
-          )
-          .flat(),
-      ),
-    ]
+        "ALL",
+        ...new Set(
+          models.data
+            .map((model) =>
+              model.supportedEndpoints.map((endpoint) => endpoint),
+            )
+            .flat(),
+        ),
+      ]
     : ["ALL"];
 
   const filteredModels = models.data
     ? selectedIndex === 0
       ? models.data // Show all models when "All" is selected
       : models.data.filter((model) =>
-        model.supportedEndpoints
-          .map((e) => e.toLowerCase())
-          .includes(endpoints[selectedIndex]!.toLowerCase()),
-      )
+          model.supportedEndpoints
+            .map((e) => e.toLowerCase())
+            .includes(endpoints[selectedIndex]!.toLowerCase()),
+        )
     : [];
 
   return (
@@ -105,10 +105,11 @@ export default function Page() {
               {endpoints.map((endpoint, index) => (
                 <Tab
                   key={index}
-                  className={`flex h-fit w-32 items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold leading-tight ${selectedIndex === index
+                  className={`flex h-fit w-32 items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold leading-tight ${
+                    selectedIndex === index
                       ? "bg-[#f2f4f7] text-[#475467]"
                       : "text-[#475467] opacity-80 hover:bg-gray-100"
-                    }`}
+                  }`}
                   onClick={() => setSelectedIndex(index)}
                 >
                   {endpoint}

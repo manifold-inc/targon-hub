@@ -15,6 +15,8 @@
     "@fortaine/fetch-event-source": "^3.0.6",
     "@headlessui/react": "^2.1.2",
     "@headlessui/tailwindcss": "^0.2.1",
+    "@influxdata/influxdb-client": "^1.35.0",
+    "@influxdata/influxdb-client-apis": "^1.35.0",
     "@planetscale/database": "^1.19.0",
     "@polkadot/extension-dapp": "^0.56.2",
     "@polkadot/keyring": "^13.1.1",
