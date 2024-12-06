@@ -8,6 +8,7 @@ import { Analytics } from "@vercel/analytics/react";
 import clsx from "clsx";
 import { Toaster } from "sonner";
 
+import { Footer } from "./_components/footer";
 import { Header } from "./_components/header";
 import { WithGlobalProvider } from "./_components/providers";
 
@@ -36,11 +37,12 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="icon" href="/ManifoldMarkTransparentGreenSVG.svg" />
       </head>
-      <body className="h-full">
+      <body className="flex h-full flex-col">
         <Suspense>
           <WithGlobalProvider>
             <Header />
-            <main className="h-full pt-12">{children}</main>
+            <main className="flex-1 pt-12">{children}</main>
+            <Footer />
           </WithGlobalProvider>
           <Toaster richColors />
           <Analytics />

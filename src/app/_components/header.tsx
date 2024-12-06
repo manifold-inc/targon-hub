@@ -14,8 +14,8 @@ import {
 } from "@headlessui/react";
 import { ChevronDown, MenuIcon, User, XIcon } from "lucide-react";
 
+import SearchBar from "./landing/SearchBar";
 import { useAuth } from "./providers";
-import SearchBar from "./SearchBar";
 import SettingsModal from "./SettingsModal";
 
 const NAVIGATION = [
@@ -36,6 +36,7 @@ export const Header = () => {
       | "credits"
       | "activity"
       | "keys") ?? null;
+  const [hasScrolled, setHasScrolled] = useState(false);
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -87,27 +88,25 @@ export const Header = () => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Handle sliding header
+  // Add scroll listener
   useEffect(() => {
-    let prevScrollpos = window.scrollY;
-    const scrollfunc = () => {
-      const currentScrollPos = window.scrollY;
-      if (prevScrollpos > currentScrollPos) {
-        document.getElementById("navbar")!.style.top = "0";
-      } else {
-        document.getElementById("navbar")!.style.top = "-60px";
-      }
-      prevScrollpos = currentScrollPos;
+    const handleScroll = () => {
+      setHasScrolled(window.scrollY > 0);
     };
-    window.addEventListener("scroll", scrollfunc);
-    return () => window.removeEventListener("scroll", scrollfunc);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <header
       id="navbar"
-      className={`fixed top-0 z-10 w-full animate-slide-in transition-[top_.3s] ${
-        pathName !== "/" ? "border-b border-gray-200 bg-white" : ""
+      className={`fixed top-0 z-20 w-full animate-slide-in transition-[top_.3s] ${
+        pathName !== "/"
+          ? "border-b border-gray-200 bg-white"
+          : hasScrolled
+            ? "bg-white/20 backdrop-blur-md backdrop-saturate-150"
+            : "bg-transparent"
       }`}
     >
       <nav className="text-manifold-green flex items-center justify-between p-4">

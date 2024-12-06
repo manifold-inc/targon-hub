@@ -96,6 +96,23 @@ export const modelRouter = createTRPCRouter({
       .where(and(eq(Model.enabled, true)));
     return models.filter((m) => m.supportedEndpoints.includes("CHAT"));
   }),
+  getActiveModels: publicAuthlessProcedure.query(async ({ ctx }) => {
+    const models = await ctx.db
+      .select({
+        name: Model.name,
+        supportedEndpoints: Model.supportedEndpoints,
+        description: Model.description,
+        id: Model.id,
+        requiredGpus: Model.requiredGpus,
+        modality: Model.modality,
+        enabled: Model.enabled,
+        cpt: Model.cpt,
+        createdAt: Model.createdAt,
+      })
+      .from(Model)
+      .where(and(eq(Model.enabled, true)));
+    return models;
+  }),
   getModels: publicAuthlessProcedure
     .input(
       z.object({

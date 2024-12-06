@@ -56,7 +56,7 @@ export default function SearchBar() {
         </div>
         <ComboboxInput
           name="search_input"
-          className="text-md flex h-11 w-full items-center rounded-full border-0 bg-gray-50 pb-2.5 pl-11 pr-8 pt-3 placeholder:text-[#98a1b2] focus:ring-gray-200"
+          className="text-md flex h-11 w-full items-center rounded-full border-gray-200 bg-gray-50 pb-2.5 pl-11 pr-8 pt-3 placeholder:text-[#98a1b2] focus:ring-gray-200"
           placeholder="Search models"
           displayValue={(model: { name: string } | null) => model?.name ?? ""}
           onChange={(event) => setQuery(event.target.value)}
