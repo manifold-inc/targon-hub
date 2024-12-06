@@ -14,7 +14,7 @@ export async function reportErrorToInflux(error: Error) {
   }
   const point = new Point("targon-hub")
     .tag("level", "error")
-    .stringField("error", error)
+    .stringField("msg", error)
     .timestamp(new Date());
 
   writeApi.writePoint(point);
