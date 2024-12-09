@@ -1,41 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
 
+import { CardContent, CTACard } from "@/app/_components/browse/CTACard";
 import { GlobeAnimation } from "@/app/_components/browse/GlobeAnimation";
 import { ClientHubCard } from "@/app/_components/browse/HubCard";
-
-// Common card content structure
-const CardContent = ({
-  title,
-  description,
-  ctaText,
-  isComingSoon,
-}: {
-  title: string;
-  description: string;
-  ctaText: string;
-  isComingSoon?: boolean;
-}) => (
-  <div className="relative flex h-full flex-col">
-    <div className="flex-1">
-      <div className="mb-3 flex items-center justify-between">
-        <h3 className="text-xl font-light text-gray-900">{title}</h3>
-        {isComingSoon && (
-          <span className="rounded-full border border-[#142900] bg-white px-3 py-1 text-xs font-medium text-[#142900]">
-            Coming Soon
-          </span>
-        )}
-      </div>
-      <p className="w-4/5 text-base/relaxed text-gray-600">{description}</p>
-    </div>
-    <div className="mt-4 flex items-center text-sm text-[#142900] transition-colors group-hover:text-mf-green">
-      <span className="font-medium">{ctaText}</span>
-      <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-    </div>
-  </div>
-);
 
 export default function BrowsePage() {
   const models = [
@@ -78,105 +48,293 @@ export default function BrowsePage() {
   ];
 
   return (
-    <div className="relative py-14 sm:py-20">
+    <div className="relative">
       <div className="mx-auto px-6 lg:px-8">
         {/* Header Section */}
-        <div className="relative pb-12">
-          <div className="flex items-start justify-between">
-            <div>
-              <h2 className="text-base/7 font-semibold text-mf-green">
-                Welcome to Targon Hub
-              </h2>
-              <p className="max-w-lg whitespace-nowrap py-2 text-4xl font-semibold italic tracking-tight text-mf-green sm:text-5xl">
-                Your AI Hub For The Future
-              </p>
-            </div>
-            {/* Platform Status moved to header */}
-            <div className="flex items-center gap-2 rounded-full border border-mf-green bg-white/80 px-4 py-2 backdrop-blur-sm">
-              <span className="h-2 w-2 rounded-full bg-green-600"></span>
-              <span className="text-sm font-medium text-mf-green">
-                All Systems Operational
-              </span>
-            </div>
+        <div className="relative space-y-6 sm:space-y-8">
+          <div className="relative overflow-hidden">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-[#142900]/5 to-transparent"
+            />
+            <motion.div
+              initial={{ y: 100, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.8,
+                type: "spring",
+                stiffness: 50,
+                damping: 20,
+              }}
+              className="relative pb-8 pt-16 text-center"
+            >
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                className="inline-block"
+              >
+                <span className="mb-4 inline-block rounded-full bg-[#142900]/5 px-4 py-1.5 text-sm font-medium text-mf-green">
+                  Explore Targon
+                </span>
+              </motion.div>
+              <motion.h2
+                initial={{ y: 20, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className="mx-auto max-w-2xl text-2xl font-semibold text-gray-900 sm:text-3xl md:text-4xl"
+              >
+                An Inside Look at{" "}
+                <span className="italic text-mf-green">Targon's Ecosystem</span>
+              </motion.h2>
+              <motion.p
+                initial={{ y: 20, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                className="mx-auto max-w-xl pt-4 text-base text-gray-600 sm:text-lg"
+              >
+                Discover our comprehensive suite of AI tools and services
+                designed to power the next generation of applications
+              </motion.p>
+            </motion.div>
           </div>
         </div>
 
-        {/* Bento Grid - Now without Network Stats section */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-6 lg:grid-rows-[auto_auto_1fr]">
-          {/* Main Playground CTA */}
-          <div className="relative lg:col-span-6">
-            <Link
-              href="/playground"
-              className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all 
-              duration-300 hover:shadow-lg sm:p-8 lg:rounded-tl-xl"
-            >
-              <div className="absolute inset-0 bg-gradient-to-t from-[#142900]/5 via-transparent to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#142900]/5 via-transparent to-transparent" />
-              <div className="grid grid-cols-1 gap-8 sm:grid-cols-[1fr,200px]">
-                <div className="relative">
-                  <CardContent
-                    title="AI Model Playground"
-                    description="Discover and interact with our large language models through our fast playground. Test capabilities, compare models, and find the perfect fit for your use case."
-                    ctaText="Try Now"
-                  />
+        {/* Main Playground CTA */}
+        <div className="relative w-full animate-slide-in-delay">
+          <Link
+            href="/playground"
+            className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-all duration-300 hover:shadow-lg 
+            sm:p-6 md:p-8 lg:rounded-tl-xl"
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-[#142900]/5 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#142900]/5 via-transparent to-transparent" />
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-[1fr,200px] sm:gap-8">
+              <div className="relative">
+                <CardContent
+                  title="AI Model Playground"
+                  description="Discover and interact with our large language models through our fast playground. Test capabilities, compare models, and find the perfect fit for your use case."
+                  ctaText="Try Now"
+                />
+              </div>
+              <div className="pointer-events-none relative hidden h-full w-full items-center justify-end overflow-visible sm:flex">
+                <div className="absolute -right-2/3 -top-10 aspect-square h-full">
+                  <GlobeAnimation />
                 </div>
-                <div className="pointer-events-none relative flex h-full w-full items-center justify-end overflow-visible">
-                  <div className="absolute -right-2/3 -top-10 aspect-square h-full">
-                    <GlobeAnimation />
+              </div>
+            </div>
+          </Link>
+        </div>
+
+        {/* Secondary CTAs Grid */}
+        <div className="grid animate-slide-in-delay grid-cols-1 gap-6 pt-6 sm:grid-cols-2">
+          <CTACard
+            title="Image Generation"
+            description="Create stunning images with our SOTA text-to-image models. Free and open playground."
+            ctaText="Learn More"
+            href="/roadmap"
+            isComingSoon={true}
+            variant="left"
+          />
+
+          <CTACard
+            title="GPU Compute"
+            description="Access our decentralized network of high-performance GPUs for your AI workloads."
+            ctaText="Learn More"
+            href="/roadmap"
+            isComingSoon={true}
+            variant="right"
+          />
+        </div>
+
+        {/* Section Divider */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="relative py-6 sm:py-8"
+        >
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="absolute inset-0 flex items-center"
+            aria-hidden="true"
+          >
+            <div className="w-full border-t border-gray-200" />
+          </motion.div>
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.5,
+              delay: 0.6,
+              type: "spring",
+              stiffness: 200,
+              damping: 20,
+            }}
+            className="relative flex justify-center"
+          >
+            <span className="bg-white px-4">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-mf-green/5">
+                <div className="h-3 w-3 rounded-full bg-mf-green" />
+              </div>
+            </span>
+          </motion.div>
+        </motion.div>
+
+        {/* Bento Grid */}
+        <div className="py-2">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="grid grid-cols-1 gap-4 lg:grid-cols-6 lg:grid-rows-2"
+          >
+            {/* Text Generation Card */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1, duration: 0.5 }}
+              className="relative lg:col-span-3"
+            >
+              <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem]" />
+              <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)] lg:rounded-tl-[calc(2rem+1px)]">
+                <div className="p-3 sm:p-6">
+                  <h3 className="text-sm/4 font-semibold text-mf-green">
+                    Text Generation
+                  </h3>
+                  <p className="pt-1.5 text-lg font-medium tracking-tight text-gray-900">
+                    State-of-the-art Language Models
+                  </p>
+                  <div className="grid gap-2 pt-3 sm:grid-cols-2 sm:gap-3 sm:pt-4">
+                    {models.map((model, index) => (
+                      <motion.div
+                        key={`${model.provider}-${model.name}`}
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 + index * 0.1, duration: 0.4 }}
+                      >
+                        <ClientHubCard {...model} />
+                      </motion.div>
+                    ))}
                   </div>
                 </div>
               </div>
-            </Link>
-          </div>
+              <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem]" />
+            </motion.div>
 
-          {/* Secondary CTAs */}
-          <div className="relative lg:col-span-3">
-            <Link
-              href="/roadmap"
-              className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all 
-              duration-300 hover:shadow-lg sm:p-8"
+            {/* Model Rankings Card */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="relative lg:col-span-3"
             >
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent" />
-              <CardContent
-                title="Image Generation"
-                description="Create stunning images with our SOTA text-to-image models. Free and open playground."
-                ctaText="Learn More"
-                isComingSoon
-              />
-            </Link>
-          </div>
-
-          <div className="relative lg:col-span-3">
-            <Link
-              href="/roadmap"
-              className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all 
-              duration-300 hover:shadow-lg sm:p-8"
-            >
-              <div className="absolute inset-0 bg-gradient-to-tl from-[#142900]/5 via-transparent to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent" />
-              <CardContent
-                title="GPU Compute"
-                description="Access our decentralized network of high-performance GPUs for your AI workloads."
-                ctaText="Learn More"
-                isComingSoon
-              />
-            </Link>
-          </div>
-
-          {/* Models Grid - Now spans full width */}
-          <div className="relative lg:col-span-6 lg:row-span-2">
-            <div className="absolute inset-px rounded-xl bg-white" />
-            <div className="relative grid gap-4 rounded-xl p-8 sm:grid-cols-2 lg:grid-cols-3">
-              {models.map((model) => (
-                <ClientHubCard
-                  key={`${model.provider}-${model.name}`}
-                  {...model}
+              <div className="absolute inset-px rounded-lg bg-white lg:rounded-tr-[2rem]" />
+              <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-tr-[calc(2rem+1px)]">
+                <img
+                  alt="Model Rankings"
+                  src="/images/rankings.png"
+                  className="h-80 object-cover object-left lg:object-right"
                 />
-              ))}
-            </div>
-            <div className="pointer-events-none absolute inset-px rounded-xl shadow-md ring-1 ring-black/5" />
-          </div>
+                <div className="p-10 pt-4">
+                  <h3 className="text-sm/4 font-semibold text-mf-green">
+                    Model Rankings
+                  </h3>
+                  <p className="pt-1.5 text-lg font-medium tracking-tight text-gray-900">
+                    Performance Benchmarks
+                  </p>
+                  <p className="max-w-lg pt-2 text-sm/6 text-gray-600">
+                    Compare model performance across different tasks and find
+                    the best fit for your needs
+                  </p>
+                </div>
+              </div>
+              <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 lg:rounded-tr-[2rem]" />
+            </motion.div>
+
+            {/* Medium Cards */}
+            {[
+              {
+                title: "GPU Compute",
+                subtitle: "High-Performance Computing",
+                description: "Access our distributed GPU network",
+                image: "/images/gpu-compute.png",
+                href: "/compute",
+                delay: 0.3,
+                roundedClass: "lg:rounded-bl-[2rem]",
+              },
+              {
+                title: "Image Generation",
+                subtitle: "Text to Image Models",
+                description: "Create stunning visuals from text descriptions",
+                image: "/images/image-generation.png",
+                href: "/image-generation",
+                delay: 0.4,
+                roundedClass: "",
+              },
+              {
+                title: "Community",
+                subtitle: "Join the Discussion",
+                description: "Connect with AI enthusiasts",
+                image: "/images/community.png",
+                href: "/community",
+                delay: 0.5,
+                roundedClass: "max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]",
+              },
+            ].map((card) => (
+              <motion.div
+                key={card.title}
+                initial={{ y: 20, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: card.delay, duration: 0.5 }}
+                className="relative lg:col-span-2"
+              >
+                <div
+                  className={`absolute inset-px rounded-lg bg-white ${card.roundedClass}`}
+                />
+                <div
+                  className={`relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] ${card.roundedClass.replace(/\[/g, "[calc(") + "+1px)]"}`}
+                >
+                  <img
+                    alt={card.title}
+                    src={card.image}
+                    className="h-80 object-cover"
+                  />
+                  <div className="p-10 pt-4">
+                    <h3 className="text-sm/4 font-semibold text-mf-green">
+                      {card.title}
+                    </h3>
+                    <p className="pt-1.5 text-lg font-medium tracking-tight text-gray-900">
+                      {card.subtitle}
+                    </p>
+                    <p className="max-w-lg pt-2 text-sm/6 text-gray-600">
+                      {card.description}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  className={`pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 ${card.roundedClass}`}
+                />
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </div>
     </div>

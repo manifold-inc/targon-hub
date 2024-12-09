@@ -21,7 +21,7 @@ export function GlobeComponent({ arcsData }: GlobeProps) {
     if (globeEl.current) {
       const controls = globeEl.current.controls();
       controls.autoRotate = true;
-      controls.autoRotateSpeed = 0.5;
+      controls.autoRotateSpeed = -0.5;
       controls.enableZoom = false;
       controls.enablePan = false;
       controls.enableDamping = true;
