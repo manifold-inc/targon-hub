@@ -35,7 +35,7 @@ export default function Page() {
         <WatchForSuccess />
         <button
           onClick={() => setIsMobileOpen((s) => !s)}
-          className="flex w-full justify-between px-6 py-12"
+          className="flex w-full justify-between px-6 pt-12"
         >
           <div className="text-xl font-medium leading-normal text-[#101828]">
             Filters
