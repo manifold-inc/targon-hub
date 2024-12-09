@@ -19,7 +19,8 @@ import { useAuth } from "./providers";
 import SettingsModal from "./SettingsModal";
 
 const NAVIGATION = [
-  { slug: "/models", title: "Browse" },
+  { slug: "/browse", title: "Browse" },
+  { slug: "/models", title: "Models" },
   { slug: "/models/immunity", title: "Immunity" },
   { slug: "/playground", title: "Playground" },
 ];
