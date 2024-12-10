@@ -2,11 +2,14 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ChevronRight } from "lucide-react";
 
+import { ActionCard } from "@/app/_components/browse/ActionCard";
+import { BentoCard } from "@/app/_components/browse/BentoCard";
 import { CardContent, CTACard } from "@/app/_components/browse/CTACard";
 import { GlobeAnimation } from "@/app/_components/browse/GlobeAnimation";
 import { ClientHubCard } from "@/app/_components/browse/HubCard";
+import { ModelPerformanceChart } from "@/app/_components/browse/ModelPerformanceChart";
+import { RadialRings } from "@/app/_components/browse/RadialRings";
 
 export default function BrowsePage() {
   const models = [
@@ -48,11 +51,32 @@ export default function BrowsePage() {
     },
   ];
 
+  const actionCards = [
+    {
+      label: "Lease",
+      title: "Any AI Model",
+      description:
+        "Power your applications with Targon's AI models with the lowest cost, highest performance, and most flexible leasing options.",
+      href: "/lease",
+      background: <RadialRings position="top-right" />,
+      delay: 0.2,
+    },
+    {
+      label: "Rent",
+      title: "GPU Compute",
+      description:
+        "Access high-performance GPU compute with flexible pricing and instant scalability for any workload.",
+      href: "/roadmap",
+      delay: 0.3,
+      isComingSoon: true,
+    },
+  ];
+
   return (
     <div className="relative">
       <div className="mx-auto px-6 lg:px-8">
         {/* Header Section */}
-        <div className="relative space-y-6 sm:space-y-8">
+        <div className="relative space-y-4 sm:space-y-6">
           <div className="relative overflow-hidden">
             <motion.div
               initial={{ opacity: 0 }}
@@ -92,7 +116,9 @@ export default function BrowsePage() {
                 className="mx-auto max-w-2xl text-2xl font-semibold text-gray-900 sm:text-3xl md:text-4xl"
               >
                 An Inside Look at{" "}
-                <span className="italic text-mf-green">Targon&apos;s Ecosystem</span>
+                <span className="italic text-mf-green">
+                  Targon&apos;s Ecosystem
+                </span>
               </motion.h2>
               <motion.p
                 initial={{ y: 20, opacity: 0 }}
@@ -161,7 +187,7 @@ export default function BrowsePage() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative py-6 sm:py-8"
+          className="relative py-4 sm:py-8"
         >
           <motion.div
             initial={{ scaleX: 0 }}
@@ -195,191 +221,81 @@ export default function BrowsePage() {
         </motion.div>
 
         {/* Bento Grid */}
-        <div className="py-2">
+        <div className="py-4">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.6 }}
             className="grid grid-cols-1 gap-4 lg:grid-cols-6 lg:grid-rows-2"
           >
-            {/* Community Card (top-left) */}
+            {/* Action Cards */}
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ delay: 0.1, duration: 0.5 }}
-              className="relative lg:col-span-3"
+              className="relative h-full lg:col-span-3"
             >
-              <div className="flex h-full flex-col justify-between space-y-4">
-                {/* Lease Model Card */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2, duration: 0.5 }}
-                  className="group relative"
-                >
-                  <Link href="/lease" className="block">
-                    <div className="relative flex flex-col overflow-hidden rounded-2xl bg-gradient-to-br from-[#142900] to-[#1e3b00] p-6 transition-all duration-300 hover:scale-[1.02]">
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                      <div className="relative">
-                        <h3 className="text-sm font-medium text-white/70">
-                          Lease
-                        </h3>
-                        <p className="pt-1.5 text-xl font-semibold tracking-tight text-white">
-                          Your AI Model
-                        </p>
-                        <p className="pt-2 text-sm/6 text-white/80">
-                          Monetize your AI models through our marketplace
-                        </p>
-                        <div className="pt-4 flex items-center text-white/90">
-                          <span className="text-sm">Learn more</span>
-                          <ChevronRight className="ml-2 h-4 w-4" />
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-
-                {/* Rent Compute Card */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3, duration: 0.5 }}
-                  className="group relative"
-                >
-                  <Link href="/compute" className="block">
-                    <div className="relative flex flex-col overflow-hidden rounded-2xl bg-gradient-to-br from-[#142900] to-[#1e3b00] p-6 transition-all duration-300 hover:scale-[1.02]">
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                      <div className="relative">
-                        <h3 className="text-sm font-medium text-white/70">
-                          Rent
-                        </h3>
-                        <p className="pt-1.5 text-xl font-semibold tracking-tight text-white">
-                          GPU Compute
-                        </p>
-                        <p className="pt-2 text-sm/6 text-white/80">
-                          Access high-performance computing on demand
-                        </p>
-                        <div className="pt-4 flex items-center text-white/90">
-                          <span className="text-sm">Learn more</span>
-                          <ChevronRight className="ml-2 h-4 w-4" />
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
+              <div className="flex h-full flex-col gap-4">
+                {actionCards.map((card) => (
+                  <ActionCard key={card.label} {...card} />
+                ))}
               </div>
             </motion.div>
 
-            {/* Model Rankings Card (stays in same position) */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="relative lg:col-span-3"
+            {/* Model Rankings */}
+            <BentoCard
+              title="Model Rankings"
+              subtitle="Performance Metrics"
+              description="Compare token throughput, latency, and costs across our available models with real-time performance data"
+              className="lg:col-span-3"
+              roundedCorners="lg:rounded-tr-[2rem]"
+              delay={0.3}
             >
-              <div className="absolute inset-px rounded-lg bg-white lg:rounded-tr-[2rem]" />
-              <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-tr-[calc(2rem+1px)]">
-                <div className="p-10 pt-4">
-                  <h3 className="text-sm/4 font-semibold text-mf-green">
-                    Model Rankings
-                  </h3>
-                  <p className="pt-1.5 text-lg font-medium tracking-tight text-gray-900">
-                    Performance Benchmarks
-                  </p>
-                  <p className="max-w-lg pt-2 text-sm/6 text-gray-600">
-                    Compare model performance across different tasks and find
-                    the best fit for your needs
-                  </p>
-                </div>
-              </div>
-              <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 lg:rounded-tr-[2rem]" />
-            </motion.div>
+              <ModelPerformanceChart />
+            </BentoCard>
 
-            {/* Text Generation Card (Moved to bottom) */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="relative lg:col-span-2"
+            {/* Text Generation */}
+            <BentoCard
+              title="Text Generation"
+              subtitle="State-of-the-art Language Models"
+              className="lg:col-span-2"
+              roundedCorners="lg:rounded-bl-[2rem]"
+              delay={0.4}
             >
-              <div className="absolute inset-px rounded-lg bg-white lg:rounded-bl-[2rem]" />
-              <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-bl-[calc(2rem+1px)]">
-                <div className="p-6">
-                  <h3 className="text-sm/4 font-semibold text-mf-green">
-                    Text Generation
-                  </h3>
-                  <p className="pt-1.5 text-lg font-medium tracking-tight text-gray-900">
-                    State-of-the-art Language Models
-                  </p>
-                  <div className="grid gap-2 pt-3">
-                    {models.slice(0, 2).map((model, index) => (
-                      <motion.div
-                        key={`${model.provider}-${model.name}`}
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.4 + index * 0.1, duration: 0.4 }}
-                      >
-                        <ClientHubCard {...model} />
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
+              <div className="grid gap-2 pt-3">
+                {models.slice(0, 2).map((model, index) => (
+                  <motion.div
+                    key={`${model.provider}-${model.name}`}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false }}
+                    transition={{ delay: 0.5 + index * 0.1, duration: 0.4 }}
+                  >
+                    <ClientHubCard {...model} />
+                  </motion.div>
+                ))}
               </div>
-              <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 lg:rounded-bl-[2rem]" />
-            </motion.div>
+            </BentoCard>
 
-            {/* GPU Compute Card */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-              className="relative lg:col-span-2"
-            >
-              <div className="absolute inset-px rounded-lg bg-white" />
-              <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
-                <div className="p-10 pt-4">
-                  <h3 className="text-sm/4 font-semibold text-mf-green">GPU Compute</h3>
-                  <p className="pt-1.5 text-lg font-medium tracking-tight text-gray-900">
-                    High-Performance Computing
-                  </p>
-                  <p className="max-w-lg pt-2 text-sm/6 text-gray-600">
-                    Access our distributed GPU network
-                  </p>
-                </div>
-              </div>
-              <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5" />
-            </motion.div>
+            {/* Other Cards */}
+            <BentoCard
+              title="GPU Compute"
+              subtitle="High-Performance Computing"
+              description="Access our distributed GPU network"
+              className="lg:col-span-2"
+              delay={0.5}
+            />
 
-            {/* Image Generation Card */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-              className="relative lg:col-span-2"
-            >
-              <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]" />
-              <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-br-[calc(2rem+1px)]">
-                <div className="p-10 pt-4">
-                  <h3 className="text-sm/4 font-semibold text-mf-green">Image Generation</h3>
-                  <p className="pt-1.5 text-lg font-medium tracking-tight text-gray-900">
-                    Text to Image Models
-                  </p>
-                  <p className="max-w-lg pt-2 text-sm/6 text-gray-600">
-                    Create stunning visuals from text descriptions
-                  </p>
-                </div>
-              </div>
-              <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]" />
-            </motion.div>
+            <BentoCard
+              title="Image Generation"
+              subtitle="Text to Image Models"
+              description="Create stunning visuals from text descriptions"
+              className="lg:col-span-2"
+              roundedCorners="max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]"
+              delay={0.6}
+            />
           </motion.div>
         </div>
       </div>
