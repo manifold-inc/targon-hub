@@ -8,7 +8,12 @@ interface ModelPreviewCardProps {
   description: string;
 }
 
-export const ModelPreviewCard = ({ name, provider, type, description }: ModelPreviewCardProps) => {
+export const ModelPreviewCard = ({
+  name,
+  provider,
+  type,
+  description,
+}: ModelPreviewCardProps) => {
   // Get gradient based on type
   const getGradient = () => {
     switch (type) {

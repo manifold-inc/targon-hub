@@ -20,13 +20,16 @@ export function GlobeComponent({ arcsData }: GlobeProps) {
   useEffect(() => {
     if (globeEl.current) {
       const globe = globeEl.current;
-      
+
       // Set initial position to show more landmass (Europe/Americas)
-      globe.pointOfView({
-        lat: 30,
-        lng: -70,
-        altitude: 2.5
-      }, 0);
+      globe.pointOfView(
+        {
+          lat: 30,
+          lng: -70,
+          altitude: 2.5,
+        },
+        0,
+      );
 
       const controls = globe.controls();
       controls.autoRotate = true;

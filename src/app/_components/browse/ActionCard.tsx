@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 
 interface ActionCardProps {
@@ -12,7 +12,15 @@ interface ActionCardProps {
   background?: React.ReactNode;
 }
 
-export const ActionCard = ({ label, title, description, href, delay = 0, isComingSoon, background }: ActionCardProps) => (
+export const ActionCard = ({
+  label,
+  title,
+  description,
+  href,
+  delay = 0,
+  isComingSoon,
+  background,
+}: ActionCardProps) => (
   <motion.div
     initial={{ y: 20, opacity: 0 }}
     whileInView={{ y: 0, opacity: 1 }}
@@ -21,7 +29,7 @@ export const ActionCard = ({ label, title, description, href, delay = 0, isComin
     className="group relative h-1/2"
   >
     <Link href={href} className="block h-full">
-      <div className="relative flex h-full flex-col overflow-hidden rounded-2xl bg-white p-8 border border-gray-100 shadow ring-1 ring-black/5 hover:shadow-lg transition-all duration-300">
+      <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white p-8 shadow ring-1 ring-black/5 transition-all duration-300 hover:shadow-lg">
         {background}
         <div className="relative z-10 flex h-full flex-col gap-4">
           <div className="flex items-center justify-between">
@@ -29,7 +37,7 @@ export const ActionCard = ({ label, title, description, href, delay = 0, isComin
               {label}
             </span>
             {isComingSoon && (
-              <span className="inline-flex items-center rounded-full bg-[#1C3836]/10 px-3 py-1 text-xs font-medium text-[#1C3836] animate-pulse">
+              <span className="inline-flex animate-pulse items-center rounded-full bg-[#1C3836]/10 px-3 py-1 text-xs font-medium text-[#1C3836]">
                 Coming Soon
               </span>
             )}
@@ -49,4 +57,4 @@ export const ActionCard = ({ label, title, description, href, delay = 0, isComin
       </div>
     </Link>
   </motion.div>
-); 
+);
