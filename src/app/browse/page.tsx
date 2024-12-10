@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ChevronRight } from "lucide-react";
 
 import { CardContent, CTACard } from "@/app/_components/browse/CTACard";
 import { GlobeAnimation } from "@/app/_components/browse/GlobeAnimation";
@@ -91,7 +92,7 @@ export default function BrowsePage() {
                 className="mx-auto max-w-2xl text-2xl font-semibold text-gray-900 sm:text-3xl md:text-4xl"
               >
                 An Inside Look at{" "}
-                <span className="italic text-mf-green">Targon's Ecosystem</span>
+                <span className="italic text-mf-green">Targon&apos;s Ecosystem</span>
               </motion.h2>
               <motion.p
                 initial={{ y: 20, opacity: 0 }}
@@ -202,7 +203,7 @@ export default function BrowsePage() {
             transition={{ duration: 0.6 }}
             className="grid grid-cols-1 gap-4 lg:grid-cols-6 lg:grid-rows-2"
           >
-            {/* Text Generation Card */}
+            {/* Community Card (top-left) */}
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
@@ -210,34 +211,70 @@ export default function BrowsePage() {
               transition={{ delay: 0.1, duration: 0.5 }}
               className="relative lg:col-span-3"
             >
-              <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem]" />
-              <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)] lg:rounded-tl-[calc(2rem+1px)]">
-                <div className="p-3 sm:p-6">
-                  <h3 className="text-sm/4 font-semibold text-mf-green">
-                    Text Generation
-                  </h3>
-                  <p className="pt-1.5 text-lg font-medium tracking-tight text-gray-900">
-                    State-of-the-art Language Models
-                  </p>
-                  <div className="grid gap-2 pt-3 sm:grid-cols-2 sm:gap-3 sm:pt-4">
-                    {models.map((model, index) => (
-                      <motion.div
-                        key={`${model.provider}-${model.name}`}
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 + index * 0.1, duration: 0.4 }}
-                      >
-                        <ClientHubCard {...model} />
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
+              <div className="flex h-full flex-col justify-between space-y-4">
+                {/* Lease Model Card */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                  className="group relative"
+                >
+                  <Link href="/lease" className="block">
+                    <div className="relative flex flex-col overflow-hidden rounded-2xl bg-gradient-to-br from-[#142900] to-[#1e3b00] p-6 transition-all duration-300 hover:scale-[1.02]">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                      <div className="relative">
+                        <h3 className="text-sm font-medium text-white/70">
+                          Lease
+                        </h3>
+                        <p className="pt-1.5 text-xl font-semibold tracking-tight text-white">
+                          Your AI Model
+                        </p>
+                        <p className="pt-2 text-sm/6 text-white/80">
+                          Monetize your AI models through our marketplace
+                        </p>
+                        <div className="pt-4 flex items-center text-white/90">
+                          <span className="text-sm">Learn more</span>
+                          <ChevronRight className="ml-2 h-4 w-4" />
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+
+                {/* Rent Compute Card */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                  className="group relative"
+                >
+                  <Link href="/compute" className="block">
+                    <div className="relative flex flex-col overflow-hidden rounded-2xl bg-gradient-to-br from-[#142900] to-[#1e3b00] p-6 transition-all duration-300 hover:scale-[1.02]">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                      <div className="relative">
+                        <h3 className="text-sm font-medium text-white/70">
+                          Rent
+                        </h3>
+                        <p className="pt-1.5 text-xl font-semibold tracking-tight text-white">
+                          GPU Compute
+                        </p>
+                        <p className="pt-2 text-sm/6 text-white/80">
+                          Access high-performance computing on demand
+                        </p>
+                        <div className="pt-4 flex items-center text-white/90">
+                          <span className="text-sm">Learn more</span>
+                          <ChevronRight className="ml-2 h-4 w-4" />
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
               </div>
-              <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem]" />
             </motion.div>
 
-            {/* Model Rankings Card */}
+            {/* Model Rankings Card (stays in same position) */}
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
@@ -247,11 +284,6 @@ export default function BrowsePage() {
             >
               <div className="absolute inset-px rounded-lg bg-white lg:rounded-tr-[2rem]" />
               <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-tr-[calc(2rem+1px)]">
-                <img
-                  alt="Model Rankings"
-                  src="/images/rankings.png"
-                  className="h-80 object-cover object-left lg:object-right"
-                />
                 <div className="p-10 pt-4">
                   <h3 className="text-sm/4 font-semibold text-mf-green">
                     Model Rankings
@@ -268,72 +300,86 @@ export default function BrowsePage() {
               <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 lg:rounded-tr-[2rem]" />
             </motion.div>
 
-            {/* Medium Cards */}
-            {[
-              {
-                title: "GPU Compute",
-                subtitle: "High-Performance Computing",
-                description: "Access our distributed GPU network",
-                image: "/images/gpu-compute.png",
-                href: "/compute",
-                delay: 0.3,
-                roundedClass: "lg:rounded-bl-[2rem]",
-              },
-              {
-                title: "Image Generation",
-                subtitle: "Text to Image Models",
-                description: "Create stunning visuals from text descriptions",
-                image: "/images/image-generation.png",
-                href: "/image-generation",
-                delay: 0.4,
-                roundedClass: "",
-              },
-              {
-                title: "Community",
-                subtitle: "Join the Discussion",
-                description: "Connect with AI enthusiasts",
-                image: "/images/community.png",
-                href: "/community",
-                delay: 0.5,
-                roundedClass: "max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]",
-              },
-            ].map((card) => (
-              <motion.div
-                key={card.title}
-                initial={{ y: 20, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: card.delay, duration: 0.5 }}
-                className="relative lg:col-span-2"
-              >
-                <div
-                  className={`absolute inset-px rounded-lg bg-white ${card.roundedClass}`}
-                />
-                <div
-                  className={`relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] ${card.roundedClass.replace(/\[/g, "[calc(") + "+1px)]"}`}
-                >
-                  <img
-                    alt={card.title}
-                    src={card.image}
-                    className="h-80 object-cover"
-                  />
-                  <div className="p-10 pt-4">
-                    <h3 className="text-sm/4 font-semibold text-mf-green">
-                      {card.title}
-                    </h3>
-                    <p className="pt-1.5 text-lg font-medium tracking-tight text-gray-900">
-                      {card.subtitle}
-                    </p>
-                    <p className="max-w-lg pt-2 text-sm/6 text-gray-600">
-                      {card.description}
-                    </p>
+            {/* Text Generation Card (Moved to bottom) */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="relative lg:col-span-2"
+            >
+              <div className="absolute inset-px rounded-lg bg-white lg:rounded-bl-[2rem]" />
+              <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-bl-[calc(2rem+1px)]">
+                <div className="p-6">
+                  <h3 className="text-sm/4 font-semibold text-mf-green">
+                    Text Generation
+                  </h3>
+                  <p className="pt-1.5 text-lg font-medium tracking-tight text-gray-900">
+                    State-of-the-art Language Models
+                  </p>
+                  <div className="grid gap-2 pt-3">
+                    {models.slice(0, 2).map((model, index) => (
+                      <motion.div
+                        key={`${model.provider}-${model.name}`}
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.4 + index * 0.1, duration: 0.4 }}
+                      >
+                        <ClientHubCard {...model} />
+                      </motion.div>
+                    ))}
                   </div>
                 </div>
-                <div
-                  className={`pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 ${card.roundedClass}`}
-                />
-              </motion.div>
-            ))}
+              </div>
+              <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 lg:rounded-bl-[2rem]" />
+            </motion.div>
+
+            {/* GPU Compute Card */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              className="relative lg:col-span-2"
+            >
+              <div className="absolute inset-px rounded-lg bg-white" />
+              <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
+                <div className="p-10 pt-4">
+                  <h3 className="text-sm/4 font-semibold text-mf-green">GPU Compute</h3>
+                  <p className="pt-1.5 text-lg font-medium tracking-tight text-gray-900">
+                    High-Performance Computing
+                  </p>
+                  <p className="max-w-lg pt-2 text-sm/6 text-gray-600">
+                    Access our distributed GPU network
+                  </p>
+                </div>
+              </div>
+              <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5" />
+            </motion.div>
+
+            {/* Image Generation Card */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="relative lg:col-span-2"
+            >
+              <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]" />
+              <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-br-[calc(2rem+1px)]">
+                <div className="p-10 pt-4">
+                  <h3 className="text-sm/4 font-semibold text-mf-green">Image Generation</h3>
+                  <p className="pt-1.5 text-lg font-medium tracking-tight text-gray-900">
+                    Text to Image Models
+                  </p>
+                  <p className="max-w-lg pt-2 text-sm/6 text-gray-600">
+                    Create stunning visuals from text descriptions
+                  </p>
+                </div>
+              </div>
+              <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]" />
+            </motion.div>
           </motion.div>
         </div>
       </div>
