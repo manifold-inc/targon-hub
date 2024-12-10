@@ -26,17 +26,19 @@ export const ModelPreviewCard = ({
 
   return (
     <Link href={`/models/${encodeURIComponent(name)}`}>
-      <div className="group relative overflow-hidden rounded-lg border border-gray-100 bg-white p-4 transition-all hover:shadow-md">
-        {/* Background gradient bar */}
-        <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b opacity-50 transition-opacity group-hover:opacity-100">
-          <div className={`h-full w-full bg-gradient-to-b ${getGradient()}`} />
+      <div className="group relative overflow-hidden p-4 transition-all">
+        {/* Background gradient bar - rounded by default, straight on hover */}
+        <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b opacity-50 transition-all group-hover:opacity-100">
+          <div
+            className={`h-full w-full rounded-2xl bg-gradient-to-b transition-all group-hover:rounded-none ${getGradient()}`}
+          />
         </div>
 
         <div className="ml-3 flex flex-col gap-2">
           {/* Header */}
           <div className="flex items-start justify-between">
             <div className="flex flex-col">
-              <h3 className="font-medium text-gray-900 group-hover:text-gray-700">
+              <h3 className="font-medium text-gray-900 transition-colors group-hover:text-gray-700">
                 {name}
               </h3>
               <p className="text-xs text-gray-500">{provider}</p>

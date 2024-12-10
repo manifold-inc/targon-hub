@@ -31,7 +31,7 @@ const locations = [
 export const GpuComputeCard = () => (
   <div className="relative flex h-full w-full flex-col overflow-hidden">
     {/* Map Section - Now visible on all screens */}
-    <div className="xs:h-36 relative h-32 pb-12 sm:h-48 lg:h-56 xl:h-64">
+    <div className="xs:h-36 relative h-32 sm:h-48 lg:h-56 xl:h-64">
       <Image
         src="/Black_on_white_dotted_world_map_vector.jpg"
         alt="World Map"
@@ -110,8 +110,8 @@ export const GpuComputeCard = () => (
 
       {/* Description */}
       <p className="mt-auto text-sm leading-relaxed text-gray-500">
-        Coming Soon: Access high-performance GPU compute with flexible pricing
-        and instant scalability through our distributed network.
+        Access high-performance GPU compute with flexible pricing and instant
+        scalability through our distributed network.
       </p>
     </div>
   </div>

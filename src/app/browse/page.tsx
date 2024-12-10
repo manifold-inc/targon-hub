@@ -265,7 +265,7 @@ export default function BrowsePage() {
               roundedCorners="lg:rounded-bl-[2rem]"
               delay={0.4}
             >
-              <div className="grid gap-2 pt-3">
+              <div className="grid gap-2">
                 {models.slice(0, 3).map((model, index) => (
                   <motion.div
                     key={`${model.provider}-${model.name}`}
@@ -293,11 +293,32 @@ export default function BrowsePage() {
             <BentoCard
               title="Image Generation"
               subtitle="Text to Image Models"
-              description="Create stunning visuals from text descriptions"
-              className="lg:col-span-2"
+              className="relative lg:col-span-2"
               roundedCorners="max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]"
               delay={0.6}
-            />
+            >
+              {/* Coming soon overlay */}
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-xl bg-gray-100/40 backdrop-blur-[2px]">
+                <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                  Coming Soon
+                </span>
+              </div>
+
+              {/* Existing content (greyed out) */}
+              <div className="grid gap-2 opacity-50">
+                {models.slice(3, 6).map((model, index) => (
+                  <motion.div
+                    key={`${model.provider}-${model.name}`}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false }}
+                    transition={{ delay: 0.5 + index * 0.1, duration: 0.4 }}
+                  >
+                    <ModelPreviewCard {...model} />
+                  </motion.div>
+                ))}
+              </div>
+            </BentoCard>
           </motion.div>
         </div>
       </div>
