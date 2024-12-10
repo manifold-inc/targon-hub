@@ -15,4 +15,4 @@ export const DEFAULT_CREDITS = 10000;
 export const COST_PER_GPU = 6_250_000_000n;
 
 // Max amount of models (measuered in gpu slots)
-export const MAX_GPU_SLOTS = 50
+export const MAX_GPU_SLOTS = 50;

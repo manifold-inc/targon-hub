@@ -2,7 +2,11 @@ import { TRPCError } from "@trpc/server";
 import { eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 
-import { COST_PER_GPU, MIN_PURCHASE_IN_DOLLARS, MAX_GPU_SLOTS } from "@/constants";
+import {
+  COST_PER_GPU,
+  MAX_GPU_SLOTS,
+  MIN_PURCHASE_IN_DOLLARS,
+} from "@/constants";
 import { env } from "@/env.mjs";
 import { Model, User } from "@/schema/schema";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
