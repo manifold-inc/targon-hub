@@ -42,6 +42,7 @@
     "lucide-react": "^0.331.0",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.45",
+    "motion": "^11.13.5",
     "nanoid": "^5.0.7",
     "next": "^14.0.0",
     "next-themes": "^0.3.0",
