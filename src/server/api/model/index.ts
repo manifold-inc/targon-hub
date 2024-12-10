@@ -43,33 +43,6 @@ interface HuggingFaceModelInfo {
   };
 }
 
-// Why are we checking these? we only need to check if it has a restrictive license
-//const UNRESTRICTED_LICENSES = [
-//  // Highly permissive - no API key needed
-//  "mit",
-//  "apache-2.0",
-//  "bsd",
-//  "bsd-2-clause",
-//  "bsd-3-clause",
-//  "bsd-3-clause-clear",
-//  "cc0-1.0",
-//  "unlicense",
-//  "bsl-1.0",
-//  "isc",
-//  "zlib",
-//
-//  // Additional open source - should work without API key
-//  "gpl-2.0",
-//  "gpl-3.0",
-//  "lgpl-2.1",
-//  "lgpl-3.0",
-//  "mpl-2.0",
-//  "artistic-2.0",
-//  "eupl-1.1",
-//  "postgresql",
-//  "ncsa",
-//] as const;
-
 const RESTRICTED_ACCESS_LICENSES = [
   // Likely needs API key or authentication
   "openrail",

@@ -2,7 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 
-import { COST_PER_GPU, MIN_PURCHASE_IN_DOLLARS } from "@/constants";
+import { COST_PER_GPU, MIN_PURCHASE_IN_DOLLARS, MAX_GPU_SLOTS } from "@/constants";
 import { env } from "@/env.mjs";
 import { Model, User } from "@/schema/schema";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
@@ -117,7 +117,7 @@ export const creditsRouter = createTRPCRouter({
       );
       const requestedGPU = requiredGPU[0]?.gpu ?? 0;
 
-      if (currentGPUUsage + requestedGPU <= 8) {
+      if (currentGPUUsage + requestedGPU <= MAX_GPU_SLOTS) {
         // we have enough capacity without removal
         await ctx.db
           .update(Model)
@@ -141,7 +141,7 @@ export const creditsRouter = createTRPCRouter({
       }
 
       // need to remove to make room
-      let gpuToRemove = currentGPUUsage + requestedGPU - 8;
+      let gpuToRemove = currentGPUUsage + requestedGPU - MAX_GPU_SLOTS;
       const modelsToDisable = [];
 
       for (const model of eligibleForRemoval) {
