@@ -19,13 +19,24 @@ export function GlobeComponent({ arcsData }: GlobeProps) {
 
   useEffect(() => {
     if (globeEl.current) {
-      const controls = globeEl.current.controls();
+      const globe = globeEl.current;
+      
+      // Set initial position to show more landmass (Europe/Americas)
+      globe.pointOfView({
+        lat: 30,
+        lng: -70,
+        altitude: 2.5
+      }, 0);
+
+      const controls = globe.controls();
       controls.autoRotate = true;
       controls.autoRotateSpeed = -0.5;
       controls.enableZoom = false;
       controls.enablePan = false;
       controls.enableDamping = true;
       controls.dampingFactor = 0.1;
+      controls.minPolarAngle = Math.PI / 3; // Limit vertical rotation to keep land visible
+      controls.maxPolarAngle = Math.PI - Math.PI / 3;
 
       function animate() {
         controls.update();

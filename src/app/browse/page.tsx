@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-import { ActionCard } from "@/app/_components/browse/ActionCard";
-import { BentoCard } from "@/app/_components/browse/BentoCard";
 import { CardContent, CTACard } from "@/app/_components/browse/CTACard";
 import { GlobeAnimation } from "@/app/_components/browse/GlobeAnimation";
 import { ClientHubCard } from "@/app/_components/browse/HubCard";
+import { BentoCard } from "@/app/_components/browse/BentoCard";
+import { ActionCard } from "@/app/_components/browse/ActionCard";
 import { ModelPerformanceChart } from "@/app/_components/browse/ModelPerformanceChart";
 import { RadialRings } from "@/app/_components/browse/RadialRings";
 
@@ -55,21 +55,19 @@ export default function BrowsePage() {
     {
       label: "Lease",
       title: "Any AI Model",
-      description:
-        "Power your applications with Targon's AI models with the lowest cost, highest performance, and most flexible leasing options.",
+      description: "Power your applications with Targon's AI models with the lowest cost, highest performance, and most flexible leasing options.",
       href: "/lease",
       background: <RadialRings position="top-right" />,
-      delay: 0.2,
+      delay: 0.2
     },
     {
       label: "Rent",
       title: "GPU Compute",
-      description:
-        "Access high-performance GPU compute with flexible pricing and instant scalability for any workload.",
+      description: "Access high-performance GPU compute with flexible pricing and instant scalability for any workload.",
       href: "/roadmap",
       delay: 0.3,
-      isComingSoon: true,
-    },
+      isComingSoon: true
+    }
   ];
 
   return (
@@ -116,9 +114,7 @@ export default function BrowsePage() {
                 className="mx-auto max-w-2xl text-2xl font-semibold text-gray-900 sm:text-3xl md:text-4xl"
               >
                 An Inside Look at{" "}
-                <span className="italic text-mf-green">
-                  Targon&apos;s Ecosystem
-                </span>
+                <span className="italic text-mf-green">Targon&apos;s Ecosystem</span>
               </motion.h2>
               <motion.p
                 initial={{ y: 20, opacity: 0 }}
@@ -152,7 +148,7 @@ export default function BrowsePage() {
                 />
               </div>
               <div className="pointer-events-none relative hidden h-full w-full items-center justify-end overflow-visible sm:flex">
-                <div className="absolute -right-2/3 -top-10 aspect-square h-full">
+                <div className="absolute -right-2/3 -top-10 aspect-square h-full ">
                   <GlobeAnimation />
                 </div>
               </div>
@@ -235,7 +231,7 @@ export default function BrowsePage() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: false }}
               transition={{ delay: 0.1, duration: 0.5 }}
-              className="relative h-full lg:col-span-3"
+              className="relative lg:col-span-3 h-full"
             >
               <div className="flex h-full flex-col gap-4">
                 {actionCards.map((card) => (
