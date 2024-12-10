@@ -5,11 +5,11 @@ import { motion } from "framer-motion";
 
 import { CardContent, CTACard } from "@/app/_components/browse/CTACard";
 import { GlobeAnimation } from "@/app/_components/browse/GlobeAnimation";
-import { ClientHubCard } from "@/app/_components/browse/HubCard";
 import { BentoCard } from "@/app/_components/browse/BentoCard";
 import { ActionCard } from "@/app/_components/browse/ActionCard";
 import { ModelPerformanceChart } from "@/app/_components/browse/ModelPerformanceChart";
 import { RadialRings } from "@/app/_components/browse/RadialRings";
+import { ModelPreviewCard } from "@/app/_components/browse/ModelPreviewCard";
 
 export default function BrowsePage() {
   const models = [
@@ -26,15 +26,15 @@ export default function BrowsePage() {
       description: "Efficient and powerful language model",
     },
     {
-      name: "Flux Schnell Text to Image",
+      name: "Completions Example",
       provider: "black-forest-labs",
-      type: "text-to-image" as const,
+      type: "completions" as const,
       description: "Fast and high-quality image generation",
     },
     {
       name: "Proteus Text to Image",
       provider: "dataautopilot3",
-      type: "text-to-image" as const,
+      type: "completions" as const,
       description: "Advanced image generation model",
     },
     {
@@ -255,13 +255,13 @@ export default function BrowsePage() {
             {/* Text Generation */}
             <BentoCard
               title="Text Generation"
-              subtitle="State-of-the-art Language Models"
+              subtitle="SOTA Large Language Models"
               className="lg:col-span-2"
               roundedCorners="lg:rounded-bl-[2rem]"
               delay={0.4}
             >
               <div className="grid gap-2 pt-3">
-                {models.slice(0, 2).map((model, index) => (
+                {models.slice(0, 3).map((model, index) => (
                   <motion.div
                     key={`${model.provider}-${model.name}`}
                     initial={{ opacity: 0, y: 10 }}
@@ -269,7 +269,7 @@ export default function BrowsePage() {
                     viewport={{ once: false }}
                     transition={{ delay: 0.5 + index * 0.1, duration: 0.4 }}
                   >
-                    <ClientHubCard {...model} />
+                    <ModelPreviewCard {...model} />
                   </motion.div>
                 ))}
               </div>
