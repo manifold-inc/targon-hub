@@ -7,7 +7,7 @@ export async function GET(): Promise<Response> {
   const [total_today] = await db
     .select({ total: count(Request.id) })
     .from(Request)
-    .where(gte(Request.createdAt, sql`CURRENT_DATE()`));
+    .where(gte(Request.createdAt, sql`CURRENT_DATE() + INTERVAL 9 HOUR`));
   const [total_hour] = await db
     .select({ total: count(Request.id) })
     .from(Request)
