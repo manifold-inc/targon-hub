@@ -1,10 +1,10 @@
 import { TRPCError } from "@trpc/server";
-import { and, asc, count, eq, gte, inArray, like, or, sql } from "drizzle-orm";
+import { and, asc, count, eq, gte, inArray, like, or, sql, desc } from "drizzle-orm";
 import moment from "moment";
 import { z } from "zod";
 
 import { env } from "@/env.mjs";
-import { MODALITIES, Model, Request } from "@/schema/schema";
+import { DailyModelTokenCounts, MODALITIES, Model, Request } from "@/schema/schema";
 import { createTRPCRouter, publicAuthlessProcedure } from "../trpc";
 
 const Modality = ["text-generation", "text-to-image"] as const;
@@ -428,5 +428,21 @@ export const modelRouter = createTRPCRouter({
           ).toLocaleDateString()
         : null,
     }));
+  }),
+  getDailyModelTokenCounts: publicAuthlessProcedure.query(async ({ ctx }) => {
+    const tokenCounts = await ctx.db
+      .select({
+        modelName: DailyModelTokenCounts.modelName,
+        totalTokens: DailyModelTokenCounts.totalTokens,
+        createdAt: DailyModelTokenCounts.createdAt,
+        requiredGpus: Model.requiredGpus,
+        cpt: Model.cpt,
+      })
+      .from(DailyModelTokenCounts)
+      .leftJoin(Model, eq(DailyModelTokenCounts.modelName, Model.name))
+      .where(gte(DailyModelTokenCounts.createdAt, sql`NOW() - INTERVAL 8 DAY`))
+      .orderBy(desc(DailyModelTokenCounts.createdAt))
+
+    return tokenCounts;
   }),
 });

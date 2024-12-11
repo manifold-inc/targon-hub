@@ -73,7 +73,6 @@ for chunk in response:
         print(chunk.choices[0].text, end="")`;
 
   const cost = (data.cpt * 1_000_000) / CREDIT_PER_DOLLAR;
-  console.log(usage);
   return (
     <div className="relative flex">
       <div className="fixed right-20 top-32 hidden lg:block">
