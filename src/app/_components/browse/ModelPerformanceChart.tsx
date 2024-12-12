@@ -195,7 +195,7 @@ export const ModelPerformanceChart = () => {
                     onClick={() => setSelectedModel(model.modelName)}
                   >
                     <div className="flex items-center justify-between whitespace-nowrap pb-1.5 text-xs sm:text-sm">
-                      <span className="font-medium text-gray-900 group-hover:text-gray-700">
+                      <span className="font-medium text-gray-900 group-hover:text-gray-700 truncate w-1/2 inline-block">
                         {formatModelName(model.modelName)}
                       </span>
                       <span
@@ -208,6 +208,7 @@ export const ModelPerformanceChart = () => {
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{
+                          
                           width: `${getBarWidth(model.totalTokens, maxTokens)}%`,
                         }}
                         transition={{
@@ -252,7 +253,7 @@ export const ModelPerformanceChart = () => {
                   <div
                     className={`text-xs ${getColorTheme(models.findIndex((m) => m.modelName === selectedModel)).text}`}
                   >
-                    Total Tokens
+                    Total Tokens in Last 7 Days
                   </div>
                   <div className="pt-0.5 text-sm font-semibold text-gray-900 sm:pt-1 sm:text-base">
                     {formatTokenCount(
@@ -268,12 +269,12 @@ export const ModelPerformanceChart = () => {
                   <div
                     className={`text-xs ${getColorTheme(models.findIndex((m) => m.modelName === selectedModel)).text}`}
                   >
-                    GPUs Required
+                    AVG TPS
                   </div>
                   <div className="pt-0.5 text-sm font-semibold text-gray-900 sm:pt-1 sm:text-base">
                     {models.find((m) => m.modelName === selectedModel)
                       ?.requiredGpus ?? 0}{" "}
-                    GPUs
+                    TPS
                   </div>
                 </div>
                 <div
@@ -298,7 +299,7 @@ export const ModelPerformanceChart = () => {
               {/* Daily Performance Chart */}
               <div className="flex-1 pt-2">
                 <div className="py-2 text-xs font-medium text-gray-600">
-                  Last 7 Days
+                  Usage Over Last 7 Days
                 </div>
                 {/* Use grid to ensure perfect alignment */}
                 <div className="grid grid-cols-7 gap-0">
@@ -405,7 +406,7 @@ export const ModelPerformanceChart = () => {
       {/* Model Filter Pills */}
       <div className="absolute -bottom-4 left-0 right-0 border-t border-gray-100 bg-white sm:-bottom-6">
         <div className="p-3 sm:p-4">
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-1.5 items-center justify-center">
             {models.map(
               (model, index) =>
                 model.modelName !== selectedModel && (
