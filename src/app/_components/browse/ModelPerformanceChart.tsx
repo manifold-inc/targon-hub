@@ -4,16 +4,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CREDIT_PER_DOLLAR } from "@/constants";
 import { reactClient } from "@/trpc/react";
 
-// Update types to match API response
-type ModelStats = {
-  modelName: string;
-  totalTokens: number;
-  dailyTokens: number[];
-  createdAt: Date;
-  requiredGpus: number;
-  cpt: number;
-};
-
 // Keep modelThemes type but make it more flexible
 type ModelTheme = {
   from: string;
@@ -118,8 +108,18 @@ const getBarWidth = (tokens: number, maxTokens: number) => {
   return Math.max(MIN_WIDTH, scaledWidth);
 };
 
+// Helper function to format date consistently in UTC
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC", // Force UTC timezone
+  });
+};
+
 export const ModelPerformanceChart = () => {
-  const [selectedModel, setSelectedModel] = useState<ModelStats | null>(null);
+  const [selectedModel, setSelectedModel] = useState<string | null>(null);
   const [hoverData, setHoverData] = useState<HoverData>(null);
 
   const { data: modelData, isLoading } =
@@ -129,52 +129,41 @@ export const ModelPerformanceChart = () => {
     return <div>Loading...</div>;
   }
 
-  // Group data by model name to get daily breakdown
-  const modelBreakdown = modelData.reduce(
-    (acc, curr) => {
-      if (!acc[curr.modelName]) {
-        // Initialize model data with empty dailyTokens array for 7 days
-        acc[curr.modelName] = {
-          modelName: curr.modelName,
-          totalTokens: 0, // We'll calculate this after aggregating
-          requiredGpus: curr.requiredGpus ?? 0,
-          dailyTokens: Array<number>(7).fill(0), // Initialize with zeros
-          createdAt: curr.createdAt,
-          cpt: curr.cpt ?? 0,
-        };
-      }
-
-      // Calculate day index (0-6) from newest to oldest
-      const today = new Date();
-      const dayDiff = Math.floor(
-        (today.getTime() - new Date(curr.createdAt).getTime()) /
-          (1000 * 60 * 60 * 24),
+  // Get unique models and their info
+  const models = Object.entries(modelData.modelTotals)
+    .map(([modelName, totalTokens]) => {
+      const modelInfo = modelData.dailyStats.find(
+        (stat) => stat.modelName === modelName,
       );
-      const dayIndex = Math.min(6, dayDiff); // Ensure index is within 0-6
+      return {
+        modelName,
+        totalTokens,
+        requiredGpus: modelInfo?.requiredGpus ?? 0,
+        cpt: modelInfo?.cpt ?? 0,
+      };
+    })
+    // Sort by total tokens to maintain consistent ordering/coloring
+    .sort((a, b) => b.totalTokens - a.totalTokens);
 
-      // Add tokens to the correct day
-      if (dayIndex >= 0 && dayIndex < 7) {
-        acc[curr.modelName]!.dailyTokens[6 - dayIndex] = curr.totalTokens;
-      }
+  // Get daily stats for selected model if any
+  const selectedModelStats = selectedModel
+    ? modelData.dailyStats
+        .filter((stat) => stat.modelName === selectedModel)
+        .sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+        )
+    : [];
 
-      return acc;
-    },
-    {} as Record<string, ModelStats>,
-  );
-
-  // Calculate total tokens for each model (use the most recent day's count)
-  Object.values(modelBreakdown).forEach((model) => {
-    model.totalTokens = model.dailyTokens[model.dailyTokens.length - 1] || 0;
-  });
-
-  const models = Object.values(modelBreakdown);
-
-  // Calculate max tokens across all days for proper scaling
-  const maxTokens = Math.max(...models.flatMap((model) => model.dailyTokens));
+  // Calculate max tokens for proper scaling
+  const maxTokens = Math.max(...models.map((m) => m.totalTokens));
 
   const cost = (cpt: number) => {
     return (cpt * 1_000_000) / CREDIT_PER_DOLLAR;
   };
+
+  // Get the date range (Dec 5th - Dec 11th)
+  const endDate = new Date("2024-12-11T00:00:00.000Z");
 
   return (
     <div className="relative flex h-96 flex-col">
@@ -182,7 +171,7 @@ export const ModelPerformanceChart = () => {
       <div className="flex-1 py-2 sm:py-3">
         <AnimatePresence mode="wait">
           {!selectedModel ? (
-            // Overview List - show latest token count for each model
+            // Overview List - show total token count for each model
             <motion.div
               key="overview"
               initial={{ opacity: 0 }}
@@ -203,7 +192,7 @@ export const ModelPerformanceChart = () => {
                       ease: "easeOut",
                     }}
                     className="group cursor-pointer"
-                    onClick={() => setSelectedModel(model)}
+                    onClick={() => setSelectedModel(model.modelName)}
                   >
                     <div className="flex items-center justify-between whitespace-nowrap pb-1.5 text-xs sm:text-sm">
                       <span className="font-medium text-gray-900 group-hover:text-gray-700">
@@ -212,20 +201,14 @@ export const ModelPerformanceChart = () => {
                       <span
                         className={`${getColorTheme(index).text} font-medium`}
                       >
-                        {formatTokenCount(
-                          model.dailyTokens.reduce((a, b) => a + b, 0),
-                        )}{" "}
-                        tokens
+                        {formatTokenCount(model.totalTokens)} tokens
                       </span>
                     </div>
                     <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-gray-100/80">
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{
-                          width: `${getBarWidth(
-                            model.dailyTokens.reduce((a, b) => a + b, 0),
-                            maxTokens,
-                          )}%`,
+                          width: `${getBarWidth(model.totalTokens, maxTokens)}%`,
                         }}
                         transition={{
                           delay: index * 0.05 + 0.1,
@@ -240,7 +223,7 @@ export const ModelPerformanceChart = () => {
               </div>
             </motion.div>
           ) : (
-            // Detailed Stats - show daily breakdown
+            // Detailed Stats - show daily breakdown for selected model
             <motion.div
               key="details"
               initial={{ opacity: 0 }}
@@ -253,10 +236,10 @@ export const ModelPerformanceChart = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">
-                    {formatModelName(selectedModel.modelName)}
+                    {formatModelName(selectedModel)}
                   </h3>
                   <p className="text-sm text-gray-500">
-                    by {selectedModel.modelName.split("/")[0]}
+                    by {selectedModel.split("/")[0]}
                   </p>
                 </div>
               </div>
@@ -264,42 +247,50 @@ export const ModelPerformanceChart = () => {
               {/* Model Stats Grid */}
               <div className="grid grid-cols-3 gap-1.5 pt-2 sm:gap-3">
                 <div
-                  className={`rounded-lg bg-gradient-to-br ${getColorTheme(models.findIndex((m) => m.modelName === selectedModel.modelName)).stats} p-2 sm:p-3`}
+                  className={`rounded-lg bg-gradient-to-br ${getColorTheme(models.findIndex((m) => m.modelName === selectedModel)).stats} p-2 sm:p-3`}
                 >
                   <div
-                    className={`text-xs ${getColorTheme(models.findIndex((m) => m.modelName === selectedModel.modelName)).text}`}
+                    className={`text-xs ${getColorTheme(models.findIndex((m) => m.modelName === selectedModel)).text}`}
                   >
                     Total Tokens
                   </div>
                   <div className="pt-0.5 text-sm font-semibold text-gray-900 sm:pt-1 sm:text-base">
                     {formatTokenCount(
-                      selectedModel.dailyTokens.reduce((a, b) => a + b, 0),
+                      models.find((m) => m.modelName === selectedModel)
+                        ?.totalTokens ?? 0,
                     )}{" "}
                     tokens
                   </div>
                 </div>
                 <div
-                  className={`rounded-lg bg-gradient-to-br ${getColorTheme(models.findIndex((m) => m.modelName === selectedModel.modelName)).stats} p-2 sm:p-3`}
+                  className={`rounded-lg bg-gradient-to-br ${getColorTheme(models.findIndex((m) => m.modelName === selectedModel)).stats} p-2 sm:p-3`}
                 >
                   <div
-                    className={`text-xs ${getColorTheme(models.findIndex((m) => m.modelName === selectedModel.modelName)).text}`}
+                    className={`text-xs ${getColorTheme(models.findIndex((m) => m.modelName === selectedModel)).text}`}
                   >
                     GPUs Required
                   </div>
                   <div className="pt-0.5 text-sm font-semibold text-gray-900 sm:pt-1 sm:text-base">
-                    {selectedModel.requiredGpus} GPUs
+                    {models.find((m) => m.modelName === selectedModel)
+                      ?.requiredGpus ?? 0}{" "}
+                    GPUs
                   </div>
                 </div>
                 <div
-                  className={`rounded-lg bg-gradient-to-br ${getColorTheme(models.findIndex((m) => m.modelName === selectedModel.modelName)).stats} p-2 sm:p-3`}
+                  className={`rounded-lg bg-gradient-to-br ${getColorTheme(models.findIndex((m) => m.modelName === selectedModel)).stats} p-2 sm:p-3`}
                 >
                   <div
-                    className={`text-xs ${getColorTheme(models.findIndex((m) => m.modelName === selectedModel.modelName)).text}`}
+                    className={`text-xs ${getColorTheme(models.findIndex((m) => m.modelName === selectedModel)).text}`}
                   >
                     Cost
                   </div>
                   <div className="pt-0.5 text-sm font-semibold text-gray-900 sm:pt-1 sm:text-base">
-                    ${cost(selectedModel.cpt).toFixed(2)} / M tokens
+                    $
+                    {cost(
+                      models.find((m) => m.modelName === selectedModel)?.cpt ??
+                        0,
+                    ).toFixed(2)}{" "}
+                    / M tokens
                   </div>
                 </div>
               </div>
@@ -309,81 +300,101 @@ export const ModelPerformanceChart = () => {
                 <div className="py-2 text-xs font-medium text-gray-600">
                   Last 7 Days
                 </div>
-                <div className="relative h-28">
-                  {modelBreakdown[selectedModel.modelName]?.dailyTokens.map(
-                    (tokens, i) => {
-                      return (
+                {/* Use grid to ensure perfect alignment */}
+                <div className="grid grid-cols-7 gap-0">
+                  {Array.from({ length: 7 }).map((_, i) => (
+                    <div key={i} className="relative">
+                      {/* Bar container */}
+                      <div className="h-28">
                         <div
-                          key={i}
-                          className="relative"
-                          style={{
-                            position: "absolute",
-                            left: `${i * 14}%`,
-                            width: "12%",
-                            height: "100%",
+                          className="relative h-full w-full"
+                          onMouseEnter={() => {
+                            const stat = selectedModelStats.find(
+                              (s) =>
+                                new Date(s.createdAt).getUTCDate() ===
+                                new Date(
+                                  endDate.getTime() -
+                                    (6 - i) * 24 * 60 * 60 * 1000,
+                                ).getUTCDate(),
+                            );
+                            if (stat) {
+                              setHoverData({
+                                value: stat.totalTokens,
+                                day: formatDate(stat.createdAt.toISOString()),
+                                index: i,
+                              });
+                            }
                           }}
-                          onMouseEnter={() =>
-                            setHoverData({
-                              value: tokens,
-                              day:
-                                modelBreakdown[
-                                  selectedModel.modelName
-                                ]?.createdAt.toLocaleDateString("en-US", {
-                                  month: "short",
-                                  day: "numeric",
-                                }) ?? "",
-                              index: i,
-                            })
-                          }
                           onMouseLeave={() => setHoverData(null)}
                         >
-                          <motion.div
-                            className={`absolute bottom-0 w-full rounded-sm ${
-                              getColorTheme(
-                                models.findIndex(
-                                  (m) =>
-                                    m.modelName === selectedModel.modelName,
-                                ),
-                              ).bar
-                            } transition-opacity ${
-                              hoverData?.index === i
-                                ? "opacity-100"
-                                : "opacity-80"
-                            }`}
-                            initial={{ height: 0 }}
-                            animate={{
-                              height: `${(tokens / selectedModel.dailyTokens.reduce((a, b) => a + b, 0)) * 100}%`,
-                            }}
-                            transition={{ delay: i * 0.1, duration: 0.5 }}
-                          />
+                          {selectedModelStats.find(
+                            (stat) =>
+                              new Date(stat.createdAt).getUTCDate() ===
+                              new Date(
+                                endDate.getTime() -
+                                  (6 - i) * 24 * 60 * 60 * 1000,
+                              ).getUTCDate(),
+                          ) && (
+                            <motion.div
+                              className={`absolute bottom-0 left-1/2 w-[80%] -translate-x-1/2 rounded-sm ${
+                                getColorTheme(
+                                  models.findIndex(
+                                    (m) => m.modelName === selectedModel,
+                                  ),
+                                ).bar
+                              } transition-opacity ${
+                                hoverData?.index === i
+                                  ? "opacity-100"
+                                  : "opacity-80"
+                              }`}
+                              initial={{ height: 0 }}
+                              animate={{
+                                height: `${
+                                  ((selectedModelStats.find(
+                                    (stat) =>
+                                      new Date(stat.createdAt).getUTCDate() ===
+                                      new Date(
+                                        endDate.getTime() -
+                                          (6 - i) * 24 * 60 * 60 * 1000,
+                                      ).getUTCDate(),
+                                  )?.totalTokens ?? 0) /
+                                    (models.find(
+                                      (m) => m.modelName === selectedModel,
+                                    )?.totalTokens ?? 1)) *
+                                  100
+                                }%`,
+                              }}
+                              transition={{ delay: i * 0.1, duration: 0.5 }}
+                            />
+                          )}
                           {hoverData?.index === i && (
-                            <div className="absolute bottom-full mb-1 w-full">
+                            <div className="absolute bottom-20 w-full">
                               <div className="relative left-1/2 flex -translate-x-1/2 items-center justify-center">
-                                <div className="whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white">
-                                  {formatTokenCount(tokens)} tokens
-                                  <div className="absolute left-1/2 top-full -translate-x-1/2 border-4 border-transparent border-t-gray-900" />
+                                <div
+                                  className={`relative flex items-center gap-1.5 whitespace-nowrap rounded-md bg-white px-2.5 py-1.5 text-xs font-medium shadow-lg ring-1 ring-gray-100`}
+                                >
+                                  <span
+                                    className={`${getColorTheme(models.findIndex((m) => m.modelName === selectedModel)).text}`}
+                                  >
+                                    {formatTokenCount(hoverData.value)} tokens
+                                  </span>
+                                  <div className="absolute left-1/2 top-full -translate-x-1/2 -translate-y-[1px] border-[5px] border-transparent border-t-white" />
                                 </div>
                               </div>
                             </div>
                           )}
                         </div>
-                      );
-                    },
-                  )}
-                </div>
-                <div className="flex justify-between pt-2 text-xs text-gray-500">
-                  {Array.from({ length: 7 }).map((_, index) => {
-                    const date = new Date();
-                    date.setDate(date.getDate() - (6 - index));
-                    return (
-                      <div key={index} className="text-center">
-                        {date.toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "numeric",
-                        })}
                       </div>
-                    );
-                  })}
+                      {/* Date label */}
+                      <div className="pt-2 text-center text-xs text-gray-500">
+                        {formatDate(
+                          new Date(
+                            endDate.getTime() - (6 - i) * 24 * 60 * 60 * 1000,
+                          ).toISOString(),
+                        )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </motion.div>
@@ -397,10 +408,10 @@ export const ModelPerformanceChart = () => {
           <div className="flex flex-wrap gap-1.5">
             {models.map(
               (model, index) =>
-                model.modelName !== selectedModel?.modelName && (
+                model.modelName !== selectedModel && (
                   <button
                     key={model.modelName}
-                    onClick={() => setSelectedModel(model)}
+                    onClick={() => setSelectedModel(model.modelName)}
                     className="flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-gray-100/80 px-2 py-1 text-xs font-medium text-gray-600 shadow-sm transition-all hover:bg-gray-100 hover:shadow sm:px-2.5 "
                   >
                     <span
@@ -417,9 +428,7 @@ export const ModelPerformanceChart = () => {
                 onClick={() => setSelectedModel(null)}
                 className={`flex items-center justify-center gap-1 rounded-full px-2 py-1 text-xs font-medium shadow-sm transition-all hover:shadow sm:px-2.5 ${
                   getColorTheme(
-                    models.findIndex(
-                      (m) => m.modelName === selectedModel.modelName,
-                    ),
+                    models.findIndex((m) => m.modelName === selectedModel),
                   ).pill
                 } whitespace-nowrap text-white`}
               >

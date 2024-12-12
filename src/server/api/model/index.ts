@@ -446,7 +446,8 @@ export const modelRouter = createTRPCRouter({
     }));
   }),
   getDailyModelTokenCounts: publicAuthlessProcedure.query(async ({ ctx }) => {
-    const tokenCounts = await ctx.db
+    //  get the daily token counts
+    const dailyTokens = await ctx.db
       .select({
         modelName: DailyModelTokenCounts.modelName,
         totalTokens: DailyModelTokenCounts.totalTokens,
@@ -456,10 +457,34 @@ export const modelRouter = createTRPCRouter({
       })
       .from(DailyModelTokenCounts)
       .leftJoin(Model, eq(DailyModelTokenCounts.modelName, Model.name))
-      .where(gte(DailyModelTokenCounts.createdAt, sql`NOW() - INTERVAL 8 DAY`))
+      .where(
+        gte(DailyModelTokenCounts.createdAt, sql`DATE(NOW()) - INTERVAL 7 DAY`),
+      )
       .orderBy(desc(DailyModelTokenCounts.createdAt));
 
-    return tokenCounts;
+    // Then calculate total tokens per model
+    const modelTotals = await ctx.db
+      .select({
+        modelName: DailyModelTokenCounts.modelName,
+        weeklyTotal: sql<number>`SUM(${DailyModelTokenCounts.totalTokens})`,
+      })
+      .from(DailyModelTokenCounts)
+      .where(
+        gte(DailyModelTokenCounts.createdAt, sql`DATE(NOW()) - INTERVAL 7 DAY`),
+      )
+      .groupBy(DailyModelTokenCounts.modelName);
+
+    // Combine the data
+    return {
+      dailyStats: dailyTokens,
+      modelTotals: modelTotals.reduce(
+        (acc, curr) => {
+          acc[curr.modelName] = curr.weeklyTotal;
+          return acc;
+        },
+        {} as Record<string, number>,
+      ),
+    };
   }),
   getModelPreview: publicAuthlessProcedure.query(async ({ ctx }) => {
     const models = await ctx.db
