@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Globe from "react-globe.gl";
 import type { GlobeMethods } from "react-globe.gl";
+import { MathUtils } from "three";
 
 interface GlobeProps {
   arcsData: Array<{
@@ -18,10 +19,13 @@ export function GlobeComponent({ arcsData }: GlobeProps) {
   const globeEl = useRef<GlobeMethods | undefined>(undefined);
 
   useEffect(() => {
-    if (globeEl.current) {
-      const globe = globeEl.current;
+    if (!globeEl.current) {
+      return;
+    }
+    const globe = globeEl.current;
+    const controls = globe.controls();
 
-      // Set initial position to show more landmass (Europe/Americas)
+      // Initial position
       globe.pointOfView(
         {
           lat: 30,
@@ -31,22 +35,43 @@ export function GlobeComponent({ arcsData }: GlobeProps) {
         0,
       );
 
-      const controls = globe.controls();
+      // Get scene and set initial scale
+      const scene = globe.scene();
+      scene.scale.set(0.001, 0.001, 0.001);
+
+      // Animate scale and rotation
+      const startTime = Date.now();
+      const duration = 1000;
+
+      function animate() {
+        const progress = Math.min(1, (Date.now() - startTime) / duration);
+        const scale = MathUtils.lerp(0.001, 1, progress);
+        const rotation = MathUtils.lerp(Math.PI, 0, progress);
+        
+        scene.scale.set(scale, scale, scale);
+        scene.rotation.y = rotation;
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      }
+      animate();
+
+      // Normal controls setup
       controls.autoRotate = true;
       controls.autoRotateSpeed = -0.5;
       controls.enableZoom = false;
       controls.enablePan = false;
       controls.enableDamping = true;
       controls.dampingFactor = 0.1;
-      controls.minPolarAngle = Math.PI / 3; // Limit vertical rotation to keep land visible
+      controls.minPolarAngle = Math.PI / 3;
       controls.maxPolarAngle = Math.PI - Math.PI / 3;
 
-      function animate() {
+      function controlsAnimate() {
         controls.update();
-        requestAnimationFrame(animate);
+        requestAnimationFrame(controlsAnimate);
       }
-      animate();
-    }
+      controlsAnimate();
   }, []);
 
   return (
@@ -66,6 +91,7 @@ export function GlobeComponent({ arcsData }: GlobeProps) {
         width={400}
         height={400}
         enablePointerInteraction={false}
+        animateIn={false}
       />
     </div>
   );
