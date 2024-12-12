@@ -11,46 +11,12 @@ import { GpuComputeCard } from "@/app/_components/browse/GpuComputeCard";
 import { ModelPerformanceChart } from "@/app/_components/browse/ModelPerformanceChart";
 import { ModelPreviewCard } from "@/app/_components/browse/ModelPreviewCard";
 import { RadialRings } from "@/app/_components/browse/RadialRings";
+import { reactClient } from "@/trpc/react";
 
 export default function BrowsePage() {
-  const models = [
-    {
-      name: "Llama 3.1 70B",
-      provider: "hugging-quants",
-      type: "chat" as const,
-      description: "Latest large language model from Meta AI",
-    },
-    {
-      name: "Llama 3.1 8B",
-      provider: "unsloth",
-      type: "chat" as const,
-      description: "Efficient and powerful language model",
-    },
-    {
-      name: "Completions Example",
-      provider: "black-forest-labs",
-      type: "completions" as const,
-      description: "Fast and high-quality image generation",
-    },
-    {
-      name: "Proteus Text to Image",
-      provider: "dataautopilot3",
-      type: "completions" as const,
-      description: "Advanced image generation model",
-    },
-    {
-      name: "Rogue Rose 103B",
-      provider: "TheBloke",
-      type: "completions" as const,
-      description: "Large language model optimized for completions",
-    },
-    {
-      name: "Llama 3.2 3B",
-      provider: "unsloth",
-      type: "chat" as const,
-      description: "Lightweight and efficient language model",
-    },
-  ];
+  const models = reactClient.model.getModelPreview.useQuery();
+
+  console.log(models.data);
 
   const actionCards = [
     {
@@ -266,15 +232,21 @@ export default function BrowsePage() {
               delay={0.4}
             >
               <div className="grid gap-2">
-                {models.slice(0, 3).map((model, index) => (
+                {models.data?.map((model, index) => (
                   <motion.div
-                    key={`${model.provider}-${model.name}`}
+                    key={`${model.name}`}
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: false }}
                     transition={{ delay: 0.5 + index * 0.1, duration: 0.4 }}
                   >
-                    <ModelPreviewCard {...model} />
+                    <ModelPreviewCard
+                      name={model.name ?? ""}
+                      endpoints={model.endpoints}
+                      description={model.description ?? ""}
+                      modality={model.modality}
+                      cpt={model.cpt}
+                    />
                   </motion.div>
                 ))}
               </div>
@@ -306,7 +278,7 @@ export default function BrowsePage() {
 
               {/* Existing content (greyed out) */}
               <div className="grid gap-2 opacity-50">
-                {models.slice(3, 6).map((model, index) => (
+                {/*models.slice(3, 6).map((model, index) => (
                   <motion.div
                     key={`${model.provider}-${model.name}`}
                     initial={{ opacity: 0, y: 10 }}
@@ -316,7 +288,7 @@ export default function BrowsePage() {
                   >
                     <ModelPreviewCard {...model} />
                   </motion.div>
-                ))}
+                )) */}
               </div>
             </BentoCard>
           </motion.div>

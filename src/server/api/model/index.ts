@@ -1,10 +1,26 @@
 import { TRPCError } from "@trpc/server";
-import { and, asc, count, eq, gte, inArray, like, or, sql, desc } from "drizzle-orm";
+import {
+  and,
+  asc,
+  count,
+  desc,
+  eq,
+  gte,
+  inArray,
+  like,
+  or,
+  sql,
+} from "drizzle-orm";
 import moment from "moment";
 import { z } from "zod";
 
 import { env } from "@/env.mjs";
-import { DailyModelTokenCounts, MODALITIES, Model, Request } from "@/schema/schema";
+import {
+  DailyModelTokenCounts,
+  MODALITIES,
+  Model,
+  Request,
+} from "@/schema/schema";
 import { createTRPCRouter, publicAuthlessProcedure } from "../trpc";
 
 const Modality = ["text-generation", "text-to-image"] as const;
@@ -441,8 +457,34 @@ export const modelRouter = createTRPCRouter({
       .from(DailyModelTokenCounts)
       .leftJoin(Model, eq(DailyModelTokenCounts.modelName, Model.name))
       .where(gte(DailyModelTokenCounts.createdAt, sql`NOW() - INTERVAL 8 DAY`))
-      .orderBy(desc(DailyModelTokenCounts.createdAt))
+      .orderBy(desc(DailyModelTokenCounts.createdAt));
 
     return tokenCounts;
+  }),
+  getModelPreview: publicAuthlessProcedure.query(async ({ ctx }) => {
+    const models = await ctx.db
+      .select({
+        name: Model.name,
+        endpoints: Model.supportedEndpoints,
+        description: Model.description,
+        modality: Model.modality,
+        cpt: Model.cpt,
+        totalTokens: DailyModelTokenCounts.totalTokens,
+      })
+      .from(Model)
+      .leftJoin(
+        DailyModelTokenCounts,
+        eq(Model.name, DailyModelTokenCounts.modelName),
+      )
+      .where(
+        and(
+          eq(Model.enabled, true),
+          gte(DailyModelTokenCounts.createdAt, sql`CURDATE() - INTERVAL 1 DAY`),
+        ),
+      )
+      .orderBy(desc(DailyModelTokenCounts.totalTokens))
+      .limit(3);
+
+    return models;
   }),
 });

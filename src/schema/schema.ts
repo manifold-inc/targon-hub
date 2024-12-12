@@ -170,6 +170,9 @@ export const Model = mysqlTable("model", {
 export const DailyModelTokenCounts = mysqlTable("daily_model_token_counts", {
   id: serial("id").primaryKey(),
   modelName: varchar("model_name", { length: 64 }).notNull(),
-  totalTokens: bigint("total_tokens", { mode: "number", unsigned: true }).notNull(),
+  totalTokens: bigint("total_tokens", {
+    mode: "number",
+    unsigned: true,
+  }).notNull(),
   createdAt: timestamp("created_at", { mode: "date" }).notNull(),
 });
