@@ -278,9 +278,31 @@ export default function BrowsePage() {
 
               {/* Existing content (greyed out) */}
               <div className="grid gap-2 opacity-50">
-                {/*models.slice(3, 6).map((model, index) => (
+                {[
+                  {
+                    name: "RunDiffusion/Juggernaut-XL-v9",
+                    endpoints: ["GENERATION"],
+                    modality: "text-to-image",
+                    description: "High-fidelity XL model optimized for photorealistic images and superior composition. Excels at dynamic scenes and detailed subjects.",
+                    cpt: 25,
+                  },
+                  {
+                    name: "black-forest-labs/FLUX.1-dev",
+                    endpoints: ["GENERATION"],
+                    modality: "text-to-image",
+                    description: "Next-gen image synthesis model with enhanced coherence and style control. Specializes in artistic and creative generations.",
+                    cpt: 20,
+                  },
+                  {
+                    name: "stable-diffusion-v1-5/stable-diffusion-inpainting",
+                    endpoints: ["GENERATION"],
+                    modality: "text-to-image",
+                    description: "Specialized model for image inpainting and editing. Perfect for selective image modifications while maintaining context.",
+                    cpt: 15,
+                  }
+                ].map((model, index) => (
                   <motion.div
-                    key={`${model.provider}-${model.name}`}
+                    key={model.name}
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: false }}
@@ -288,7 +310,7 @@ export default function BrowsePage() {
                   >
                     <ModelPreviewCard {...model} />
                   </motion.div>
-                )) */}
+                ))}
               </div>
             </BentoCard>
           </motion.div>

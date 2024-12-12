@@ -24,6 +24,8 @@ export const ModelPreviewCard = ({
       return "from-[#DADFF7] to-[#A8AFEF]";
     } else if (endpoints.includes("COMPLETION")) {
       return "from-[#F896D8] to-[#CA7DF9]";
+    } else if (endpoints.includes("GENERATION")) {
+      return "from-[#2DD4BF] to-[#0EA5E9]";
     }
   };
 
@@ -43,8 +45,8 @@ export const ModelPreviewCard = ({
           {/* Header */}
           <div className="flex items-start justify-between">
             <div className="flex flex-col">
-              <h3 className="font-medium text-gray-900 transition-colors group-hover:text-gray-700">
-                {name}
+              <h3 className="font-medium text-sm text-gray-900 transition-colors group-hover:text-gray-700">
+                {name?.split("/")[1]}
               </h3>
               <p className="text-xs text-gray-500">{name?.split("/")[0]}</p>
             </div>
