@@ -1,8 +1,9 @@
+import Link from "next/link";
 import SearchBar from "./SearchBar";
 
 export function HeroSection() {
   return (
-    <div className="relative animate-slide-in">
+    <Link className="relative animate-slide-in" href="/browse">
       <div className="relative -top-20 flex flex-col items-start justify-center gap-6 px-4 pb-6 pt-20 sm:px-10 sm:pb-10 sm:pt-40 lg:flex-row">
         {/* Left Column - Glass morphic elements */}
         <div className="flex w-full flex-col gap-6 lg:w-1/2">
@@ -35,7 +36,7 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
