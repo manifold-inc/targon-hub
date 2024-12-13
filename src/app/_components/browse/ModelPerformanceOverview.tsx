@@ -82,9 +82,12 @@ export const ModelPerformanceOverview = ({
     );
   }
 
+  // Filter out models with null or 0 TPS
+  const validModels = models.filter(model => model.avgTPS !== null && model.avgTPS !== 0);
+
   return (
     <div className="flex flex-col space-y-2.5">
-      {models.map((model, index) => (
+      {validModels.map((model, index) => (
         <motion.div
           key={model.modelName}
           initial={{ opacity: 0, x: -10 }}
@@ -102,11 +105,7 @@ export const ModelPerformanceOverview = ({
               {formatModelName(model.modelName)}
             </span>
             <span className={`${getColorTheme(index).text} font-medium`}>
-              {model.avgTPS === null || model.avgTPS === 0 ? (
-                <span className="italic text-gray-400">Not calculated</span>
-              ) : (
-                `${model.avgTPS.toFixed(1)} TPS`
-              )}
+              {`${model.avgTPS.toFixed(1)} TPS`}
             </span>
           </div>
           <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-gray-100/80">
