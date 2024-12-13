@@ -20,7 +20,7 @@ export default function ActivityTab() {
                       Model
                     </th>
                     <th className="px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
-                      Tokens
+                      Response Tokens
                     </th>
                     <th className="px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
                       Cost
@@ -38,11 +38,13 @@ export default function ActivityTab() {
                           ? activity.createdAt.toLocaleDateString()
                           : formatDate(activity.createdAt)}
                       </td>
-                      <td className="px-2 py-1 text-center  leading-tight text-[#101828]">
+                      <td
+                        className="px-2 py-1 text-center leading-tight text-[#101828] max-w-40 truncate"
+                      >
                         {activity.model}
                       </td>
                       <td className="px-2 py-1 text-center leading-tight text-[#101828]">
-                        {activity.tokens}
+                        {activity.responseTokens}
                       </td>
                       <td className="whitespace-nowrap px-2 py-1 text-center leading-tight text-[#101828]">
                         {activity.creditsUsed >= 1_000_000

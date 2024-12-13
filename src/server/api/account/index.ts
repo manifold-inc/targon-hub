@@ -163,8 +163,8 @@ export const accountRouter = createTRPCRouter({
       .select({
         createdAt: Request.createdAt,
         model: Model.name,
-        tokens: Request.tokens,
         creditsUsed: Request.creditsUsed,
+        responseTokens: Request.responseTokens,
       })
       .from(Request)
       .leftJoin(Model, eq(Request.model, Model.id))

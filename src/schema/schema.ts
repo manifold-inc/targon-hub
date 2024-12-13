@@ -56,7 +56,6 @@ export const Request = mysqlTable("request", {
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
   creditsUsed: int("credits_used").notNull().default(0),
-  tokens: int("tokens").notNull().default(0),
   request: json("request").notNull(),
   response: json("response"),
   model: bigint("model_id", {
@@ -72,10 +71,13 @@ export const Request = mysqlTable("request", {
   hotkey: varchar("hotkey", { length: 48 }),
   coldkey: varchar("coldkey", { length: 48 }),
   minerAddress: varchar("miner_address", { length: 48 }),
-  attempt: int("attempt"),
-  metadata: json("metadata"),
   scored: boolean("scored").default(false),
   endpoint: mysqlEnum("endpoint", ENDPOINTS).notNull(),
+  success: boolean("success").notNull().default(false),
+  modelName: varchar("model_name", { length: 64 }),
+  totalTime: int("total_time"),
+  timeToFirstToken: int("time_to_first_token"),
+  responseTokens: int("response_tokens"),
 });
 
 export const ApiKey = mysqlTable("api_key", {
