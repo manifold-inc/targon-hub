@@ -445,47 +445,6 @@ export const modelRouter = createTRPCRouter({
         : null,
     }));
   }),
-  getDailyModelTokenCounts: publicAuthlessProcedure.query(async ({ ctx }) => {
-    //  get the daily token counts
-    const dailyTokens = await ctx.db
-      .select({
-        modelName: DailyModelTokenCounts.modelName,
-        totalTokens: DailyModelTokenCounts.totalTokens,
-        createdAt: DailyModelTokenCounts.createdAt,
-        requiredGpus: Model.requiredGpus,
-        cpt: Model.cpt,
-      })
-      .from(DailyModelTokenCounts)
-      .leftJoin(Model, eq(DailyModelTokenCounts.modelName, Model.name))
-      .where(
-        gte(DailyModelTokenCounts.createdAt, sql`DATE(NOW()) - INTERVAL 7 DAY`),
-      )
-      .orderBy(desc(DailyModelTokenCounts.createdAt));
-
-    // Then calculate total tokens per model
-    const modelTotals = await ctx.db
-      .select({
-        modelName: DailyModelTokenCounts.modelName,
-        weeklyTotal: sql<number>`SUM(${DailyModelTokenCounts.totalTokens})`,
-      })
-      .from(DailyModelTokenCounts)
-      .where(
-        gte(DailyModelTokenCounts.createdAt, sql`DATE(NOW()) - INTERVAL 7 DAY`),
-      )
-      .groupBy(DailyModelTokenCounts.modelName);
-
-    // Combine the data
-    return {
-      dailyStats: dailyTokens,
-      modelTotals: modelTotals.reduce(
-        (acc, curr) => {
-          acc[curr.modelName] = curr.weeklyTotal;
-          return acc;
-        },
-        {} as Record<string, number>,
-      ),
-    };
-  }),
   getModelPreview: publicAuthlessProcedure.query(async ({ ctx }) => {
     const models = await ctx.db
       .select({
@@ -512,4 +471,48 @@ export const modelRouter = createTRPCRouter({
 
     return models;
   }),
+  getTopModelsByTPS: publicAuthlessProcedure.query(async ({ ctx }) => {
+    const topModels = await ctx.db
+      .select({
+        modelName: DailyModelTokenCounts.modelName,
+        avgTPS: DailyModelTokenCounts.avgTPS,
+        requiredGpus: Model.requiredGpus,
+        cpt: Model.cpt,
+      })
+      .from(DailyModelTokenCounts)
+      .leftJoin(Model, eq(DailyModelTokenCounts.modelName, Model.name))
+      .where(
+        gte(DailyModelTokenCounts.createdAt, sql`DATE(NOW()) - INTERVAL 7 DAY`),
+      )
+      .orderBy(
+        desc(DailyModelTokenCounts.avgTPS),
+        desc(DailyModelTokenCounts.createdAt),
+      )
+      .limit(6);
+
+    return topModels;
+  }),
+  getModelDailyStats: publicAuthlessProcedure
+    .input(z.string())
+    .query(async ({ ctx, input }) => {
+      const dailyStats = await ctx.db
+        .select({
+          modelName: DailyModelTokenCounts.modelName,
+          totalTokens: DailyModelTokenCounts.totalTokens,
+          createdAt: DailyModelTokenCounts.createdAt,
+          avgTPS: DailyModelTokenCounts.avgTPS,
+          cpt: Model.cpt,
+        })
+        .from(DailyModelTokenCounts)
+        .leftJoin(Model, eq(DailyModelTokenCounts.modelName, Model.name))
+        .where(
+          and(
+            eq(DailyModelTokenCounts.modelName, input),
+            sql`DATE(${DailyModelTokenCounts.createdAt}) >= DATE(NOW() - INTERVAL 7 DAY)`,
+          ),
+        )
+        .orderBy(asc(DailyModelTokenCounts.createdAt));
+
+      return dailyStats;
+    }),
 });

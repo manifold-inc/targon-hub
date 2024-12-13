@@ -174,5 +174,6 @@ export const DailyModelTokenCounts = mysqlTable("daily_model_token_counts", {
     mode: "number",
     unsigned: true,
   }).notNull(),
+  avgTPS: float("avg_tps").notNull().default(0),
   createdAt: timestamp("created_at", { mode: "date" }).notNull(),
 });

@@ -283,23 +283,26 @@ export default function BrowsePage() {
                     name: "RunDiffusion/Juggernaut-XL-v9",
                     endpoints: ["GENERATION"],
                     modality: "text-to-image",
-                    description: "High-fidelity XL model optimized for photorealistic images and superior composition. Excels at dynamic scenes and detailed subjects.",
+                    description:
+                      "High-fidelity XL model optimized for photorealistic images and superior composition. Excels at dynamic scenes and detailed subjects.",
                     cpt: 25,
                   },
                   {
                     name: "black-forest-labs/FLUX.1-dev",
                     endpoints: ["GENERATION"],
                     modality: "text-to-image",
-                    description: "Next-gen image synthesis model with enhanced coherence and style control. Specializes in artistic and creative generations.",
+                    description:
+                      "Next-gen image synthesis model with enhanced coherence and style control. Specializes in artistic and creative generations.",
                     cpt: 20,
                   },
                   {
                     name: "stable-diffusion-v1-5/stable-diffusion-inpainting",
                     endpoints: ["GENERATION"],
                     modality: "text-to-image",
-                    description: "Specialized model for image inpainting and editing. Perfect for selective image modifications while maintaining context.",
+                    description:
+                      "Specialized model for image inpainting and editing. Perfect for selective image modifications while maintaining context.",
                     cpt: 15,
-                  }
+                  },
                 ].map((model, index) => (
                   <motion.div
                     key={model.name}

@@ -25,53 +25,53 @@ export function GlobeComponent({ arcsData }: GlobeProps) {
     const globe = globeEl.current;
     const controls = globe.controls();
 
-      // Initial position
-      globe.pointOfView(
-        {
-          lat: 30,
-          lng: -70,
-          altitude: 2.5,
-        },
-        0,
-      );
+    // Initial position
+    globe.pointOfView(
+      {
+        lat: 30,
+        lng: -70,
+        altitude: 2.5,
+      },
+      0,
+    );
 
-      // Get scene and set initial scale
-      const scene = globe.scene();
-      scene.scale.set(0.001, 0.001, 0.001);
+    // Get scene and set initial scale
+    const scene = globe.scene();
+    scene.scale.set(0.001, 0.001, 0.001);
 
-      // Animate scale and rotation
-      const startTime = Date.now();
-      const duration = 1000;
+    // Animate scale and rotation
+    const startTime = Date.now();
+    const duration = 1000;
 
-      function animate() {
-        const progress = Math.min(1, (Date.now() - startTime) / duration);
-        const scale = MathUtils.lerp(0.001, 1, progress);
-        const rotation = MathUtils.lerp(Math.PI, 0, progress);
-        
-        scene.scale.set(scale, scale, scale);
-        scene.rotation.y = rotation;
+    function animate() {
+      const progress = Math.min(1, (Date.now() - startTime) / duration);
+      const scale = MathUtils.lerp(0.001, 1, progress);
+      const rotation = MathUtils.lerp(Math.PI, 0, progress);
 
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        }
+      scene.scale.set(scale, scale, scale);
+      scene.rotation.y = rotation;
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
       }
-      animate();
+    }
+    animate();
 
-      // Normal controls setup
-      controls.autoRotate = true;
-      controls.autoRotateSpeed = -0.5;
-      controls.enableZoom = false;
-      controls.enablePan = false;
-      controls.enableDamping = true;
-      controls.dampingFactor = 0.1;
-      controls.minPolarAngle = Math.PI / 3;
-      controls.maxPolarAngle = Math.PI - Math.PI / 3;
+    // Normal controls setup
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = -0.5;
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.1;
+    controls.minPolarAngle = Math.PI / 3;
+    controls.maxPolarAngle = Math.PI - Math.PI / 3;
 
-      function controlsAnimate() {
-        controls.update();
-        requestAnimationFrame(controlsAnimate);
-      }
-      controlsAnimate();
+    function controlsAnimate() {
+      controls.update();
+      requestAnimationFrame(controlsAnimate);
+    }
+    controlsAnimate();
   }, []);
 
   return (
