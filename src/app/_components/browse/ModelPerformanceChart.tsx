@@ -56,7 +56,7 @@ export const ModelPerformanceChart = () => {
                       : getColorTheme(index).pill
                   }`}
                 />
-                <span className="max-w-[100px] truncate">
+                <span className="w-24 truncate">
                   {formatModelName(model.modelName)}
                 </span>
               </button>
