@@ -24,7 +24,7 @@ export default function BrowsePage() {
       title: "Any AI Model",
       description:
         "Power your applications with Targon's AI models with the lowest cost, highest performance, and most flexible leasing options.",
-      href: "/lease",
+      href: "/models/lease",
       background: <RadialRings position="top-right" />,
       delay: 0.2,
     },
