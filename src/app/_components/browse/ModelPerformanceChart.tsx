@@ -38,9 +38,11 @@ export const ModelPerformanceChart = () => {
             {models?.map((model, index) => (
               <button
                 key={model.modelName}
-                onClick={() => setSelectedModel(
-                  model.modelName === selectedModel ? null : model.modelName
-                )}
+                onClick={() =>
+                  setSelectedModel(
+                    model.modelName === selectedModel ? null : model.modelName,
+                  )
+                }
                 className={`flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-2 py-1 text-xs font-medium shadow-sm transition-all hover:shadow sm:px-2.5 ${
                   model.modelName === selectedModel
                     ? `${getColorTheme(index).pill} text-white`
@@ -64,7 +66,8 @@ export const ModelPerformanceChart = () => {
                 onClick={() => setSelectedModel(null)}
                 className={`flex items-center justify-center gap-1 rounded-full px-2 py-1 text-xs font-medium shadow-sm transition-all hover:shadow sm:px-2.5 ${
                   getColorTheme(
-                    models?.findIndex((m) => m.modelName === selectedModel) ?? 0
+                    models?.findIndex((m) => m.modelName === selectedModel) ??
+                      0,
                   ).pill
                 } whitespace-nowrap text-white`}
               >

@@ -45,9 +45,7 @@ export const ActionCard = ({
           <h3 className="text-2xl font-semibold tracking-tight text-[#1C3836]">
             {title}
           </h3>
-          <p className="text-base/relaxed text-[#1C3836]/80">
-            {description}
-          </p>
+          <p className="text-base/relaxed text-[#1C3836]/80">{description}</p>
 
           <div className="pt-auto flex items-center text-[#1C3836]">
             <span className="text-sm font-medium">Learn more</span>

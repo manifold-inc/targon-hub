@@ -83,9 +83,7 @@ export default function BrowsePage() {
                 className="mx-auto max-w-2xl text-2xl font-semibold text-gray-900 sm:text-3xl md:text-4xl"
               >
                 An Inside Look at{" "}
-                <span className="italic text-mf-green">
-                  Targon
-                </span>
+                <span className="italic text-mf-green">Targon</span>
               </motion.h2>
               <motion.p
                 initial={{ y: 20, opacity: 0 }}

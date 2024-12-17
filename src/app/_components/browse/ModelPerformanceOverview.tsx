@@ -83,7 +83,9 @@ export const ModelPerformanceOverview = ({
   }
 
   // Filter out models with null or 0 TPS
-  const validModels = models.filter(model => model.avgTPS !== null && model.avgTPS !== 0);
+  const validModels = models.filter(
+    (model) => model.avgTPS !== null && model.avgTPS !== 0,
+  );
 
   return (
     <div className="flex flex-col space-y-2.5">
