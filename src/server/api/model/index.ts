@@ -475,7 +475,7 @@ export const modelRouter = createTRPCRouter({
     const topModels = await ctx.db
       .select({
         modelName: DailyModelTokenCounts.modelName,
-        avgTPS: DailyModelTokenCounts.avgTPS,
+        avgTPS: sql<number>`MAX(${DailyModelTokenCounts.avgTPS})`.mapWith(Number),
         requiredGpus: Model.requiredGpus,
         cpt: Model.cpt,
       })
@@ -484,10 +484,12 @@ export const modelRouter = createTRPCRouter({
       .where(
         gte(DailyModelTokenCounts.createdAt, sql`DATE(NOW()) - INTERVAL 7 DAY`),
       )
-      .orderBy(
-        desc(DailyModelTokenCounts.avgTPS),
-        desc(DailyModelTokenCounts.createdAt),
+      .groupBy(
+        DailyModelTokenCounts.modelName,
+        Model.requiredGpus,
+        Model.cpt
       )
+      .orderBy(desc(sql`MAX(${DailyModelTokenCounts.avgTPS})`))
       .limit(6);
 
     return topModels;

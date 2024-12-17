@@ -84,7 +84,7 @@ export default function BrowsePage() {
               >
                 An Inside Look at{" "}
                 <span className="italic text-mf-green">
-                  Targon&apos;s Ecosystem
+                  Targon
                 </span>
               </motion.h2>
               <motion.p
@@ -265,8 +265,7 @@ export default function BrowsePage() {
             <BentoCard
               title="Image Generation"
               subtitle="Text to Image Models"
-              className="relative lg:col-span-2"
-              roundedCorners="max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]"
+              className="lg:col-span-2"
               delay={0.6}
             >
               {/* Coming soon overlay */}

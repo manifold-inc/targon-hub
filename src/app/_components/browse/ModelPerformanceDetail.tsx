@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 
 import { CREDIT_PER_DOLLAR } from "@/constants";
 import { reactClient } from "@/trpc/react";
-// Import the color palette and helper functions from ModelPerformanceOverview
 import { formatModelName, getColorTheme } from "./ModelPerformanceOverview";
 
 const formatTokenCount = (tokens: number) => {

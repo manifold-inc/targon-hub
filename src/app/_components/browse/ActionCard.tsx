@@ -42,10 +42,10 @@ export const ActionCard = ({
               </span>
             )}
           </div>
-          <h3 className="pt-4 text-2xl font-semibold tracking-tight text-[#1C3836]">
+          <h3 className="text-2xl font-semibold tracking-tight text-[#1C3836]">
             {title}
           </h3>
-          <p className="pt-3 text-base/relaxed text-[#1C3836]/80">
+          <p className="text-base/relaxed text-[#1C3836]/80">
             {description}
           </p>
 
