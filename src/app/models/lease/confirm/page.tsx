@@ -7,12 +7,30 @@ import { toast } from "sonner";
 
 import { COST_PER_GPU, CREDIT_PER_DOLLAR } from "@/constants";
 import { reactClient } from "@/trpc/react";
-import { formatLargeNumber } from "@/utils/utils";
+
+type SummaryRowProps = {
+  label: string;
+  value: string;
+  highlight?: boolean;
+};
+
+function SummaryRow({ label, value, highlight }: SummaryRowProps) {
+  const textClass = highlight
+    ? "text-sm font-medium text-gray-900"
+    : "text-sm text-gray-600";
+  return (
+    <div className="flex justify-between">
+      <span className={textClass}>{label}</span>
+      <span className={`${textClass} font-medium`}>{value}</span>
+    </div>
+  );
+}
 
 export default function ConfirmPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const model = searchParams.get("model");
+  const immunityWeeks = Number(searchParams.get("immunity") ?? 1);
 
   const user = reactClient.account.getUser.useQuery();
   const dbRequiredGpus = reactClient.model.getRequiredGpus.useQuery(
@@ -21,6 +39,7 @@ export default function ConfirmPage() {
       enabled: !!model,
     },
   );
+
   const enableModelMutation = reactClient.credits.leaseModel.useMutation({
     onSuccess: () => {
       toast.success("Model enabled successfully");
@@ -39,17 +58,20 @@ export default function ConfirmPage() {
   const requiredGPUS = BigInt(dbRequiredGpus.data ?? 0);
   const totalCost = requiredGPUS * COST_PER_GPU;
   const totalCostUSD = Number(totalCost) / CREDIT_PER_DOLLAR;
-  const costPerGPUUSD = Number(COST_PER_GPU) / CREDIT_PER_DOLLAR;
+  const adjustedTotalCostUSD = totalCostUSD;
   const userBalanceUSD = Number(user.data?.credits ?? 0) / CREDIT_PER_DOLLAR;
-  const remainingBalanceUSD = userBalanceUSD - totalCostUSD;
+  const remainingBalanceUSD = userBalanceUSD - adjustedTotalCostUSD;
+  const immunityEndDate = new Date(
+    Date.now() + immunityWeeks * 7 * 24 * 60 * 60 * 1000,
+  );
 
   return (
-    <div className="flex flex-col gap-4 pt-2">
+    <div className="flex flex-col gap-4 py-2">
       <div>
         <h2 className="text-lg font-semibold text-gray-900">
           Step 3: Confirm Lease
         </h2>
-        <p className="mt-1 text-sm text-gray-600">
+        <p className="pt-1 text-sm text-gray-600">
           Review and confirm your model lease
         </p>
       </div>
@@ -62,49 +84,37 @@ export default function ConfirmPage() {
           <p className="text-sm text-gray-500">{model}</p>
         </div>
 
-        <dl className="mt-4 space-y-4">
-          <div className="flex justify-between">
-            <dt className="text-sm text-gray-600">Required GPUs</dt>
-            <dd className="text-sm font-medium text-gray-900">
-              {formatLargeNumber(requiredGPUS)}
-            </dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-sm text-gray-600">Cost per GPU</dt>
-            <dd className="text-sm font-medium text-gray-900">
-              ${costPerGPUUSD.toFixed(2)}
-            </dd>
-          </div>
-          <div className="flex justify-between border-t border-gray-100 pt-4">
-            <dt className="text-sm font-medium text-gray-900">Total Cost</dt>
-            <dd className="text-sm font-medium text-gray-900">
-              ${totalCostUSD.toFixed(2)}
-            </dd>
+        <dl className="space-y-4 pt-4">
+          <SummaryRow label="Required GPUs" value={requiredGPUS.toString()} />
+          <SummaryRow
+            label="Immunity Period"
+            value={immunityEndDate.toLocaleDateString()}
+          />
+          <div className="border-t border-gray-100 pt-4">
+            <SummaryRow
+              label="Total Cost"
+              value={`$${adjustedTotalCostUSD.toFixed(2)}`}
+              highlight
+            />
           </div>
         </dl>
 
-        {user.data && (
-          <div className="mt-4 border-t border-gray-100 pt-4">
-            <div className="flex justify-between">
-              <span className="text-sm text-gray-600">Your Balance</span>
-              <span className="text-sm font-medium text-gray-900">
-                ${userBalanceUSD.toFixed(2)}
-              </span>
-            </div>
-            <div className="mt-2 flex justify-between">
-              <span className="text-sm font-medium text-gray-900">
-                Remaining Balance
-              </span>
-              <span className="text-sm font-medium text-gray-900">
-                ${remainingBalanceUSD.toFixed(2)}
-              </span>
-            </div>
-          </div>
-        )}
+        {/* Balance Section */}
+        <div className="mt-4 space-y-2 border-t border-gray-100 pt-4">
+          <SummaryRow
+            label="Your Balance"
+            value={`$${userBalanceUSD.toFixed(2)}`}
+          />
+          <SummaryRow
+            label="Remaining Balance"
+            value={`$${remainingBalanceUSD.toFixed(2)}`}
+            highlight
+          />
+        </div>
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="flex justify-between">
+      {/* Navigation */}
+      <div className="flex justify-between pb-10">
         <Link
           href={`/models/lease/pricing?model=${encodeURIComponent(model)}`}
           className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50"

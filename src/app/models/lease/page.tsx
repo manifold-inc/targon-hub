@@ -2,10 +2,51 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AlertCircle, FileCode, MailWarning } from "lucide-react";
+import {
+  AlertCircle,
+  FileCode,
+  MailWarning,
+  type LucideIcon,
+} from "lucide-react";
 import { toast } from "sonner";
 
 import { reactClient } from "@/trpc/react";
+
+type InfoSection = {
+  icon: LucideIcon;
+  title: string;
+  items?: readonly string[];
+  description?: string;
+  href?: string;
+};
+
+const INFO_SECTIONS: readonly InfoSection[] = [
+  {
+    icon: FileCode,
+    title: "Compatible Models",
+    items: [
+      "Transformer Models (BERT, GPT)",
+      "Standard Architectures",
+      "Public HuggingFace Models",
+    ],
+  },
+  {
+    icon: AlertCircle,
+    title: "Incompatible Models",
+    items: [
+      "Custom Code Required",
+      "Private/Gated Models",
+      "Missing Configurations",
+    ],
+  },
+  {
+    icon: MailWarning,
+    title: "Contact Support",
+    description:
+      "Having issues with model compatibility? Our support team is here to help.",
+    href: "mailto:devs@manifold.inc",
+  },
+] as const;
 
 export default function ModelPage() {
   const router = useRouter();
@@ -35,6 +76,7 @@ export default function ModelPage() {
 
   return (
     <div className="flex flex-col gap-4 pt-2">
+      {/* Header */}
       <div>
         <h2 className="text-lg font-semibold text-gray-900">
           Step 1: Enter Model Name
@@ -44,6 +86,7 @@ export default function ModelPage() {
         </p>
       </div>
 
+      {/* Model Input */}
       <div>
         <label
           htmlFor="modelUrl"
@@ -53,75 +96,61 @@ export default function ModelPage() {
         </label>
         <div className="pt-2">
           <div className="flex w-full items-center rounded-lg border border-gray-300 bg-white focus-within:border-mf-green focus-within:ring-2 focus-within:ring-mf-green">
-            <span className="flex-shrink-0 pl-4 text-sm text-gray-500">
+            <span
+              className="cursor-text pl-4 text-sm text-gray-500"
+              onClick={() => document.getElementById("modelUrl")?.focus()}
+            >
               https://huggingface.com/
             </span>
             <input
               type="text"
               id="modelUrl"
               value={model}
-              onChange={(e) => {
-                setModel(e.target.value.trim());
-              }}
-              className="w-full border-0 bg-transparent py-2 pl-0 pr-4 text-sm text-gray-900 placeholder:text-gray-700 focus:bg-transparent focus:ring-0"
+              onChange={(e) => setModel(e.target.value.trim())}
+              className="w-full border-0 bg-transparent py-2 pl-0 pr-4 text-sm text-gray-900 placeholder:text-gray-700 focus:ring-0"
               placeholder="NousResearch/Hermes-3-Llama-3.1-8B"
             />
           </div>
         </div>
       </div>
 
-      {/* Info Section */}
+      {/* Info Sections */}
       <div className="flex flex-col gap-4">
-        {/* Compatible Models */}
-        <div className="flex items-start gap-3">
-          <FileCode className="h-5 w-5 flex-shrink-0 pt-1 text-gray-800" />
-          <div>
-            <h3 className="font-medium text-gray-900">Compatible Models</h3>
-            <ul className="space-y-1 pt-2 text-sm text-gray-600">
-              <li>• Transformer Models (BERT, GPT)</li>
-              <li>• Standard Architectures</li>
-              <li>• Public HuggingFace Models</li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Incompatible Models */}
-        <div className="flex items-start gap-3">
-          <AlertCircle className="h-5 w-5 flex-shrink-0 pt-1 text-gray-800" />
-          <div>
-            <h3 className="font-medium text-gray-900">Incompatible Models</h3>
-            <ul className="space-y-1 pt-2 text-sm text-gray-600">
-              <li>• Custom Code Required</li>
-              <li>• Private/Gated Models</li>
-              <li>• Missing Configurations</li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Support Note */}
-        <div className="flex items-start gap-3">
-          <MailWarning className="h-5 w-5 flex-shrink-0 pt-1 text-gray-800" />
-          <div>
-            <a
-              href="mailto:devs@manifold.inc"
-              className="font-medium text-gray-900 hover:underline"
-            >
-              <h3 className="font-medium text-gray-900">Contact Support</h3>
-            </a>
-            <p className="pt-2 text-sm text-gray-600">
-              Having issues with model compatibility? Our support team is here
-              to help.
-            </p>
-          </div>
-        </div>
+        {INFO_SECTIONS.map(
+          ({ icon: Icon, title, items, description, href }) => (
+            <div key={title} className="flex items-start gap-3">
+              <Icon className="h-5 w-5 flex-shrink-0 pt-1 text-gray-800" />
+              <div>
+                {href ? (
+                  <a
+                    href={href}
+                    className="font-medium text-gray-900 hover:underline"
+                  >
+                    <h3 className="font-medium text-gray-900">{title}</h3>
+                  </a>
+                ) : (
+                  <h3 className="font-medium text-gray-900">{title}</h3>
+                )}
+                {items ? (
+                  <ul className="space-y-1 pt-2 text-sm text-gray-600">
+                    {items.map((item) => (
+                      <li key={item}>• {item}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="pt-2 text-sm text-gray-600">{description}</p>
+                )}
+              </div>
+            </div>
+          ),
+        )}
       </div>
 
+      {/* Action Button */}
       <div className="flex justify-end pt-3">
         <button
           onClick={() => addModelMutation.mutate(model)}
-          disabled={
-            !model || model.trim().length === 0 || addModelMutation.isLoading
-          }
+          disabled={!model.trim() || addModelMutation.isLoading}
           className="rounded-full bg-mf-green px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-green disabled:cursor-not-allowed disabled:opacity-50"
         >
           {addModelMutation.isLoading ? (
