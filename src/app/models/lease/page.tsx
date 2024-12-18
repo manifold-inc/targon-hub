@@ -1,197 +1,138 @@
-import { Building2, Mail, Phone } from "lucide-react";
+"use client";
 
-export default function Page() {
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { AlertCircle, FileCode, MailWarning } from "lucide-react";
+import { toast } from "sonner";
+
+import { reactClient } from "@/trpc/react";
+
+export default function ModelPage() {
+  const router = useRouter();
+  const [model, setModel] = useState("");
+
+  const addModelMutation = reactClient.model.addModel.useMutation({
+    onSuccess: (gpus) => {
+      if (gpus > 8) {
+        toast.error(
+          "This model requires more than 8 GPUs, which exceeds our limit of 8 GPUs. We will not be able to run this model.",
+        );
+        return;
+      }
+      if (gpus === -1) {
+        toast.info("Model is already enabled and can be used immediately.");
+        router.push(`/models/${encodeURIComponent(model)}`);
+        return;
+      }
+
+      toast.success("Model added successfully");
+      router.push(`/models/lease/pricing?model=${encodeURIComponent(model)}`);
+    },
+    onError: (error) => {
+      toast.error("Failed to add model: " + error.message);
+    },
+  });
+
   return (
-    <div className="relative isolate bg-white">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
-        <div className="relative px-6 pb-20 pt-24 sm:pt-32 lg:static lg:px-8 lg:py-48">
-          <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
-            <div className="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden bg-gray-100 ring-1 ring-gray-900/10 lg:w-1/2">
-              <svg
-                aria-hidden="true"
-                className="absolute inset-0 size-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
-              >
-                <defs>
-                  <pattern
-                    x="100%"
-                    y={-1}
-                    id="83fd4e5a-9d52-42fc-97b6-718e5d7ee527"
-                    width={200}
-                    height={200}
-                    patternUnits="userSpaceOnUse"
-                  >
-                    <path d="M130 200V.5M.5 .5H200" fill="none" />
-                  </pattern>
-                </defs>
-                <rect fill="white" width="100%" height="100%" strokeWidth={0} />
-                <svg x="100%" y={-1} className="overflow-visible fill-gray-50">
-                  <path d="M-470.5 0h201v201h-201Z" strokeWidth={0} />
-                </svg>
-                <rect
-                  fill="url(#83fd4e5a-9d52-42fc-97b6-718e5d7ee527)"
-                  width="100%"
-                  height="100%"
-                  strokeWidth={0}
-                />
-              </svg>
-            </div>
-            <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-              Get in touch
-            </h2>
-            <p className="mt-6 text-lg/8 text-gray-600">
-              Proin volutpat consequat porttitor cras nullam gravida at. Orci
-              molestie a eu arcu. Sed ut tincidunt integer elementum id sem.
-              Arcu sed malesuada et magna.
-            </p>
-            <dl className="mt-10 space-y-4 text-base/7 text-gray-600">
-              <div className="flex gap-x-4">
-                <dt className="flex-none">
-                  <span className="sr-only">Address</span>
-                  <Building2
-                    aria-hidden="true"
-                    className="h-7 w-6 text-gray-400"
-                  />
-                </dt>
-                <dd>
-                  545 Mavis Island
-                  <br />
-                  Chicago, IL 99191
-                </dd>
-              </div>
-              <div className="flex gap-x-4">
-                <dt className="flex-none">
-                  <span className="sr-only">Telephone</span>
-                  <Phone aria-hidden="true" className="h-7 w-6 text-gray-400" />
-                </dt>
-                <dd>
-                  <a
-                    href="tel:+1 (555) 234-5678"
-                    className="hover:text-gray-900"
-                  >
-                    +1 (555) 234-5678
-                  </a>
-                </dd>
-              </div>
-              <div className="flex gap-x-4">
-                <dt className="flex-none">
-                  <span className="sr-only">Email</span>
-                  <Mail aria-hidden="true" className="h-7 w-6 text-gray-400" />
-                </dt>
-                <dd>
-                  <a
-                    href="mailto:hello@example.com"
-                    className="hover:text-gray-900"
-                  >
-                    hello@example.com
-                  </a>
-                </dd>
-              </div>
-            </dl>
+    <div className="flex flex-col gap-4 pt-2">
+      <div>
+        <h2 className="text-lg font-semibold text-gray-900">
+          Step 1: Enter Model Name
+        </h2>
+        <p className="pt-1 text-sm text-gray-600">
+          Enter the HuggingFace model you&apos;d like to lease
+        </p>
+      </div>
+
+      <div>
+        <label
+          htmlFor="modelUrl"
+          className="block text-sm/6 font-semibold text-gray-900"
+        >
+          HuggingFace Model <span className="text-red-500">*</span>
+        </label>
+        <div className="pt-2">
+          <div className="flex w-full items-center rounded-lg border border-gray-300 bg-white focus-within:border-mf-green focus-within:ring-2 focus-within:ring-mf-green">
+            <span className="flex-shrink-0 pl-4 text-sm text-gray-500">
+              https://huggingface.com/
+            </span>
+            <input
+              type="text"
+              id="modelUrl"
+              value={model}
+              onChange={(e) => {
+                setModel(e.target.value.trim());
+              }}
+              className="w-full border-0 bg-transparent py-2 pl-0 pr-4 text-sm text-gray-900 placeholder:text-gray-700 focus:bg-transparent focus:ring-0"
+              placeholder="NousResearch/Hermes-3-Llama-3.1-8B"
+            />
           </div>
         </div>
-        <form
-          action="#"
-          method="POST"
-          className="px-6 pb-24 pt-20 sm:pb-32 lg:px-8 lg:py-48"
-        >
-          <div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
-            <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-              <div>
-                <label
-                  htmlFor="first-name"
-                  className="block text-sm/6 font-semibold text-gray-900"
-                >
-                  First name
-                </label>
-                <div className="mt-2.5">
-                  <input
-                    id="first-name"
-                    name="first-name"
-                    type="text"
-                    autoComplete="given-name"
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-mf-green"
-                  />
-                </div>
-              </div>
-              <div>
-                <label
-                  htmlFor="last-name"
-                  className="block text-sm/6 font-semibold text-gray-900"
-                >
-                  Last name
-                </label>
-                <div className="mt-2.5">
-                  <input
-                    id="last-name"
-                    name="last-name"
-                    type="text"
-                    autoComplete="family-name"
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-mf-green"
-                  />
-                </div>
-              </div>
-              <div className="sm:col-span-2">
-                <label
-                  htmlFor="email"
-                  className="block text-sm/6 font-semibold text-gray-900"
-                >
-                  Email
-                </label>
-                <div className="mt-2.5">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-mf-green"
-                  />
-                </div>
-              </div>
-              <div className="sm:col-span-2">
-                <label
-                  htmlFor="phone-number"
-                  className="block text-sm/6 font-semibold text-gray-900"
-                >
-                  Phone number
-                </label>
-                <div className="mt-2.5">
-                  <input
-                    id="phone-number"
-                    name="phone-number"
-                    type="tel"
-                    autoComplete="tel"
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-mf-green"
-                  />
-                </div>
-              </div>
-              <div className="sm:col-span-2">
-                <label
-                  htmlFor="message"
-                  className="block text-sm/6 font-semibold text-gray-900"
-                >
-                  Message
-                </label>
-                <div className="mt-2.5">
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={4}
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-mf-green"
-                    defaultValue={""}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="mt-8 flex justify-end">
-              <button
-                type="submit"
-                className="rounded-md bg-mf-green px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-green"
-              >
-                Send message
-              </button>
-            </div>
+      </div>
+
+      {/* Info Section */}
+      <div className="flex flex-col gap-4">
+        {/* Compatible Models */}
+        <div className="flex items-start gap-3">
+          <FileCode className="h-5 w-5 flex-shrink-0 pt-1 text-gray-800" />
+          <div>
+            <h3 className="font-medium text-gray-900">Compatible Models</h3>
+            <ul className="space-y-1 pt-2 text-sm text-gray-600">
+              <li>• Transformer Models (BERT, GPT)</li>
+              <li>• Standard Architectures</li>
+              <li>• Public HuggingFace Models</li>
+            </ul>
           </div>
-        </form>
+        </div>
+
+        {/* Incompatible Models */}
+        <div className="flex items-start gap-3">
+          <AlertCircle className="h-5 w-5 flex-shrink-0 pt-1 text-gray-800" />
+          <div>
+            <h3 className="font-medium text-gray-900">Incompatible Models</h3>
+            <ul className="space-y-1 pt-2 text-sm text-gray-600">
+              <li>• Custom Code Required</li>
+              <li>• Private/Gated Models</li>
+              <li>• Missing Configurations</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Support Note */}
+        <div className="flex items-start gap-3">
+          <MailWarning className="h-5 w-5 flex-shrink-0 pt-1 text-gray-800" />
+          <div>
+            <a
+              href="mailto:devs@manifold.inc"
+              className="font-medium text-gray-900 hover:underline"
+            >
+              <h3 className="font-medium text-gray-900">Contact Support</h3>
+            </a>
+            <p className="pt-2 text-sm text-gray-600">
+              Having issues with model compatibility? Our support team is here
+              to help.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex justify-end pt-3">
+        <button
+          onClick={() => addModelMutation.mutate(model)}
+          disabled={
+            !model || model.trim().length === 0 || addModelMutation.isLoading
+          }
+          className="rounded-full bg-mf-green px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-green disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {addModelMutation.isLoading ? (
+            <div className="flex items-center gap-2">
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              Checking model...
+            </div>
+          ) : (
+            "Continue to Pricing"
+          )}
+        </button>
       </div>
     </div>
   );
