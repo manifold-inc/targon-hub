@@ -195,7 +195,7 @@ export const modelRouter = createTRPCRouter({
 
       if (!modelName || !organization) {
         throw new TRPCError({
-          message: "Invalid model ID format. Expected: organization/modelName",
+          message: `Invalid model ID format for "${input}". Expected: organization/modelName`,
           code: "BAD_REQUEST",
         });
       }
@@ -225,7 +225,7 @@ export const modelRouter = createTRPCRouter({
 
       if (!response.ok) {
         throw new TRPCError({
-          message: "Model not found on HuggingFace",
+          message: `Model "${input}" not found on HuggingFace`,
           code: "BAD_REQUEST",
         });
       }
@@ -238,7 +238,7 @@ export const modelRouter = createTRPCRouter({
         modelInfo.cardData?.extra_gated_prompt
       ) {
         throw new TRPCError({
-          message: "Private or gated models are not supported",
+          message: `Model "${input}" is private or gated and is not supported`,
           code: "BAD_REQUEST",
         });
       }
@@ -260,8 +260,7 @@ export const modelRouter = createTRPCRouter({
 
       if (hasRestrictedLicense) {
         throw new TRPCError({
-          message:
-            "Only models with unrestricted licenses that don't require API keys are supported",
+          message: `Model "${input}" has a restricted license that requires API keys. Only models with unrestricted licenses are supported`,
           code: "BAD_REQUEST",
         });
       }
@@ -271,8 +270,7 @@ export const modelRouter = createTRPCRouter({
         allLicenses.some((license) => ["unknown", "other"].includes(license))
       ) {
         throw new TRPCError({
-          message:
-            "Models with unknown or unspecified licenses are not supported",
+          message: `Model "${input}" has an unknown or unspecified license and is not supported`,
           code: "BAD_REQUEST",
         });
       }
@@ -283,7 +281,7 @@ export const modelRouter = createTRPCRouter({
         !modelInfo.config?.tokenizer_config
       ) {
         throw new TRPCError({
-          message: `Unsupported model type. Model must be either text-generation or text-to-image. Got: ${modelInfo.pipeline_tag}`,
+          message: `Unsupported model type for "${input}". Model must be either text-generation or text-to-image. Got: ${modelInfo.pipeline_tag}`,
           code: "BAD_REQUEST",
         });
       }
@@ -315,7 +313,7 @@ export const modelRouter = createTRPCRouter({
 
       if (!gpuResponse.ok) {
         throw new TRPCError({
-          message: "Failed to estimate GPU requirements",
+          message: `Failed to estimate GPU requirements for model "${input}"`,
           code: "INTERNAL_SERVER_ERROR",
         });
       }
@@ -325,15 +323,14 @@ export const modelRouter = createTRPCRouter({
       };
       if (!gpuData.required_gpus) {
         throw new TRPCError({
-          message: "Failed getting required GPUS",
+          message: `Failed getting required GPUs for model "${input}"`,
           code: "INTERNAL_SERVER_ERROR",
         });
       }
 
       if (gpuData.required_gpus > 8) {
         throw new TRPCError({
-          message:
-            "This model requires more than 8 GPUs, which exceeds our limit of 8 GPUs. We will not be able to run this model.",
+          message: `Model "${input}" requires ${gpuData.required_gpus} GPUs, which exceeds our limit of 8 GPUs. We will not be able to run this model.`,
           code: "BAD_REQUEST",
         });
       }
