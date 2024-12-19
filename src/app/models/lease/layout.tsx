@@ -92,7 +92,7 @@ export default function LeaseLayout({
         </div>
 
         {/* Content */}
-        <div className="relative py-8 sm:py-12 lg:py-48">
+        <div className="relative py-12 lg:py-48">
           <div className="mx-auto lg:mx-0 lg:max-w-lg">
             <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
               Lease Your Model
@@ -125,7 +125,7 @@ export default function LeaseLayout({
       <div className="relative bg-white px-6 py-8 sm:py-12 lg:py-48">
         <div className="mx-auto max-w-xl lg:ml-12 lg:mr-[max(4rem,calc((100vw-80rem)/2+4rem))]">
           <StepIndicator steps={steps} />
-          <div className="pt-8">{children}</div>
+          <div className="pt-2 sm:pt-8">{children}</div>
         </div>
       </div>
     </div>

@@ -299,7 +299,9 @@ export default function PricingPage() {
           </button>
         ) : (
           <Link
-            href="/sign-in"
+            href={`/sign-in?redirect=${encodeURIComponent(
+              `/models/lease/pricing?model=${encodeURIComponent(model)}`
+            )}`}
             className="inline-block rounded-full bg-mf-green px-4 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-green"
           >
             Sign in to Continue
