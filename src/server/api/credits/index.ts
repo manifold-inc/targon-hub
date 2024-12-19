@@ -2,7 +2,11 @@ import { TRPCError } from "@trpc/server";
 import { eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 
-import { COST_PER_GPU, CREDIT_PER_DOLLAR, MIN_PURCHASE_IN_DOLLARS } from "@/constants";
+import {
+  COST_PER_GPU,
+  CREDIT_PER_DOLLAR,
+  MIN_PURCHASE_IN_DOLLARS,
+} from "@/constants";
 import { env } from "@/env.mjs";
 import { Model, ModelLeasing, User } from "@/schema/schema";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
@@ -131,18 +135,20 @@ export const creditsRouter = createTRPCRouter({
           ctx.db
             .update(User)
             .set({
-              credits: user[0].credits - requiredGPU[0]!.gpu * Number(COST_PER_GPU),
+              credits:
+                user[0].credits - requiredGPU[0]!.gpu * Number(COST_PER_GPU),
             })
             .where(eq(User.id, ctx.user.id)),
-            
+
           // Add lease record
           ctx.db.insert(ModelLeasing).values({
             userId: ctx.user.id,
             modelName: input.model,
-            amount: (requiredGPU[0]!.gpu * Number(COST_PER_GPU)) / CREDIT_PER_DOLLAR,
+            amount:
+              (requiredGPU[0]!.gpu * Number(COST_PER_GPU)) / CREDIT_PER_DOLLAR,
           }),
         ]);
-        
+
         return {
           success: true,
         };
@@ -190,7 +196,8 @@ export const creditsRouter = createTRPCRouter({
         ctx.db
           .update(User)
           .set({
-            credits: user[0].credits - requiredGPU[0]!.gpu * Number(COST_PER_GPU),
+            credits:
+              user[0].credits - requiredGPU[0]!.gpu * Number(COST_PER_GPU),
           })
           .where(eq(User.id, ctx.user.id)),
 
@@ -198,7 +205,8 @@ export const creditsRouter = createTRPCRouter({
         ctx.db.insert(ModelLeasing).values({
           userId: ctx.user.id,
           modelName: input.model,
-          amount: (requiredGPU[0]!.gpu * Number(COST_PER_GPU)) / CREDIT_PER_DOLLAR,
+          amount:
+            (requiredGPU[0]!.gpu * Number(COST_PER_GPU)) / CREDIT_PER_DOLLAR,
         }),
       ]);
 
