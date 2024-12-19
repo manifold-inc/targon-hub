@@ -47,7 +47,7 @@ function StatsCards() {
       <div className="flex w-full flex-col items-center">
         <div className="grid w-full grid-cols-1 gap-4 text-center font-mono sm:grid-cols-2">
           <StatCard title="Greater Than" value="400" unit="Tokens/s" />
-          <StatCard title="Currently" value="$0.04" unit="/M Tokens" />
+          <StatCard title="Currently" value="Free Tokens" unit="on All Models" />
         </div>
       </div>
     </div>
@@ -68,7 +68,7 @@ function StatCard({
       <div className="relative z-10 flex h-full flex-col items-center justify-center text-center font-light">
         <p className="text-mf-green">{title}</p>
         <div className="relative inline-flex items-start justify-center">
-          <p className="text-5xl text-mf-green">{value}</p>
+          <p className="text-3xl text-mf-green">{value}</p>
         </div>
         <p className="text-mf-green">{unit}</p>
       </div>

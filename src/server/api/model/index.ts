@@ -122,7 +122,6 @@ export const modelRouter = createTRPCRouter({
         requiredGpus: Model.requiredGpus,
         modality: Model.modality,
         enabled: Model.enabled,
-        cpt: Model.cpt,
         createdAt: Model.createdAt,
       })
       .from(Model)
@@ -181,7 +180,6 @@ export const modelRouter = createTRPCRouter({
         .select({
           name: Model.name,
           id: Model.id,
-          cpt: Model.cpt,
           enabled: Model.enabled,
           createdAt: Model.createdAt,
           modality: Model.modality,

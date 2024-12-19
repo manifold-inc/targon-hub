@@ -6,7 +6,6 @@ import { Star, UserRound } from "lucide-react";
 import CodeBlock from "@/app/_components/CodeBlock";
 import ModelsNav from "@/app/_components/ModelsNav";
 import ModelStatusIndicator from "@/app/_components/ModelStatusIndicator";
-import { CREDIT_PER_DOLLAR } from "@/constants";
 import { env } from "@/env.mjs";
 import { db } from "@/schema/db";
 import { createCaller } from "@/server/api/root";
@@ -72,7 +71,6 @@ for chunk in response:
     if chunk.choices[0].text is not None:
         print(chunk.choices[0].text, end="")`;
 
-  const cost = (data.cpt * 1_000_000) / CREDIT_PER_DOLLAR;
   return (
     <div className="relative flex">
       <div className="fixed right-20 top-32 hidden lg:block">
@@ -123,7 +121,7 @@ for chunk in response:
                 </div>
                 <div className="h-5 w-px bg-[#e4e7ec]" />
                 <div className="text-xs leading-tight text-[#667085] sm:text-sm">
-                  ${cost} / M Tokens
+                  Free Tokens
                 </div>
                 <div className="h-5 w-px bg-[#e4e7ec]" />
                 <ModelStatusIndicator

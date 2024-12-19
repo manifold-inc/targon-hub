@@ -11,7 +11,6 @@ import { AppCard } from "./AppCard";
 interface Model {
   id: number;
   name: string | null;
-  cpt: number;
   requiredGpus: number;
   modality: "text-generation" | "text-to-image";
   enabled: boolean | null;
@@ -118,9 +117,8 @@ function ModelGrid({ models }: { models: Model[] }) {
           <AppCard
             key={model.id}
             name={model.name ?? ""}
-            cpt={model.cpt}
-            requiredGPUs={model.requiredGpus}
             modality={model.modality}
+            requiredGPUs={model.requiredGpus}
             enabled={model.enabled ?? false}
             supportedEndpoints={model.supportedEndpoints}
             description={model.description ?? ""}
