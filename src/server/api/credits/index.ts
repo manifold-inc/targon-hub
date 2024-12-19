@@ -2,7 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 
-import { COST_PER_GPU, MIN_PURCHASE_IN_DOLLARS } from "@/constants";
+import { COST_PER_GPU, CREDIT_PER_DOLLAR, MIN_PURCHASE_IN_DOLLARS } from "@/constants";
 import { env } from "@/env.mjs";
 import { Model, ModelLeasing, User } from "@/schema/schema";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
@@ -139,7 +139,7 @@ export const creditsRouter = createTRPCRouter({
           ctx.db.insert(ModelLeasing).values({
             userId: ctx.user.id,
             modelName: input.model,
-            amount: Number(requiredGPU[0]!.gpu * Number(COST_PER_GPU)),
+            amount: (requiredGPU[0]!.gpu * Number(COST_PER_GPU)) / CREDIT_PER_DOLLAR,
           }),
         ]);
         
@@ -198,7 +198,7 @@ export const creditsRouter = createTRPCRouter({
         ctx.db.insert(ModelLeasing).values({
           userId: ctx.user.id,
           modelName: input.model,
-          amount: Number(requiredGPU[0]!.gpu * Number(COST_PER_GPU)),
+          amount: (requiredGPU[0]!.gpu * Number(COST_PER_GPU)) / CREDIT_PER_DOLLAR,
         }),
       ]);
 
