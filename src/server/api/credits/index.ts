@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { COST_PER_GPU, MIN_PURCHASE_IN_DOLLARS } from "@/constants";
 import { env } from "@/env.mjs";
-import { Model, User } from "@/schema/schema";
+import { Model, ModelLeasing, User } from "@/schema/schema";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const creditsRouter = createTRPCRouter({
@@ -119,22 +119,30 @@ export const creditsRouter = createTRPCRouter({
 
       if (currentGPUUsage + requestedGPU <= 8) {
         // we have enough capacity without removal
-        await ctx.db
-          .update(Model)
-          .set({
-            enabled: true,
-            enabledDate: now,
-          })
-          .where(eq(Model.name, input.model));
+        await Promise.all([
+          ctx.db
+            .update(Model)
+            .set({
+              enabled: true,
+              enabledDate: now,
+            })
+            .where(eq(Model.name, input.model)),
 
-        // deduct from user credits
-        await ctx.db
-          .update(User)
-          .set({
-            credits:
-              user[0].credits - requiredGPU[0]!.gpu * Number(COST_PER_GPU),
-          })
-          .where(eq(User.id, ctx.user.id));
+          ctx.db
+            .update(User)
+            .set({
+              credits: user[0].credits - requiredGPU[0]!.gpu * Number(COST_PER_GPU),
+            })
+            .where(eq(User.id, ctx.user.id)),
+            
+          // Add lease record
+          ctx.db.insert(ModelLeasing).values({
+            userId: ctx.user.id,
+            modelName: input.model,
+            amount: Number(requiredGPU[0]!.gpu * Number(COST_PER_GPU)),
+          }),
+        ]);
+        
         return {
           success: true,
         };
@@ -179,14 +187,19 @@ export const creditsRouter = createTRPCRouter({
           })
           .where(eq(Model.name, input.model)),
 
-        //deduct from user credits
         ctx.db
           .update(User)
           .set({
-            credits:
-              user[0].credits - requiredGPU[0]!.gpu * Number(COST_PER_GPU),
+            credits: user[0].credits - requiredGPU[0]!.gpu * Number(COST_PER_GPU),
           })
           .where(eq(User.id, ctx.user.id)),
+
+        // Add lease record
+        ctx.db.insert(ModelLeasing).values({
+          userId: ctx.user.id,
+          modelName: input.model,
+          amount: Number(requiredGPU[0]!.gpu * Number(COST_PER_GPU)),
+        }),
       ]);
 
       return {

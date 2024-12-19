@@ -177,3 +177,21 @@ export const DailyModelTokenCounts = mysqlTable("daily_model_token_counts", {
   avgTPS: float("avg_tps").notNull().default(0),
   createdAt: timestamp("created_at", { mode: "date" }).notNull(),
 });
+
+export const ModelLeasing = mysqlTable("model_leasing", {
+  id: serial("id").primaryKey(),
+  userId: bigint("user_id", {
+    unsigned: true,
+    mode: "number",
+  })
+    .notNull()
+    .references(() => User.id, { onDelete: "cascade" }),
+  enabledDate: timestamp("enabled_date", { mode: "date" })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  modelName: varchar("model_name", { length: 64 }).notNull(),
+  amount: bigint("amount", {
+    mode: "number",
+    unsigned: true,
+  }).notNull(),
+});
