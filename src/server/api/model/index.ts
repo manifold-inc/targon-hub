@@ -307,7 +307,7 @@ export const modelRouter = createTRPCRouter({
             cpt: 0,
             enabled: false,
             customBuild: true,
-            ...(description && { description }),
+            description: description ?? "No description provided",
           });
           return -2;
         }
@@ -357,7 +357,7 @@ export const modelRouter = createTRPCRouter({
         cpt: gpuData.required_gpus,
         enabled: false,
         customBuild: false,
-        ...(description && { description }),
+        description: description ?? "No description provided",
       });
 
       return gpuData.required_gpus;
