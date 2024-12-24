@@ -167,4 +167,5 @@ export const Model = mysqlTable("model", {
   description: text("description").default("No description provided"),
   supportedEndpoints: json("supported_endpoints").notNull().$type<string[]>(),
   enabledDate: timestamp("enabled_date", { mode: "date" }),
+  customBuild: boolean("custom_build").default(false).notNull(),
 });

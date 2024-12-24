@@ -25,7 +25,7 @@ export const checkoutSuccess = async (
     .from(CheckoutSession)
     .where(eq(CheckoutSession.id, data.id));
   if (existing) {
-    return
+    return;
   }
 
   const line_items = await stripe.checkout.sessions.listLineItems(data.id);
