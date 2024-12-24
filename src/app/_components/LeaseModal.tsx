@@ -58,30 +58,27 @@ export default function LeaseModal({
   const utils = reactClient.useUtils();
 
   const addModelMutation = reactClient.model.addModel.useMutation({
-    onSuccess: (gpus) => {
-      if (gpus > 8) {
-        toast.error(
-          "This model requires more than 8 GPUs, which exceeds our limit of 8 GPUs. We will not be able to run this model.",
-        );
-        return;
-      }
-      if (gpus === -1) {
-        toast.info("Model is already enabled and can be used immediately.");
+    onSuccess: (response) => {
+      // show message, then redirect to model page
+      if (response.enabled) {
+        toast.info(response.message);
         router.push(`/models/${encodeURIComponent(model)}`);
         return;
       }
-      if (gpus === -2) {
-        toast.info(
-          "Model requires a custom build. It has been marked for review by our team.",
-        );
+
+      // not enabled, custom build, show message
+      if (response.message) {
+        toast.info(response.message);
         return;
       }
 
+      // empty message is falsy
       toast.success("Model added successfully");
-      utils.model.getRequiredGpus.setData(model, gpus);
+      utils.model.getRequiredGpus.setData(model, response.gpus);
       setCurrentStep(currentStep + 1);
     },
     onError: (error) => {
+      // show error message
       toast.error("Failed to add model: " + error.message);
     },
   });

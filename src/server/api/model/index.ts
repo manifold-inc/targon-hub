@@ -13,6 +13,7 @@ interface HuggingFaceModelInfo {
   gated: boolean | "auto";
   library_name: string;
   pipeline_tag?: string;
+  tags?: string[];
   transformersInfo?: {
     auto_model: string;
   };
@@ -177,9 +178,17 @@ export const modelRouter = createTRPCRouter({
         .where(eq(Model.name, input));
       if (existingModel.length > 0) {
         if (existingModel.at(0)!.enabled) {
-          return -1;
+          return {
+            gpus: 0,
+            enabled: true,
+            message: "Model is already enabled. It can be used immediately.",
+          };
         }
-        return existingModel.at(0)!.gpus;
+        return {
+          gpus: existingModel.at(0)!.gpus,
+          enabled: false,
+          message: "",
+        };
       }
 
       // Validate model exists on HuggingFace using direct model endpoint
@@ -292,13 +301,17 @@ export const modelRouter = createTRPCRouter({
           });
         }
 
-        // Check if model has auto_map or auto_model
+        // Check if model requires custom code
+        const hasCustomCode = modelInfo.tags?.includes("custom_code");
         const hasAutoMap =
           modelInfo.config.auto_map &&
-          typeof modelInfo.config.auto_map === "object";
+          typeof modelInfo.config.auto_map === "object" &&
+          Object.values(modelInfo.config.auto_map).every(
+            (path) => !path.includes(".py"),
+          );
         const hasAutoModel = modelInfo.transformersInfo?.auto_model;
 
-        if (!hasAutoMap && !hasAutoModel) {
+        if (hasCustomCode || (!hasAutoMap && !hasAutoModel)) {
           await ctx.db.insert(Model).values({
             name: modelInfo.id,
             modality,
@@ -309,7 +322,12 @@ export const modelRouter = createTRPCRouter({
             customBuild: true,
             description: description ?? "No description provided",
           });
-          return -2;
+          return {
+            gpus: 0,
+            enabled: false,
+            message:
+              "Model requires custom build. It has been marked for review by our team.",
+          };
         }
       }
 
@@ -360,7 +378,11 @@ export const modelRouter = createTRPCRouter({
         description: description ?? "No description provided",
       });
 
-      return gpuData.required_gpus;
+      return {
+        gpus: gpuData.required_gpus,
+        enabled: false,
+        message: "",
+      };
     }),
   getImmunityTimeline: publicAuthlessProcedure.query(async ({ ctx }) => {
     const models = await ctx.db
