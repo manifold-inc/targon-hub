@@ -53,16 +53,15 @@ export default function ModelPage() {
   const [model, setModel] = useState("");
 
   const addModelMutation = reactClient.model.addModel.useMutation({
-    onSuccess: (gpus) => {
-      if (gpus > 8) {
-        toast.error(
-          "This model requires more than 8 GPUs, which exceeds our limit of 8 GPUs. We will not be able to run this model.",
-        );
+    onSuccess: (response) => {
+      if (response.enabled) {
+        toast.info(response.message);
+        router.push(`/models/${encodeURIComponent(model)}`);
         return;
       }
-      if (gpus === -1) {
-        toast.info("Model is already enabled and can be used immediately.");
-        router.push(`/models/${encodeURIComponent(model)}`);
+
+      if (response.message) {
+        toast.info(response.message);
         return;
       }
 
