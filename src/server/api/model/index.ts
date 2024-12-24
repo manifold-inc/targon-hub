@@ -23,83 +23,24 @@ import {
 } from "@/schema/schema";
 import { createTRPCRouter, publicAuthlessProcedure } from "../trpc";
 
-const Modality = ["text-generation", "text-to-image"] as const;
-type ModalityType = (typeof Modality)[number];
-
-interface ModelSibling {
-  rfilename: string;
-}
-
 interface HuggingFaceModelInfo {
-  _id: string;
   id: string;
-  author: string;
-  gated: boolean;
-  inference: string;
-  lastModified: string;
-  likes: number;
-  trendingScore: number;
   private: boolean;
-  sha: string;
-  downloads: number;
-  tags: string[];
-  pipeline_tag?: string;
+  gated: boolean | "auto";
   library_name: string;
-  createdAt: string;
-  modelId: string;
-  siblings: ModelSibling[];
-  cardData?: {
-    license?: string;
-    extra_gated_prompt?: string;
+  pipeline_tag?: string;
+  tags?: string[];
+  transformersInfo?: {
+    auto_model: string;
   };
   config?: {
+    auto_map?: Record<string, string>;
+
     tokenizer_config?: {
       chat_template?: string;
     };
   };
 }
-
-// Why are we checking these? we only need to check if it has a restrictive license
-//const UNRESTRICTED_LICENSES = [
-//  // Highly permissive - no API key needed
-//  "mit",
-//  "apache-2.0",
-//  "bsd",
-//  "bsd-2-clause",
-//  "bsd-3-clause",
-//  "bsd-3-clause-clear",
-//  "cc0-1.0",
-//  "unlicense",
-//  "bsl-1.0",
-//  "isc",
-//  "zlib",
-//
-//  // Additional open source - should work without API key
-//  "gpl-2.0",
-//  "gpl-3.0",
-//  "lgpl-2.1",
-//  "lgpl-3.0",
-//  "mpl-2.0",
-//  "artistic-2.0",
-//  "eupl-1.1",
-//  "postgresql",
-//  "ncsa",
-//] as const;
-
-const RESTRICTED_ACCESS_LICENSES = [
-  // Likely needs API key or authentication
-  "openrail",
-  "bigscience-openrail-m",
-  "creativeml-openrail-m",
-  "bigscience-bloom-rail-1.0",
-  "bigcode-openrail-m",
-  "llama2",
-  "llama3",
-  "llama3.1",
-  "llama3.2",
-  "deepfloyd-if-license",
-  "gemma",
-] as const;
 
 export const modelRouter = createTRPCRouter({
   getActiveChatModels: publicAuthlessProcedure.query(async ({ ctx }) => {
@@ -236,7 +177,7 @@ export const modelRouter = createTRPCRouter({
 
       if (!modelName || !organization) {
         throw new TRPCError({
-          message: "Invalid model ID format. Expected: organization/modelName",
+          message: `Invalid model ID format for "${input}". Expected: organization/modelName`,
           code: "BAD_REQUEST",
         });
       }
@@ -251,9 +192,17 @@ export const modelRouter = createTRPCRouter({
         .where(eq(Model.name, input));
       if (existingModel.length > 0) {
         if (existingModel.at(0)!.enabled) {
-          return -1;
+          return {
+            gpus: 0,
+            enabled: true,
+            message: "Model is already enabled. It can be used immediately.",
+          };
         }
-        return existingModel.at(0)!.gpus;
+        return {
+          gpus: existingModel.at(0)!.gpus,
+          enabled: false,
+          message: "",
+        };
       }
 
       // Validate model exists on HuggingFace using direct model endpoint
@@ -266,159 +215,188 @@ export const modelRouter = createTRPCRouter({
 
       if (!response.ok) {
         throw new TRPCError({
-          message: "Model not found on HuggingFace",
+          message: `Failed to fetch model info for "${input}" from HuggingFace: ${response.statusText}`,
           code: "BAD_REQUEST",
         });
       }
 
       const modelInfo = (await response.json()) as HuggingFaceModelInfo;
 
-      if (
-        modelInfo.private ||
-        modelInfo.gated ||
-        modelInfo.cardData?.extra_gated_prompt
-      ) {
+      // Validate model accessibility
+      if (modelInfo.private || modelInfo.gated) {
         throw new TRPCError({
-          message: "Private or gated models are not supported",
+          message: `Model "${input}" is private or gated and is not supported`,
           code: "BAD_REQUEST",
         });
       }
 
-      // Get license from model card or tags
-      const modelLicense = modelInfo.cardData?.license?.toLowerCase() || "";
-      const licenseTags = modelInfo.tags
-        .filter((tag) => tag.startsWith("license:"))
-        .map((tag) => tag.replace("license:", "").toLowerCase());
-
-      const allLicenses = [modelLicense, ...licenseTags];
-
-      // Check if any license requires authentication
-      const hasRestrictedLicense = allLicenses.some((license) =>
-        RESTRICTED_ACCESS_LICENSES.includes(
-          license as (typeof RESTRICTED_ACCESS_LICENSES)[number],
-        ),
-      );
-
-      if (hasRestrictedLicense) {
+      // Get library name from model info
+      if (!modelInfo.library_name) {
         throw new TRPCError({
-          message:
-            "Only models with unrestricted licenses that don't require API keys are supported",
+          message: `Model "${input}" does not have any library metadata on the Hub.`,
           code: "BAD_REQUEST",
         });
       }
 
-      // If license is "unknown" or "other", reject it to be safe
-      if (
-        allLicenses.some((license) => ["unknown", "other"].includes(license))
-      ) {
+      if (!["transformers", "timm"].includes(modelInfo.library_name)) {
         throw new TRPCError({
-          message:
-            "Models with unknown or unspecified licenses are not supported",
+          message: `Library "${modelInfo.library_name}" for model "${input}" is not supported yet. Only transformers and timm are supported.`,
           code: "BAD_REQUEST",
         });
       }
 
-      if (
-        (!modelInfo.pipeline_tag ||
-          !Modality.includes(modelInfo.pipeline_tag as ModalityType)) &&
-        !modelInfo.config?.tokenizer_config
-      ) {
-        throw new TRPCError({
-          message: `Unsupported model type. Model must be either text-generation or text-to-image. Got: ${modelInfo.pipeline_tag}`,
-          code: "BAD_REQUEST",
-        });
-      }
-
-      const supportedEndpoints = ["COMPLETION"];
-      if (modelInfo.config?.tokenizer_config?.chat_template) {
-        supportedEndpoints.push("CHAT");
-      }
-
-      let library_name = modelInfo.library_name;
-      if (modelInfo.config?.tokenizer_config && !library_name) {
-        library_name = "transformers";
-      } else {
-        library_name = "diffusers";
-      }
-      const gpuResponse = await fetch(
-        `${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/estimate`,
+      // Get model description from README
+      let description = "No description provided";
+      const readmeResponse = await fetch(
+        `https://huggingface.co/${organization}/${modelName}/raw/main/README.md`,
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model: modelInfo.id,
-            library_name,
-          }),
+          method: "GET",
         },
       );
 
+      if (readmeResponse.ok) {
+        const readmeContent = await readmeResponse.text();
+        // Skip YAML frontmatter if it exists
+        const contentWithoutFrontmatter = readmeContent.replace(
+          /^---\n[\s\S]*?\n---\n/,
+          "",
+        );
+
+        // Split into lines and find first real paragraph
+        const lines = contentWithoutFrontmatter.split("\n");
+        const paragraphLines: string[] = [];
+
+        for (const line of lines) {
+          const trimmedLine = line.trim();
+          // Skip empty lines, headings, and common markdown elements
+          if (
+            !trimmedLine ||
+            trimmedLine.startsWith("#") ||
+            trimmedLine.startsWith("---") ||
+            trimmedLine.startsWith("|") ||
+            trimmedLine.startsWith("```") ||
+            trimmedLine.startsWith("<!--") ||
+            trimmedLine.startsWith("- ")
+          ) {
+            if (paragraphLines.length > 0) break; // We found a paragraph, stop at next special element
+            continue;
+          }
+          paragraphLines.push(trimmedLine);
+        }
+
+        if (paragraphLines.length > 0) {
+          description = paragraphLines.join(" ");
+        }
+      }
+
+      //  common model properties
+      const supportedEndpoints = modelInfo.config?.tokenizer_config
+        ?.chat_template
+        ? ["COMPLETION", "CHAT"]
+        : ["COMPLETION"];
+
+      if (
+        !modelInfo.pipeline_tag ||
+        !(MODALITIES as readonly string[]).includes(modelInfo.pipeline_tag)
+      ) {
+        throw new TRPCError({
+          message: `Model "${input}" has unsupported modality: ${modelInfo.pipeline_tag}. Supported modalities are: ${MODALITIES.join(", ")}`,
+          code: "BAD_REQUEST",
+        });
+      }
+      const modality = modelInfo.pipeline_tag as (typeof MODALITIES)[number];
+
+      // For transformers models, check config
+      if (modelInfo.library_name === "transformers") {
+        if (!modelInfo.config) {
+          throw new TRPCError({
+            message: `Tried to load "${input}" with transformers but it does not have any metadata.`,
+            code: "BAD_REQUEST",
+          });
+        }
+
+        // Check if model requires custom code
+        const hasCustomCode = modelInfo.tags?.includes("custom_code");
+        const hasAutoMap =
+          modelInfo.config.auto_map &&
+          typeof modelInfo.config.auto_map === "object" &&
+          Object.values(modelInfo.config.auto_map).every(
+            (path) => !path.includes(".py"),
+          );
+        const hasAutoModel = modelInfo.transformersInfo?.auto_model;
+
+        if (hasCustomCode || (!hasAutoMap && !hasAutoModel)) {
+          await ctx.db.insert(Model).values({
+            name: modelInfo.id,
+            modality,
+            requiredGpus: 0,
+            supportedEndpoints,
+            cpt: 0,
+            enabled: false,
+            customBuild: true,
+            description: description ?? "No description provided",
+          });
+          return {
+            gpus: 0,
+            enabled: false,
+            message:
+              "Model requires custom build. It has been marked for review by our team.",
+          };
+        }
+      }
+
+      // Now that we've validated everything and confirmed no custom code, try to get the GPU requirements
+      const gpuResponse = await fetch(`${env.NEXT_PUBLIC_HUB_API_ENDPOINT}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: modelInfo.id,
+          library_name: modelInfo.library_name,
+        }),
+      });
+
       if (!gpuResponse.ok) {
         throw new TRPCError({
-          message: "Failed to estimate GPU requirements",
+          message: `Failed to estimate GPU requirements for model "${input}": ${gpuResponse.statusText}`,
           code: "INTERNAL_SERVER_ERROR",
         });
       }
 
-      const gpuData = (await gpuResponse.json()) as {
-        required_gpus: number;
-      };
+      const gpuData = (await gpuResponse.json()) as { required_gpus: number };
+
       if (!gpuData.required_gpus) {
         throw new TRPCError({
-          message: "Failed getting required GPUS",
+          message: `Failed getting required GPUs for model "${input}"`,
           code: "INTERNAL_SERVER_ERROR",
         });
       }
 
       if (gpuData.required_gpus > 8) {
         throw new TRPCError({
-          message:
-            "This model requires more than 8 GPUs, which exceeds our limit of 8 GPUs. We will not be able to run this model.",
+          message: `Model "${input}" requires ${gpuData.required_gpus} GPUs, which exceeds our limit of 8 GPUs. We will not be able to run this model.`,
           code: "BAD_REQUEST",
         });
       }
 
-      // Try to get description from README
-      let description: string | undefined;
-      try {
-        const readmeResponse = await fetch(
-          `https://huggingface.co/${organization}/${modelName}/raw/main/README.md`,
-        );
-        if (readmeResponse.ok) {
-          const readmeContent = await readmeResponse.text();
-          const modelDescMatch = readmeContent.match(
-            /#+\s*Model Description\s*(.*?)(?=\n#|\Z)/is,
-          );
-          description =
-            modelDescMatch?.[1]?.trim() ||
-            readmeContent
-              .split("\n")
-              .filter(
-                (line) =>
-                  line.trim() &&
-                  !line.startsWith("#") &&
-                  !line.startsWith("---") &&
-                  !line.startsWith("<"),
-              )
-              .slice(0, 3)
-              .join(" ")
-              .slice(0, 1000);
-        }
-      } catch (error) {
-        console.error("Error fetching README:", error);
-      }
-
+      // Add the model to the database
       await ctx.db.insert(Model).values({
         name: modelInfo.id,
-        modality: modelInfo.pipeline_tag as ModalityType,
+        modality,
         requiredGpus: gpuData.required_gpus,
-        supportedEndpoints: supportedEndpoints,
-        cpt: 1 * gpuData.required_gpus,
-        ...(description && { description }), // Only include if we found one
+        supportedEndpoints,
+        cpt: gpuData.required_gpus,
+        enabled: false,
+        customBuild: false,
+        description: description ?? "No description provided",
       });
 
-      return gpuData.required_gpus;
+      return {
+        gpus: gpuData.required_gpus,
+        enabled: false,
+        message: "",
+      };
     }),
   getImmunityTimeline: publicAuthlessProcedure.query(async ({ ctx }) => {
     const models = await ctx.db

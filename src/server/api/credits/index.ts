@@ -5,6 +5,7 @@ import { z } from "zod";
 import {
   COST_PER_GPU,
   CREDIT_PER_DOLLAR,
+  MAX_GPU_SLOTS,
   MIN_PURCHASE_IN_DOLLARS,
 } from "@/constants";
 import { env } from "@/env.mjs";
@@ -121,7 +122,7 @@ export const creditsRouter = createTRPCRouter({
       );
       const requestedGPU = requiredGPU[0]?.gpu ?? 0;
 
-      if (currentGPUUsage + requestedGPU <= 8) {
+      if (currentGPUUsage + requestedGPU <= MAX_GPU_SLOTS) {
         // we have enough capacity without removal
         await Promise.all([
           ctx.db
@@ -155,7 +156,7 @@ export const creditsRouter = createTRPCRouter({
       }
 
       // need to remove to make room
-      let gpuToRemove = currentGPUUsage + requestedGPU - 8;
+      let gpuToRemove = currentGPUUsage + requestedGPU - MAX_GPU_SLOTS;
       const modelsToDisable = [];
 
       for (const model of eligibleForRemoval) {
