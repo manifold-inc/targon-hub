@@ -38,9 +38,7 @@ export default function ActivityTab() {
                           ? activity.createdAt.toLocaleDateString()
                           : formatDate(activity.createdAt)}
                       </td>
-                      <td
-                        className="px-2 py-1 text-center leading-tight text-[#101828] max-w-40 truncate"
-                      >
+                      <td className="max-w-40 truncate px-2 py-1 text-center leading-tight text-[#101828]">
                         {activity.model}
                       </td>
                       <td className="px-2 py-1 text-center leading-tight text-[#101828]">

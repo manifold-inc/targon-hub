@@ -70,6 +70,12 @@ export default function LeaseModal({
         router.push(`/models/${encodeURIComponent(model)}`);
         return;
       }
+      if (gpus === -2) {
+        toast.info(
+          "Model requires a custom build. It has been marked for review by our team.",
+        );
+        return;
+      }
 
       toast.success("Model added successfully");
       utils.model.getRequiredGpus.setData(model, gpus);
