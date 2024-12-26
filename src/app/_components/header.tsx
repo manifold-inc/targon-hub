@@ -15,10 +15,10 @@ import {
 import { ChevronDown, MenuIcon, User, XIcon } from "lucide-react";
 
 import { CREDIT_PER_DOLLAR } from "@/constants";
+import { formatLargeNumber } from "@/utils/utils";
 import SearchBar from "./landing/SearchBar";
 import { useAuth } from "./providers";
 import SettingsModal from "./SettingsModal";
-import { formatLargeNumber } from "@/utils/utils";
 
 const NAVIGATION = [
   { slug: "/browse", title: "Browse" },
@@ -167,7 +167,10 @@ export const Header = () => {
                             className="h-4 w-4 rounded-full bg-gray-700 text-white"
                           />
                           <span className="text-xs font-medium text-gray-900">
-                            ${formatLargeNumber((auth.user?.credits ?? 0) / CREDIT_PER_DOLLAR)}
+                            $
+                            {formatLargeNumber(
+                              (auth.user?.credits ?? 0) / CREDIT_PER_DOLLAR,
+                            )}
                           </span>
                         </MenuButton>
 
@@ -175,9 +178,18 @@ export const Header = () => {
                           <div className="border-b border-gray-200 py-1">
                             <MenuItem>
                               <div className="block w-full px-4 py-2 text-center">
-                                <div className="text-sm tracking-wider text-gray-500">Balance</div>
+                                <div className="text-sm tracking-wider text-gray-500">
+                                  Balance
+                                </div>
                                 <div className="text-sm font-medium text-gray-900">
-                                  ${Number((auth.user?.credits ?? 0) / CREDIT_PER_DOLLAR).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                  $
+                                  {Number(
+                                    (auth.user?.credits ?? 0) /
+                                      CREDIT_PER_DOLLAR,
+                                  ).toLocaleString("en-US", {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2,
+                                  })}
                                 </div>
                               </div>
                             </MenuItem>
