@@ -14,9 +14,11 @@ import {
 } from "@headlessui/react";
 import { ChevronDown, MenuIcon, User, XIcon } from "lucide-react";
 
+import { CREDIT_PER_DOLLAR } from "@/constants";
 import SearchBar from "./landing/SearchBar";
 import { useAuth } from "./providers";
 import SettingsModal from "./SettingsModal";
+import { formatLargeNumber } from "@/utils/utils";
 
 const NAVIGATION = [
   { slug: "/browse", title: "Browse" },
@@ -148,7 +150,7 @@ export const Header = () => {
                   <Menu as="div" className="relative inline-block text-left">
                     {({ open }) => (
                       <>
-                        <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold  shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        <MenuButton className="inline-flex w-full items-center justify-center gap-x-2 rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                           {open ? (
                             <ChevronDown
                               aria-hidden="true"
@@ -164,10 +166,21 @@ export const Header = () => {
                             aria-hidden="true"
                             className="h-4 w-4 rounded-full bg-gray-700 text-white"
                           />
+                          <span className="text-xs font-medium text-gray-900">
+                            ${formatLargeNumber((auth.user?.credits ?? 0) / CREDIT_PER_DOLLAR)}
+                          </span>
                         </MenuButton>
 
                         <MenuItems className="absolute right-0 mt-1 w-36 rounded-md bg-white pt-1 shadow-lg ring-1 ring-black ring-opacity-5">
                           <div className="border-b border-gray-200 py-1">
+                            <MenuItem>
+                              <div className="block w-full px-4 py-2 text-center">
+                                <div className="text-sm tracking-wider text-gray-500">Balance</div>
+                                <div className="text-sm font-medium text-gray-900">
+                                  ${Number((auth.user?.credits ?? 0) / CREDIT_PER_DOLLAR).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                </div>
+                              </div>
+                            </MenuItem>
                             <MenuItem>
                               <button
                                 onClick={() => {
