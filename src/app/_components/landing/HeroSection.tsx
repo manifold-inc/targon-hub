@@ -47,7 +47,11 @@ function StatsCards() {
       <div className="flex w-full flex-col items-center">
         <div className="grid w-full grid-cols-1 gap-4 text-center font-mono sm:grid-cols-2">
           <StatCard title="Greater Than" value="400" unit="Tokens/s" />
-          <StatCard title="Currently" value="Free Tokens" unit="on All Models" />
+          <StatCard
+            title="Currently"
+            value="Free Tokens"
+            unit="on All Models"
+          />
         </div>
       </div>
     </div>

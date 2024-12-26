@@ -91,9 +91,7 @@ export const AppCard = ({
 
             <div className="flex h-5 items-center justify-between whitespace-nowrap">
               <div className="flex items-center gap-2">
-                <div className="text-sm leading-tight text-[#667085]">
-                  Free
-                </div>
+                <div className="text-sm leading-tight text-[#667085]">Free</div>
                 <div className="h-5 w-px bg-[#e4e7ec]" />
                 <ModelStatusIndicator enabled={enabled} showBorder={false} />
                 <div

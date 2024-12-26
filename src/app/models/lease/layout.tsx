@@ -18,8 +18,8 @@ const STEP_NAMES: Record<LeaseStep, string> = {
 const FEATURES = [
   {
     icon: Zap,
-    title: "Instant Deployment",
-    description: "Your model will be ready to use in minutes",
+    title: "Fast Deployment",
+    description: "Ready to use within 24 hours",
   },
   {
     icon: CreditCard,
@@ -95,7 +95,7 @@ export default function LeaseLayout({
         <div className="relative py-12 lg:py-48">
           <div className="mx-auto lg:mx-0 lg:max-w-lg">
             <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-              Lease Your Model
+              Add Any Model
             </h2>
             <p className="pt-6 text-lg/8 text-gray-600">
               Deploy any HuggingFace model with just a few clicks. Our platform
