@@ -105,16 +105,57 @@ export const creditsRouter = createTRPCRouter({
         });
       }
 
-      // calculate total gpu and eligible models
       const immunityPeriod = 7 * 24 * 60 * 60 * 1000;
       const now = new Date();
 
+      // If no enabled models, we can skip eligibility checks
+      if (!enabledModels.length) {
+        const requestedGPU = requiredGPU[0]?.gpu ?? 0;
+        if (requestedGPU <= MAX_GPU_SLOTS) {
+          await Promise.all([
+            ctx.db
+              .update(Model)
+              .set({
+                enabled: true,
+                enabledDate: now,
+              })
+              .where(eq(Model.name, input.model)),
+
+            ctx.db
+              .update(User)
+              .set({
+                credits:
+                  user[0].credits - requiredGPU[0]!.gpu * Number(COST_PER_GPU),
+              })
+              .where(eq(User.id, ctx.user.id)),
+
+            // Add lease record
+            ctx.db.insert(ModelLeasing).values({
+              userId: ctx.user.id,
+              modelName: input.model,
+              amount:
+                (requiredGPU[0]!.gpu * Number(COST_PER_GPU)) /
+                CREDIT_PER_DOLLAR,
+            }),
+          ]);
+
+          return {
+            success: true,
+          };
+        }
+
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: `Model requires ${requestedGPU} GPUs, which exceeds our maximum capacity of ${MAX_GPU_SLOTS} GPUs.`,
+        });
+      }
+
       const eligibleForRemoval = enabledModels
         .filter((model) => {
-          const timeSinceEnabled = now.getTime() - model.enabledDate!.getTime();
-          return timeSinceEnabled > immunityPeriod;
+          if (!model.enabledDate) return false;
+          return now.getTime() - model.enabledDate.getTime() > immunityPeriod;
         })
-        .sort((a, b) => a.enabledDate!.getTime() - b.enabledDate!.getTime());
+        .sort((a, b) => b.enabledDate!.getTime() - a.enabledDate!.getTime());
 
       const currentGPUUsage = enabledModels.reduce(
         (sum, model) => sum + (model.requiredGpus ?? 0),
@@ -168,7 +209,7 @@ export const creditsRouter = createTRPCRouter({
       if (gpuToRemove > 0) {
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: `Server capacity is currently full. Please try again later.`,
+          message: `Cannot free up enough GPU slots. Need ${gpuToRemove} more GPUs. Try again when more models become eligible for removal.`,
         });
       }
 

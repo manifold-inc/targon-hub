@@ -40,13 +40,13 @@ export default function ConfirmPage() {
     },
   );
 
-  const addModelMutation = reactClient.credits.leaseModel.useMutation({
+  const leaseModelMutation = reactClient.credits.leaseModel.useMutation({
     onSuccess: () => {
-      toast.success("Model added successfully");
+      toast.success("Model leased successfully");
       router.push(`/models/${encodeURIComponent(model!)}`);
     },
     onError: (error) => {
-      toast.error("Failed to add model: " + error.message);
+      toast.error("Failed to lease model: " + error.message);
     },
   });
 
@@ -122,11 +122,11 @@ export default function ConfirmPage() {
           Back
         </Link>
         <button
-          onClick={() => addModelMutation.mutate({ model })}
-          disabled={addModelMutation.isLoading}
+          onClick={() => leaseModelMutation.mutate({ model })}
+          disabled={leaseModelMutation.isLoading}
           className="rounded-full bg-mf-green px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-green disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {addModelMutation.isLoading ? (
+          {leaseModelMutation.isLoading ? (
             <div className="flex items-center gap-2">
               <Loader2 className="h-4 w-4 animate-spin" />
               <span>Adding Model...</span>
