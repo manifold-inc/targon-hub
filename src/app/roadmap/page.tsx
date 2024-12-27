@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { RadialRings } from "@/app/_components/browse/RadialRings";
+import { Check, Plus, MoreVertical, MessagesSquare } from "lucide-react";
 
 interface RoadmapItem {
   quarter: string;
@@ -27,7 +27,7 @@ const roadmapItems: RoadmapItem[] = [
   {
     quarter: "Q1 2025",
     title: "Infrastructure Scale",
-    description: "Building robust infrastructure and advanced deployment capabilities to support enterprise workloads.",
+    description: "Building robust infrastructure and advanced deployment capabilities to support enterprises.",
     status: "in-progress",
     features: [
       "High-Performance GPU Infrastructure",
@@ -72,186 +72,160 @@ const roadmapItems: RoadmapItem[] = [
       "24/7 Enterprise Support",
     ],
   },
+  {
+    quarter: "Community",
+    title: "Connect with Us",
+    description: "Join our community to help shape the future of Targon.",
+    status: "completed",
+    features: [
+      "Join Developer Discord",
+      "Chat with the Team",
+      "Email Support",
+      "Feature Requests & Feedback",
+    ],
+  },
 ];
+
+const animations = {
+  fadeInUp: {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.5 }
+  },
+  stagger: {
+    animate: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
+};
+
+const StatusBadge = ({ status }: { status: RoadmapItem["status"] }) => (
+  <span
+    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+      status === "completed"
+        ? "bg-mf-green/10 text-mf-green/60 ring-1 ring-inset ring-mf-green/30"
+        : status === "in-progress"
+        ? "bg-yellow-50 text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
+        : "bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/10"
+    }`}
+  >
+    {status === "in-progress" && (
+      <span className="relative mr-1 flex h-1 w-1">
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-yellow-400 opacity-75" />
+        <span className="relative inline-flex h-1 w-1 rounded-full bg-yellow-400" />
+      </span>
+    )}
+    {status.charAt(0).toUpperCase() + status.slice(1)}
+  </span>
+);
+
+const FeatureIcon = ({ status, isCommunitySection }: { status: RoadmapItem["status"], isCommunitySection: boolean }) => {
+  if (isCommunitySection) return <MessagesSquare className="h-3 w-3 text-mf-green/80" />;
+  if (status === "completed") return <Check className="h-3 w-3 text-mf-green/60" />;
+  if (status === "in-progress") return <Plus className="h-3 w-3 text-yellow-500" />;
+  return <MoreVertical className="h-3 w-3 text-gray-400" />;
+};
 
 export default function RoadmapPage() {
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-white via-gray-50/50 to-white">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -right-1/4 top-0 h-[800px] w-[800px] opacity-30">
-          <RadialRings position="top-right" />
-        </div>
-        <div className="absolute -left-1/4 top-96 h-[600px] w-[600px] opacity-30">
-          <RadialRings position="bottom-left" />
-        </div>
-        <div className="absolute left-1/4 top-32 h-32 w-32 rounded-full bg-gradient-to-r from-mf-green/5 to-transparent blur-3xl" />
-        <div className="absolute right-1/4 top-64 h-48 w-48 rounded-full bg-gradient-to-l from-mf-green/5 to-transparent blur-3xl" />
+    <div className="relative min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50">
+      {/* Background Effects */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]" />
+        <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-mf-green/20 to-transparent" />
       </div>
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="relative space-y-4 sm:space-y-6">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white to-gray-50/80 px-6 pb-12 pt-24 shadow-2xl shadow-mf-green/5 sm:px-12">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-[#142900]/10 to-transparent"
-            />
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.2 }}
-              className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-white"
-            />
-            <motion.div
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{
-                duration: 1,
-                type: "spring",
-                stiffness: 50,
-                damping: 20,
-              }}
-              className="relative text-center"
-            >
-              <motion.div
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
-                className="inline-block"
-              >
-                <span className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#142900]/10 px-6 py-2 text-sm font-semibold text-mf-green ring-1 ring-[#142900]/20">
-                  <span className="relative flex h-3 w-3">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mf-green opacity-75"></span>
-                    <span className="relative inline-flex h-3 w-3 rounded-full bg-mf-green"></span>
-                  </span>
-                  Building the Future of AI Infrastructure
-                </span>
-              </motion.div>
-              <motion.h1
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                className="mx-auto max-w-3xl bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text pb-4 text-4xl font-bold tracking-tight text-transparent sm:text-5xl md:text-6xl"
-              >
-                Product Roadmap
-              </motion.h1>
-              <motion.p
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-                className="mx-auto max-w-2xl text-lg text-gray-600 sm:text-xl"
-              >
-                Follow our journey as we revolutionize AI infrastructure and empower businesses with cutting-edge machine learning capabilities.
-              </motion.p>
-            </motion.div>
-          </div>
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[40rem] overflow-hidden">
+        {/* using pixels here, because its a gradient which is hard to do with tailwind */}
+        <div className="absolute -top-48 left-1/2 h-[1000px] w-[1000px] -translate-x-1/2">
+          <div className="absolute inset-0 rounded-full bg-gradient-to-b from-mf-green/20 via-mf-green/5 to-transparent blur-3xl" />
         </div>
+      </div>
 
-        <div className="relative mt-24 flow-root pb-24">
-          <div className="absolute inset-0 flex justify-center">
-            <div className="w-px bg-gradient-to-b from-mf-green/30 via-mf-green/10 to-transparent" />
-          </div>
-          
-          <ul role="list" className="-mb-8">
-            {roadmapItems.map((item, itemIdx) => (
-              <motion.li
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 + itemIdx * 0.1, duration: 0.5 }}
+      <div className="relative mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
+        {/* Header Section */}
+        <motion.div
+          initial="initial"
+          animate="animate"
+          variants={animations.stagger}
+          className="mx-auto max-w-2xl text-center"
+        >
+          <motion.div variants={animations.fadeInUp}>
+            <span className="inline-block rounded-full bg-[#142900]/5 px-4 py-1.5 text-sm font-medium text-mf-green">
+              Product Roadmap
+            </span>
+          </motion.div>
+          <motion.h1
+            variants={animations.fadeInUp}
+            className="pt-4 font-display text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
+          >
+            Building the future of{" "}
+            <p className="text-mf-green">AI infrastructure</p>
+          </motion.h1>
+          <motion.p
+            variants={animations.fadeInUp}
+            className="pt-6 text-lg leading-8 text-gray-600"
+          >
+            Our vision for revolutionizing how businesses deploy and scale AI models
+          </motion.p>
+        </motion.div>
+
+        {/* Roadmap Grid */}
+        <div className="relative pb-8 pt-16">
+          <motion.div
+            initial="initial"
+            animate="animate"
+            variants={animations.stagger}
+            className="grid gap-6 lg:grid-cols-3"
+          >
+            {roadmapItems.map((item, idx) => (
+              <motion.div
                 key={item.quarter}
-                className="relative pb-12"
+                variants={{
+                  initial: { opacity: 0, y: 20 },
+                  animate: { opacity: 1, y: 0, transition: { delay: idx * 0.1 } }
+                }}
+                className="group relative h-full"
               >
-                {itemIdx !== roadmapItems.length - 1 ? (
-                  <span
-                    className="absolute left-6 top-6 -ml-px h-full w-0.5 bg-gradient-to-b from-mf-green via-mf-green/50 to-transparent"
-                    aria-hidden="true"
-                  />
-                ) : null}
-                <div className="relative flex gap-8">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-[#142900]/20 to-[#142900]/5 ring-4 ring-white shadow-lg">
-                    <div
-                      className={`relative h-4 w-4 rounded-full transition-all duration-500 ${
-                        item.status === "completed"
-                          ? "bg-mf-green shadow-lg shadow-mf-green/30"
-                          : item.status === "in-progress"
-                          ? "bg-yellow-400 shadow-lg shadow-yellow-400/30"
-                          : "bg-gray-300"
-                      }`}
-                    >
-                      {item.status === "in-progress" && (
-                        <span className="absolute -inset-1 animate-ping rounded-full bg-yellow-400 opacity-75"></span>
-                      )}
+                <div className="relative flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-lg">
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white via-white to-gray-50/50" />
+                  
+                  <div className="relative flex h-full flex-col">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-sm font-medium text-mf-green">
+                        {item.quarter}
+                      </span>
+                      {item.quarter !== "Community" && <StatusBadge status={item.status} />}
                     </div>
-                  </div>
-                  <div className="flex min-w-0 flex-1 justify-between space-x-4">
-                    <div className="w-full">
-                      <motion.div
-                        whileHover={{ scale: 1.02 }}
-                        className="group relative overflow-hidden rounded-2xl border border-gray-200/50 bg-white/80 p-8 shadow-xl shadow-mf-green/5 backdrop-blur-sm transition-all duration-300 hover:border-mf-green/30 hover:shadow-2xl hover:shadow-mf-green/10"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                        <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-mf-green to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                        <div className="relative">
-                          <div className="flex items-center justify-between">
-                            <span className="inline-flex items-center gap-2 rounded-lg bg-[#142900]/10 px-4 py-2 text-sm font-semibold text-mf-green ring-1 ring-inset ring-[#142900]/20">
-                              {item.quarter}
-                              {item.status === "in-progress" && (
-                                <span className="relative flex h-2 w-2">
-                                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-yellow-400 opacity-75"></span>
-                                  <span className="relative inline-flex h-2 w-2 rounded-full bg-yellow-400"></span>
-                                </span>
-                              )}
-                            </span>
-                            <span
-                              className={`rounded-full px-4 py-1 text-sm font-medium ${
-                                item.status === "completed"
-                                  ? "bg-green-100 text-green-800 ring-1 ring-green-600/20"
-                                  : item.status === "in-progress"
-                                  ? "bg-yellow-100 text-yellow-800 ring-1 ring-yellow-600/20"
-                                  : "bg-gray-100 text-gray-800 ring-1 ring-gray-400/20"
-                              }`}
-                            >
-                              {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
-                            </span>
+
+                    <div className="pb-6 pt-4">
+                      <h3 className="text-xl font-semibold text-gray-900">
+                        {item.title}
+                      </h3>
+                      <p className="pt-2 text-sm leading-6 text-gray-600">
+                        {item.description}
+                      </p>
+                    </div>
+
+                    <div className="flex-1 space-y-3">
+                      {item.features.map((feature, featureIdx) => (
+                        <div
+                          key={featureIdx}
+                          className="flex h-10 items-center gap-3 rounded-xl bg-gray-50/80 px-4 text-sm text-gray-900 ring-1 ring-inset ring-gray-100"
+                        >
+                          <div className="flex h-5 w-5 flex-none items-center justify-center rounded-lg bg-gray-100">
+                            <FeatureIcon status={item.status} isCommunitySection={item.quarter === "Community"} />
                           </div>
-                          <h3 className="mt-4 text-xl font-bold text-gray-900">
-                            {item.title}
-                          </h3>
-                          <p className="mt-2 text-base text-gray-600">
-                            {item.description}
-                          </p>
-                          <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                            {item.features.map((feature, featureIdx) => (
-                              <li
-                                key={featureIdx}
-                                className="flex items-center rounded-xl bg-gradient-to-br from-gray-50 to-white p-3 text-sm text-gray-700 shadow-sm ring-1 ring-gray-900/5"
-                              >
-                                <svg
-                                  className="mr-3 h-5 w-5 flex-shrink-0 text-mf-green"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M5 13l4 4L19 7"
-                                  />
-                                </svg>
-                                {feature}
-                              </li>
-                            ))}
-                          </ul>
+                          <span className="truncate">{feature}</span>
                         </div>
-                      </motion.div>
+                      ))}
                     </div>
                   </div>
                 </div>
-              </motion.li>
+              </motion.div>
             ))}
-          </ul>
+          </motion.div>
         </div>
       </div>
     </div>
