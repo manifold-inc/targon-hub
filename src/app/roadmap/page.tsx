@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, Plus, MoreVertical, MessagesSquare } from "lucide-react";
+import { Check, MessagesSquare, MoreVertical, Plus } from "lucide-react";
 
 interface RoadmapItem {
   quarter: string;
@@ -15,7 +15,8 @@ const roadmapItems: RoadmapItem[] = [
   {
     quarter: "Q4 2024",
     title: "Foundation Launch",
-    description: "Establishing the core platform infrastructure for AI model deployment and management.",
+    description:
+      "Establishing the core platform infrastructure for AI model deployment and management.",
     status: "completed",
     features: [
       "Model Marketplace & Discovery",
@@ -27,7 +28,8 @@ const roadmapItems: RoadmapItem[] = [
   {
     quarter: "Q1 2025",
     title: "Infrastructure Scale",
-    description: "Building robust infrastructure and advanced deployment capabilities to support enterprises.",
+    description:
+      "Building robust infrastructure and advanced deployment capabilities to support enterprises.",
     status: "in-progress",
     features: [
       "High-Performance GPU Infrastructure",
@@ -39,7 +41,8 @@ const roadmapItems: RoadmapItem[] = [
   {
     quarter: "Q2 2025",
     title: "Platform Expansion",
-    description: "Expanding core capabilities with multi-modal AI support and compute integration features.",
+    description:
+      "Expanding core capabilities with multi-modal AI support and compute integration features.",
     status: "upcoming",
     features: [
       "Multi-Modal Model Support",
@@ -51,7 +54,8 @@ const roadmapItems: RoadmapItem[] = [
   {
     quarter: "Q3 2025",
     title: "Advanced Applications",
-    description: "Expanding platform capabilities with specialized tools and advanced AI applications.",
+    description:
+      "Expanding platform capabilities with specialized tools and advanced AI applications.",
     status: "upcoming",
     features: [
       "Multi-Modal Model Fine-tuning",
@@ -63,7 +67,8 @@ const roadmapItems: RoadmapItem[] = [
   {
     quarter: "Q4 2025",
     title: "Enterprise Features",
-    description: "Delivering comprehensive enterprise features for large-scale AI operations.",
+    description:
+      "Delivering comprehensive enterprise features for large-scale AI operations.",
     status: "upcoming",
     features: [
       "Team Collaboration Tools",
@@ -90,15 +95,15 @@ const animations = {
   fadeInUp: {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.5 }
+    transition: { duration: 0.5 },
   },
   stagger: {
     animate: {
       transition: {
-        staggerChildren: 0.1
-      }
-    }
-  }
+        staggerChildren: 0.1,
+      },
+    },
+  },
 };
 
 const StatusBadge = ({ status }: { status: RoadmapItem["status"] }) => (
@@ -107,8 +112,8 @@ const StatusBadge = ({ status }: { status: RoadmapItem["status"] }) => (
       status === "completed"
         ? "bg-mf-green/10 text-mf-green/60 ring-1 ring-inset ring-mf-green/30"
         : status === "in-progress"
-        ? "bg-yellow-50 text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
-        : "bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/10"
+          ? "bg-yellow-50 text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
+          : "bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/10"
     }`}
   >
     {status === "in-progress" && (
@@ -121,10 +126,19 @@ const StatusBadge = ({ status }: { status: RoadmapItem["status"] }) => (
   </span>
 );
 
-const FeatureIcon = ({ status, isCommunitySection }: { status: RoadmapItem["status"], isCommunitySection: boolean }) => {
-  if (isCommunitySection) return <MessagesSquare className="h-3 w-3 text-mf-green/80" />;
-  if (status === "completed") return <Check className="h-3 w-3 text-mf-green/60" />;
-  if (status === "in-progress") return <Plus className="h-3 w-3 text-yellow-500" />;
+const FeatureIcon = ({
+  status,
+  isCommunitySection,
+}: {
+  status: RoadmapItem["status"];
+  isCommunitySection: boolean;
+}) => {
+  if (isCommunitySection)
+    return <MessagesSquare className="h-3 w-3 text-mf-green/80" />;
+  if (status === "completed")
+    return <Check className="h-3 w-3 text-mf-green/60" />;
+  if (status === "in-progress")
+    return <Plus className="h-3 w-3 text-yellow-500" />;
   return <MoreVertical className="h-3 w-3 text-gray-400" />;
 };
 
@@ -158,7 +172,7 @@ export default function RoadmapPage() {
           </motion.div>
           <motion.h1
             variants={animations.fadeInUp}
-            className="pt-4 font-display text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
+            className="font-display pt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
           >
             Building the future of{" "}
             <p className="text-mf-green">AI infrastructure</p>
@@ -167,7 +181,8 @@ export default function RoadmapPage() {
             variants={animations.fadeInUp}
             className="pt-6 text-lg leading-8 text-gray-600"
           >
-            Our vision for revolutionizing how businesses deploy and scale AI models
+            Our vision for revolutionizing how businesses deploy and scale AI
+            models
           </motion.p>
         </motion.div>
 
@@ -184,19 +199,25 @@ export default function RoadmapPage() {
                 key={item.quarter}
                 variants={{
                   initial: { opacity: 0, y: 20 },
-                  animate: { opacity: 1, y: 0, transition: { delay: idx * 0.1 } }
+                  animate: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { delay: idx * 0.1 },
+                  },
                 }}
                 className="group relative h-full"
               >
                 <div className="relative flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-lg">
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white via-white to-gray-50/50" />
-                  
+
                   <div className="relative flex h-full flex-col">
                     <div className="flex items-center justify-between">
                       <span className="font-mono text-sm font-medium text-mf-green">
                         {item.quarter}
                       </span>
-                      {item.quarter !== "Community" && <StatusBadge status={item.status} />}
+                      {item.quarter !== "Community" && (
+                        <StatusBadge status={item.status} />
+                      )}
                     </div>
 
                     <div className="pb-6 pt-4">
@@ -215,7 +236,10 @@ export default function RoadmapPage() {
                           className="flex h-10 items-center gap-3 rounded-xl bg-gray-50/80 px-4 text-sm text-gray-900 ring-1 ring-inset ring-gray-100"
                         >
                           <div className="flex h-5 w-5 flex-none items-center justify-center rounded-lg bg-gray-100">
-                            <FeatureIcon status={item.status} isCommunitySection={item.quarter === "Community"} />
+                            <FeatureIcon
+                              status={item.status}
+                              isCommunitySection={item.quarter === "Community"}
+                            />
                           </div>
                           <span className="truncate">{feature}</span>
                         </div>
@@ -230,4 +254,4 @@ export default function RoadmapPage() {
       </div>
     </div>
   );
-} 
+}

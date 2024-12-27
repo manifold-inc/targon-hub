@@ -27,7 +27,7 @@ export const env = createEnv({
     INFLUX_TOKEN: z.string(),
     INFLUX_ORG: z.string(),
     INFULX_BUCKET: z.string(),
-    
+
     HUB_API_ESTIMATE_GPU_ENDPOINT: z.string(),
   },
   client: {
