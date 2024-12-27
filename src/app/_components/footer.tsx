@@ -8,6 +8,7 @@ const navigation = {
     { name: "Models", href: "/models" },
     { name: "Immunity", href: "/models/immunity" },
     { name: "Playground", href: "/playground" },
+    { name: "Roadmap", href: "/roadmap" },
   ],
   social: [
     {
