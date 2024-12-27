@@ -1,7 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { CreditCard, Gauge, Zap } from "lucide-react";
+import { CreditCard, Gauge, Zap, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 import { StepIndicator } from "@/app/_components/lease/StepIndicator";
 
@@ -117,6 +118,16 @@ export default function LeaseLayout({
                 </div>
               ))}
             </dl>
+
+            <div className="pt-10">
+              <Link
+                href="/infrastructure"
+                className="group inline-flex items-center rounded-full border border-[#142900] px-6 py-2.5 text-sm font-medium text-[#142900] transition hover:bg-[#142900]/5"
+              >
+                Curious about how it works?
+                <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
