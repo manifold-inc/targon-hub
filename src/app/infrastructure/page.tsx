@@ -16,7 +16,7 @@ export default function InfrastructurePage() {
         <HeroSection />
 
         {/* Content Sections */}
-        <div className="mx-auto max-w-7xl px-4 pt-12 sm:px-6 sm:pt-24 lg:pt-32">
+        <div className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
           <div className="space-y-12 sm:space-y-24 lg:space-y-32">
             <NetworkArchitectureSection />
             <ModelSupportSection />
