@@ -60,7 +60,7 @@
     "sse-decoder": "^1.0.0",
     "stripe": "^15.8.0",
     "superjson": "^2.2.1",
-    "three": "^0.171.0",
+    "tailwind-merge": "^2.6.0",
     "zod": "^3.22.4",
     "zustand": "^5.0.1"
   },
