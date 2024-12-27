@@ -27,10 +27,11 @@ export const env = createEnv({
     INFLUX_TOKEN: z.string(),
     INFLUX_ORG: z.string(),
     INFULX_BUCKET: z.string(),
+    
+    HUB_API_ESTIMATE_GPU_ENDPOINT: z.string(),
   },
   client: {
     NEXT_PUBLIC_HUB_API_ENDPOINT: z.string(),
-    NEXT_PUBLIC_HUB_API_ESTIMATE_GPU_ENDPOINT: z.string(),
     NEXT_PUBLIC_DEPOSIT_ADDRESS: z.string(),
   },
 
@@ -49,12 +50,12 @@ export const env = createEnv({
     STRIPE_CREDIT_PRICE_ID: process.env.STRIPE_CREDIT_PRICE_ID,
     STRIPE_ENDPOINT_SECRET: process.env.STRIPE_ENDPOINT_SECRET,
     NEXT_PUBLIC_HUB_API_ENDPOINT: process.env.NEXT_PUBLIC_HUB_API_ENDPOINT,
-    NEXT_PUBLIC_HUB_API_ESTIMATE_GPU_ENDPOINT: process.env.NEXT_PUBLIC_HUB_API_ESTIMATE_GPU_ENDPOINT,
     VERCEL_URL: process.env.VERCEL_ENV ?? "http://localhost:3000",
     INFLUX_URL: process.env.INFLUX_URL,
     INFLUX_TOKEN: process.env.INFLUX_TOKEN,
     INFLUX_ORG: process.env.INFLUX_ORG,
     INFULX_BUCKET: process.env.INFLUX_BUCKET,
+    HUB_API_ESTIMATE_GPU_ENDPOINT: process.env.HUB_API_ESTIMATE_GPU_ENDPOINT,
   },
 
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
