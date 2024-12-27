@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-import { CREDIT_PER_DOLLAR } from "@/constants";
 import { reactClient } from "@/trpc/react";
 import { formatModelName, getColorTheme } from "./ModelPerformanceOverview";
 
@@ -115,12 +114,7 @@ export const ModelPerformanceDetail = ({
             Cost
           </div>
           <div className="pt-0.5 text-sm font-semibold text-gray-900 sm:pt-1 sm:text-base">
-            $
-            {(
-              ((modelStats[0]?.cpt || 0) * 1_000_000) /
-              CREDIT_PER_DOLLAR
-            ).toFixed(2)}{" "}
-            / M tokens
+            Free
           </div>
         </div>
       </div>
