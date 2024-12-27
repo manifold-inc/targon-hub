@@ -332,7 +332,7 @@ export const modelRouter = createTRPCRouter({
       }
 
       // Now that we've validated everything and confirmed no custom code, try to get the GPU requirements
-      const gpuResponse = await fetch(`${env.NEXT_PUBLIC_HUB_API_ENDPOINT}`, {
+      const gpuResponse = await fetch(`${env.NEXT_PUBLIC_HUB_API_ESTIMATE_GPU_ENDPOINT}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
