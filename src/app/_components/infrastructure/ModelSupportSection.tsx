@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Code } from "lucide-react";
 
-const fadeInAnimation = {
+export const fadeInAnimation = {
   initial: { opacity: 0 },
   whileInView: { opacity: 1 },
   viewport: { once: true },

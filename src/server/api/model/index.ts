@@ -421,6 +421,32 @@ export const modelRouter = createTRPCRouter({
         : null,
     }));
   }),
+  getThreeClosestImmunityEnds: publicAuthlessProcedure.query(
+    async ({ ctx }) => {
+      const models = await ctx.db
+        .select({
+          name: Model.name,
+          enabled: Model.enabled,
+          enabledDate: Model.enabledDate,
+        })
+        .from(Model)
+        .where(eq(Model.enabled, true))
+        .orderBy(asc(Model.enabledDate))
+        .limit(3);
+
+      return models.map((model) => ({
+        ...model,
+        enabledDate: model.enabledDate
+          ? new Date(model.enabledDate).toLocaleDateString()
+          : null,
+        immunityEnds: model.enabledDate
+          ? new Date(
+              new Date(model.enabledDate).getTime() + 7 * 24 * 60 * 60 * 1000,
+            ).toLocaleDateString()
+          : null,
+      }));
+    },
+  ),
   getModelPreview: publicAuthlessProcedure.query(async ({ ctx }) => {
     const models = await ctx.db
       .select({
