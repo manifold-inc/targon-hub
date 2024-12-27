@@ -1,9 +1,67 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Cpu, ServerCog, User } from "lucide-react";
 
 export const NetworkAnimation = () => {
+  const [viewBox, setViewBox] = useState("0 0 800 200");
+  const [coordinates, setCoordinates] = useState({
+    userX: 150,
+    targonX: 400,
+    targonY: 100,
+    minerX: 650,
+    nodeYs: [60, 100, 140],
+  });
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (window.innerWidth < 400) {
+        setViewBox("0 0 300 200");
+        setCoordinates({
+          userX: 60,
+          targonX: 150,
+          targonY: 70,
+          minerX: 240,
+          nodeYs: [40, 75, 110],
+        });
+      } else if (window.innerWidth < 640) {
+        setViewBox("0 0 400 200");
+        setCoordinates({
+          userX: 85,
+          targonX: 200,
+          targonY: 75,
+          minerX: 315,
+          nodeYs: [45, 80, 115],
+        });
+      } else if (window.innerWidth < 768) {
+        setViewBox("0 0 600 200");
+        setCoordinates({
+          userX: 125,
+          targonX: 300,
+          targonY: 80,
+          minerX: 475,
+          nodeYs: [50, 85, 120],
+        });
+      } else {
+        setViewBox("0 0 800 200");
+        setCoordinates({
+          userX: 150,
+          targonX: 400,
+          targonY: 85,
+          minerX: 650,
+          nodeYs: [45, 100, 165],
+        });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
+  const { userX, targonX, targonY, minerX, nodeYs } = coordinates;
+
   return (
     <div className="relative flex h-full flex-col justify-center gap-4">
       {/* Icons Row */}
@@ -24,7 +82,7 @@ export const NetworkAnimation = () => {
           ))}
         </div>
 
-        {/* Validator Icon */}
+        {/* Targon API Icon */}
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: [0, 1.2, 1] }}
@@ -52,7 +110,7 @@ export const NetworkAnimation = () => {
         </div>
 
         {/* Connection Lines */}
-        <svg className="absolute inset-0" viewBox="0 0 800 200">
+        <svg className="absolute inset-0" viewBox={viewBox}>
           {/* Gradient Definitions */}
           <defs>
             <linearGradient id="lineGradient" gradientUnits="userSpaceOnUse">
@@ -65,134 +123,104 @@ export const NetworkAnimation = () => {
             </linearGradient>
           </defs>
 
-          {/* Lines from Users to Validator */}
-          <motion.line
-            x1="150"
-            y1="40"
-            x2="400"
-            y2="100"
-            stroke="url(#lineGradient)"
-            strokeWidth="1"
-          />
-          <motion.line
-            x1="150"
-            y1="100"
-            x2="400"
-            y2="100"
-            stroke="url(#lineGradient)"
-            strokeWidth="1"
-          />
-          <motion.line
-            x1="150"
-            y1="160"
-            x2="400"
-            y2="100"
-            stroke="url(#lineGradient)"
-            strokeWidth="1"
-          />
+          {/* Lines from Users to Targon API */}
+          {nodeYs.map((y) => (
+            <motion.line
+              key={`user-${y}`}
+              x1={userX}
+              y1={y}
+              x2={targonX}
+              y2={targonY}
+              stroke="url(#lineGradient)"
+              strokeWidth="1"
+            />
+          ))}
 
-          {/* Lines from Validator to Miners */}
-          <motion.line
-            x1="400"
-            y1="100"
-            x2="650"
-            y2="40"
-            stroke="url(#lineGradient)"
-            strokeWidth="1"
-          />
-          <motion.line
-            x1="400"
-            y1="100"
-            x2="650"
-            y2="100"
-            stroke="url(#lineGradient)"
-            strokeWidth="1"
-          />
-          <motion.line
-            x1="400"
-            y1="100"
-            x2="650"
-            y2="160"
-            stroke="url(#lineGradient)"
-            strokeWidth="1"
-          />
+          {/* Lines from Targon API to Miners */}
+          {nodeYs.map((y) => (
+            <motion.line
+              key={`miner-${y}`}
+              x1={targonX}
+              y1={targonY}
+              x2={minerX}
+              y2={y}
+              stroke="url(#lineGradient)"
+              strokeWidth="1"
+            />
+          ))}
 
           {/* Complete Path Animations */}
-          {[
-            { userY: 40, minerY: 40, delay: 0 },
-            { userY: 100, minerY: 100, delay: 2 },
-            { userY: 160, minerY: 160, delay: 4 },
-          ].map(({ userY, minerY, delay }) => (
-            <g key={userY}>
-              {/* User to Validator */}
+          {nodeYs.map((y, index) => (
+            <g key={y}>
+              {/* User to Targon API */}
               <motion.circle
                 r="3"
                 fill="#142900"
                 initial={{ opacity: 0 }}
                 animate={{
-                  cx: [150, 400],
-                  cy: [userY, 100],
+                  cx: [userX, targonX],
+                  cy: [y, targonY],
                   opacity: [0, 1, 0],
                 }}
                 transition={{
                   duration: 0.75,
                   repeat: Infinity,
                   repeatDelay: 6,
-                  delay,
+                  delay: index * 0.75,
                   ease: "linear",
                 }}
               />
-              {/* Validator to Miner */}
+              {/* Targon API to Miner */}
               <motion.circle
                 r="3"
                 fill="#142900"
                 initial={{ opacity: 0 }}
                 animate={{
-                  cx: [400, 650],
-                  cy: [100, minerY],
+                  cx: [targonX, minerX],
+                  cy: [targonY, y],
                   opacity: [0, 1, 0],
                 }}
                 transition={{
                   duration: 0.75,
                   repeat: Infinity,
                   repeatDelay: 6,
-                  delay: delay + 0.75,
+                  delay: index * 0.75 + 0.75,
                   ease: "linear",
                 }}
               />
-              {/* Miner back to Validator */}
+              {/* Miner back to Targon API */}
               <motion.circle
                 r="3"
                 fill="#142900"
                 initial={{ opacity: 0 }}
                 animate={{
-                  cx: [650, 400],
-                  cy: [minerY, 100],
+                  cx: [minerX, targonX],
+                  cy: [y, targonY],
                   opacity: [0, 1, 0],
                 }}
                 transition={{
                   duration: 0.75,
                   repeat: Infinity,
                   repeatDelay: 6,
-                  delay: delay + 1.5,
+                  delay: index * 0.75 + 1.5,
                   ease: "linear",
                 }}
               />
-              {/* Validator back to User */}
+              {/* Targon API back to User */}
               <motion.circle
                 r="3"
                 fill="#142900"
                 initial={{ opacity: 0 }}
                 animate={{
-                  cx: [400, 150],
-                  cy: [100, userY],
+                  cx: [targonX, userX],
+                  cy: [targonY, y],
                   opacity: [0, 1, 0],
                 }}
                 transition={{
                   duration: 0.75,
                   repeat: Infinity,
                   repeatDelay: 6,
-                  delay: delay + 2.25,
+                  delay: index * 0.75 + 2.25,
                   ease: "linear",
                 }}
               />

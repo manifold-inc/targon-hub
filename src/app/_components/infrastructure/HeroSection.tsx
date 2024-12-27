@@ -86,9 +86,9 @@ export const HeroSection = () => {
               AI <span className="italic text-mf-green">Evolved</span>
             </Title>
             <Description>
-              Built on Bittensor&apos;s Subnet 4, our API seamlessly connects
-              users to a decentralized network of miners, backed by a robust
-              validator system.
+              Operating on Bittensor&apos;s Subnet 4, Targon provides seamless
+              access to a decentralized network of AI models through our
+              optimized API, powered by a network of high-performance miners
             </Description>
           </motion.div>
         </div>
