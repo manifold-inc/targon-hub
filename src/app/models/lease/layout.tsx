@@ -1,8 +1,8 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { CreditCard, Gauge, Zap, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ChevronRight, CreditCard, Gauge, Zap } from "lucide-react";
 
 import { StepIndicator } from "@/app/_components/lease/StepIndicator";
 

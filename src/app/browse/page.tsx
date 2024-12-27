@@ -137,11 +137,10 @@ export default function BrowsePage() {
           />
 
           <CTACard
-            title="GPU Compute"
-            description="Access our decentralized network of high-performance GPUs for your AI workloads."
-            ctaText="Learn More"
-            href="/roadmap"
-            isComingSoon={true}
+            title="AI Models"
+            description="Browse our collection of high-performance language models ready for deployment."
+            ctaText="View Models"
+            href="/models"
             variant="right"
           />
         </div>
