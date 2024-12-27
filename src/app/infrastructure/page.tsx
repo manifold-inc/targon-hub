@@ -7,7 +7,6 @@ import { NetworkArchitectureSection } from "@/app/_components/infrastructure/Net
 export default function InfrastructurePage() {
   return (
     <div className="relative min-h-screen bg-white">
-      {/* Gradient Background */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(20,41,0,0.1),rgba(255,255,255,0))]" />
       </div>
@@ -15,9 +14,8 @@ export default function InfrastructurePage() {
       <div className="relative">
         <HeroSection />
 
-        {/* Content Sections */}
         <div className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
-          <div className="space-y-12 sm:space-y-24 lg:space-y-32">
+          <div className="space-y-6 sm:space-y-12 lg:space-y-24">
             <NetworkArchitectureSection />
             <ModelSupportSection />
             <ModelLeasingSection />
