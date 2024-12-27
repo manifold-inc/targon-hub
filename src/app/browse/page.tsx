@@ -16,8 +16,6 @@ import { reactClient } from "@/trpc/react";
 export default function BrowsePage() {
   const models = reactClient.model.getModelPreview.useQuery();
 
-  console.log(models.data);
-
   const actionCards = [
     {
       label: "Lease",
