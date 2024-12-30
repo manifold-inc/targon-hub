@@ -38,21 +38,11 @@ export const ModelPerformanceDetail = ({
   colorIndex: number;
 }) => {
   const [hoverData, setHoverData] = useState<HoverData>(null);
-  const { data: modelStats, isLoading } =
+  const { data: modelStats } =
     reactClient.model.getModelDailyStats.useQuery(modelName);
 
-  if (isLoading || !modelStats) {
-    return (
-      <div className="flex items-center justify-center py-4">
-        <p
-          className={`h-8 w-8 animate-pulse ${getColorTheme(colorIndex).text}`}
-        >
-          {" "}
-          Loading...{" "}
-        </p>
-      </div>
-    );
-  }
+  // return null if no data or while loading. Looks better than a loading spinner.
+  if (!modelStats) return null;
 
   // Sort by date to ensure correct order
   const sortedStats = [...modelStats].sort(
