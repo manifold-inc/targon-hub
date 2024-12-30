@@ -80,8 +80,14 @@ export default function ModelPage() {
         <h2 className="text-lg font-semibold text-gray-900">
           Step 1: Enter Model Name
         </h2>
-        <p className="pt-1 text-sm text-gray-600">
+        <p className="pt-2 text-sm text-gray-600">
           Enter the HuggingFace model you&apos;d like to lease
+        </p>
+        <p className="pt-2 text-sm text-gray-600">
+          Example:{" "}
+          <span className="rounded border border-gray-200 bg-gray-50 px-1.5 py-0.5 font-mono text-gray-800">
+            Organization/Model-Name
+          </span>
         </p>
       </div>
 
@@ -89,14 +95,15 @@ export default function ModelPage() {
       <div>
         <label
           htmlFor="modelUrl"
-          className="block text-sm/6 font-semibold text-gray-900"
+          className="flex items-center gap-2 text-sm/6 font-semibold text-gray-900"
         >
-          HuggingFace Model <span className="text-red-500">*</span>
+          HuggingFace Model{" "}
         </label>
         <div className="pt-2">
           <div className="flex w-full items-center rounded-lg border border-gray-300 bg-white focus-within:border-mf-green focus-within:ring-2 focus-within:ring-mf-green">
             <span
-              className="cursor-text pl-4 text-sm text-gray-500"
+              // flex-shrink-0 to ensure the text doesnt wrap on different browsers, let the prefix always show and the input shrink
+              className="flex-shrink-0 cursor-text pl-4 text-sm text-gray-500"
               onClick={() => document.getElementById("modelUrl")?.focus()}
             >
               https://huggingface.com/
@@ -107,7 +114,6 @@ export default function ModelPage() {
               value={model}
               onChange={(e) => setModel(e.target.value.trim())}
               className="w-full border-0 bg-transparent py-2 pl-0 pr-4 text-sm text-gray-900 placeholder:text-gray-700 focus:ring-0"
-              placeholder="NousResearch/Hermes-3-Llama-3.1-8B"
             />
           </div>
         </div>
