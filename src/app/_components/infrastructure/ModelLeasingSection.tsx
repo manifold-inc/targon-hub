@@ -24,9 +24,9 @@ export const ModelLeasingSection = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        <Shield className="mx-auto h-12 w-12 rounded-full bg-[#142900]/10 p-3 text-[#142900] sm:mx-0 sm:h-14 sm:w-14" />
+        <Shield className="mx-auto h-12 w-12 rounded-full bg-[#142900]/10 p-3 text-[#142900] lg:mx-0 sm:h-14 sm:w-14" />
 
-        <h2 className="text-center text-2xl font-semibold text-gray-900 sm:text-left sm:text-3xl">
+        <h2 className="text-center text-2xl font-semibold text-gray-900 lg:text-left sm:text-3xl">
           Model Leasing
         </h2>
         <p className="text-sm text-gray-600 sm:text-base md:text-lg">
