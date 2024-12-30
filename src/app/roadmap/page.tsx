@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, MessagesSquare, MoreVertical, Plus } from "lucide-react";
+import { Check, CircleDashed, Hourglass, MessagesSquare } from "lucide-react";
 
 interface RoadmapItem {
   quarter: string;
@@ -134,12 +134,15 @@ const FeatureIcon = ({
   isCommunitySection: boolean;
 }) => {
   if (isCommunitySection)
-    return <MessagesSquare className="h-3 w-3 text-mf-green/80" />;
+    return <MessagesSquare className="h-4 w-4 text-mf-green/80" />;
   if (status === "completed")
-    return <Check className="h-3 w-3 text-mf-green/60" />;
+    return <Check className="h-4 w-4 text-green-800" />;
   if (status === "in-progress")
-    return <Plus className="h-3 w-3 text-yellow-500" />;
-  return <MoreVertical className="h-3 w-3 text-gray-400" />;
+    return (
+      //custom animation speed
+      <CircleDashed className="h-4 w-4 animate-spin text-yellow-500 [animation-duration:3000ms]" />
+    );
+  return <Hourglass className="h-4 w-4 text-gray-500" />;
 };
 
 export default function RoadmapPage() {
@@ -235,7 +238,7 @@ export default function RoadmapPage() {
                           key={featureIdx}
                           className="flex h-10 items-center gap-3 rounded-xl bg-gray-50/80 px-4 text-sm text-gray-900 ring-1 ring-inset ring-gray-100"
                         >
-                          <div className="flex h-5 w-5 flex-none items-center justify-center rounded-lg bg-gray-100">
+                          <div className="flex h-5 w-5 flex-none items-center justify-center">
                             <FeatureIcon
                               status={item.status}
                               isCommunitySection={item.quarter === "Community"}
