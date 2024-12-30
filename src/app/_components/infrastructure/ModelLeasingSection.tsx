@@ -30,8 +30,9 @@ export const ModelLeasingSection = () => {
           Model Leasing
         </h2>
         <p className="text-sm text-gray-600 sm:text-base md:text-lg">
-          Lease and deploy any HuggingFace model with guaranteed availability
-          through our immunity system.
+          Experience worry-free model deployment with our powerful immunity
+          system. Deploy any HuggingFace model with 7 days of guaranteed
+          protection from replacement.
         </p>
 
         <motion.div
