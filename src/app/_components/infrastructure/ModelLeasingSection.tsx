@@ -91,25 +91,27 @@ export const ModelLeasingSection = () => {
                         <span className="text-xs font-medium">Live</span>
                       </div>
                     </div>
-                    {model.immunityEnds && (
-                      <div className="flex flex-wrap items-center gap-1.5 text-xs text-gray-500">
-                        <span className="font-medium">
-                          {new Date(model.immunityEnds) < new Date()
-                            ? "Immunity Ended:"
-                            : "Immunity Ends:"}
-                        </span>
+                    <div className="flex flex-wrap items-center gap-1.5 text-xs text-gray-500">
+                      {model.immunityEnds && (
                         <span>
-                          {new Date(model.immunityEnds).toLocaleDateString(
-                            undefined,
-                            {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            },
+                          {new Date(model.immunityEnds) > new Date() ? (
+                            <>
+                              <span className="font-medium">Immunity Ends:</span>{" "}
+                              {new Date(model.immunityEnds).toLocaleDateString(
+                                undefined,
+                                {
+                                  year: "numeric",
+                                  month: "short",
+                                  day: "numeric",
+                                },
+                              )}
+                            </>
+                          ) : (
+                            <span className="font-medium">Active Until Replaced</span>
                           )}
                         </span>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </Link>
               </motion.div>
