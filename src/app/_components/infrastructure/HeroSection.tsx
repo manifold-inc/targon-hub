@@ -72,7 +72,7 @@ export const HeroSection = () => {
             whileInView="visible"
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-[#142900]/5 to-transparent"
+            className="absolute inset-0 bg-transparent"
           />
           <motion.div
             initial={{ y: 100, opacity: 0 }}
