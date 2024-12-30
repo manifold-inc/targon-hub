@@ -43,13 +43,10 @@ export default function BrowsePage() {
         {/* Header Section */}
         <div className="relative space-y-4 sm:space-y-6">
           <div className="relative overflow-hidden">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-[#142900]/5 to-transparent"
-            />
+            {/* Static gradients that are present immediately */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#142900]/10 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white" />
+            {/* Animated content */}
             <motion.div
               initial={{ y: 100, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
