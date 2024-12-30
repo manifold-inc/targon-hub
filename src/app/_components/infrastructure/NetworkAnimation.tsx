@@ -160,7 +160,7 @@ export const NetworkAnimation = () => {
                 animate={{
                   cx: [userX, targonX],
                   cy: [y, targonY],
-                  opacity: [0, 1, 0],
+                  opacity: [0, 1, 1, 0],
                 }}
                 transition={{
                   duration: 0.75,
@@ -168,6 +168,7 @@ export const NetworkAnimation = () => {
                   repeatDelay: 6,
                   delay: index * 0.75,
                   ease: "linear",
+                  times: [0, 0.1, 0.9, 1],
                 }}
               />
               {/* Targon API to Miner */}
@@ -178,7 +179,7 @@ export const NetworkAnimation = () => {
                 animate={{
                   cx: [targonX, minerX],
                   cy: [targonY, y],
-                  opacity: [0, 1, 0],
+                  opacity: [0, 1, 1, 0],
                 }}
                 transition={{
                   duration: 0.75,
@@ -186,6 +187,7 @@ export const NetworkAnimation = () => {
                   repeatDelay: 6,
                   delay: index * 0.75 + 0.75,
                   ease: "linear",
+                  times: [0, 0.1, 0.9, 1],
                 }}
               />
               {/* Miner back to Targon API */}
@@ -196,7 +198,7 @@ export const NetworkAnimation = () => {
                 animate={{
                   cx: [minerX, targonX],
                   cy: [y, targonY],
-                  opacity: [0, 1, 0],
+                  opacity: [0, 1, 1, 0],
                 }}
                 transition={{
                   duration: 0.75,
@@ -204,6 +206,7 @@ export const NetworkAnimation = () => {
                   repeatDelay: 6,
                   delay: index * 0.75 + 1.5,
                   ease: "linear",
+                  times: [0, 0.1, 0.9, 1],
                 }}
               />
               {/* Targon API back to User */}
@@ -214,7 +217,7 @@ export const NetworkAnimation = () => {
                 animate={{
                   cx: [targonX, userX],
                   cy: [targonY, y],
-                  opacity: [0, 1, 0],
+                  opacity: [0, 1, 1, 0],
                 }}
                 transition={{
                   duration: 0.75,
@@ -222,6 +225,7 @@ export const NetworkAnimation = () => {
                   repeatDelay: 6,
                   delay: index * 0.75 + 2.25,
                   ease: "linear",
+                  times: [0, 0.1, 0.9, 1],
                 }}
               />
             </g>

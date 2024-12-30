@@ -24,9 +24,9 @@ export const ModelLeasingSection = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        <Shield className="mx-auto h-12 w-12 rounded-full bg-[#142900]/10 p-3 text-[#142900] lg:mx-0 sm:h-14 sm:w-14" />
+        <Shield className="mx-auto h-12 w-12 rounded-full bg-[#142900]/10 p-3 text-[#142900] sm:h-14 sm:w-14 lg:mx-0" />
 
-        <h2 className="text-center text-2xl font-semibold text-gray-900 lg:text-left sm:text-3xl">
+        <h2 className="text-center text-2xl font-semibold text-gray-900 sm:text-3xl lg:text-left">
           Model Leasing
         </h2>
         <p className="text-sm text-gray-600 sm:text-base md:text-lg">
@@ -96,7 +96,9 @@ export const ModelLeasingSection = () => {
                         <span>
                           {new Date(model.immunityEnds) > new Date() ? (
                             <>
-                              <span className="font-medium">Immunity Ends:</span>{" "}
+                              <span className="font-medium">
+                                Immunity Ends:
+                              </span>{" "}
                               {new Date(model.immunityEnds).toLocaleDateString(
                                 undefined,
                                 {
@@ -107,7 +109,9 @@ export const ModelLeasingSection = () => {
                               )}
                             </>
                           ) : (
-                            <span className="font-medium">Active Until Replaced</span>
+                            <span className="font-medium">
+                              Active Until Replaced
+                            </span>
                           )}
                         </span>
                       )}
