@@ -113,8 +113,13 @@ export const NetworkArchitectureSection = () => {
         <div className="relative lg:pt-12">
           <div className="absolute -inset-x-4 -bottom-16 top-0 rounded-3xl bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent" />
           <div className="relative space-y-6 sm:space-y-8">
-            <div className="hidden aspect-[3/2] overflow-hidden rounded-2xl border border-gray-100 bg-white/50 shadow-xl sm:aspect-[4/3] lg:block">
-              <NetworkAnimation />
+            {/* Large screens */}
+            <div className="hidden aspect-[3/2] overflow-hidden rounded-2xl border border-gray-100 bg-white/50 shadow-xl sm:aspect-[4/3] lg:block xl:hidden">
+              <NetworkAnimation variant="compact" />
+            </div>
+            {/* Larger screens -- not the biggest fan of doing it like this */}
+            <div className="hidden aspect-[3/2] overflow-hidden rounded-2xl border border-gray-100 bg-white/50 shadow-xl sm:aspect-[4/3] xl:block">
+              <NetworkAnimation variant="default" />
             </div>
             <motion.div
               variants={slideUpVariants}

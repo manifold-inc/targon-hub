@@ -1,73 +1,53 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Cpu, ServerCog, User } from "lucide-react";
 
-export const NetworkAnimation = () => {
-  const [viewBox, setViewBox] = useState("0 0 800 200");
-  const [coordinates, setCoordinates] = useState({
-    userX: 150,
-    targonX: 400,
-    targonY: 100,
-    minerX: 650,
-    nodeYs: [60, 100, 140],
-  });
+// Create a compact version with adjusted coordinates
+const COMPACT_COORDINATES = {
+  userX: 100,
+  targonX: 300,
+  minerX: 500,
+  // Y coordinates stay the same
+  targonY: 150,
+  userYs: [40, 150, 280],
+  minerYs: [40, 150, 280],
+  viewBox: "0 0 600 300", // Smaller viewBox for compact version
+};
 
-  useEffect(() => {
-    const updateDimensions = () => {
-      if (window.innerWidth < 400) {
-        setViewBox("0 0 300 200");
-        setCoordinates({
-          userX: 60,
-          targonX: 150,
-          targonY: 70,
-          minerX: 240,
-          nodeYs: [40, 75, 110],
-        });
-      } else if (window.innerWidth < 640) {
-        setViewBox("0 0 400 200");
-        setCoordinates({
-          userX: 85,
-          targonX: 200,
-          targonY: 75,
-          minerX: 315,
-          nodeYs: [45, 80, 115],
-        });
-      } else if (window.innerWidth < 768) {
-        setViewBox("0 0 600 200");
-        setCoordinates({
-          userX: 125,
-          targonX: 300,
-          targonY: 80,
-          minerX: 475,
-          nodeYs: [50, 85, 120],
-        });
-      } else {
-        setViewBox("0 0 800 200");
-        setCoordinates({
-          userX: 150,
-          targonX: 400,
-          targonY: 85,
-          minerX: 650,
-          nodeYs: [45, 100, 165],
-        });
-      }
-    };
+const DEFAULT_COORDINATES = {
+  userX: 150,
+  targonX: 400,
+  minerX: 650,
+  targonY: 150,
+  userYs: [40, 150, 280],
+  minerYs: [40, 150, 280],
+  viewBox: "0 0 800 300", // Original viewBox for large screens
+};
 
-    updateDimensions();
-    window.addEventListener("resize", updateDimensions);
-    return () => window.removeEventListener("resize", updateDimensions);
-  }, []);
+export const NetworkAnimation = ({
+  variant = "default",
+}: {
+  variant?: "default" | "compact";
+}) => {
+  const coordinates =
+    variant === "default" ? DEFAULT_COORDINATES : COMPACT_COORDINATES;
+  // Animation constants
+  const ANIMATION_DURATION = 0.75; // Faster path duration (was 1.0)
+  const PATH_CYCLE = ANIMATION_DURATION * 4; // Time for one node's complete cycle (4 paths)
+  const CYCLE_DELAY = 0.5; // Shorter delay between cycles (was 1.0)
+  const NODE_OFFSET = 1.0; // Shorter offset between nodes (was 1.5)
 
-  const { userX, targonX, targonY, minerX, nodeYs } = coordinates;
+  const { userX, targonX, minerX, targonY, userYs, minerYs } = coordinates;
 
   return (
-    <div className="relative flex h-full flex-col justify-center gap-4">
+    <div className="relative flex h-full flex-col justify-center gap-6">
       {/* Icons Row */}
-      <div className="relative flex items-center justify-between px-4 sm:px-8 md:px-16">
+      <div className="relative flex items-center justify-between px-16">
         {/* User Icons */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-10">
+          {" "}
+          {/* Exact NODE_SPACING */}
           {[-1, 0, 1].map((offset, _i) => (
             <motion.div
               key={offset}
@@ -75,8 +55,8 @@ export const NetworkAnimation = () => {
               animate={{ scale: [0, 1.2, 1] }}
               transition={{ duration: 0.5, delay: 0.1 + _i * 0.1 }}
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#142900]/10">
-                <User className="h-5 w-5 text-[#142900]" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#142900]/10">
+                <User className="h-6 w-6 text-[#142900]" />
               </div>
             </motion.div>
           ))}
@@ -94,7 +74,9 @@ export const NetworkAnimation = () => {
         </motion.div>
 
         {/* Miner Icons */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-10">
+          {" "}
+          {/* Exact NODE_SPACING */}
           {[-1, 0, 1].map((offset, _i) => (
             <motion.div
               key={offset}
@@ -102,128 +84,122 @@ export const NetworkAnimation = () => {
               animate={{ scale: [0, 1.2, 1] }}
               transition={{ duration: 0.5, delay: 0.3 + _i * 0.1 }}
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#142900]/10">
-                <Cpu className="h-5 w-5 text-[#142900]" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#142900]/10">
+                <Cpu className="h-6 w-6 text-[#142900]" />
               </div>
             </motion.div>
           ))}
         </div>
 
         {/* Connection Lines */}
-        <svg className="absolute inset-0" viewBox={viewBox}>
-          {/* Gradient Definitions */}
-          <defs>
-            <linearGradient id="lineGradient" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#142900" stopOpacity="0.05" />
-              <stop offset="35%" stopColor="#142900" stopOpacity="0.2" />
-              <stop offset="45%" stopColor="#142900" stopOpacity="0.05" />
-              <stop offset="65%" stopColor="#142900" stopOpacity="0.05" />
-              <stop offset="75%" stopColor="#142900" stopOpacity="0.2" />
-              <stop offset="100%" stopColor="#142900" stopOpacity="0.05" />
-            </linearGradient>
-          </defs>
-
+        <svg
+          className="absolute inset-0"
+          viewBox={coordinates.viewBox}
+          preserveAspectRatio="xMidYMid meet"
+        >
           {/* Lines from Users to Targon API */}
-          {nodeYs.map((y) => (
+          {userYs.map((userY) => (
             <motion.line
-              key={`user-${y}`}
+              key={`user-${userY}`}
               x1={userX}
-              y1={y}
+              y1={userY}
               x2={targonX}
               y2={targonY}
-              stroke="url(#lineGradient)"
-              strokeWidth="1"
+              stroke="#142900"
+              strokeWidth="2"
+              strokeOpacity="0.15"
             />
           ))}
 
           {/* Lines from Targon API to Miners */}
-          {nodeYs.map((y) => (
+          {minerYs.map((minerY) => (
             <motion.line
-              key={`miner-${y}`}
+              key={`miner-${minerY}`}
               x1={targonX}
               y1={targonY}
               x2={minerX}
-              y2={y}
-              stroke="url(#lineGradient)"
-              strokeWidth="1"
+              y2={minerY}
+              stroke="#142900"
+              strokeWidth="2"
+              strokeOpacity="0.15"
             />
           ))}
 
           {/* Complete Path Animations */}
-          {nodeYs.map((y, index) => (
-            <g key={y}>
+          {userYs.map((userY, index) => (
+            <g key={userY}>
               {/* User to Targon API */}
               <motion.circle
-                r="3"
+                r="2.5"
                 fill="#142900"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [userX, targonX],
-                  cy: [y, targonY],
+                  cy: [userY, targonY],
                   opacity: [0, 1, 1, 0],
                 }}
                 transition={{
-                  duration: 0.75,
+                  duration: ANIMATION_DURATION,
                   repeat: Infinity,
-                  repeatDelay: 6,
-                  delay: index * 0.75,
+                  repeatDelay: PATH_CYCLE + CYCLE_DELAY,
+                  delay: index * NODE_OFFSET, // Offset when each node starts
                   ease: "linear",
                   times: [0, 0.1, 0.9, 1],
                 }}
               />
               {/* Targon API to Miner */}
               <motion.circle
-                r="3"
+                r="2.5"
                 fill="#142900"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [targonX, minerX],
-                  cy: [targonY, y],
+                  cy: [targonY, minerYs[index]],
                   opacity: [0, 1, 1, 0],
                 }}
                 transition={{
-                  duration: 0.75,
+                  duration: ANIMATION_DURATION,
                   repeat: Infinity,
-                  repeatDelay: 6,
-                  delay: index * 0.75 + 0.75,
+                  repeatDelay: PATH_CYCLE + CYCLE_DELAY,
+                  delay: index * NODE_OFFSET + ANIMATION_DURATION,
                   ease: "linear",
                   times: [0, 0.1, 0.9, 1],
                 }}
               />
               {/* Miner back to Targon API */}
               <motion.circle
-                r="3"
+                r="2.5"
                 fill="#142900"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [minerX, targonX],
-                  cy: [y, targonY],
+                  cy: [minerYs[index], targonY],
                   opacity: [0, 1, 1, 0],
                 }}
                 transition={{
-                  duration: 0.75,
+                  duration: ANIMATION_DURATION,
                   repeat: Infinity,
-                  repeatDelay: 6,
-                  delay: index * 0.75 + 1.5,
+                  repeatDelay: PATH_CYCLE + CYCLE_DELAY,
+                  delay: index * NODE_OFFSET + ANIMATION_DURATION * 2,
                   ease: "linear",
                   times: [0, 0.1, 0.9, 1],
                 }}
               />
               {/* Targon API back to User */}
               <motion.circle
-                r="3"
+                r="2.5"
                 fill="#142900"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [targonX, userX],
-                  cy: [targonY, y],
+                  cy: [targonY, userY],
                   opacity: [0, 1, 1, 0],
                 }}
                 transition={{
-                  duration: 0.75,
+                  duration: ANIMATION_DURATION,
                   repeat: Infinity,
-                  repeatDelay: 6,
-                  delay: index * 0.75 + 2.25,
+                  repeatDelay: PATH_CYCLE + CYCLE_DELAY,
+                  delay: index * NODE_OFFSET + ANIMATION_DURATION * 3,
                   ease: "linear",
                   times: [0, 0.1, 0.9, 1],
                 }}
@@ -234,14 +210,14 @@ export const NetworkAnimation = () => {
       </div>
 
       {/* Labels Row */}
-      <div className="flex justify-between px-4 sm:px-8 md:px-12">
-        <span className="w-16 text-center text-xs font-medium text-gray-600 sm:w-20 sm:text-sm">
+      <div className="flex justify-between px-16">
+        <span className="w-20 text-center text-sm font-medium text-gray-600">
           Users
         </span>
-        <span className="w-16 text-center text-xs font-medium text-gray-600 sm:w-20 sm:text-sm">
+        <span className="w-20 text-center text-sm font-medium text-gray-600">
           Targon API
         </span>
-        <span className="w-16 text-center text-xs font-medium text-gray-600 sm:w-20 sm:text-sm">
+        <span className="w-20 text-center text-sm font-medium text-gray-600">
           Miners
         </span>
       </div>
