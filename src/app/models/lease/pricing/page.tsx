@@ -148,7 +148,7 @@ export default function PricingPage() {
   });
 
   if (!model) {
-    router.replace("/models/lease/model");
+    router.replace("/models/lease");
     return null;
   }
 
