@@ -454,7 +454,6 @@ export const modelRouter = createTRPCRouter({
         endpoints: Model.supportedEndpoints,
         description: Model.description,
         modality: Model.modality,
-        cpt: Model.cpt,
         totalTokens: DailyModelTokenCounts.totalTokens,
       })
       .from(Model)

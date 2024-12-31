@@ -237,7 +237,6 @@ export default function BrowsePage() {
                       endpoints={model.endpoints}
                       description={model.description ?? ""}
                       modality={model.modality}
-                      cpt={model.cpt}
                     />
                   </motion.div>
                 ))}

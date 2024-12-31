@@ -1,14 +1,11 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
-import { CREDIT_PER_DOLLAR } from "@/constants";
-
 interface ModelPreviewCardProps {
   name: string;
   endpoints: string[];
   modality: string;
   description: string;
-  cpt: number;
 }
 
 export const ModelPreviewCard = ({
@@ -16,7 +13,6 @@ export const ModelPreviewCard = ({
   endpoints,
   modality,
   description,
-  cpt,
 }: ModelPreviewCardProps) => {
   // Get gradient based on modality
   const getGradient = () => {
@@ -28,8 +24,6 @@ export const ModelPreviewCard = ({
       return "from-[#2DD4BF] to-[#0EA5E9]";
     }
   };
-
-  const cost = (cpt * 1_000_000) / CREDIT_PER_DOLLAR;
 
   return (
     <Link href={`/models/${encodeURIComponent(name)}`}>
@@ -62,7 +56,7 @@ export const ModelPreviewCard = ({
           <div className="flex items-center justify-between pt-1">
             <div className="flex items-center gap-2 text-xs text-gray-500">
               <span className="rounded-full bg-gray-100 px-2 py-0.5">
-                {cost} / M Tokens
+                Free Token Usage
               </span>
             </div>
             <ChevronRight className="h-4 w-4 text-gray-400 transition-transform group-hover:translate-x-0.5" />
