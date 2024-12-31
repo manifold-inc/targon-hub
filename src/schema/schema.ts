@@ -144,7 +144,9 @@ export const ModelSubscription = mysqlTable("model_subscription", {
   })
     .notNull()
     .references(() => Model.id),
-  stripeSubscriptionId: varchar("stripe_subscription_id", { length: 255 }).notNull(),
+  stripeSubscriptionId: varchar("stripe_subscription_id", {
+    length: 255,
+  }).notNull(),
   status: mysqlEnum("status", [
     "incomplete",
     "incomplete_expired",
@@ -152,10 +154,13 @@ export const ModelSubscription = mysqlTable("model_subscription", {
     "active",
     "past_due",
     "canceled",
-    "unpaid"
+    "unpaid",
+    "paused",
   ]).notNull(),
   gpuCount: int("gpu_count").notNull(),
-  currentPeriodStart: timestamp("current_period_start", { mode: "date" }).notNull(),
+  currentPeriodStart: timestamp("current_period_start", {
+    mode: "date",
+  }).notNull(),
   currentPeriodEnd: timestamp("current_period_end", { mode: "date" }).notNull(),
   cancelAtPeriodEnd: boolean("cancel_at_period_end").default(false),
   priceId: varchar("price_id", { length: 255 }).notNull(),
@@ -163,10 +168,11 @@ export const ModelSubscription = mysqlTable("model_subscription", {
   latestInvoice: varchar("latest_invoice", { length: 255 }),
   collectionMethod: mysqlEnum("collection_method", [
     "charge_automatically",
-    "send_invoice"
+    "send_invoice",
   ]).default("charge_automatically"),
-  createdAt: timestamp("created_at", { mode: "date" })
-    .default(sql`CURRENT_TIMESTAMP`),
+  createdAt: timestamp("created_at", { mode: "date" }).default(
+    sql`CURRENT_TIMESTAMP`,
+  ),
   updatedAt: timestamp("updated_at", { mode: "date" })
     .default(sql`CURRENT_TIMESTAMP`)
     .onUpdateNow(),
