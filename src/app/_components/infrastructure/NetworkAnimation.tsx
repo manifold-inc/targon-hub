@@ -95,7 +95,7 @@ export const NetworkAnimation = ({
 
         {/* Connection Lines */}
         <svg
-          className="absolute -z-10 inset-0"
+          className="absolute inset-0"
           viewBox={coordinates.viewBox}
           preserveAspectRatio="xMidYMid meet"
         >
