@@ -70,7 +70,9 @@ export const checkoutSuccess = async (
   return;
 };
 
-export const subscriptionCreated = async (subscription: Stripe.Subscription) => {
+export const subscriptionCreated = async (
+  subscription: Stripe.Subscription,
+) => {
   const { user_id, model_id, gpu_count } = subscription.metadata;
 
   // Validation
@@ -121,7 +123,13 @@ export const subscriptionCreated = async (subscription: Stripe.Subscription) => 
     userId: parseInt(user_id),
     modelId: parseInt(model_id),
     stripeSubscriptionId: subscription.id,
-    status: subscription.status as "incomplete" | "incomplete_expired" | "active" | "past_due" | "canceled" | "unpaid",
+    status: subscription.status as
+      | "incomplete"
+      | "incomplete_expired"
+      | "active"
+      | "past_due"
+      | "canceled"
+      | "unpaid",
     gpuCount: parseInt(gpu_count),
     currentPeriodStart: new Date(subscription.current_period_start * 1000),
     currentPeriodEnd: new Date(subscription.current_period_end * 1000),
@@ -137,7 +145,7 @@ export const subscriptionCreated = async (subscription: Stripe.Subscription) => 
     .update(Model)
     .set({
       enabled: true,
-      enabledDate: new Date()
+      enabledDate: new Date(),
     })
     .where(eq(Model.id, parseInt(model_id)));
 

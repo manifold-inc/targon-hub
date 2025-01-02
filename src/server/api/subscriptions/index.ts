@@ -47,7 +47,6 @@ export const subscriptionRouter = createTRPCRouter({
               "incomplete_expired",
               "unpaid",
               "past_due",
-              "paused",
             ]),
           ),
         );
@@ -75,11 +74,6 @@ export const subscriptionRouter = createTRPCRouter({
               quantity: input.gpuCount,
             },
           ],
-          metadata: {
-            user_id: ctx.user.id.toString(),
-            model_id: model.id.toString(),
-            gpu_count: input.gpuCount.toString(),
-          },
           success_url: `${ctx.req!.nextUrl.origin}/models/${encodeURIComponent(input.modelName)}?success=true`,
           cancel_url: `${ctx.req!.nextUrl.origin}${input.redirectUrl ?? "/models/lease"}?canceled=true`,
           subscription_data: {
