@@ -43,7 +43,7 @@ export const NetworkAnimation = ({
   return (
     <div className="relative flex h-full flex-col justify-center gap-6">
       {/* Icons Row */}
-      <div className="relative flex items-center justify-between px-16">
+      <div className="relative flex z-0 items-center justify-between px-16">
         {/* User Icons */}
         <div className="flex flex-col gap-10">
           {" "}
@@ -54,8 +54,9 @@ export const NetworkAnimation = ({
               initial={{ scale: 0 }}
               animate={{ scale: [0, 1.2, 1] }}
               transition={{ duration: 0.5, delay: 0.1 + _i * 0.1 }}
+              className='z-10'
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#142900]/10">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#e2e4df]">
                 <User className="h-6 w-6 text-[#142900]" />
               </div>
             </motion.div>
@@ -67,8 +68,9 @@ export const NetworkAnimation = ({
           initial={{ scale: 0 }}
           animate={{ scale: [0, 1.2, 1] }}
           transition={{ duration: 0.5, delay: 0.2 }}
+          className='z-10'
         >
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#142900]/10">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#e2e4df]">
             <ServerCog className="h-8 w-8 text-[#142900]" />
           </div>
         </motion.div>
@@ -84,7 +86,7 @@ export const NetworkAnimation = ({
               animate={{ scale: [0, 1.2, 1] }}
               transition={{ duration: 0.5, delay: 0.3 + _i * 0.1 }}
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#142900]/10">
+              <div className="flex h-12 w-12 z-10 items-center justify-center rounded-full  bg-[#e2e4df]">
                 <Cpu className="h-6 w-6 text-[#142900]" />
               </div>
             </motion.div>
@@ -93,7 +95,7 @@ export const NetworkAnimation = ({
 
         {/* Connection Lines */}
         <svg
-          className="absolute inset-0"
+          className="absolute -z-10 inset-0"
           viewBox={coordinates.viewBox}
           preserveAspectRatio="xMidYMid meet"
         >
