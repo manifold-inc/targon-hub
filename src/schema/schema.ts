@@ -148,14 +148,12 @@ export const ModelSubscription = mysqlTable("model_subscription", {
     length: 255,
   }).notNull(),
   status: mysqlEnum("status", [
-    "incomplete",
-    "incomplete_expired",
-    "trialing",
-    "active",
-    "past_due",
-    "canceled",
-    "unpaid",
-    "paused",
+    "incomplete",      // Initial state when subscription is being set up
+    "incomplete_expired", // Failed to complete setup
+    "active",          // Successfully paying
+    "past_due",        // Payment failed but retrying
+    "canceled",        // Subscription ended
+    "unpaid",           // Failed to collect payment
   ]).notNull(),
   gpuCount: int("gpu_count").notNull(),
   currentPeriodStart: timestamp("current_period_start", {
