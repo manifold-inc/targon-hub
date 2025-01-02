@@ -5,7 +5,12 @@ import type Stripe from "stripe";
 import { env } from "@/env.mjs";
 import { reportErrorToInflux } from "@/server/influx";
 import { stripe } from "@/server/stripe";
-import { checkoutSuccess, subscriptionCreated } from "@/server/stripeHandlers";
+import {
+  checkoutSuccess,
+  invoicePaid,
+  subscriptionCreated,
+  subscriptionUpdated,
+} from "@/server/stripeHandlers";
 
 export async function POST(request: NextRequest) {
   try {
@@ -34,10 +39,20 @@ export async function POST(request: NextRequest) {
 
     switch (event.type) {
       case "checkout.session.completed":
+        if (event.data.object.mode === "subscription") {
+          // Skip - this is handled by subscription events
+          break;
+        }
         await checkoutSuccess(event.data.object);
         break;
       case "customer.subscription.created":
         await subscriptionCreated(event.data.object);
+        break;
+      case "customer.subscription.updated":
+        await subscriptionUpdated(event.data.object);
+        break;
+      case "invoice.paid":
+        await invoicePaid(event.data.object);
         break;
       default:
         break;

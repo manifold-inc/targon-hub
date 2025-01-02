@@ -243,4 +243,8 @@ export const ModelLeasing = mysqlTable("model_leasing", {
     mode: "number",
     unsigned: true,
   }).notNull(),
+  type: mysqlEnum("type", ["onetime", "subscription"])
+    .notNull()
+    .default("onetime"),
+  invoiceId: varchar("invoice_id", { length: 255 }),
 });

@@ -136,6 +136,7 @@ export const creditsRouter = createTRPCRouter({
               amount:
                 (requiredGPU[0]!.gpu * Number(COST_PER_GPU)) /
                 CREDIT_PER_DOLLAR,
+              type: "onetime",
             }),
           ]);
 
@@ -188,6 +189,7 @@ export const creditsRouter = createTRPCRouter({
             modelName: input.model,
             amount:
               (requiredGPU[0]!.gpu * Number(COST_PER_GPU)) / CREDIT_PER_DOLLAR,
+            type: "onetime",
           }),
         ]);
 
@@ -249,6 +251,7 @@ export const creditsRouter = createTRPCRouter({
           modelName: input.model,
           amount:
             (requiredGPU[0]!.gpu * Number(COST_PER_GPU)) / CREDIT_PER_DOLLAR,
+          type: "onetime",
         }),
       ]);
 
