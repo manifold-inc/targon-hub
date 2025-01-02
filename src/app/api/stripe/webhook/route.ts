@@ -8,6 +8,7 @@ import { stripe } from "@/server/stripe";
 import {
   checkoutSuccess,
   invoicePaid,
+  invoicePaymentFailed,
   subscriptionCreated,
   subscriptionUpdated,
 } from "@/server/stripeHandlers";
@@ -53,6 +54,9 @@ export async function POST(request: NextRequest) {
         break;
       case "invoice.paid":
         await invoicePaid(event.data.object);
+        break;
+      case "invoice.payment_failed":
+        await invoicePaymentFailed(event.data.object);
         break;
       default:
         break;

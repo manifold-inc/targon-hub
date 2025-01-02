@@ -45,7 +45,6 @@ export const subscriptionRouter = createTRPCRouter({
             notInArray(ModelSubscription.status, [
               "canceled",
               "incomplete_expired",
-              "unpaid",
               "past_due",
             ]),
           ),

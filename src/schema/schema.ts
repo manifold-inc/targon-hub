@@ -153,7 +153,6 @@ export const ModelSubscription = mysqlTable("model_subscription", {
     "active", // Successfully paying
     "past_due", // Payment failed but retrying
     "canceled", // Subscription ended
-    "unpaid", // Failed to collect payment
   ]).notNull(),
   gpuCount: int("gpu_count").notNull(),
   currentPeriodStart: timestamp("current_period_start", {
