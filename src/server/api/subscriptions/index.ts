@@ -92,4 +92,25 @@ export const subscriptionRouter = createTRPCRouter({
         });
       }
     }),
+
+  createPortalSession: protectedProcedure.mutation(async ({ ctx }) => {
+    const [user] = await ctx.db
+      .select({ customerId: User.stripeCustomerId })
+      .from(User)
+      .where(eq(User.id, ctx.user.id));
+
+    if (!user?.customerId) {
+      throw new TRPCError({
+        code: "PRECONDITION_FAILED",
+        message: "No Stripe customer found",
+      });
+    }
+
+    const session = await ctx.stripe.billingPortal.sessions.create({
+      customer: user.customerId,
+      return_url: `${ctx.req!.nextUrl.origin}/models`,
+    });
+
+    return session.url;
+  }),
 });
