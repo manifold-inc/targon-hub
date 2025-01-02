@@ -22,7 +22,7 @@ import SettingsModal from "./SettingsModal";
 
 const NAVIGATION = [
   { slug: "/browse", title: "Browse" },
-  { slug: "/infrastructure", title: "Infra" },
+  { slug: "/infrastructure", title: "Infrastructure" },
   { slug: "/playground", title: "Playground" },
 ];
 
