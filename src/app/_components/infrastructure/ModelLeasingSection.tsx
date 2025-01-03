@@ -30,8 +30,9 @@ export const ModelLeasingSection = () => {
           Model Leasing
         </h2>
         <p className="text-sm text-gray-600 sm:text-base md:text-lg">
-          Experience worry-free model deployment with our flexible leasing system. Choose between 
-          one-time 7-day leases or automatic weekly renewals for continuous operation.
+          Experience worry-free model deployment with our flexible leasing
+          system. Choose between one-time 7-day leases or automatic weekly
+          renewals for continuous operation.
         </p>
 
         <motion.div
@@ -49,11 +50,13 @@ export const ModelLeasingSection = () => {
             </li>
             <li className="flex gap-x-3">
               <span className="text-[#142900]">•</span>
-              Your model is protected during the lease period and cannot be replaced
+              Your model is protected during the lease period and cannot be
+              replaced
             </li>
             <li className="flex gap-x-3">
               <span className="text-[#142900]">•</span>
-              After your lease expires, your model continues running until replaced
+              After your lease expires, your model continues running until
+              replaced
             </li>
           </ul>
         </motion.div>
