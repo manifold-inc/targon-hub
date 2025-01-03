@@ -14,10 +14,12 @@ import {
 import { stripe } from "../stripe";
 
 export async function invoicePaid(invoice: Stripe.Invoice) {
+  // Only process subscription invoices
   if (!invoice.subscription) return;
 
   try {
-    // Check for duplicate processing
+    // Check for duplicate invoice processing
+    // This prevents double-charging and duplicate model activations
     const [existingLease] = await db
       .select()
       .from(ModelLeasing)
@@ -25,6 +27,7 @@ export async function invoicePaid(invoice: Stripe.Invoice) {
 
     if (existingLease) return;
 
+    // Get full subscription details from Stripe
     const subscription = await stripe.subscriptions.retrieve(
       invoice.subscription as string,
     );
@@ -34,7 +37,8 @@ export async function invoicePaid(invoice: Stripe.Invoice) {
       subscription.id,
     );
 
-    // Get user ID from subscription
+    // Get user ID from subscription record
+    // We need this to record the lease payment
     const [subDetails] = await db
       .select({ userId: ModelSubscription.userId })
       .from(ModelSubscription)
@@ -50,13 +54,14 @@ export async function invoicePaid(invoice: Stripe.Invoice) {
       );
     }
 
-    // Update subscription status
+    // Update subscription record with latest status
     await updateSubscriptionRecord(
       subscription,
       subscription.status as SubscriptionStatus,
     );
 
-    // Record the lease payment
+    // Record the lease payment in our database
+    // This creates an audit trail and helps prevent duplicate processing
     await db.insert(ModelLeasing).values({
       userId: subDetails.userId,
       createdAt: new Date(),
@@ -66,7 +71,8 @@ export async function invoicePaid(invoice: Stripe.Invoice) {
       invoiceId: invoice.id,
     });
 
-    // Enable model if needed
+    // Enable the model if it's not already enabled and the subscription is active
+    // This handles cases where the model was disabled due to payment issues
     if (!model.enabled && subscription.status === "active") {
       await updateModelStatus(modelSub.modelId, true);
     }
@@ -77,9 +83,11 @@ export async function invoicePaid(invoice: Stripe.Invoice) {
 }
 
 export async function invoicePaymentFailed(invoice: Stripe.Invoice) {
+  // Only process subscription invoices
   if (!invoice.subscription) return;
 
   try {
+    // Get full subscription details from Stripe
     const subscription = await stripe.subscriptions.retrieve(
       invoice.subscription as string,
     );
@@ -87,17 +95,21 @@ export async function invoicePaymentFailed(invoice: Stripe.Invoice) {
     // Skip if already canceled
     if (subscription.status === "canceled") return;
 
+    // Get subscription and model details from our database
     const { subscription: modelSub } = await getSubscriptionWithModel(
       subscription.id,
     );
 
-    // Update subscription status
+    // Update subscription record with failed status
     await updateSubscriptionRecord(
       subscription,
       subscription.status as SubscriptionStatus,
     );
 
     // Handle final payment attempt
+    // If there are no more retry attempts, we:
+    // 1. Disable the model to prevent further usage
+    // 2. Mark the subscription as canceled
     if (!invoice.next_payment_attempt) {
       await Promise.all([
         updateModelStatus(modelSub.modelId, false),

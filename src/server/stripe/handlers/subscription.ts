@@ -1,8 +1,8 @@
-import { and, eq, notInArray } from "drizzle-orm";
+import { and, eq, gte, notInArray } from "drizzle-orm";
 import type Stripe from "stripe";
 
 import { db } from "@/schema/db";
-import { Model, ModelSubscription, User } from "@/schema/schema";
+import { Model, ModelLeasing, ModelSubscription, User } from "@/schema/schema";
 import { reportErrorToInflux } from "@/server/influx";
 import {
   updateModelStatus,
@@ -21,9 +21,24 @@ async function validateSubscriptionMetadata(subscription: Stripe.Subscription) {
   const modelId = parseInt(model_id);
   const gpuCount = parseInt(gpu_count);
 
-  const [[user], [model], [existing]] = await Promise.all([
+  // We need the model name to check for active leases
+  const [model] = await db
+    .select({
+      id: Model.id,
+      name: Model.name,
+    })
+    .from(Model)
+    .where(eq(Model.id, modelId));
+
+  if (!model?.name) {
+    throw new Error(`Model ${modelId} not found or has no name`);
+  }
+
+  const [[user], [existingSubscription], [activeLease]] = await Promise.all([
+    // Check if user exists
     db.select().from(User).where(eq(User.id, userId)),
-    db.select().from(Model).where(eq(Model.id, modelId)),
+    // Check if model already has an active subscription
+    // exclude canceled, incomplete_expired, and past_due statuses as they are not considered active
     db
       .select()
       .from(ModelSubscription)
@@ -37,18 +52,34 @@ async function validateSubscriptionMetadata(subscription: Stripe.Subscription) {
           ]),
         ),
       ),
+    // Check if model has an active lease (within the 7-day immunity period)
+    // A model cannot be subscribed to if it's currently leased via one-time payment
+    db
+      .select()
+      .from(ModelLeasing)
+      .where(
+        and(
+          eq(ModelLeasing.modelName, model.name),
+          gte(
+            ModelLeasing.createdAt,
+            new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+          ),
+        ),
+      ),
   ]);
 
   if (!user) {
     throw new Error(`User ${userId} not found`);
   }
 
-  if (!model) {
-    throw new Error(`Model ${modelId} not found`);
+  if (existingSubscription) {
+    throw new Error(`Model ${modelId} is already subscribed`);
   }
 
-  if (existing) {
-    throw new Error(`Model ${modelId} is already subscribed`);
+  if (activeLease) {
+    throw new Error(
+      `Model ${model.name} is currently leased via one time payment and cannot be subscribed to`,
+    );
   }
 
   return { userId, modelId, gpuCount };
@@ -83,28 +114,58 @@ async function handleSubscriptionStateChange(
   const [model] = await db
     .select({
       id: Model.id,
+      name: Model.name,
       enabled: Model.enabled,
     })
     .from(Model)
     .where(eq(Model.id, existingSub.modelId));
 
-  if (!model) {
+  if (!model?.name) {
     throw new Error(`No model found for subscription ${subscription.id}`);
   }
 
+  // Disable model when subscription is canceled
   if (subscription.status === "canceled" && model.enabled) {
     await updateModelStatus(model.id, false);
-  } else if (
+  }
+  // Re-enable model when subscription becomes active after being past_due
+  else if (
     existingSub.status === "past_due" &&
     subscription.status === "active" &&
     !model.enabled
   ) {
+    // Check for active lease before enabling
+    // This prevents a race condition where:
+    // 1. A subscription becomes past_due
+    // 2. Someone leases the model
+    // 3. The subscription payment succeeds
+    // 4. We try to re-enable the subscription
+    const [activeLease] = await db
+      .select()
+      .from(ModelLeasing)
+      .where(
+        and(
+          eq(ModelLeasing.modelName, model.name),
+          gte(
+            ModelLeasing.createdAt,
+            new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+          ),
+        ),
+      );
+
+    if (activeLease) {
+      throw new Error(
+        `Cannot enable model ${model.name} as it currently has an active lease`,
+      );
+    }
+
     await updateModelStatus(model.id, true);
   }
 }
 
 export async function subscriptionCreated(subscription: Stripe.Subscription) {
   try {
+    // Validate metadata and check for conflicts with existing subscriptions or leases
     const metadata = await validateSubscriptionMetadata(subscription);
     await createSubscriptionRecord(subscription, metadata);
   } catch (error) {
@@ -120,6 +181,7 @@ export async function subscriptionUpdated(subscription: Stripe.Subscription) {
       .from(ModelSubscription)
       .where(eq(ModelSubscription.stripeSubscriptionId, subscription.id));
 
+    // Skip processing if this is a duplicate event for an incomplete->active transition
     if (
       existingSub?.status === "incomplete" &&
       subscription.status === "active" &&
@@ -128,6 +190,7 @@ export async function subscriptionUpdated(subscription: Stripe.Subscription) {
       return;
     }
 
+    // Update subscription record with latest status and payment details
     await updateSubscriptionRecord(
       subscription,
       subscription.status as SubscriptionStatus,
@@ -139,6 +202,7 @@ export async function subscriptionUpdated(subscription: Stripe.Subscription) {
     );
 
     if (existingSub) {
+      // Handle model state changes based on subscription status
       await handleSubscriptionStateChange(subscription, existingSub);
     }
   } catch (error) {
