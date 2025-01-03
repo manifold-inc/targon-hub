@@ -80,7 +80,7 @@ export function ModelTabs() {
         <div className="absolute inset-0 bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent" />
 
         <div className="relative h-96 overflow-auto sm:h-auto sm:overflow-visible">
-          <div className="sticky top-0 z-50 flex items-center justify-between border-b border-gray-200 p-2 backdrop-blur-md sm:p-3">
+          <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 p-2 backdrop-blur-md sm:p-3">
             <div className="flex h-8 w-16 items-center gap-1.5 sm:w-20">
               <div className="h-2.5 w-2.5 rounded-full bg-red-400 sm:h-3 sm:w-3"></div>
               <div className="h-2.5 w-2.5 rounded-full bg-yellow-400 sm:h-3 sm:w-3"></div>
