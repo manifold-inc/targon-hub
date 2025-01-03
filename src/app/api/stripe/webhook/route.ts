@@ -4,14 +4,12 @@ import type Stripe from "stripe";
 
 import { env } from "@/env.mjs";
 import { reportErrorToInflux } from "@/server/influx";
-import { stripe } from "@/server/stripe";
-import {
-  checkoutSuccess,
-  invoicePaid,
-  invoicePaymentFailed,
-  subscriptionCreated,
-  subscriptionUpdated,
-} from "@/server/stripeHandlers";
+import { stripe } from "@/server/stripe/stripe";
+import { checkoutSuccess } from "@/server/stripe/handlers/checkout";
+import { subscriptionCreated } from "@/server/stripe/handlers/subscription";
+import { subscriptionUpdated } from "@/server/stripe/handlers/subscription";
+import { invoicePaid } from "@/server/stripe/handlers/invoice";
+import { invoicePaymentFailed } from "@/server/stripe/handlers/invoice";
 
 export async function POST(request: NextRequest) {
   try {
