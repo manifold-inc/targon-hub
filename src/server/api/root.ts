@@ -6,6 +6,7 @@ import { accountRouter } from "./account";
 import { coreRouter } from "./core";
 import { creditsRouter } from "./credits";
 import { modelRouter } from "./model";
+import { subscriptionRouter } from "./subscriptions";
 
 /**
  * This is the primary router for your server.
@@ -18,6 +19,7 @@ export const appRouter = createTRPCRouter({
   credits: creditsRouter,
   core: coreRouter,
   model: modelRouter,
+  subscriptions: subscriptionRouter,
 });
 
 export type ReactQueryOptions = inferReactQueryProcedureOptions<AppRouter>;

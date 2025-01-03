@@ -27,7 +27,7 @@ export const ModelLeasingSection = () => {
         <Shield className="mx-auto h-12 w-12 rounded-full bg-[#142900]/10 p-3 text-[#142900] sm:h-14 sm:w-14 lg:mx-0" />
 
         <h2 className="text-center text-2xl font-semibold text-gray-900 sm:text-3xl lg:text-left">
-          Model Leasing
+          Model Hosting
         </h2>
         <p className="text-sm text-gray-600 sm:text-base md:text-lg">
           Experience worry-free model deployment with our flexible leasing
@@ -55,8 +55,7 @@ export const ModelLeasingSection = () => {
             </li>
             <li className="flex gap-x-3">
               <span className="text-[#142900]">•</span>
-              After your lease expires, your model continues running until
-              replaced
+              Keep your model running smoothly with hassle-free lease renewals
             </li>
           </ul>
         </motion.div>

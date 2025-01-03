@@ -6,7 +6,7 @@ import { Lucia, Scrypt, type User as LuciaUser, type Session } from "lucia";
 import { env } from "@/env.mjs";
 import { adapter, type DB } from "@/schema/db";
 import { ApiKey, genId, User } from "@/schema/schema";
-import { type stripe as STRIPE } from "./stripe";
+import { type stripe as STRIPE } from "./stripe/stripe";
 
 declare module "lucia" {
   interface Register {

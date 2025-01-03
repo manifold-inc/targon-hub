@@ -165,16 +165,14 @@ export const creditsRouter = createTRPCRouter({
         db
           .update(User)
           .set({
-            credits:
-              user.credits - requiredGPU!.gpu * Number(COST_PER_GPU),
+            credits: user.credits - requiredGPU!.gpu * Number(COST_PER_GPU),
           })
           .where(eq(User.id, ctx.user.id)),
 
         db.insert(ModelLeasing).values({
           userId: ctx.user.id,
           modelName: input.model,
-          amount:
-            (requiredGPU!.gpu * Number(COST_PER_GPU)) / CREDIT_PER_DOLLAR,
+          amount: (requiredGPU!.gpu * Number(COST_PER_GPU)) / CREDIT_PER_DOLLAR,
         }),
       ]);
 

@@ -88,7 +88,6 @@ export const modelRouter = createTRPCRouter({
           requiredGpus: Model.requiredGpus,
           modality: Model.modality,
           enabled: Model.enabled,
-          cpt: Model.cpt,
           createdAt: Model.createdAt,
         })
         .from(Model)
