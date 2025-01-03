@@ -2,9 +2,13 @@ import { type SVGProps } from "react";
 
 const navigation = {
   main: [
-    { name: "Browse", href: "/models" },
+    { name: "Browse", href: "/browse" },
+    { name: "Infrastructure", href: "/infrastructure" },
+    { name: "Lease", href: "/models/lease" },
+    { name: "Models", href: "/models" },
     { name: "Immunity", href: "/models/immunity" },
     { name: "Playground", href: "/playground" },
+    { name: "Roadmap", href: "/roadmap" },
   ],
   social: [
     {

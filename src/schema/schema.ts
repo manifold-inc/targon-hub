@@ -169,3 +169,32 @@ export const Model = mysqlTable("model", {
   enabledDate: timestamp("enabled_date", { mode: "date" }),
   customBuild: boolean("custom_build").default(false).notNull(),
 });
+
+export const DailyModelTokenCounts = mysqlTable("daily_model_token_counts", {
+  id: serial("id").primaryKey(),
+  modelName: varchar("model_name", { length: 64 }).notNull(),
+  totalTokens: bigint("total_tokens", {
+    mode: "number",
+    unsigned: true,
+  }).notNull(),
+  avgTPS: float("avg_tps").notNull().default(0),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull(),
+});
+
+export const ModelLeasing = mysqlTable("model_leasing", {
+  id: serial("id").primaryKey(),
+  userId: bigint("user_id", {
+    unsigned: true,
+    mode: "number",
+  })
+    .notNull()
+    .references(() => User.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at", { mode: "date" })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  modelName: varchar("model_name", { length: 64 }).notNull(),
+  amount: bigint("amount", {
+    mode: "number",
+    unsigned: true,
+  }).notNull(),
+});

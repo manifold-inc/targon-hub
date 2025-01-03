@@ -4,11 +4,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import ModelStatusIndicator from "@/app/_components/ModelStatusIndicator";
-import { CREDIT_PER_DOLLAR } from "@/constants";
 
 interface AppCardProps {
   name: string;
-  cpt: number;
   modality: string;
   requiredGPUs: number;
   enabled: boolean;
@@ -18,14 +16,12 @@ interface AppCardProps {
 
 export const AppCard = ({
   name,
-  cpt,
   modality,
   requiredGPUs,
   enabled,
   supportedEndpoints,
   description,
 }: AppCardProps) => {
-  const cost = (cpt * 1_000_000) / CREDIT_PER_DOLLAR;
   const [isHovered, setIsHovered] = useState(false);
   const [isHoverSupported, setIsHoverSupported] = useState(true);
 
@@ -95,9 +91,7 @@ export const AppCard = ({
 
             <div className="flex h-5 items-center justify-between whitespace-nowrap">
               <div className="flex items-center gap-2">
-                <div className="text-sm leading-tight text-[#667085]">
-                  ${cost} / M Tokens
-                </div>
+                <div className="text-sm leading-tight text-[#667085]">Free</div>
                 <div className="h-5 w-px bg-[#e4e7ec]" />
                 <ModelStatusIndicator enabled={enabled} showBorder={false} />
                 <div

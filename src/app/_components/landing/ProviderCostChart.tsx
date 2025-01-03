@@ -47,6 +47,7 @@ const currentData = {
   name: "Manifold Labs",
   date: "Dec 2024",
   currentTokens: "400+",
+  costPerMillion: 0.0,
   position: { left: "55%", bottom: "60%" },
   currentPosition: { left: "80%", bottom: "75%" },
 };
@@ -147,6 +148,7 @@ export function ProviderCostChart() {
                 <div className="animate-pulse">
                   {currentData.currentTokens} TPS
                 </div>
+                <div className="text-neutral-400">Free Tokens</div>
               </div>
             </div>
           </div>
@@ -187,7 +189,7 @@ export function ProviderCostChart() {
               <div className="animate-pulse">
                 {currentData.currentTokens} TPS
               </div>
-              <div className="text-neutral-400">As of {currentData.date}</div>
+              <div className="text-neutral-400">Free Tokens</div>
             </div>
           </Link>
 
