@@ -52,7 +52,7 @@ async function validateSubscriptionMetadata(subscription: Stripe.Subscription) {
           ]),
         ),
       ),
-    // Check if model has an active lease (within the 7-day immunity period)
+    // Check if model has an active one-time lease (within the 7-day immunity period)
     // A model cannot be subscribed to if it's currently leased via one-time payment
     db
       .select()
@@ -60,6 +60,7 @@ async function validateSubscriptionMetadata(subscription: Stripe.Subscription) {
       .where(
         and(
           eq(ModelLeasing.modelName, model.name),
+          eq(ModelLeasing.type, "onetime"),
           gte(
             ModelLeasing.createdAt,
             new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
@@ -134,10 +135,10 @@ async function handleSubscriptionStateChange(
     subscription.status === "active" &&
     !model.enabled
   ) {
-    // Check for active lease before enabling
+    // Check for active one-time lease before enabling
     // This prevents a race condition where:
     // 1. A subscription becomes past_due
-    // 2. Someone leases the model
+    // 2. Someone leases the model with a one-time payment
     // 3. The subscription payment succeeds
     // 4. We try to re-enable the subscription
     const [activeLease] = await db
@@ -146,6 +147,7 @@ async function handleSubscriptionStateChange(
       .where(
         and(
           eq(ModelLeasing.modelName, model.name),
+          eq(ModelLeasing.type, "onetime"),
           gte(
             ModelLeasing.createdAt,
             new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
@@ -155,7 +157,7 @@ async function handleSubscriptionStateChange(
 
     if (activeLease) {
       throw new Error(
-        `Cannot enable model ${model.name} as it currently has an active lease`,
+        `Cannot enable model ${model.name} as it currently has an active one-time lease`,
       );
     }
 
@@ -163,6 +165,13 @@ async function handleSubscriptionStateChange(
   }
 }
 
+/**
+ * Handles subscription creation events from Stripe.
+ * This is called when a customer.subscription.created webhook is received.
+ *
+ * Note: Stripe doesn't guarantee event order, so this might arrive before or after
+ * other subscription-related events like invoice.created or invoice.paid.
+ */
 export async function subscriptionCreated(subscription: Stripe.Subscription) {
   try {
     // Validate metadata and check for conflicts with existing subscriptions or leases
@@ -174,6 +183,15 @@ export async function subscriptionCreated(subscription: Stripe.Subscription) {
   }
 }
 
+/**
+ * Handles subscription update events from Stripe.
+ * This is called when a customer.subscription.updated webhook is received.
+ *
+ * Following Stripe's best practices:
+ * 1. Returns 200 quickly to prevent timeouts
+ * 2. Handles out-of-order events (subscription.updated might arrive before subscription.created)
+ * 3. Lets Stripe's retry mechanism handle temporary failures (retries for up to 3 days in live mode)
+ */
 export async function subscriptionUpdated(subscription: Stripe.Subscription) {
   try {
     const [existingSub] = await db
@@ -181,9 +199,15 @@ export async function subscriptionUpdated(subscription: Stripe.Subscription) {
       .from(ModelSubscription)
       .where(eq(ModelSubscription.stripeSubscriptionId, subscription.id));
 
+    // If subscription doesn't exist yet, return 200 and let Stripe retry
+    // This handles the case where subscription.updated arrives before subscription.created
+    if (!existingSub) {
+      return;
+    }
+
     // Skip processing if this is a duplicate event for an incomplete->active transition
     if (
-      existingSub?.status === "incomplete" &&
+      existingSub.status === "incomplete" &&
       subscription.status === "active" &&
       existingSub.latestInvoice === subscription.latest_invoice
     ) {
@@ -201,10 +225,47 @@ export async function subscriptionUpdated(subscription: Stripe.Subscription) {
       },
     );
 
-    if (existingSub) {
-      // Handle model state changes based on subscription status
-      await handleSubscriptionStateChange(subscription, existingSub);
+    // Handle model state changes based on subscription status
+    await handleSubscriptionStateChange(subscription, existingSub);
+  } catch (error) {
+    await reportErrorToInflux(error as Error);
+    throw error;
+  }
+}
+
+/**
+ * Handles subscription deletion events from Stripe.
+ * This is called when a customer.subscription.deleted webhook is received.
+ *
+ * When a subscription is deleted:
+ * 1. Updates the subscription record to canceled status
+ * 2. Disables access to the model
+ * 3. Makes the model available for new subscriptions or leases
+ */
+export async function subscriptionDeleted(subscription: Stripe.Subscription) {
+  try {
+    const [existingSub] = await db
+      .select()
+      .from(ModelSubscription)
+      .where(eq(ModelSubscription.stripeSubscriptionId, subscription.id));
+
+    // If subscription doesn't exist, return 200 and let Stripe retry
+    if (!existingSub) {
+      return;
     }
+
+    // Update subscription record to canceled status
+    await updateSubscriptionRecord(
+      subscription,
+      "canceled" as SubscriptionStatus,
+      {
+        cancelAtPeriodEnd: false,
+        defaultPaymentMethod: null,
+      },
+    );
+
+    // Disable the model
+    await updateModelStatus(existingSub.modelId, false);
   } catch (error) {
     await reportErrorToInflux(error as Error);
     throw error;

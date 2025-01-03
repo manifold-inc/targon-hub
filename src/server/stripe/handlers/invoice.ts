@@ -83,7 +83,6 @@ export async function invoicePaid(invoice: Stripe.Invoice) {
 }
 
 export async function invoicePaymentFailed(invoice: Stripe.Invoice) {
-  // Only process subscription invoices
   if (!invoice.subscription) return;
 
   try {
@@ -91,9 +90,6 @@ export async function invoicePaymentFailed(invoice: Stripe.Invoice) {
     const subscription = await stripe.subscriptions.retrieve(
       invoice.subscription as string,
     );
-
-    // Skip if already canceled
-    if (subscription.status === "canceled") return;
 
     // Get subscription and model details from our database
     const { subscription: modelSub } = await getSubscriptionWithModel(
@@ -106,11 +102,8 @@ export async function invoicePaymentFailed(invoice: Stripe.Invoice) {
       subscription.status as SubscriptionStatus,
     );
 
-    // Handle final payment attempt
-    // If there are no more retry attempts, we:
-    // 1. Disable the model to prevent further usage
-    // 2. Mark the subscription as canceled
-    if (!invoice.next_payment_attempt) {
+    // Handle final payment attempt or canceled status
+    if (!invoice.next_payment_attempt || subscription.status === "canceled") {
       await Promise.all([
         updateModelStatus(modelSub.modelId, false),
         updateSubscriptionRecord(subscription, "canceled"),
