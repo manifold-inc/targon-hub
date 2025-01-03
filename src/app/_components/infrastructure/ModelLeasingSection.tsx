@@ -30,9 +30,8 @@ export const ModelLeasingSection = () => {
           Model Leasing
         </h2>
         <p className="text-sm text-gray-600 sm:text-base md:text-lg">
-          Experience worry-free model deployment with our powerful immunity
-          system. Deploy any HuggingFace model with 7 days of guaranteed
-          protection from replacement.
+          Experience worry-free model deployment with our flexible leasing system. Choose between 
+          one-time 7-day leases or automatic weekly renewals for continuous operation.
         </p>
 
         <motion.div
@@ -41,21 +40,20 @@ export const ModelLeasingSection = () => {
           transition={{ delay: 0.2, duration: 0.5 }}
         >
           <h3 className="text-center font-medium text-gray-900 sm:text-left">
-            Immunity System
+            Leasing Options
           </h3>
           <ul className="space-y-3 pt-4 text-sm text-gray-600">
             <li className="flex gap-x-3">
               <span className="text-[#142900]">•</span>
-              Your model is protected for a 7-day immunity period
+              Choose between one-time 7-day leases or automatic weekly renewals
             </li>
             <li className="flex gap-x-3">
               <span className="text-[#142900]">•</span>
-              During immunity, your model cannot be replaced by others
+              Your model is protected during the lease period and cannot be replaced
             </li>
             <li className="flex gap-x-3">
               <span className="text-[#142900]">•</span>
-              After immunity, your model will continue to be hosted until
-              replaced
+              After your lease expires, your model continues running until replaced
             </li>
           </ul>
         </motion.div>
