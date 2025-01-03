@@ -234,7 +234,7 @@ export const ModelLeasing = mysqlTable("model_leasing", {
   })
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
-  enabledDate: timestamp("enabled_date", { mode: "date" })
+  createdAt: timestamp("created_at", { mode: "date" })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
   modelName: varchar("model_name", { length: 64 }).notNull(),

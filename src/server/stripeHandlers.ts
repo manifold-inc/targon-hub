@@ -351,7 +351,7 @@ export const invoicePaid = async (invoice: Stripe.Invoice) => {
   // Record the lease payment
   await db.insert(ModelLeasing).values({
     userId: modelSub.userId,
-    enabledDate: new Date(),
+    createdAt: new Date(),
     modelName: model.name,
     amount: (modelSub.gpuCount * Number(COST_PER_GPU)) / CREDIT_PER_DOLLAR,
     type: "subscription",
