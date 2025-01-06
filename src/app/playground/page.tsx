@@ -19,6 +19,9 @@ import { useAuth } from "../_components/providers";
 export default function Example() {
   const auth = useAuth();
   const router = useRouter();
+  const models = reactClient.model.getActiveChatModels.useQuery();
+  const keys = reactClient.core.getApiKeys.useQuery();
+  const first_key = keys.data?.[0]?.key ?? "";
   const [selected, setSelected] = useState<string | null>(null);
   const [isLoading, setIsloading] = useState(false);
   const [text, setText] = useState("");
@@ -29,9 +32,6 @@ export default function Example() {
     top_p: 0.5,
   });
   const [nav, setNav] = useState("ui");
-  const models = reactClient.model.getActiveChatModels.useQuery();
-  const keys = reactClient.core.getApiKeys.useQuery();
-  const first_key = keys.data?.[0]?.key ?? "";
   const client = useMemo(() => {
     return new OpenAI({
       baseURL: env.NEXT_PUBLIC_HUB_API_ENDPOINT + "/v1",
@@ -39,7 +39,7 @@ export default function Example() {
       dangerouslyAllowBrowser: true,
     });
   }, [first_key]);
-  const current_model = selected;
+  const current_model = selected ?? models.data?.[0]?.name ?? null;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [showShortcuts, setShowShortcuts] = useState(false);
@@ -115,11 +115,10 @@ export default function Example() {
       return; // Allow default behavior
     }
 
-    // Clear input: Escape
+    // Blur input on Escape
     if (e.key === "Escape") {
       e.preventDefault();
-      setText("");
-      setHistoryIndex(-1);
+      e.currentTarget.blur();
     }
 
     // Navigate message history: Up/Down arrows
@@ -168,6 +167,9 @@ export default function Example() {
   return (
     <>
       <div className="flex h-full flex-col pt-6 sm:pt-8 lg:flex-row">
+        {/* Left Sidebar */}
+        <ParameterControls params={params} setParams={setParams} />
+
         {/* Main Content */}
         <main className="flex flex-1 flex-col">
           <PlaygroundNav
@@ -207,9 +209,6 @@ export default function Example() {
             </div>
           )}
         </main>
-
-        {/* Right Sidebar */}
-        <ParameterControls params={params} setParams={setParams} />
       </div>
 
       <KeyboardShortcuts
