@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { InfoIcon } from "lucide-react";
 
 import { reactClient } from "@/trpc/react";
 
@@ -98,7 +99,19 @@ function CostSummaryCard({
 
       <div className="space-y-1 px-6 py-4">
         <div className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-2">
-          <dt className="text-sm text-gray-600">Required GPUs</dt>
+          <dt className="flex items-center gap-1 text-sm text-gray-500">
+            Required GPUs
+            <div className="group relative">
+              <InfoIcon className="h-4 w-4 text-gray-400" />
+              <div className="absolute left-full top-full hidden pl-1 pt-1 group-hover:block">
+                <div className="w-64 rounded-md bg-gray-900 px-3 py-2 text-xs text-white">
+                  Required GPUs are calculated based on the model&apos;s maximum
+                  memory usage utilizing Accelerate&apos;s estimate
+                  functionality.
+                </div>
+              </div>
+            </div>
+          </dt>
           <dd className="text-sm font-medium text-gray-900">
             {requiredGPUS.toString()}
           </dd>
