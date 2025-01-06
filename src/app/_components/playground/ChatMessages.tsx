@@ -1,4 +1,4 @@
-import { useState, type ComponentPropsWithoutRef } from "react";
+import { useState, useRef, useEffect, type ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
 import { Check, Copy } from "lucide-react";
 import { type ChatCompletionMessageParam } from "openai/resources/index.mjs";
@@ -30,7 +30,7 @@ const CodeBlock: Components["code"] = ({
 
   if (inline || !isMultiLine) {
     return (
-      <code className="rounded bg-gray-800/50 px-1.5 py-0.5 text-sm" {...props}>
+      <code className="rounded bg-gray-800/50 px-1.5 py-0.5 text-sm text-gray-200" {...props}>
         {children}
       </code>
     );
@@ -67,10 +67,22 @@ interface ChatMessagesProps {
 }
 
 export function ChatMessages({ messages }: ChatMessagesProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const scrollToBottom = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   if (messages.length === 0) return null;
 
   return (
-    <div className="space-y-6 py-8">
+    <div ref={containerRef} className="space-y-6 px-4 py-6">
       {messages.map((message, i) => (
         <div
           key={i}

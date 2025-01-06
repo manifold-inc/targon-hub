@@ -166,42 +166,47 @@ export default function Example() {
 
   return (
     <>
-      <div className="flex h-full flex-col pt-6 sm:pt-8 lg:flex-row">
+      <div className="flex h-[calc(100vh-4rem)] flex-1 pt-8">
         {/* Left Sidebar */}
         <ParameterControls params={params} setParams={setParams} />
 
         {/* Main Content */}
-        <main className="flex flex-1 flex-col">
-          <PlaygroundNav
-            nav={nav}
-            setNav={setNav}
-            current_model={current_model}
-            setSelected={setSelected}
-            models={models}
-          />
+        <main className="flex min-h-0 flex-1 flex-col">
+          {/* Navigation */}
+          <div className="flex-none border-b border-gray-200">
+            <PlaygroundNav
+              nav={nav}
+              setNav={setNav}
+              current_model={current_model}
+              setSelected={setSelected}
+              models={models}
+            />
+          </div>
 
           {/* Content Area */}
           {nav === "ui" ? (
-            <div className="flex flex-1 flex-col overflow-hidden">
-              <div className="flex-1 overflow-y-auto p-4">
-                {chats.length === 0 ? (
-                  <EmptyState startChat={startChat} />
-                ) : (
+            <div className="flex min-h-0 flex-1 flex-col">
+              {chats.length === 0 ? (
+                <EmptyState startChat={startChat} />
+              ) : (
+                <div className="min-h-0 flex-1 overflow-y-auto">
                   <ChatMessages messages={chats} />
-                )}
-              </div>
+                </div>
+              )}
 
-              <ChatInput
-                text={text}
-                setText={setText}
-                onSend={() => trigger(text, chats)}
-                isLoading={isLoading}
-                current_model={current_model}
-                textareaRef={textareaRef}
-                onKeyDown={handleKeyDown}
-                onShowShortcuts={() => setShowShortcuts(true)}
-                hasChat={chats.length > 0}
-              />
+              <div className="flex-none border-t border-gray-200">
+                <ChatInput
+                  text={text}
+                  setText={setText}
+                  onSend={() => trigger(text, chats)}
+                  isLoading={isLoading}
+                  current_model={current_model}
+                  textareaRef={textareaRef}
+                  onKeyDown={handleKeyDown}
+                  onShowShortcuts={() => setShowShortcuts(true)}
+                  hasChat={chats.length > 0}
+                />
+              </div>
             </div>
           ) : (
             <div className="flex flex-1 flex-col overflow-hidden px-4 py-4">
