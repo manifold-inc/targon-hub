@@ -27,8 +27,8 @@ export function ChatInput({
 }: ChatInputProps) {
   return (
     <div className="p-4">
-      <div className="relative">
-        <div className="absolute left-4 top-1/2 -translate-y-1/2">
+      <div className="relative flex items-end">
+        <div className="pointer-events-none absolute left-4 top-4">
           <MessageSquareIcon className="h-5 w-5 text-gray-400" />
         </div>
         <textarea
@@ -42,13 +42,15 @@ export function ChatInput({
           disabled={!current_model}
           rows={1}
           className={clsx(
-            "w-full rounded-xl bg-white py-3 text-gray-900 placeholder:text-gray-400",
-            "focus:outline-none focus:ring-2 focus:ring-[#142900]/20",
+            "w-full resize-none rounded-xl bg-white py-3 text-gray-900 placeholder:text-gray-400",
+            "border border-gray-200",
+            "focus:border-[#142900]/20 focus:outline-none focus:ring-1 focus:ring-[#142900]/20",
             "disabled:cursor-not-allowed disabled:opacity-50",
             "pl-12 pr-24",
+            "max-h-36 min-h-12 overflow-y-auto",
           )}
         />
-        <div className="absolute right-2 top-1/2 flex -translate-y-1/2 items-center gap-2">
+        <div className="absolute right-2 top-[6px] flex items-center gap-2">
           {hasChat && (
             <button
               onClick={onShowShortcuts}
