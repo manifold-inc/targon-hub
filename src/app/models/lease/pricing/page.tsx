@@ -52,7 +52,10 @@ function CostSummaryCard({
               </div>
               <div className="text-right">
                 <div className="text-sm font-semibold text-gray-900">
-                  ${totalCostUSD.toFixed(2)}
+                  $
+                  {totalCostUSD % 1 === 0
+                    ? Math.floor(totalCostUSD)
+                    : totalCostUSD.toFixed(2)}
                 </div>
                 <div className="text-xs text-gray-500">total</div>
               </div>
@@ -75,11 +78,16 @@ function CostSummaryCard({
                 <p className="text-sm font-medium text-gray-900">
                   Weekly Subscription
                 </p>
-                <p className="text-xs text-gray-500">Auto-renew weekly</p>
+                <p className="text-xs text-gray-500">
+                  Auto-renew weekly and save 10%
+                </p>
               </div>
               <div className="text-right">
                 <div className="text-sm font-semibold text-gray-900">
-                  ${totalCostUSD.toFixed(2)}
+                  $
+                  {totalCostUSD % 1 === 0
+                    ? Math.floor(totalCostUSD * 0.9)
+                    : (totalCostUSD * 0.9).toFixed(2)}
                 </div>
                 <div className="text-xs text-gray-500">per week</div>
               </div>
@@ -102,8 +110,8 @@ function CostSummaryCard({
           <h4 className="text-sm font-medium text-gray-900">Cost Breakdown</h4>
           <p className="mt-1 text-sm text-gray-600">
             {selectedPayment === "subscription"
-              ? `${COST_PER_GPU_PER_WEEK} per GPU per week`
-              : `${COST_PER_GPU_PER_WEEK} per GPU`}
+              ? `$${COST_PER_GPU_PER_WEEK * 0.9} per GPU per week`
+              : `$${COST_PER_GPU_PER_WEEK} per GPU`}
           </p>
           <div className="mt-2 flex items-center justify-between">
             <dt className="text-base font-medium text-gray-900">
@@ -112,7 +120,14 @@ function CostSummaryCard({
                 : "Total Cost"}
             </dt>
             <dd className="text-base font-medium text-gray-900">
-              ${totalCostUSD.toFixed(2)}
+              $
+              {selectedPayment === "subscription"
+                ? (totalCostUSD * 0.9) % 1 === 0
+                  ? Math.floor(totalCostUSD * 0.9)
+                  : (totalCostUSD * 0.9).toFixed(2)
+                : totalCostUSD % 1 === 0
+                  ? Math.floor(totalCostUSD)
+                  : totalCostUSD.toFixed(2)}
               {selectedPayment === "subscription" && " per week"}
             </dd>
           </div>

@@ -97,7 +97,10 @@ function SummaryCard({
             {paymentType === "subscription" ? "Weekly Cost" : "Total Cost"}
           </span>
           <span className="font-medium text-gray-900">
-            ${totalCostUSD.toFixed(2)}
+            $
+            {paymentType === "subscription"
+              ? (totalCostUSD * 0.9).toFixed(2)
+              : totalCostUSD.toFixed(2)}
           </span>
         </div>
 
