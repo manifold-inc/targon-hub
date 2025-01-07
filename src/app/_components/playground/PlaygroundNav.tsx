@@ -63,7 +63,7 @@ export function PlaygroundNav({
   );
 
   return (
-    <nav className="sticky top-16 z-10 flex flex-col border-b border-gray-200 bg-white pt-3 sm:pt-0 lg:h-14 lg:flex-row lg:items-center">
+    <nav className="flex flex-col border-b border-gray-200 bg-white py-4 lg:h-14 lg:flex-row lg:items-center">
       {/* Navigation Buttons */}
       <div className="flex items-center gap-2 p-4 lg:p-0 lg:px-4">
         <NavButton type="ui" icon={MessageSquareIcon} />
