@@ -7,52 +7,62 @@ interface EmptyStateProps {
 
 export function EmptyState({ startChat }: EmptyStateProps) {
   return (
-    <div className="mx-auto flex h-full w-full max-w-3xl flex-col items-center justify-center px-4">
-      <div className="space-y-6 pb-4 text-center">
+    <div className="mx-auto flex h-full w-full max-w-3xl flex-col items-center justify-center p-4">
+      <div className="space-y-4 pb-6 text-center">
         <div className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#142900]/5 p-2">
-          <Bot className="h-6 w-6 text-[#142900]" />
+          <Bot className="h-5 w-5 text-[#142900] lg:h-6 lg:w-6" />
           <span className="font-bold text-[#142900]">TARGON</span>
         </div>
-        <p className="text-gray-500">
+        <p className="text-sm text-gray-500 lg:text-base">
           Experience the power of AI models through natural conversation
         </p>
       </div>
 
-      <div className="mb-8 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mb-6 grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:mb-8 lg:grid-cols-3 lg:gap-4">
         <div
           onClick={startChat}
-          className="cursor-pointer rounded-lg bg-[#142900]/10 p-6 transition-colors hover:bg-[#142900]/20"
+          className="cursor-pointer rounded-lg bg-[#142900]/10 p-4 transition-colors hover:bg-[#142900]/20 lg:p-6"
         >
-          <Users className="mb-4 h-6 w-6 text-[#142900]/80" />
-          <h3 className="mb-1 font-medium text-[#142900]">Play With Me</h3>
-          <p className="text-sm text-[#142900]/60">Start Chatting Below</p>
+          <Users className="mb-3 h-5 w-5 text-[#142900]/80 lg:mb-4 lg:h-6 lg:w-6" />
+          <h3 className="mb-1 text-sm font-medium text-[#142900] lg:text-base">
+            Play With Me
+          </h3>
+          <p className="text-xs text-[#142900]/60 lg:text-sm">
+            Start Chatting Below
+          </p>
         </div>
 
         <Link
           href="/models"
-          className="cursor-pointer rounded-lg bg-[#142900]/10 p-6 transition-colors hover:bg-[#142900]/20"
+          className="cursor-pointer rounded-lg bg-[#142900]/10 p-4 transition-colors hover:bg-[#142900]/20 lg:p-6"
         >
-          <BrainCircuit className="mb-4 h-6 w-6 text-[#142900]/80" />
-          <h3 className="mb-1 font-medium text-[#142900]">Visit Models</h3>
-          <p className="text-sm text-[#142900]/60">Discover Models on Targon</p>
+          <BrainCircuit className="mb-3 h-5 w-5 text-[#142900]/80 lg:mb-4 lg:h-6 lg:w-6" />
+          <h3 className="mb-1 text-sm font-medium text-[#142900] lg:text-base">
+            Visit Models
+          </h3>
+          <p className="text-xs text-[#142900]/60 lg:text-sm">
+            Discover Models on Targon
+          </p>
         </Link>
 
-        <div className="group cursor-not-allowed rounded-lg bg-[#142900]/5 p-6 backdrop-blur-[1px]">
-          <div className="mb-4 flex items-center justify-between">
-            <ImageIcon className="h-6 w-6 text-[#142900]/60" />
+        <div className="group cursor-not-allowed rounded-lg bg-[#142900]/5 p-4 backdrop-blur-[1px] lg:p-6">
+          <div className="mb-3 flex items-center justify-between lg:mb-4">
+            <ImageIcon className="h-5 w-5 text-[#142900]/60 lg:h-6 lg:w-6" />
             <span className="inline-flex items-center rounded-full bg-white/80 px-2 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 backdrop-blur-[1px]">
               Coming Soon
             </span>
           </div>
-          <h3 className="mb-1 font-medium text-[#142900]/60">
+          <h3 className="mb-1 text-sm font-medium text-[#142900]/60 lg:text-base">
             Try Image Playground
           </h3>
-          <p className="text-sm text-[#142900]/40">Generate Stunning Images</p>
+          <p className="text-xs text-[#142900]/40 lg:text-sm">
+            Generate Stunning Images
+          </p>
         </div>
       </div>
 
       <div className="flex flex-col items-center gap-2">
-        <p className="text-sm text-gray-500">
+        <p className="text-xs text-gray-500 lg:text-sm">
           Press{" "}
           <kbd className="rounded-md border border-gray-200 bg-gray-100 px-1.5 py-0.5 text-xs font-medium text-gray-400">
             ⌘/Ctrl
