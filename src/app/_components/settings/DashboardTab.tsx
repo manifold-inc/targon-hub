@@ -5,10 +5,18 @@ import type {
   InjectedExtension,
 } from "@polkadot/extension-inject/types";
 import type { Signer } from "@polkadot/types/types";
-import { Key, LineChart, Loader2, User, Wallet } from "lucide-react";
+import {
+  CreditCard,
+  Key,
+  LineChart,
+  Loader2,
+  User,
+  Wallet,
+} from "lucide-react";
 import { toast } from "sonner";
 
 import { CREDIT_PER_DOLLAR } from "@/constants";
+import { reactClient } from "@/trpc/react";
 import { type RouterOutputs } from "@/trpc/shared";
 import { formatLargeNumber } from "@/utils/utils";
 
@@ -37,6 +45,9 @@ export default function DashboardTab({ user, onTabChange }: DashboardTabProps) {
   const [showSS58Input, setShowSS58Input] = useState(false);
   const [ss58Address, setSS58Address] = useState("");
   const [isLinking, setIsLinking] = useState(false);
+
+  const { mutateAsync: createPortalSession, isLoading } =
+    reactClient.subscriptions.createPortalSession.useMutation();
 
   const handleBittensorLink = async () => {
     setIsLinking(true);
@@ -135,6 +146,15 @@ export default function DashboardTab({ user, onTabChange }: DashboardTabProps) {
     }
   };
 
+  const handleManageSubscriptions = async () => {
+    try {
+      const url = await createPortalSession();
+      if (url) window.location.href = url;
+    } catch (error) {
+      toast.error("Failed to open subscription portal");
+    }
+  };
+
   return (
     <div className="flex h-full flex-col py-2 sm:py-4">
       <div className="flex h-12 items-center justify-between sm:h-14">
@@ -189,6 +209,22 @@ export default function DashboardTab({ user, onTabChange }: DashboardTabProps) {
             {user?.apiKeyCount} Keys
           </p>
         </button>
+
+        <button
+          onClick={handleManageSubscriptions}
+          disabled={isLoading}
+          className="inline-flex h-24 w-full flex-col items-start justify-center gap-2 rounded-xl bg-gray-50 p-4 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50 sm:h-32 sm:w-32 sm:gap-4 sm:p-6"
+        >
+          {isLoading ? (
+            <Loader2 className="h-6 w-6 animate-spin" />
+          ) : (
+            <CreditCard className="h-6 w-6" />
+          )}
+          <p className="whitespace-break text-left text-sm leading-tight text-black">
+            Manage Subscriptions
+          </p>
+        </button>
+
         {!user?.ss58 ? (
           !showSS58Input ? (
             <button

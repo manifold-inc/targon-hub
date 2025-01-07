@@ -1,10 +1,26 @@
 import { TRPCError } from "@trpc/server";
-import { and, asc, count, eq, gte, inArray, like, or, sql } from "drizzle-orm";
+import {
+  and,
+  asc,
+  count,
+  desc,
+  eq,
+  gte,
+  inArray,
+  like,
+  or,
+  sql,
+} from "drizzle-orm";
 import moment from "moment";
 import { z } from "zod";
 
 import { env } from "@/env.mjs";
-import { MODALITIES, Model, Request } from "@/schema/schema";
+import {
+  DailyModelTokenCounts,
+  MODALITIES,
+  Model,
+  Request,
+} from "@/schema/schema";
 import { createTRPCRouter, publicAuthlessProcedure } from "../trpc";
 
 interface HuggingFaceModelInfo {
@@ -47,7 +63,6 @@ export const modelRouter = createTRPCRouter({
         requiredGpus: Model.requiredGpus,
         modality: Model.modality,
         enabled: Model.enabled,
-        cpt: Model.cpt,
         createdAt: Model.createdAt,
       })
       .from(Model)
@@ -73,7 +88,6 @@ export const modelRouter = createTRPCRouter({
           requiredGpus: Model.requiredGpus,
           modality: Model.modality,
           enabled: Model.enabled,
-          cpt: Model.cpt,
           createdAt: Model.createdAt,
         })
         .from(Model)
@@ -106,7 +120,6 @@ export const modelRouter = createTRPCRouter({
         .select({
           name: Model.name,
           id: Model.id,
-          cpt: Model.cpt,
           enabled: Model.enabled,
           createdAt: Model.createdAt,
           modality: Model.modality,
@@ -332,7 +345,7 @@ export const modelRouter = createTRPCRouter({
       }
 
       // Now that we've validated everything and confirmed no custom code, try to get the GPU requirements
-      const gpuResponse = await fetch(`${env.NEXT_PUBLIC_HUB_API_ESTIMATE_GPU_ENDPOINT}`, {
+      const gpuResponse = await fetch(`${env.HUB_API_ESTIMATE_GPU_ENDPOINT}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -407,4 +420,99 @@ export const modelRouter = createTRPCRouter({
         : null,
     }));
   }),
+  getThreeClosestImmunityEnds: publicAuthlessProcedure.query(
+    async ({ ctx }) => {
+      const models = await ctx.db
+        .select({
+          name: Model.name,
+          enabled: Model.enabled,
+          enabledDate: Model.enabledDate,
+        })
+        .from(Model)
+        .where(eq(Model.enabled, true))
+        .orderBy(asc(Model.enabledDate))
+        .limit(3);
+
+      return models.map((model) => ({
+        ...model,
+        enabledDate: model.enabledDate
+          ? new Date(model.enabledDate).toLocaleDateString()
+          : null,
+        immunityEnds: model.enabledDate
+          ? new Date(
+              new Date(model.enabledDate).getTime() + 7 * 24 * 60 * 60 * 1000,
+            ).toLocaleDateString()
+          : null,
+      }));
+    },
+  ),
+  getModelPreview: publicAuthlessProcedure.query(async ({ ctx }) => {
+    const models = await ctx.db
+      .select({
+        name: Model.name,
+        endpoints: Model.supportedEndpoints,
+        description: Model.description,
+        modality: Model.modality,
+        totalTokens: DailyModelTokenCounts.totalTokens,
+      })
+      .from(Model)
+      .leftJoin(
+        DailyModelTokenCounts,
+        eq(Model.name, DailyModelTokenCounts.modelName),
+      )
+      .where(
+        and(
+          eq(Model.enabled, true),
+          gte(DailyModelTokenCounts.createdAt, sql`CURDATE() - INTERVAL 1 DAY`),
+        ),
+      )
+      .orderBy(desc(DailyModelTokenCounts.totalTokens))
+      .limit(3);
+
+    return models;
+  }),
+  getTopModelsByTPS: publicAuthlessProcedure.query(async ({ ctx }) => {
+    const topModels = await ctx.db
+      .select({
+        modelName: DailyModelTokenCounts.modelName,
+        avgTPS: sql<number>`MAX(${DailyModelTokenCounts.avgTPS})`.mapWith(
+          Number,
+        ),
+        requiredGpus: Model.requiredGpus,
+        cpt: Model.cpt,
+      })
+      .from(DailyModelTokenCounts)
+      .leftJoin(Model, eq(DailyModelTokenCounts.modelName, Model.name))
+      .where(
+        gte(DailyModelTokenCounts.createdAt, sql`DATE(NOW()) - INTERVAL 7 DAY`),
+      )
+      .groupBy(DailyModelTokenCounts.modelName, Model.requiredGpus, Model.cpt)
+      .orderBy(desc(sql`MAX(${DailyModelTokenCounts.avgTPS})`))
+      .limit(6);
+
+    return topModels;
+  }),
+  getModelDailyStats: publicAuthlessProcedure
+    .input(z.string())
+    .query(async ({ ctx, input }) => {
+      const dailyStats = await ctx.db
+        .select({
+          modelName: DailyModelTokenCounts.modelName,
+          totalTokens: DailyModelTokenCounts.totalTokens,
+          createdAt: DailyModelTokenCounts.createdAt,
+          avgTPS: DailyModelTokenCounts.avgTPS,
+          cpt: Model.cpt,
+        })
+        .from(DailyModelTokenCounts)
+        .leftJoin(Model, eq(DailyModelTokenCounts.modelName, Model.name))
+        .where(
+          and(
+            eq(DailyModelTokenCounts.modelName, input),
+            sql`DATE(${DailyModelTokenCounts.createdAt}) >= DATE(NOW() - INTERVAL 7 DAY)`,
+          ),
+        )
+        .orderBy(asc(DailyModelTokenCounts.createdAt));
+
+      return dailyStats;
+    }),
 });

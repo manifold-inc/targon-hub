@@ -14,7 +14,7 @@ import { ZodError } from "zod";
 
 import { db } from "@/schema/db";
 import { validateRequest } from "../auth";
-import { stripe } from "../stripe";
+import { stripe } from "../stripe/stripe";
 
 export const createTRPCContext = (opts: { req: NextRequest }) => {
   // Fetch stuff that depends on the request
