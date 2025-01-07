@@ -30,6 +30,8 @@ export default function Example() {
     temperature: 0.5,
     max_tokens: 500,
     top_p: 0.5,
+    frequency_penalty: 0,
+    presence_penalty: 0,
   });
   const [nav, setNav] = useState("ui");
   const client = useMemo(() => {
@@ -43,6 +45,7 @@ export default function Example() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const [isParamsOpen, setIsParamsOpen] = useState(true);
 
   // Add global keyboard listener for shortcuts helper
   useEffect(() => {
@@ -101,6 +104,13 @@ export default function Example() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // Toggle parameters: Cmd/Ctrl + P
+    if (e.key === "p" && (e.metaKey || e.ctrlKey) && !e.shiftKey) {
+      e.preventDefault();
+      setIsParamsOpen((prev) => !prev);
+      return;
+    }
+
     // Send message: Enter (without shift)
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -166,9 +176,14 @@ export default function Example() {
 
   return (
     <>
-      <div className="flex h-[calc(100vh-4rem)] flex-1 pt-8">
+      <div className="flex h-[calc(100vh-4rem)] flex-1 pt-7">
         {/* Left Sidebar */}
-        <ParameterControls params={params} setParams={setParams} />
+        <ParameterControls
+          params={params}
+          setParams={setParams}
+          isOpen={isParamsOpen}
+          setIsOpen={setIsParamsOpen}
+        />
 
         {/* Main Content */}
         <main className="flex min-h-0 flex-1 flex-col">
@@ -189,12 +204,12 @@ export default function Example() {
               {chats.length === 0 ? (
                 <EmptyState startChat={startChat} />
               ) : (
-                <div className="min-h-0 flex-1 overflow-y-auto">
+                <div className="min-h-0 flex-1 overflow-y-auto px-4">
                   <ChatMessages messages={chats} />
                 </div>
               )}
 
-              <div className="flex-none border-t border-gray-200">
+              <div className="flex-none border-t border-gray-200 bg-white">
                 <ChatInput
                   text={text}
                   setText={setText}
