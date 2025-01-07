@@ -7,7 +7,7 @@ interface EmptyStateProps {
 
 export function EmptyState({ startChat }: EmptyStateProps) {
   return (
-    <div className="mx-auto flex h-full w-full max-w-3xl flex-col items-center justify-center p-4">
+    <div className="flex h-full flex-col items-center justify-center px-4">
       <div className="space-y-4 pb-6 text-center">
         <div className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#142900]/5 p-2">
           <Bot className="h-5 w-5 text-[#142900] lg:h-6 lg:w-6" />
@@ -18,7 +18,7 @@ export function EmptyState({ startChat }: EmptyStateProps) {
         </p>
       </div>
 
-      <div className="mb-6 grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:mb-8 lg:grid-cols-3 lg:gap-4">
+      <div className="mb-6 grid w-full max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 lg:mb-8 lg:grid-cols-3 lg:gap-4">
         <div
           onClick={startChat}
           className="cursor-pointer rounded-lg bg-[#142900]/10 p-4 transition-colors hover:bg-[#142900]/20 lg:p-6"

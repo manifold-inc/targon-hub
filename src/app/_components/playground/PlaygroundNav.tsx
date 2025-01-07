@@ -53,7 +53,7 @@ export function PlaygroundNav({
       onClick={() => setNav(type)}
       className={clsx(
         baseButtonStyles,
-        "h-10 flex-1 lg:h-9 lg:flex-initial",
+        "h-10 w-24 lg:h-9",
         nav === type ? selectedButtonStyles : unselectedButtonStyles,
       )}
     >
@@ -72,7 +72,7 @@ export function PlaygroundNav({
           onClick={() => setIsParamsOpen(!isParamsOpen)}
           className={clsx(
             baseButtonStyles,
-            "ml-auto lg:hidden",
+            "ml-auto h-10 w-32 lg:hidden",
             isParamsOpen ? selectedButtonStyles : unselectedButtonStyles,
           )}
         >
