@@ -130,6 +130,51 @@ export const CheckoutSession = mysqlTable("checkout_sessions", {
   cardBrand: varchar("card_brand", { length: 20 }),
 });
 
+export const ModelSubscription = mysqlTable("model_subscription", {
+  id: serial("id").primaryKey(),
+  userId: bigint("user_id", {
+    unsigned: true,
+    mode: "number",
+  })
+    .notNull()
+    .references(() => User.id, { onDelete: "cascade" }),
+  modelId: bigint("model_id", {
+    unsigned: true,
+    mode: "number",
+  })
+    .notNull()
+    .references(() => Model.id),
+  stripeSubscriptionId: varchar("stripe_subscription_id", {
+    length: 255,
+  }).notNull(),
+  status: mysqlEnum("status", [
+    "incomplete", // Initial state when subscription is being set up
+    "incomplete_expired", // Failed to complete setup
+    "active", // Successfully paying
+    "past_due", // Payment failed but retrying
+    "canceled", // Subscription ended
+  ]).notNull(),
+  gpuCount: int("gpu_count").notNull(),
+  currentPeriodStart: timestamp("current_period_start", {
+    mode: "date",
+  }).notNull(),
+  currentPeriodEnd: timestamp("current_period_end", { mode: "date" }).notNull(),
+  cancelAtPeriodEnd: boolean("cancel_at_period_end").default(false),
+  priceId: varchar("price_id", { length: 255 }).notNull(),
+  defaultPaymentMethod: varchar("default_payment_method", { length: 255 }),
+  latestInvoice: varchar("latest_invoice", { length: 255 }),
+  collectionMethod: mysqlEnum("collection_method", [
+    "charge_automatically",
+    "send_invoice",
+  ]).default("charge_automatically"),
+  createdAt: timestamp("created_at", { mode: "date" }).default(
+    sql`CURRENT_TIMESTAMP`,
+  ),
+  updatedAt: timestamp("updated_at", { mode: "date" })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .onUpdateNow(),
+});
+
 export const TaoTransfers = mysqlTable("tao_transfers", {
   id: serial("id").primaryKey(),
   userId: bigint("user_id", {
@@ -197,4 +242,8 @@ export const ModelLeasing = mysqlTable("model_leasing", {
     mode: "number",
     unsigned: true,
   }).notNull(),
+  type: mysqlEnum("type", ["onetime", "subscription"])
+    .notNull()
+    .default("onetime"),
+  invoiceId: varchar("invoice_id", { length: 255 }),
 });

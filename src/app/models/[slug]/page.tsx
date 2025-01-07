@@ -152,7 +152,7 @@ for chunk in response:
                 )}
               </div>
             </section>
-            {usage && (
+            {!!usage?.length && (
               <section id="usage">
                 <div className="py-10">
                   <div className="h-px w-full bg-[#e4e7ec]" />

@@ -20,6 +20,7 @@ export const env = createEnv({
     STRIPE_CREDIT_PRICE_ID: z.string(),
     STRIPE_PUBLISHABLE_KEY: z.string(),
     STRIPE_ENDPOINT_SECRET: z.string(),
+    STRIPE_SUBSCRIPTION_PRICE_ID: z.string(),
 
     VERCEL_URL: z.string(),
 
@@ -49,6 +50,7 @@ export const env = createEnv({
     STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
     STRIPE_CREDIT_PRICE_ID: process.env.STRIPE_CREDIT_PRICE_ID,
     STRIPE_ENDPOINT_SECRET: process.env.STRIPE_ENDPOINT_SECRET,
+    STRIPE_SUBSCRIPTION_PRICE_ID: process.env.STRIPE_SUBSCRIPTION_PRICE_ID,
     NEXT_PUBLIC_HUB_API_ENDPOINT: process.env.NEXT_PUBLIC_HUB_API_ENDPOINT,
     VERCEL_URL: process.env.VERCEL_ENV ?? "http://localhost:3000",
     INFLUX_URL: process.env.INFLUX_URL,
