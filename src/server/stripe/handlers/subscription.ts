@@ -8,7 +8,7 @@ import {
   updateModelStatus,
   updateSubscriptionRecord,
   type SubscriptionStatus,
-} from "../helpers";
+} from "@/server/stripe/helpers";
 
 async function validateSubscriptionMetadata(subscription: Stripe.Subscription) {
   const { user_id, model_id, gpu_count } = subscription.metadata;
