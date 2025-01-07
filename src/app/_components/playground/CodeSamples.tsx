@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import clsx from "clsx";
 import { Copy, Eye, EyeOff } from "lucide-react";
