@@ -1,4 +1,9 @@
-import { useState, useRef, useEffect, type ComponentPropsWithoutRef } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ComponentPropsWithoutRef,
+} from "react";
 import clsx from "clsx";
 import { Check, Copy } from "lucide-react";
 import { type ChatCompletionMessageParam } from "openai/resources/index.mjs";
@@ -30,7 +35,10 @@ const CodeBlock: Components["code"] = ({
 
   if (inline || !isMultiLine) {
     return (
-      <code className="rounded bg-gray-800/50 px-1.5 py-0.5 text-sm text-gray-200" {...props}>
+      <code
+        className="rounded bg-gray-800/50 px-1.5 py-0.5 text-sm text-gray-200"
+        {...props}
+      >
         {children}
       </code>
     );
@@ -68,21 +76,29 @@ interface ChatMessagesProps {
 
 export function ChatMessages({ messages }: ChatMessagesProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  
-  const scrollToBottom = () => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }
-  };
+  const SCROLL_DELAY = 50;
 
   useEffect(() => {
-    scrollToBottom();
+    const container = containerRef.current;
+    if (!container) return;
+
+    const timeoutId = setTimeout(() => {
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: "smooth",
+      });
+    }, SCROLL_DELAY);
+
+    return () => clearTimeout(timeoutId);
   }, [messages]);
 
   if (messages.length === 0) return null;
 
   return (
-    <div ref={containerRef} className="space-y-6 px-4 py-6">
+    <div
+      ref={containerRef}
+      className="h-full space-y-6 overflow-y-auto px-4 py-6"
+    >
       {messages.map((message, i) => (
         <div
           key={i}
