@@ -52,6 +52,10 @@ export default function Example() {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Toggle parameters: P
       if (e.key === "p") {
+        // Only prevent when focused on the chat input
+        if (document.activeElement === textareaRef.current) {
+          return;
+        }
         setIsParamsOpen((prev) => !prev);
         return;
       }

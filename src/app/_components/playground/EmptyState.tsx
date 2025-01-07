@@ -11,7 +11,7 @@ export function EmptyState({ startChat }: EmptyStateProps) {
       <div className="space-y-4 pb-6 text-center">
         <div className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#142900]/5 p-2">
           <Bot className="h-5 w-5 text-[#142900] lg:h-6 lg:w-6" />
-          <span className="font-bold text-[#142900]">TARGON</span>
+          <span className="text-[#142900] font-semibold">TARGON</span>
         </div>
         <p className="text-sm text-gray-500 lg:text-base">
           Experience the power of AI models through natural conversation
