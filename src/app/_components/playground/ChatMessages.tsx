@@ -88,17 +88,14 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
   if (messages.length === 0) return null;
 
   return (
-    <div
-      ref={containerRef}
-      className="h-full overflow-y-auto"
-    >
+    <div ref={containerRef} className="h-full overflow-y-auto">
       <div className="space-y-4 px-4 py-6 lg:space-y-6">
         {messages.map((message, i) => (
           <div
             key={i}
             className={clsx(
               "flex",
-              message.role === "user" ? "justify-end" : "justify-start"
+              message.role === "user" ? "justify-end" : "justify-start",
             )}
           >
             <div
@@ -106,7 +103,7 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
                 "w-[95%] overflow-hidden rounded-2xl px-4 py-3 lg:w-[85%] lg:px-6 lg:py-4",
                 message.role === "user"
                   ? "bg-[#142900]/80 text-white shadow-sm backdrop-blur-sm"
-                  : "bg-gray-100 text-gray-900"
+                  : "bg-gray-100 text-gray-900",
               )}
             >
               <Markdown
@@ -129,7 +126,7 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
                     "prose-strong:text-white",
                     "prose-a:text-white hover:prose-a:text-white/90",
                     "prose-li:text-white/90",
-                  ]
+                  ],
                 )}
               >
                 {message.content as string}

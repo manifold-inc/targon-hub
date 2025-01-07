@@ -14,8 +14,10 @@ interface ChatInputProps {
   hasChat?: boolean;
 }
 
-const buttonBaseClass = "rounded-lg p-2.5 text-gray-500 hover:bg-[#142900]/5 hover:text-[#142900] lg:p-2";
-const buttonDisabledClass = "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-gray-500";
+const buttonBaseClass =
+  "rounded-lg p-2.5 text-gray-500 hover:bg-[#142900]/5 hover:text-[#142900] lg:p-2";
+const buttonDisabledClass =
+  "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-gray-500";
 
 export function ChatInput({
   text,
@@ -50,15 +52,12 @@ export function ChatInput({
             "focus:border-[#142900]/20 focus:outline-none focus:ring-1 focus:ring-[#142900]/20",
             "disabled:cursor-not-allowed disabled:opacity-50",
             "pl-12 pr-24",
-            "min-h-[3.25rem] max-h-36 overflow-y-auto lg:min-h-12"
+            "max-h-36 min-h-[3.25rem] overflow-y-auto lg:min-h-12",
           )}
         />
         <div className="absolute right-2 top-[6px] flex items-center gap-1 lg:gap-2">
           {hasChat && (
-            <button
-              onClick={onShowShortcuts}
-              className={buttonBaseClass}
-            >
+            <button onClick={onShowShortcuts} className={buttonBaseClass}>
               <Command className="h-5 w-5" />
             </button>
           )}

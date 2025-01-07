@@ -10,6 +10,7 @@ import { env } from "@/env.mjs";
 import { reactClient } from "@/trpc/react";
 import { ChatInput } from "../_components/playground/ChatInput";
 import { ChatMessages } from "../_components/playground/ChatMessages";
+import { CodeSamples } from "../_components/playground/CodeSamples";
 import { EmptyState } from "../_components/playground/EmptyState";
 import { KeyboardShortcuts } from "../_components/playground/KeyboardShortcuts";
 import { ParameterControls } from "../_components/playground/ParameterControls";
@@ -62,6 +63,7 @@ export default function Example() {
 
       // Show shortcuts when Command/Control is pressed alone
       if (e.key === "Meta" || e.key === "Control") {
+        if (nav === "code") return;
         e.preventDefault();
         setShowShortcuts(true);
       }
@@ -73,7 +75,7 @@ export default function Example() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [showShortcuts, setIsParamsOpen]);
+  }, [showShortcuts, setIsParamsOpen, nav]);
 
   const trigger = useCallback(
     async (chat: string, chatlog: typeof chats) => {
@@ -114,7 +116,6 @@ export default function Example() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-
     // Send message: Enter (without shift)
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -230,8 +231,12 @@ export default function Example() {
               </div>
             </div>
           ) : (
-            <div className="flex flex-1 flex-col overflow-hidden px-4 py-4">
-              Code Samples here
+            <div className="flex flex-1 flex-col overflow-hidden">
+              <CodeSamples
+                model={current_model}
+                apiKey={first_key}
+                params={params}
+              />
             </div>
           )}
         </main>
