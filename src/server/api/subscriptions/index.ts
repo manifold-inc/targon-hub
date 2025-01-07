@@ -16,7 +16,6 @@ export const subscriptionRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-
       const [model] = await ctx.db
         .select()
         .from(Model)

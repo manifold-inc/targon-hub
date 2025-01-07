@@ -76,7 +76,8 @@ export const Footer = () => {
           ))}
         </div>
         <p className="text-muted-foreground mt-10 text-center text-sm/6">
-          &copy; {new Date().getFullYear()} Manifold Labs, Inc. All rights reserved.
+          &copy; {new Date().getFullYear()} Manifold Labs, Inc. All rights
+          reserved.
         </p>
       </div>
     </footer>

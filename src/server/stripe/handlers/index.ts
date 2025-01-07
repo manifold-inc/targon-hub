@@ -4,4 +4,7 @@ export {
   subscriptionUpdated,
   subscriptionDeleted,
 } from "@/server/stripe/handlers/subscription";
-export { invoicePaid, invoicePaymentFailed } from "@/server/stripe/handlers/invoice";
+export {
+  invoicePaid,
+  invoicePaymentFailed,
+} from "@/server/stripe/handlers/invoice";
