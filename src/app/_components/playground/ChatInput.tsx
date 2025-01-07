@@ -14,6 +14,9 @@ interface ChatInputProps {
   hasChat?: boolean;
 }
 
+const buttonBaseClass = "rounded-lg p-2.5 text-gray-500 hover:bg-[#142900]/5 hover:text-[#142900] lg:p-2";
+const buttonDisabledClass = "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-gray-500";
+
 export function ChatInput({
   text,
   setText,
@@ -42,19 +45,19 @@ export function ChatInput({
           disabled={!current_model}
           rows={1}
           className={clsx(
-            "w-full resize-none rounded-xl bg-white py-3.5 text-base text-gray-900 placeholder:text-gray-400 lg:py-3 lg:text-sm",
-            "border border-gray-200",
+            "w-full resize-none rounded-xl py-3.5 text-base lg:py-3 lg:text-sm",
+            "border border-gray-200 bg-white",
             "focus:border-[#142900]/20 focus:outline-none focus:ring-1 focus:ring-[#142900]/20",
             "disabled:cursor-not-allowed disabled:opacity-50",
             "pl-12 pr-24",
-            "max-h-36 min-h-[3.25rem] overflow-y-auto lg:min-h-12",
+            "min-h-[3.25rem] max-h-36 overflow-y-auto lg:min-h-12"
           )}
         />
         <div className="absolute right-2 top-[6px] flex items-center gap-1 lg:gap-2">
           {hasChat && (
             <button
               onClick={onShowShortcuts}
-              className="rounded-lg p-2.5 text-gray-500 hover:bg-[#142900]/5 hover:text-[#142900] lg:p-2"
+              className={buttonBaseClass}
             >
               <Command className="h-5 w-5" />
             </button>
@@ -62,7 +65,7 @@ export function ChatInput({
           <button
             onClick={onSend}
             disabled={isLoading || !current_model || !text.trim()}
-            className="rounded-lg p-2.5 text-gray-500 hover:bg-[#142900]/5 hover:text-[#142900] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-gray-500 lg:p-2"
+            className={clsx(buttonBaseClass, buttonDisabledClass)}
           >
             <SendHorizonalIcon className="h-5 w-5" />
           </button>
