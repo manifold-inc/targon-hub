@@ -34,6 +34,7 @@ export default function Example() {
     presence_penalty: 0,
   });
   const [nav, setNav] = useState("ui");
+  const [isParamsOpen, setIsParamsOpen] = useState(false);
   const client = useMemo(() => {
     return new OpenAI({
       baseURL: env.NEXT_PUBLIC_HUB_API_ENDPOINT + "/v1",
@@ -45,7 +46,6 @@ export default function Example() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [showShortcuts, setShowShortcuts] = useState(false);
-  const [isParamsOpen, setIsParamsOpen] = useState(true);
 
   // Add global keyboard listener for shortcuts helper
   useEffect(() => {
@@ -176,8 +176,8 @@ export default function Example() {
 
   return (
     <>
-      <div className="flex h-[calc(100vh-4rem)] flex-1 pt-7">
-        {/* Left Sidebar */}
+      <div className="flex min-h-[calc(100vh-4rem)] flex-col pt-7 lg:flex-row">
+        {/* Parameter Controls - Move before main content for desktop */}
         <ParameterControls
           params={params}
           setParams={setParams}
@@ -188,15 +188,15 @@ export default function Example() {
         {/* Main Content */}
         <main className="flex min-h-0 flex-1 flex-col">
           {/* Navigation */}
-          <div className="flex-none border-b border-gray-200">
-            <PlaygroundNav
-              nav={nav}
-              setNav={setNav}
-              current_model={current_model}
-              setSelected={setSelected}
-              models={models}
-            />
-          </div>
+          <PlaygroundNav
+            nav={nav}
+            setNav={setNav}
+            current_model={current_model}
+            setSelected={setSelected}
+            models={models}
+            isParamsOpen={isParamsOpen}
+            setIsParamsOpen={setIsParamsOpen}
+          />
 
           {/* Content Area */}
           {nav === "ui" ? (
@@ -204,7 +204,7 @@ export default function Example() {
               {chats.length === 0 ? (
                 <EmptyState startChat={startChat} />
               ) : (
-                <div className="min-h-0 flex-1 overflow-y-auto px-4">
+                <div className="flex-1 overflow-y-auto">
                   <ChatMessages messages={chats} />
                 </div>
               )}

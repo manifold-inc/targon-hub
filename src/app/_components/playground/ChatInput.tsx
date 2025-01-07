@@ -26,7 +26,7 @@ export function ChatInput({
   hasChat = false,
 }: ChatInputProps) {
   return (
-    <div className="p-4">
+    <div className="p-3 lg:p-4">
       <div className="relative flex items-end">
         <div className="pointer-events-none absolute left-4 top-4">
           <MessageSquareIcon className="h-5 w-5 text-gray-400" />
@@ -42,19 +42,19 @@ export function ChatInput({
           disabled={!current_model}
           rows={1}
           className={clsx(
-            "w-full resize-none rounded-xl bg-white py-3 text-gray-900 placeholder:text-gray-400",
+            "w-full resize-none rounded-xl bg-white py-3.5 text-base text-gray-900 placeholder:text-gray-400 lg:py-3 lg:text-sm",
             "border border-gray-200",
             "focus:border-[#142900]/20 focus:outline-none focus:ring-1 focus:ring-[#142900]/20",
             "disabled:cursor-not-allowed disabled:opacity-50",
             "pl-12 pr-24",
-            "max-h-36 min-h-12 overflow-y-auto",
+            "max-h-36 min-h-[3.25rem] overflow-y-auto lg:min-h-12",
           )}
         />
-        <div className="absolute right-2 top-[6px] flex items-center gap-2">
+        <div className="absolute right-2 top-[6px] flex items-center gap-1 lg:gap-2">
           {hasChat && (
             <button
               onClick={onShowShortcuts}
-              className="rounded-lg p-2 text-gray-500 hover:bg-[#142900]/5 hover:text-[#142900]"
+              className="rounded-lg p-2.5 text-gray-500 hover:bg-[#142900]/5 hover:text-[#142900] lg:p-2"
             >
               <Command className="h-5 w-5" />
             </button>
@@ -62,7 +62,7 @@ export function ChatInput({
           <button
             onClick={onSend}
             disabled={isLoading || !current_model || !text.trim()}
-            className="rounded-lg p-2 text-gray-500 hover:bg-[#142900]/5 hover:text-[#142900] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-gray-500"
+            className="rounded-lg p-2.5 text-gray-500 hover:bg-[#142900]/5 hover:text-[#142900] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-gray-500 lg:p-2"
           >
             <SendHorizonalIcon className="h-5 w-5" />
           </button>
