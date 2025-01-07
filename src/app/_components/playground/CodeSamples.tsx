@@ -33,13 +33,19 @@ export function CodeSamples({ model, apiKey, params }: CodeSamplesProps) {
 
   const getCodeExample = (lang: typeof selectedLang) => {
     const displayedKey = showApiKey ? apiKey : "YOUR_API_KEY";
+
     const examples = {
       curl: `curl ${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1/chat/completions \\
   -H "Content-Type: application/json" \\
   -H "Authorization: Bearer ${displayedKey}" \\
+  -N \\
   -d '{
     "model": "${model}",
-    "messages": [{"role": "user", "content": "Hello!"}],
+    "stream": true,
+    "messages": [
+      {"role": "system", "content": "You are a helpful programming assistant."},
+      {"role": "user", "content": "Write a bubble sort implementation in Python with comments explaining how it works"}
+    ],
     "temperature": ${params.temperature},
     "max_tokens": ${params.max_tokens},
     "top_p": ${params.top_p},
@@ -54,16 +60,22 @@ client = OpenAI(
 )
 
 try:
-    completion = client.chat.completions.create(
+    response = client.chat.completions.create(
         model="${model}",
-        messages=[{"role": "user", "content": "Hello!"}],
+        stream=True,
+        messages=[
+            {"role": "system", "content": "You are a helpful programming assistant."},
+            {"role": "user", "content": "Write a bubble sort implementation in Python with comments explaining how it works"}
+        ],
         temperature=${params.temperature},
         max_tokens=${params.max_tokens},
         top_p=${params.top_p},
         frequency_penalty=${params.frequency_penalty},
         presence_penalty=${params.presence_penalty}
     )
-    print(completion.choices[0].message.content)
+    for chunk in response:
+        if chunk.choices[0].delta.content is not None:
+            print(chunk.choices[0].delta.content, end="")
 except Exception as e:
     print(f"Error: {e}")`,
       javascript: `import OpenAI from 'openai';
@@ -74,43 +86,50 @@ const client = new OpenAI({
 });
 
 try {
-  const completion = await client.chat.completions.create({
+  const stream = await client.chat.completions.create({
     model: "${model}",
-    messages: [{ role: "user", content: "Hello!" }],
+    stream: true,
+    messages: [
+      { role: "system", content: "You are a helpful programming assistant." },
+      { role: "user", content: "Write a bubble sort implementation in JavaScript with comments explaining how it works" }
+    ],
     temperature: ${params.temperature},
     max_tokens: ${params.max_tokens},
     top_p: ${params.top_p},
     frequency_penalty: ${params.frequency_penalty},
     presence_penalty: ${params.presence_penalty}
   });
-  console.log(completion.choices[0].message.content);
+  for await (const chunk of stream) {
+    const content = chunk.choices[0]?.delta?.content || "";
+    process.stdout.write(content);
+  }
 } catch (error) {
   console.error('Error:', error);
 }`,
       typescript: `import OpenAI from 'openai';
-import type { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 
-const client = new OpenAI({
-  baseURL: "${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1",
-  apiKey: "${displayedKey}",
-  dangerouslyAllowBrowser: true
-});
+const client = new OpenAI({ baseURL: "${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1", apiKey: "${displayedKey}", dangerouslyAllowBrowser: true });
 
 const chat = async () => {
   try {
-    const completion = await client.chat.completions.create({
-      model: "${model}",
-      messages: [{ role: "user", content: "Hello!" }] as ChatCompletionMessageParam[],
+    const stream = await client.chat.completions.create({
+      model: "NTQAI/Nxcode-CQ-7B-orpo",
+      stream: true,
+      messages: [
+        { role: "system", content: "You are a helpful programming assistant." },
+        { role: "user", content: "Write a bubble sort implementation in TypeScript with comments explaining how it works" }
+      ],
       temperature: ${params.temperature},
       max_tokens: ${params.max_tokens},
       top_p: ${params.top_p},
       frequency_penalty: ${params.frequency_penalty},
       presence_penalty: ${params.presence_penalty}
     });
-    console.log(completion.choices[0]?.message?.content);
-  } catch (error) {
-    console.error('Error:', error);
-  }
+    for await (const chunk of stream) {
+      const content = chunk.choices[0]?.delta?.content || "";
+      process.stdout.write(content);
+    }
+  } catch (error) { console.error('Error:', error); }
 };
 
 void chat();`,
@@ -156,7 +175,7 @@ void chat();`,
           </p>
         </div>
 
-        <div className="mx-auto max-w-lg pb-6">
+        <div className="mx-auto max-w-lg pb-4">
           <div className="flex space-x-1 rounded-xl bg-[#142900]/5 p-1">
             {languages.map((lang) => (
               <button
