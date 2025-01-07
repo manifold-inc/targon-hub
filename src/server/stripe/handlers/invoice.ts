@@ -10,8 +10,8 @@ import {
   updateModelStatus,
   updateSubscriptionRecord,
   type SubscriptionStatus,
-} from "../helpers";
-import { stripe } from "../stripe";
+} from "@/server/stripe/helpers";
+import { stripe } from "@/server/stripe/stripe";
 
 export async function invoicePaid(invoice: Stripe.Invoice) {
   // Only process subscription invoices

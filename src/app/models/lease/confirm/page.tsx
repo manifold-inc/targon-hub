@@ -305,7 +305,6 @@ export default function ConfirmPage() {
             if (paymentType === "subscription") {
               createSubscriptionMutation.mutate({
                 modelName: model,
-                gpuCount: Number(requiredGPUS),
               });
             } else {
               leaseModelMutation.mutate({ model });

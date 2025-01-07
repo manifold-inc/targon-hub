@@ -12,18 +12,10 @@ export const subscriptionRouter = createTRPCRouter({
     .input(
       z.object({
         modelName: z.string(),
-        gpuCount: z.number().min(1).max(8),
         redirectUrl: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      if (input.gpuCount < 1 || input.gpuCount > MAX_GPU_SLOTS) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Invalid GPU count",
-        });
-      }
-
       const [model] = await ctx.db
         .select()
         .from(Model)
@@ -33,6 +25,14 @@ export const subscriptionRouter = createTRPCRouter({
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Model not found",
+        });
+      }
+
+      //this shouldn't happen but just in case
+      if (model.requiredGpus < 1 || model.requiredGpus > MAX_GPU_SLOTS) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Invalid GPU count",
         });
       }
 
@@ -70,7 +70,7 @@ export const subscriptionRouter = createTRPCRouter({
           line_items: [
             {
               price: env.STRIPE_SUBSCRIPTION_PRICE_ID,
-              quantity: input.gpuCount,
+              quantity: model.requiredGpus,
             },
           ],
           success_url: `${ctx.req!.nextUrl.origin}/models/${encodeURIComponent(input.modelName)}?success=true`,
@@ -79,7 +79,7 @@ export const subscriptionRouter = createTRPCRouter({
             metadata: {
               user_id: ctx.user.id.toString(),
               model_id: model.id.toString(),
-              gpu_count: input.gpuCount.toString(),
+              gpu_count: model.requiredGpus.toString(),
             },
           },
         });

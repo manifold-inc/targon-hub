@@ -5,7 +5,7 @@ import { CREDIT_PER_DOLLAR } from "@/constants";
 import { env } from "@/env.mjs";
 import { db } from "@/schema/db";
 import { CheckoutSession, User } from "@/schema/schema";
-import { stripe } from "../stripe";
+import { stripe } from "@/server/stripe/stripe";
 
 export const checkoutSuccess = async (
   data: Stripe.CheckoutSessionCompletedEvent.Data["object"],
