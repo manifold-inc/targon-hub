@@ -314,22 +314,24 @@ export default function ModalSidebar() {
       title: "Organization",
       content: (
         <SectionContent>
-          {orgs
-            .slice(0, showAllOrganization ? orgs.length : 3)
-            .map((organization) => (
-              <ToggleButton
-                key={organization}
-                label={organization}
-                isActive={activeOrganization.includes(organization)}
-                onClick={() => {
-                  setActiveOrganization((prev) =>
-                    prev.includes(organization)
-                      ? prev.filter((s) => s !== organization)
-                      : [...prev, organization],
-                  );
-                }}
-              />
-            ))}
+          <div>
+            {orgs
+              .slice(0, showAllOrganization ? orgs.length : 3)
+              .map((organization) => (
+                <ToggleButton
+                  key={organization}
+                  label={organization}
+                  isActive={activeOrganization.includes(organization)}
+                  onClick={() => {
+                    setActiveOrganization((prev) =>
+                      prev.includes(organization)
+                        ? prev.filter((s) => s !== organization)
+                        : [...prev, organization],
+                    );
+                  }}
+                />
+              ))}
+          </div>
           {orgs.length > 3 && (
             <ToggleButton
               label={showAllOrganization ? "Show less" : "Show more"}
@@ -389,7 +391,7 @@ export default function ModalSidebar() {
 
   return (
     <aside className="h-screen border-r border-[#e4e7ec] pr-2 pt-2 sm:animate-slide-in-delay sm:pr-8 sm:pt-10">
-      <div className="flex flex-col gap-2.5">
+      <div className="flex h-full flex-col gap-2.5 overflow-y-auto">
         {sections.map((section, index) => (
           <div
             key={section.id}
@@ -480,7 +482,7 @@ export default function ModalSidebar() {
         </div>
 
         {/* Add Model CTA */}
-        <div className="px-3 pb-6 pt-3">
+        <div className="px-3 py-3">
           <div className="relative flex flex-col items-center overflow-hidden rounded-xl border border-[#e4e7ec]/60 bg-white/30 px-4 py-5 text-center backdrop-blur-sm">
             <div className="absolute inset-0 -z-10">
               <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-[#142900]/10 via-[#142900]/5 to-transparent" />

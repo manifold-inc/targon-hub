@@ -22,7 +22,7 @@ export default function SearchBar() {
   );
 
   const groupedModels =
-    models.data?.reduce(
+    models.data?.items.reduce(
       (acc, model) => {
         const date = moment(model.createdAt);
         const monthYear = date.format("MMMM YYYY");
@@ -32,7 +32,7 @@ export default function SearchBar() {
         acc[monthYear].push(model);
         return acc;
       },
-      {} as Record<string, typeof models.data>,
+      {} as Record<string, typeof models.data.items>,
     ) ?? {};
 
   const sortedMonthYears = Object.keys(groupedModels).sort(
@@ -44,7 +44,7 @@ export default function SearchBar() {
       immediate
       value={query}
       onChange={(value: string) => {
-        const selectedModel = models.data?.find((m) => m.name === value);
+        const selectedModel = models.data?.items.find((m) => m.name === value);
         if (selectedModel?.name) {
           router.push(`/models/${encodeURIComponent(selectedModel.name)}`);
         }
@@ -68,7 +68,7 @@ export default function SearchBar() {
         </div>
       </div>
       <ComboboxOptions className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm md:max-h-40 lg:max-h-60">
-        {!models.data?.length ? (
+        {!models.data?.items.length ? (
           <div className="relative cursor-default select-none px-4 py-2">
             {models.isLoading ? "Loading..." : "No models found."}
           </div>

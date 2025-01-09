@@ -82,6 +82,8 @@ export const modelRouter = createTRPCRouter({
         minTPS: z.number().nullable().optional(),
         minWeeklyPrice: z.number().nullable().optional(),
         maxWeeklyPrice: z.number().nullable().optional(),
+        page: z.number().min(1).default(1),
+        limit: z.number().min(1).default(10),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -155,19 +157,42 @@ export const modelRouter = createTRPCRouter({
         filters.push(sql`${weeklyPrice} <= ${input.maxWeeklyPrice}`);
       }
 
-      // Apply sorting
-      if (input.sortBy) {
-        switch (input.sortBy) {
-          case "newest":
-            void query.orderBy(desc(Model.createdAt));
-            break;
-          case "oldest":
-            void query.orderBy(asc(Model.createdAt));
-            break;
-        }
+      if (filters.length > 0) {
+        query.where(and(...filters));
       }
 
-      return await query.where(and(...filters));
+      // Apply sorting
+      if (input.sortBy === "newest") {
+        query.orderBy(desc(Model.createdAt));
+      } else if (input.sortBy === "oldest") {
+        query.orderBy(asc(Model.createdAt));
+      }
+
+      // Get total count for pagination
+      const countQuery = ctx.db
+        .select({ count: sql<number>`count(*)`.mapWith(Number) })
+        .from(Model)
+        .$dynamic();
+      
+      if (filters.length > 0) {
+        countQuery.where(and(...filters));
+      }
+
+      const [countResult] = await countQuery;
+      const total = countResult?.count ?? 0;
+
+      // Apply pagination
+      const offset = (input.page - 1) * input.limit;
+      query.limit(input.limit).offset(offset);
+
+      const items = await query;
+
+      return {
+        items,
+        total,
+        totalPages: Math.ceil(total / input.limit),
+        currentPage: input.page,
+      };
     }),
   getModelInfo: publicAuthlessProcedure
     .input(z.object({ model: z.string() }))
@@ -576,8 +601,7 @@ export const modelRouter = createTRPCRouter({
       .select({
         name: Model.name,
       })
-      .from(Model)
-      .where(and(eq(Model.enabled, true)));
+      .from(Model);
 
     const orgs = Array.from(
       new Set(
