@@ -92,7 +92,6 @@ export const modelRouter = createTRPCRouter({
         })
         .from(Model)
         .$dynamic()
-        .limit(15);
       const filters = [];
       if (input.name?.length) {
         filters.push(like(Model.name, `%${input.name}%`));
@@ -108,7 +107,10 @@ export const modelRouter = createTRPCRouter({
         filters.push(inArray(Model.modality, input.modalities));
       }
       if (input.endpoints?.length) {
-        filters.push(like(Model.name, `%${input.name}%`));
+        const endpointChecks = input.endpoints.map(endpoint => 
+          sql`JSON_CONTAINS(${Model.supportedEndpoints}, ${JSON.stringify(endpoint)}, '$')`
+        );
+        filters.push(or(...endpointChecks));
       }
 
       return await query.where(and(...filters));
