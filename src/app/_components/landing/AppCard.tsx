@@ -57,7 +57,7 @@ export const AppCard = ({
           </div>
 
           <div className="space-y-3 whitespace-nowrap">
-            <div className="flex gap-2">
+            <div className="flex gap-1">
               <p className="text-xs leading-4 text-[#667085]">
                 {requiredGPUs} GPU{requiredGPUs !== 1 ? "s" : ""}
               </p>
