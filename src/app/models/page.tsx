@@ -5,9 +5,9 @@ import { Filter, Search } from "lucide-react";
 
 import { useModalSidebarStore } from "@/store/modelSidebarStore";
 import { reactClient } from "@/trpc/react";
-import ModalSidebar from "../_components/ModalSidebar";
-import ModelCard from "../_components/ModelCard";
 import { WatchForSuccess } from "../_components/WatchForStripeSuccess";
+import ModalSidebar from "../_components/models/ModalSidebar";
+import ModelCard from "../_components/ModelCard";
 
 export default function Page() {
   const [query, setQuery] = useState("");
