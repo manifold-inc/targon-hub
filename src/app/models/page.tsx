@@ -17,14 +17,23 @@ export default function Page() {
   const savedModel = decodeURIComponent(searchParams.get("model") ?? "");
   const step = Number(searchParams.get("step")) || null;
 
-  const { activeOrganization, activeModality, activeSupportedEndpoints } =
-    useModalSidebarStore();
+  const {
+    activeOrganization,
+    activeModality,
+    activeSupportedEndpoints,
+    sortBy,
+    showLiveOnly,
+    showLeaseableOnly,
+  } = useModalSidebarStore();
   const models = reactClient.model.getModels.useQuery(
     {
       name: query,
       orgs: activeOrganization,
       modalities: activeModality,
       endpoints: activeSupportedEndpoints,
+      showLiveOnly,
+      showLeaseableOnly,
+      sortBy,
     },
     { keepPreviousData: true },
   );
@@ -87,6 +96,8 @@ export default function Page() {
                   modality={model.modality ?? ""}
                   description={model.description ?? ""}
                   enabled={model.enabled ?? false}
+                  createdAt={model.createdAt}
+                  avgTPS={model.avgTPS}
                 />
               ))}
             </div>

@@ -76,6 +76,9 @@ export const modelRouter = createTRPCRouter({
         orgs: z.array(z.string()).optional(),
         modalities: z.array(z.enum(MODALITIES)).optional(),
         endpoints: z.array(z.string()).optional(),
+        showLiveOnly: z.boolean().optional(),
+        showLeaseableOnly: z.boolean().optional(),
+        sortBy: z.enum(["newest", "oldest"]).nullable().optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -88,10 +91,19 @@ export const modelRouter = createTRPCRouter({
           requiredGpus: Model.requiredGpus,
           modality: Model.modality,
           enabled: Model.enabled,
+          customBuild: Model.customBuild,
           createdAt: Model.createdAt,
+          avgTPS: sql<number>`(
+            SELECT AVG(${DailyModelTokenCounts.avgTPS})
+            FROM ${DailyModelTokenCounts}
+            WHERE ${DailyModelTokenCounts.modelName} = ${Model.name}
+            AND ${DailyModelTokenCounts.createdAt} >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+          )`.mapWith(Number),
         })
         .from(Model)
-        .$dynamic()
+        .$dynamic();
+
+      // Apply filters
       const filters = [];
       if (input.name?.length) {
         filters.push(like(Model.name, `%${input.name}%`));
@@ -107,10 +119,29 @@ export const modelRouter = createTRPCRouter({
         filters.push(inArray(Model.modality, input.modalities));
       }
       if (input.endpoints?.length) {
-        const endpointChecks = input.endpoints.map(endpoint => 
-          sql`JSON_CONTAINS(${Model.supportedEndpoints}, ${JSON.stringify(endpoint)}, '$')`
+        const endpointChecks = input.endpoints.map(
+          (endpoint) =>
+            sql`JSON_CONTAINS(${Model.supportedEndpoints}, ${JSON.stringify(endpoint)}, '$')`,
         );
         filters.push(or(...endpointChecks));
+      }
+      if (input.showLiveOnly) {
+        filters.push(eq(Model.enabled, true));
+      }
+      if (input.showLeaseableOnly) {
+        filters.push(eq(Model.enabled, false));
+      }
+
+      // Apply sorting if sortBy is provided
+      if (input.sortBy) {
+        switch (input.sortBy) {
+          case "newest":
+            void query.orderBy(desc(Model.createdAt));
+            break;
+          case "oldest":
+            void query.orderBy(asc(Model.createdAt));
+            break;
+        }
       }
 
       return await query.where(and(...filters));
