@@ -80,6 +80,7 @@ export const modelRouter = createTRPCRouter({
         showLeaseableOnly: z.boolean().optional(),
         sortBy: z.enum(["newest", "oldest"]).nullable().optional(),
         minTPS: z.number().nullable().optional(),
+        minWeeklyPrice: z.number().nullable().optional(),
         maxWeeklyPrice: z.number().nullable().optional(),
       }),
     )
@@ -145,9 +146,13 @@ export const modelRouter = createTRPCRouter({
         ) >= ${input.minTPS}`);
       }
 
-      // Apply price filter
+      // Apply price range filter
+      const weeklyPrice = sql<number>`${Model.requiredGpus} * 250`;
+      if (input.minWeeklyPrice !== null && input.minWeeklyPrice !== undefined) {
+        filters.push(sql`${weeklyPrice} >= ${input.minWeeklyPrice}`);
+      }
       if (input.maxWeeklyPrice !== null && input.maxWeeklyPrice !== undefined) {
-        filters.push(sql`${Model.requiredGpus} * 250 <= ${input.maxWeeklyPrice}`);
+        filters.push(sql`${weeklyPrice} <= ${input.maxWeeklyPrice}`);
       }
 
       // Apply sorting
@@ -578,7 +583,7 @@ export const modelRouter = createTRPCRouter({
       new Set(
         models
           .map((model) => model.name?.split("/")[0])
-          .filter((org): org is string => org !== undefined)
+          .filter((org): org is string => org !== undefined),
       ),
     ).sort();
 

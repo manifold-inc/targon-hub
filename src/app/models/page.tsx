@@ -5,9 +5,9 @@ import { Filter, Search } from "lucide-react";
 
 import { useModalSidebarStore } from "@/store/modelSidebarStore";
 import { reactClient } from "@/trpc/react";
-import { WatchForSuccess } from "../_components/WatchForStripeSuccess";
-import ModalSidebar from "../_components/models/ModalSidebar";
 import ModelCard from "../_components/ModelCard";
+import ModalSidebar from "../_components/models/ModalSidebar";
+import { WatchForSuccess } from "../_components/WatchForStripeSuccess";
 
 export default function Page() {
   const [query, setQuery] = useState("");
@@ -21,9 +21,10 @@ export default function Page() {
     showLiveOnly,
     showLeaseableOnly,
     minTPS,
+    minWeeklyPrice,
     maxWeeklyPrice,
   } = useModalSidebarStore();
-  
+
   const models = reactClient.model.getModels.useQuery(
     {
       name: query,
@@ -34,6 +35,7 @@ export default function Page() {
       showLeaseableOnly,
       sortBy,
       minTPS,
+      minWeeklyPrice,
       maxWeeklyPrice,
     },
     { keepPreviousData: true },
