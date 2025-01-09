@@ -117,7 +117,7 @@ export const modelRouter = createTRPCRouter({
       if (input.orgs?.length) {
         const or_filters = [];
         for (const org of input.orgs) {
-          or_filters.push(like(Model.name, `${org}%`));
+          or_filters.push(like(Model.name, `${org}/%`));
         }
         filters.push(or(...or_filters));
       }
@@ -158,14 +158,14 @@ export const modelRouter = createTRPCRouter({
       }
 
       if (filters.length > 0) {
-        query.where(and(...filters));
+        await query.where(and(...filters));
       }
 
       // Apply sorting
       if (input.sortBy === "newest") {
-        query.orderBy(desc(Model.createdAt));
+        await query.orderBy(desc(Model.createdAt));
       } else if (input.sortBy === "oldest") {
-        query.orderBy(asc(Model.createdAt));
+        await query.orderBy(asc(Model.createdAt));
       }
 
       // Get total count for pagination
@@ -173,17 +173,18 @@ export const modelRouter = createTRPCRouter({
         .select({ count: sql<number>`count(*)`.mapWith(Number) })
         .from(Model)
         .$dynamic();
-      
+
       if (filters.length > 0) {
-        countQuery.where(and(...filters));
+        await countQuery.where(and(...filters));
       }
 
       const [countResult] = await countQuery;
+
       const total = countResult?.count ?? 0;
 
       // Apply pagination
       const offset = (input.page - 1) * input.limit;
-      query.limit(input.limit).offset(offset);
+      await query.limit(input.limit).offset(offset);
 
       const items = await query;
 

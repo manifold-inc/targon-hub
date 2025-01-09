@@ -411,7 +411,7 @@ export default function ModalSidebar() {
 
         {/* Advanced Filters */}
         <div className="p-3">
-          <div className="flex cursor-pointer items-center justify-between">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-5">
               <Settings2 width={20} height={20} className="text-[#98a1b2]" />
               <div className="font-medium leading-normal text-[#101828]">

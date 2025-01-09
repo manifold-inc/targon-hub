@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Filter, Search } from "lucide-react";
 
 import { useModalSidebarStore } from "@/store/modelSidebarStore";
 import { reactClient } from "@/trpc/react";
-import ModelCard from "../_components/models/ModelCard";
 import ModalSidebar from "../_components/models/ModalSidebar";
+import ModelCard from "../_components/models/ModelCard";
 import { WatchForSuccess } from "../_components/WatchForStripeSuccess";
 
 const ITEMS_PER_PAGE = 5;
@@ -143,67 +143,80 @@ export default function Page() {
                   >
                     <ChevronLeft className="h-4 w-4" />
                   </button>
-                  
+
                   {/* Numbered Pages */}
-                  {Array.from({ length: Math.min(5, Math.max(1, totalPages)) }, (_, i) => {
-                    let pageNumber;
-                    const showEllipsisStart = totalPages > 5 && currentPage > 3;
-                    const showEllipsisEnd = totalPages > 5 && currentPage < totalPages - 2;
+                  {Array.from(
+                    { length: Math.min(5, Math.max(1, totalPages)) },
+                    (_, i) => {
+                      let pageNumber;
+                      const showEllipsisStart =
+                        totalPages > 5 && currentPage > 3;
+                      const showEllipsisEnd =
+                        totalPages > 5 && currentPage < totalPages - 2;
 
-                    if (totalPages <= 5) {
-                      // Show all pages if 5 or fewer
-                      pageNumber = i + 1;
-                    } else if (i === 0) {
-                      // Always show first page
-                      pageNumber = 1;
-                    } else if (i === 4) {
-                      // Always show last page
-                      pageNumber = totalPages;
-                    } else if (i === 1 && showEllipsisStart) {
-                      // Show ellipsis after first page
+                      if (totalPages <= 5) {
+                        // Show all pages if 5 or fewer
+                        pageNumber = i + 1;
+                      } else if (i === 0) {
+                        // Always show first page
+                        pageNumber = 1;
+                      } else if (i === 4) {
+                        // Always show last page
+                        pageNumber = totalPages;
+                      } else if (i === 1 && showEllipsisStart) {
+                        // Show ellipsis after first page
+                        return (
+                          <span
+                            key="ellipsis-start"
+                            className="px-1 text-[#344054]"
+                          >
+                            ...
+                          </span>
+                        );
+                      } else if (i === 3 && showEllipsisEnd) {
+                        // Show ellipsis before last page
+                        return (
+                          <span
+                            key="ellipsis-end"
+                            className="px-1 text-[#344054]"
+                          >
+                            ...
+                          </span>
+                        );
+                      } else if (showEllipsisStart && showEllipsisEnd) {
+                        // Show current page in the middle
+                        pageNumber = currentPage;
+                      } else if (showEllipsisStart) {
+                        // Show last few pages
+                        pageNumber = totalPages - (4 - i);
+                      } else {
+                        // Show first few pages
+                        pageNumber = i + 1;
+                      }
+
+                      if (typeof pageNumber !== "number") return null;
+
                       return (
-                        <span key="ellipsis-start" className="px-1 text-[#344054]">
-                          ...
-                        </span>
+                        <button
+                          key={pageNumber}
+                          onClick={() => setCurrentPage(pageNumber)}
+                          disabled={currentPage === pageNumber}
+                          className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors ${
+                            currentPage === pageNumber
+                              ? "bg-[#142900] text-white"
+                              : "border border-[#e4e7ec] bg-white text-[#344054] hover:bg-gray-50"
+                          }`}
+                        >
+                          {pageNumber}
+                        </button>
                       );
-                    } else if (i === 3 && showEllipsisEnd) {
-                      // Show ellipsis before last page
-                      return (
-                        <span key="ellipsis-end" className="px-1 text-[#344054]">
-                          ...
-                        </span>
-                      );
-                    } else if (showEllipsisStart && showEllipsisEnd) {
-                      // Show current page in the middle
-                      pageNumber = currentPage;
-                    } else if (showEllipsisStart) {
-                      // Show last few pages
-                      pageNumber = totalPages - (4 - i);
-                    } else {
-                      // Show first few pages
-                      pageNumber = i + 1;
-                    }
-
-                    if (typeof pageNumber !== 'number') return null;
-
-                    return (
-                      <button
-                        key={pageNumber}
-                        onClick={() => setCurrentPage(pageNumber)}
-                        disabled={currentPage === pageNumber}
-                        className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors ${
-                          currentPage === pageNumber
-                            ? "bg-[#142900] text-white"
-                            : "border border-[#e4e7ec] bg-white text-[#344054] hover:bg-gray-50"
-                        }`}
-                      >
-                        {pageNumber}
-                      </button>
-                    );
-                  })}
+                    },
+                  )}
 
                   <button
-                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                    onClick={() =>
+                      setCurrentPage((p) => Math.min(totalPages, p + 1))
+                    }
                     disabled={currentPage === Math.max(1, totalPages)}
                     className="inline-flex items-center gap-1 rounded-lg border border-[#e4e7ec] bg-white px-3 py-2 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
                   >
