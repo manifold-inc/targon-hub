@@ -79,6 +79,8 @@ export const modelRouter = createTRPCRouter({
         showLiveOnly: z.boolean().optional(),
         showLeaseableOnly: z.boolean().optional(),
         sortBy: z.enum(["newest", "oldest"]).nullable().optional(),
+        minTPS: z.number().nullable().optional(),
+        maxWeeklyPrice: z.number().nullable().optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -99,6 +101,7 @@ export const modelRouter = createTRPCRouter({
             WHERE ${DailyModelTokenCounts.modelName} = ${Model.name}
             AND ${DailyModelTokenCounts.createdAt} >= DATE_SUB(NOW(), INTERVAL 7 DAY)
           )`.mapWith(Number),
+          weeklyPrice: sql<number>`${Model.requiredGpus} * 250`.mapWith(Number),
         })
         .from(Model)
         .$dynamic();
@@ -132,7 +135,22 @@ export const modelRouter = createTRPCRouter({
         filters.push(eq(Model.enabled, false));
       }
 
-      // Apply sorting if sortBy is provided
+      // Apply TPS filter
+      if (input.minTPS !== null && input.minTPS !== undefined) {
+        filters.push(sql`(
+          SELECT AVG(${DailyModelTokenCounts.avgTPS})
+          FROM ${DailyModelTokenCounts}
+          WHERE ${DailyModelTokenCounts.modelName} = ${Model.name}
+          AND ${DailyModelTokenCounts.createdAt} >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+        ) >= ${input.minTPS}`);
+      }
+
+      // Apply price filter
+      if (input.maxWeeklyPrice !== null && input.maxWeeklyPrice !== undefined) {
+        filters.push(sql`${Model.requiredGpus} * 250 <= ${input.maxWeeklyPrice}`);
+      }
+
+      // Apply sorting
       if (input.sortBy) {
         switch (input.sortBy) {
           case "newest":

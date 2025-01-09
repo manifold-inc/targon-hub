@@ -12,6 +12,7 @@ interface ModalSidebarState {
     liveStatus: boolean;
     organization: boolean;
     supportedEndpoints: boolean;
+    advancedFilters: boolean;
   };
   toggleSection: (section: keyof ModalSidebarState["openSections"]) => void;
 
@@ -24,6 +25,14 @@ interface ModalSidebarState {
   // Sorting state
   sortBy: SortOption;
   setSortBy: (option: SortOption) => void;
+
+  // Performance filter state
+  minTPS: number | null;
+  setMinTPS: (value: number | null) => void;
+
+  // Price filter state
+  maxWeeklyPrice: number | null;
+  setMaxWeeklyPrice: (value: number | null) => void;
 
   // Modality state
   activeModality: Array<(typeof MODALITIES)[number]>;
@@ -58,6 +67,7 @@ export const useModalSidebarStore = create<ModalSidebarState>((set) => ({
     liveStatus: false,
     organization: false,
     supportedEndpoints: false,
+    advancedFilters: false,
   },
   toggleSection: (section) =>
     set((state) => ({
@@ -76,6 +86,14 @@ export const useModalSidebarStore = create<ModalSidebarState>((set) => ({
   // Sorting
   sortBy: null,
   setSortBy: (option) => set({ sortBy: option }),
+
+  // Performance filter
+  minTPS: null,
+  setMinTPS: (value) => set({ minTPS: value }),
+
+  // Price filter
+  maxWeeklyPrice: null,
+  setMaxWeeklyPrice: (value) => set({ maxWeeklyPrice: value }),
 
   // Modality
   activeModality: [],

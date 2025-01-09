@@ -20,7 +20,10 @@ export default function Page() {
     sortBy,
     showLiveOnly,
     showLeaseableOnly,
+    minTPS,
+    maxWeeklyPrice,
   } = useModalSidebarStore();
+  
   const models = reactClient.model.getModels.useQuery(
     {
       name: query,
@@ -30,6 +33,8 @@ export default function Page() {
       showLiveOnly,
       showLeaseableOnly,
       sortBy,
+      minTPS,
+      maxWeeklyPrice,
     },
     { keepPreviousData: true },
   );
@@ -83,6 +88,7 @@ export default function Page() {
               </div>
             </div>
           </div>
+
           {models.data && (
             <div className="flex animate-slide-in flex-col gap-4 p-3 sm:p-8">
               {models.data?.map((model) => (
@@ -94,6 +100,7 @@ export default function Page() {
                   enabled={model.enabled ?? false}
                   createdAt={model.createdAt}
                   avgTPS={model.avgTPS}
+                  weeklyPrice={model.weeklyPrice}
                 />
               ))}
             </div>

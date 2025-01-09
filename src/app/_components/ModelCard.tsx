@@ -9,6 +9,7 @@ interface ModelCardProps {
   enabled: boolean;
   createdAt: Date | string | null;
   avgTPS?: number;
+  weeklyPrice?: number;
 }
 
 export default function ModelCard({
@@ -18,6 +19,7 @@ export default function ModelCard({
   enabled,
   createdAt,
   avgTPS,
+  weeklyPrice,
 }: ModelCardProps) {
   const org = name.split("/").at(0) ?? "Unknown";
 
@@ -39,6 +41,7 @@ export default function ModelCard({
           <div className="flex items-center gap-3 text-sm text-gray-500">
             <span>Created: {formattedDate}</span>
             {avgTPS && <span>{avgTPS.toFixed(1)} TPS</span>}
+            {weeklyPrice && <span>${weeklyPrice}/week</span>}
             {enabled ? (
               <span className="flex items-center gap-1.5">
                 <div className="h-1.5 w-1.5 rounded-full bg-green-500" />
