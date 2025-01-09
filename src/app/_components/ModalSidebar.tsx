@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useSearchParams } from "next/navigation";
 import {
   AlignVerticalSpaceAround,
   ArrowDownUp,
@@ -12,17 +10,9 @@ import {
 
 import { MODALITIES } from "@/schema/schema";
 import { useModalSidebarStore } from "@/store/modelSidebarStore";
-import LeaseModal from "./LeaseModal";
+import { reactClient } from "@/trpc/react";
 
-const orgs = ["Nvidia", "NousResearch", "Microsoft", "Gryphe", "Qwen"];
-
-export default function ModalSidebar({
-  savedModel,
-  step,
-}: {
-  savedModel: string | null;
-  step: number | null;
-}) {
+export default function ModalSidebar() {
   const {
     openSections,
     toggleSection,
@@ -42,10 +32,7 @@ export default function ModalSidebar({
     setActiveSupportedEndpoints,
   } = useModalSidebarStore();
 
-  const searchParams = useSearchParams();
-  const [isLeaseModalOpen, setIsLeaseModalOpen] = useState(() => {
-    return searchParams.get("openLeaseModal") === "true";
-  });
+  const { data: orgs = [] } = reactClient.model.getOrganizations.useQuery();
 
   return (
     <aside className="h-full pr-2 pt-2 sm:animate-slide-in-delay sm:pr-8 sm:pt-10">
@@ -354,14 +341,6 @@ export default function ModalSidebar({
           )}
         </div>
       </div>
-      {isLeaseModalOpen && (
-        <LeaseModal
-          isOpen={isLeaseModalOpen}
-          onClose={() => setIsLeaseModalOpen(false)}
-          savedModel={savedModel ?? ""}
-          step={step}
-        />
-      )}
     </aside>
   );
 }

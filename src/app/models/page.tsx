@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { Filter, Search } from "lucide-react";
 
 import { useModalSidebarStore } from "@/store/modelSidebarStore";
@@ -13,9 +12,6 @@ import { WatchForSuccess } from "../_components/WatchForStripeSuccess";
 export default function Page() {
   const [query, setQuery] = useState("");
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const searchParams = useSearchParams();
-  const savedModel = decodeURIComponent(searchParams.get("model") ?? "");
-  const step = Number(searchParams.get("step")) || null;
 
   const {
     activeOrganization,
@@ -53,12 +49,12 @@ export default function Page() {
             <Filter aria-hidden="true" className="h-6 w-6 text-mf-gray-600" />
           </div>
         </button>
-        {isMobileOpen && <ModalSidebar savedModel={savedModel} step={step} />}
+        {isMobileOpen && <ModalSidebar />}
       </div>
       <div className="flex">
         {/* Left sidebar */}
         <div className="sticky top-0 hidden h-full w-80 border-r border-[#f2f4f7] pt-8 md:block">
-          <ModalSidebar savedModel={savedModel} step={step} />
+          <ModalSidebar />
         </div>
 
         {/* Main content area */}

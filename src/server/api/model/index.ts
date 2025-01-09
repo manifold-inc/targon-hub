@@ -548,4 +548,22 @@ export const modelRouter = createTRPCRouter({
 
       return dailyStats;
     }),
+  getOrganizations: publicAuthlessProcedure.query(async ({ ctx }) => {
+    const models = await ctx.db
+      .select({
+        name: Model.name,
+      })
+      .from(Model)
+      .where(and(eq(Model.enabled, true)));
+
+    const orgs = Array.from(
+      new Set(
+        models
+          .map((model) => model.name?.split("/")[0])
+          .filter((org): org is string => org !== undefined)
+      ),
+    ).sort();
+
+    return orgs;
+  }),
 });
