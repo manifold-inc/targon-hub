@@ -34,7 +34,7 @@ export default function Page() {
       showLiveOnly,
       showLeaseableOnly,
       sortBy,
-      minTPS,
+      minTPS: minTPS && minTPS > 0 ? minTPS : undefined,
       minWeeklyPrice,
       maxWeeklyPrice,
     },
@@ -43,7 +43,7 @@ export default function Page() {
 
   return (
     <>
-      <div className="md:hidden">
+      <div className="lg:hidden">
         <WatchForSuccess />
         <button
           onClick={() => setIsMobileOpen((s) => !s)}
@@ -60,7 +60,7 @@ export default function Page() {
       </div>
       <div className="flex">
         {/* Left sidebar */}
-        <div className="sticky top-0 hidden h-full w-80 border-r border-[#f2f4f7] pt-8 md:block">
+        <div className="sticky top-0 hidden h-full w-80 border-r border-[#f2f4f7] pt-8 lg:block">
           <ModalSidebar />
         </div>
 

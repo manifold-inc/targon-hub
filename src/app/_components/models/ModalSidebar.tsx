@@ -5,9 +5,12 @@ import {
   Box,
   ChevronDown,
   ChevronUp,
+  Info,
+  Plus,
   Power,
   Settings2,
   Tag,
+  X,
   type LucideIcon,
 } from "lucide-react";
 
@@ -385,7 +388,7 @@ export default function ModalSidebar() {
   ];
 
   return (
-    <aside className="h-full pr-2 pt-2 sm:animate-slide-in-delay sm:pr-8 sm:pt-10">
+    <aside className="h-screen border-r border-[#e4e7ec] pr-2 pt-2 sm:animate-slide-in-delay sm:pr-8 sm:pt-10">
       <div className="flex flex-col gap-2.5">
         {sections.map((section, index) => (
           <div
@@ -402,33 +405,97 @@ export default function ModalSidebar() {
           </div>
         ))}
 
+        <div className="mx-3 h-px bg-gray-200" />
+
         {/* Advanced Filters */}
         <div className="p-3">
-          <div className="flex items-center gap-5">
-            <Settings2 width={20} height={20} className="text-[#98a1b2]" />
-            <div className="font-medium leading-normal text-[#101828]">
-              Advanced Filters
+          <div className="flex cursor-pointer items-center justify-between">
+            <div className="flex items-center gap-5">
+              <Settings2 width={20} height={20} className="text-[#98a1b2]" />
+              <div className="font-medium leading-normal text-[#101828]">
+                Advanced Filters
+              </div>
             </div>
           </div>
-          <div className="mt-4 flex flex-col gap-4 px-9">
-            <Slider
-              label="Minimum TPS"
-              value={minTPS}
-              onChange={setMinTPS}
-              min={0}
-              max={500}
-              step={10}
-              formatValue={(value) => `${value} TPS`}
-            />
-            <PriceRangeSlider
-              minValue={minWeeklyPrice}
-              maxValue={maxWeeklyPrice}
-              onMinChange={setMinWeeklyPrice}
-              onMaxChange={setMaxWeeklyPrice}
-              min={250}
-              max={2000}
-              step={250}
-            />
+          <div className="flex flex-col gap-6 px-9 pt-6">
+            <div className="space-y-4">
+              <Slider
+                label="Minimum TPS"
+                value={minTPS}
+                onChange={setMinTPS}
+                min={0}
+                max={500}
+                step={10}
+                formatValue={(value) => `${value} TPS`}
+              />
+              <PriceRangeSlider
+                minValue={minWeeklyPrice}
+                maxValue={maxWeeklyPrice}
+                onMinChange={setMinWeeklyPrice}
+                onMaxChange={setMaxWeeklyPrice}
+                min={250}
+                max={2000}
+                step={250}
+              />
+            </div>
+            <div className="space-y-2.5">
+              <div className="flex items-start gap-2">
+                <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#98a1b2]" />
+                <p className="text-[11px] leading-[14px] text-[#475467]">
+                  TPS (Tokens Per Second) shows the model&apos;s average
+                  throughput over the past 7 days and is only available for live
+                  models
+                </p>
+              </div>
+              <div className="flex items-start gap-2">
+                <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#98a1b2]" />
+                <p className="text-[11px] leading-[14px] text-[#475467]">
+                  Weekly price filter helps you find models within your leasing
+                  budget
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Clear Filters */}
+        <div className="px-3 pt-3">
+          <button
+            onClick={() => {
+              setActiveModality([]);
+              setActiveOrganization([]);
+              setActiveSupportedEndpoints([]);
+              setSortBy(null);
+              setShowLiveOnly(false);
+              setShowLeaseableOnly(false);
+              setMinTPS(0);
+              setMinWeeklyPrice(250);
+              setMaxWeeklyPrice(2000);
+            }}
+            className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#e4e7ec] bg-white px-4 py-2.5 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50"
+          >
+            <X className="h-4 w-4" />
+            Clear Filters
+          </button>
+        </div>
+
+        {/* Add Model CTA */}
+        <div className="px-3 pb-6 pt-3">
+          <div className="relative flex flex-col items-center overflow-hidden rounded-xl border border-[#e4e7ec]/60 bg-white/30 px-4 py-5 text-center backdrop-blur-sm">
+            <div className="absolute inset-0 -z-10">
+              <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-[#142900]/10 via-[#142900]/5 to-transparent" />
+              <div className="absolute inset-0 animate-[shine_3s_ease-in-out_infinite] bg-[linear-gradient(110deg,transparent_25%,rgba(68,255,109,0.05)_50%,transparent_75%)]" />
+            </div>
+            <p className="pb-3 text-xs font-medium text-[#344054]">
+              Don&apos;t see the model you want?
+            </p>
+            <a
+              href="/models/lease"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#142900] px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-[1px] hover:bg-[#142900]/90 hover:shadow-md"
+            >
+              <Plus className="h-4 w-4" />
+              Add New Model
+            </a>
           </div>
         </div>
       </div>
