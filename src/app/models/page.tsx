@@ -30,17 +30,21 @@ export default function Page() {
 
   const handlePageChange = (page: number) => {
     if (page === currentPage) return;
-    
+
     // Update the page state
     setCurrentPage(page);
-    
+
+    // @TODO: This is a hack to ensure the page is scrolled to the top after the state update. But it doenst work on first and last page.
+    // @TODO: Find a better solution.
+    // @TODO: Ask Josh for help.
     // Try the modern scrollIntoView first
-    const mainContent = document.querySelector('main') || document.documentElement;
+    const mainContent =
+      document.querySelector("main") || document.documentElement;
     if (mainContent.scrollIntoView) {
-      mainContent.scrollIntoView({ behavior: 'smooth' });
+      mainContent.scrollIntoView({ behavior: "smooth" });
     } else {
       // Fallback to window.scrollTo
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -67,12 +71,12 @@ export default function Page() {
   return (
     <>
       <WatchForSuccess />
-      
+
       {/* Mobile Filter Overlay */}
       {isMobileOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           {/* Backdrop */}
-          <div 
+          <div
             className="absolute inset-0 bg-gray-900/50 backdrop-blur-sm transition-opacity"
             onClick={() => setIsMobileOpen(false)}
           />
@@ -84,7 +88,11 @@ export default function Page() {
                 onClick={() => setIsMobileOpen(false)}
                 className="rounded-lg p-2 text-[#98a1b2] hover:bg-gray-50"
               >
-                <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <svg
+                  className="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
                   <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
                 </svg>
               </button>
@@ -102,7 +110,7 @@ export default function Page() {
 
         {/* Main content area */}
         <div className="min-w-0 flex-1">
-          <div className="flex flex-col animate-slide-in">
+          <div className="flex animate-slide-in flex-col">
             {/* Header */}
             <div className="px-4 pt-10 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between">
@@ -167,7 +175,9 @@ export default function Page() {
                 <div className="mt-4 flex items-center justify-center border-t border-[#e4e7ec] pt-4">
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                      onClick={() =>
+                        handlePageChange(Math.max(1, currentPage - 1))
+                      }
                       disabled={currentPage === 1}
                       className="inline-flex items-center gap-1 rounded-lg border border-[#e4e7ec] bg-white px-3 py-2 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
                     >
@@ -245,7 +255,9 @@ export default function Page() {
                     )}
 
                     <button
-                      onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                      onClick={() =>
+                        handlePageChange(Math.min(totalPages, currentPage + 1))
+                      }
                       disabled={currentPage === totalPages}
                       className="inline-flex items-center gap-1 rounded-lg border border-[#e4e7ec] bg-white px-3 py-2 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
                     >

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, Zap } from "lucide-react";
+
 import { type MODALITIES } from "@/schema/schema";
 
 interface ModelCardProps {
@@ -28,10 +29,10 @@ export default function ModelCard({
       href={`/models/${encodeURIComponent(name)}`}
       className="group relative flex items-start overflow-hidden rounded-xl border border-[#e4e7ec] bg-gradient-to-b from-white to-[#fcfcfd] p-3 transition-all duration-300 hover:border-opacity-20 hover:shadow-lg sm:p-4 md:p-5"
     >
-      <div 
+      <div
         className={`absolute inset-x-0 top-0 h-[2px] opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${
-          enabled 
-            ? "bg-gradient-to-r from-emerald-500/40 via-emerald-500/80 to-emerald-500/40" 
+          enabled
+            ? "bg-gradient-to-r from-emerald-500/40 via-emerald-500/80 to-emerald-500/40"
             : "bg-gradient-to-r from-blue-500/40 via-blue-500/80 to-blue-500/40"
         }`}
       />
@@ -45,12 +46,16 @@ export default function ModelCard({
             <div className="flex flex-wrap items-center gap-1.5 pt-1 text-[0.8125rem] text-[#475467] sm:gap-x-2 sm:text-xs">
               <span className="font-medium text-[#344054]">{org}</span>
               <span className="text-[#e4e7ec]">|</span>
-              <span>{modality === "text-generation" ? "Text Gen" : "Text to Image"}</span>
+              <span>
+                {modality === "text-generation" ? "Text Gen" : "Text to Image"}
+              </span>
               {avgTPS && (
                 <>
                   <span className="text-[#e4e7ec]">|</span>
                   <span className="inline-flex items-center gap-1">
-                    <Zap className={`h-3 w-3 ${enabled ? "text-emerald-500" : "text-blue-500"}`} />
+                    <Zap
+                      className={`h-3 w-3 ${enabled ? "text-emerald-500" : "text-blue-500"}`}
+                    />
                     {avgTPS.toFixed(1)} TPS
                   </span>
                 </>
@@ -76,9 +81,13 @@ export default function ModelCard({
                 Available
               </div>
             )}
-            <ArrowUpRight className={`h-3.5 w-3.5 flex-shrink-0 text-[#98a1b2] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 sm:h-4 sm:w-4 ${
-              enabled ? "group-hover:text-emerald-600" : "group-hover:text-blue-600"
-            }`} />
+            <ArrowUpRight
+              className={`h-3.5 w-3.5 flex-shrink-0 text-[#98a1b2] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 sm:h-4 sm:w-4 ${
+                enabled
+                  ? "group-hover:text-emerald-600"
+                  : "group-hover:text-blue-600"
+              }`}
+            />
           </div>
         </div>
 
