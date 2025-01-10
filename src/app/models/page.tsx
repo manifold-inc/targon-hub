@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChevronLeft, ChevronRight, Filter, Search } from "lucide-react";
 
 import { useModalSidebarStore } from "@/store/modelSidebarStore";
@@ -9,7 +9,7 @@ import ModalSidebar from "../_components/models/ModalSidebar";
 import ModelCard from "../_components/models/ModelCard";
 import { WatchForSuccess } from "../_components/WatchForStripeSuccess";
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 10;
 
 export default function Page() {
   const [query, setQuery] = useState("");
@@ -28,21 +28,21 @@ export default function Page() {
     maxWeeklyPrice,
   } = useModalSidebarStore();
 
-  // Reset page when filters change
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [
-    query,
-    activeOrganization,
-    activeModality,
-    activeSupportedEndpoints,
-    sortBy,
-    showLiveOnly,
-    showLeaseableOnly,
-    minTPS,
-    minWeeklyPrice,
-    maxWeeklyPrice,
-  ]);
+  const handlePageChange = (page: number) => {
+    if (page === currentPage) return;
+    
+    // Update the page state
+    setCurrentPage(page);
+    
+    // Try the modern scrollIntoView first
+    const mainContent = document.querySelector('main') || document.documentElement;
+    if (mainContent.scrollIntoView) {
+      mainContent.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Fallback to window.scrollTo
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   const models = reactClient.model.getModels.useQuery(
     {
@@ -96,13 +96,13 @@ export default function Page() {
 
       <div className="flex">
         {/* Left sidebar - desktop */}
-        <div className="sticky top-0 hidden h-full w-80 border-r border-[#f2f4f7] pt-8 lg:block">
+        <div className="sticky top-0 hidden h-full w-80 animate-slide-in-delay border-r border-[#f2f4f7] pt-8 lg:block">
           <ModalSidebar />
         </div>
 
         {/* Main content area */}
         <div className="min-w-0 flex-1">
-          <div className="flex flex-col">
+          <div className="flex flex-col animate-slide-in">
             {/* Header */}
             <div className="px-4 pt-10 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between">
@@ -167,87 +167,86 @@ export default function Page() {
                 <div className="mt-4 flex items-center justify-center border-t border-[#e4e7ec] pt-4">
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                      onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                       disabled={currentPage === 1}
                       className="inline-flex items-center gap-1 rounded-lg border border-[#e4e7ec] bg-white px-3 py-2 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <ChevronLeft className="h-4 w-4" />
                     </button>
 
-                    {/* Numbered Pages */}
-                    {Array.from(
-                      { length: Math.min(5, Math.max(1, totalPages)) },
-                      (_, i) => {
-                        let pageNumber;
-                        const showEllipsisStart =
-                          totalPages > 5 && currentPage > 3;
-                        const showEllipsisEnd =
-                          totalPages > 5 && currentPage < totalPages - 2;
+                    {/* First Page */}
+                    {totalPages > 1 && (
+                      <>
+                        <button
+                          onClick={() => handlePageChange(1)}
+                          disabled={currentPage === 1}
+                          className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors ${
+                            currentPage === 1
+                              ? "bg-[#142900] text-white"
+                              : "border border-[#e4e7ec] bg-white text-[#344054] hover:bg-gray-50"
+                          }`}
+                        >
+                          1
+                        </button>
 
-                        if (totalPages <= 5) {
-                          // Show all pages if 5 or fewer
-                          pageNumber = i + 1;
-                        } else if (i === 0) {
-                          // Always show first page
-                          pageNumber = 1;
-                        } else if (i === 4) {
-                          // Always show last page
-                          pageNumber = totalPages;
-                        } else if (i === 1 && showEllipsisStart) {
-                          // Show ellipsis after first page
-                          return (
-                            <span
-                              key="ellipsis-start"
-                              className="px-1 text-[#344054]"
-                            >
-                              ...
-                            </span>
-                          );
-                        } else if (i === 3 && showEllipsisEnd) {
-                          // Show ellipsis before last page
-                          return (
-                            <span
-                              key="ellipsis-end"
-                              className="px-1 text-[#344054]"
-                            >
-                              ...
-                            </span>
-                          );
-                        } else if (showEllipsisStart && showEllipsisEnd) {
-                          // Show current page in the middle
-                          pageNumber = currentPage;
-                        } else if (showEllipsisStart) {
-                          // Show last few pages
-                          pageNumber = totalPages - (4 - i);
-                        } else {
-                          // Show first few pages
-                          pageNumber = i + 1;
-                        }
+                        {/* Show ellipsis if current page is far from start */}
+                        {currentPage > 3 && (
+                          <span className="px-1 text-[#344054]">...</span>
+                        )}
 
-                        if (typeof pageNumber !== "number") return null;
-
-                        return (
+                        {/* Previous Page */}
+                        {currentPage > 2 && (
                           <button
-                            key={pageNumber}
-                            onClick={() => setCurrentPage(pageNumber)}
-                            disabled={currentPage === pageNumber}
-                            className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors ${
-                              currentPage === pageNumber
-                                ? "bg-[#142900] text-white"
-                                : "border border-[#e4e7ec] bg-white text-[#344054] hover:bg-gray-50"
-                            }`}
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[#e4e7ec] bg-white text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50"
                           >
-                            {pageNumber}
+                            {currentPage - 1}
                           </button>
-                        );
-                      },
+                        )}
+
+                        {/* Current Page */}
+                        {currentPage !== 1 && currentPage !== totalPages && (
+                          <button
+                            disabled
+                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#142900] text-sm font-medium text-white"
+                          >
+                            {currentPage}
+                          </button>
+                        )}
+
+                        {/* Next Page */}
+                        {currentPage < totalPages - 1 && (
+                          <button
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[#e4e7ec] bg-white text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50"
+                          >
+                            {currentPage + 1}
+                          </button>
+                        )}
+
+                        {/* Show ellipsis if current page is far from end */}
+                        {currentPage < totalPages - 2 && (
+                          <span className="px-1 text-[#344054]">...</span>
+                        )}
+
+                        {/* Last Page */}
+                        <button
+                          onClick={() => handlePageChange(totalPages)}
+                          disabled={currentPage === totalPages}
+                          className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors ${
+                            currentPage === totalPages
+                              ? "bg-[#142900] text-white"
+                              : "border border-[#e4e7ec] bg-white text-[#344054] hover:bg-gray-50"
+                          }`}
+                        >
+                          {totalPages}
+                        </button>
+                      </>
                     )}
 
                     <button
-                      onClick={() =>
-                        setCurrentPage((p) => Math.min(totalPages, p + 1))
-                      }
-                      disabled={currentPage === Math.max(1, totalPages)}
+                      onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                      disabled={currentPage === totalPages}
                       className="inline-flex items-center gap-1 rounded-lg border border-[#e4e7ec] bg-white px-3 py-2 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <ChevronRight className="h-4 w-4" />
