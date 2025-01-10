@@ -390,8 +390,8 @@ export default function ModalSidebar() {
   ];
 
   return (
-    <aside className="h-screen border-r border-[#e4e7ec] pr-2 pt-2 sm:animate-slide-in-delay sm:pr-8 sm:pt-10">
-      <div className="flex h-full flex-col gap-2.5 overflow-y-auto">
+    <aside className="flex h-full flex-col overflow-y-auto border-0 pr-0 pt-0 lg:h-screen lg:border-r lg:border-[#e4e7ec] lg:pr-8 lg:pt-10">
+      <div className="flex flex-col gap-2.5">
         {sections.map((section, index) => (
           <div
             key={section.id}
