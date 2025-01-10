@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Filter, Search } from "lucide-react";
+import Link from "next/link";
+import {
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Filter,
+  Search,
+} from "lucide-react";
 
 import { useModalSidebarStore } from "@/store/modelSidebarStore";
 import { reactClient } from "@/trpc/react";
@@ -170,9 +177,51 @@ export default function Page() {
                 />
               ))}
 
+              {/* Add Model CTA Card - only show on the last page */}
+              {models.data?.items &&
+                models.data.items.length > 0 &&
+                currentPage === totalPages && (
+                  <Link
+                    href="/models/add"
+                    className="group relative flex items-start overflow-hidden rounded-xl border border-[#142900]/10 bg-gradient-to-br from-[#142900]/[0.02] via-white/40 to-[#142900]/[0.02] p-3 backdrop-blur-md transition-all duration-500 hover:from-[#142900]/[0.05] hover:to-[#142900]/[0.05] sm:p-4 md:p-5"
+                  >
+                    {/* Base gradient layer */}
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(20,41,0,0.03),transparent_50%),radial-gradient(circle_at_100%_100%,rgba(20,41,0,0.03),transparent_50%)]" />
+
+                    {/* Animated gradient layers */}
+                    <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(20,41,0,0.03)_25%,transparent_25%,transparent_50%,rgba(20,41,0,0.03)_50%,rgba(20,41,0,0.03)_75%,transparent_75%,transparent)] bg-[length:250px_250px] opacity-0 transition-all duration-700 ease-in-out group-hover:bg-[length:200px_200px] group-hover:opacity-100" />
+
+                    {/* Moving gradient shine effect */}
+                    <div className="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-[#9fff00]/10 to-transparent opacity-0 transition-all duration-700 ease-in-out group-hover:translate-x-[100%] group-hover:opacity-100" />
+
+                    <div className="relative flex min-w-0 flex-1 flex-col gap-2">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-base font-semibold text-[#142900] sm:text-lg">
+                            Add Any Model
+                          </h3>
+                          <div className="flex flex-wrap items-center gap-2 pt-1 text-sm text-[#475467]">
+                            <span>Join the Targon ecosystem</span>
+                          </div>
+                        </div>
+                        <div className="flex items-start">
+                          <div className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-[#142900] px-3 py-1.5 text-sm font-medium text-white shadow-sm transition-all duration-300 group-hover:bg-[#1f3d00] group-hover:shadow-md sm:px-4">
+                            Add Model
+                            <ArrowUpRight className="h-3.5 w-3.5" />
+                          </div>
+                        </div>
+                      </div>
+                      <p className="text-sm leading-relaxed text-[#475467]">
+                        List your model on Targon and reach thousands of
+                        developers. Simple integration and flexible pricing.
+                      </p>
+                    </div>
+                  </Link>
+                )}
+
               {/* Pagination */}
               {models.data && models.data.items.length > 0 && (
-                <div className="mt-4 flex items-center justify-center border-t border-[#e4e7ec] pt-4">
+                <div className="flex items-center justify-center border-t border-[#e4e7ec] pt-8">
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() =>
