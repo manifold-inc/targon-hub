@@ -27,16 +27,10 @@ export default function ModelCard({
   return (
     <Link
       href={`/models/${encodeURIComponent(name)}`}
-      className="group relative flex items-start overflow-hidden rounded-xl border border-[#e4e7ec] bg-gradient-to-b from-white to-[#fcfcfd] p-3 transition-all duration-300 hover:border-opacity-20 hover:shadow-lg sm:p-4 md:p-5"
+      className={`group relative flex items-start overflow-hidden rounded-xl border border-[#e4e7ec] bg-gradient-to-b from-white to-[#fcfcfd] p-3 transition-all duration-300 hover:shadow-lg sm:p-4 md:p-5 ${
+        enabled ? "hover:border-t-emerald-500" : "hover:border-t-blue-500"
+      }`}
     >
-      <div
-        className={`absolute inset-x-0 top-0 h-[2px] opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${
-          enabled
-            ? "bg-gradient-to-r from-emerald-500/40 via-emerald-500/80 to-emerald-500/40"
-            : "bg-gradient-to-r from-blue-500/40 via-blue-500/80 to-blue-500/40"
-        }`}
-      />
-
       <div className="flex min-w-0 flex-1 flex-col gap-2 sm:gap-3 md:gap-4">
         <div className="flex items-start justify-between gap-2 sm:gap-3">
           <div className="min-w-0 flex-1">

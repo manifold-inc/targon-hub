@@ -106,8 +106,10 @@ export default function Page() {
 
       <div className="flex">
         {/* Left sidebar - desktop */}
-        <div className="sticky top-0 hidden h-full w-80 animate-slide-in-delay border-r border-[#f2f4f7] pt-8 lg:block">
-          <ModalSidebar />
+        <div className="hidden w-80 lg:block">
+          <div className="fixed w-80 border-r border-[#f2f4f7] bg-white">
+            <ModalSidebar />
+          </div>
         </div>
 
         {/* Main content area */}
