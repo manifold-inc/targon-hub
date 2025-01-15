@@ -77,12 +77,16 @@ interface ChatMessagesProps {
 export function ChatMessages({ messages }: ChatMessagesProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Handle new messages
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    // Scroll to bottom immediately for new messages
-    container.scrollTop = container.scrollHeight;
+    const { offsetHeight, scrollHeight, scrollTop } = container;
+    // Check if user is near bottom (within 100px margin)
+    if (scrollHeight <= scrollTop + offsetHeight + 300) {
+      container.scrollTop = scrollHeight;
+    }
   }, [messages]);
 
   if (messages.length === 0) return null;
