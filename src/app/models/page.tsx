@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -8,6 +8,7 @@ import {
   ChevronRight,
   Filter,
   Search,
+  X,
 } from "lucide-react";
 
 import { useModalSidebarStore } from "@/store/modelSidebarStore";
@@ -35,24 +36,24 @@ export default function Page() {
     maxWeeklyPrice,
   } = useModalSidebarStore();
 
+  // Reset to page 1 when any filter changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [
+    activeOrganization,
+    activeModality,
+    activeSupportedEndpoints,
+    sortBy,
+    showLiveOnly,
+    showLeaseableOnly,
+    minTPS,
+    minWeeklyPrice,
+    maxWeeklyPrice,
+  ]);
+
   const handlePageChange = (page: number) => {
     if (page === currentPage) return;
-
-    // Update the page state
     setCurrentPage(page);
-
-    // @TODO: This is a hack to ensure the page is scrolled to the top after the state update. But it doenst work on first and last page.
-    // @TODO: Find a better solution.
-    // @TODO: Ask Josh for help.
-    // Try the modern scrollIntoView first
-    const mainContent =
-      document.querySelector("main") || document.documentElement;
-    if (mainContent.scrollIntoView) {
-      mainContent.scrollIntoView({ behavior: "smooth" });
-    } else {
-      // Fallback to window.scrollTo
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
   };
 
   const models = reactClient.model.getModels.useQuery(
@@ -95,13 +96,7 @@ export default function Page() {
                 onClick={() => setIsMobileOpen(false)}
                 className="rounded-lg p-2 text-[#98a1b2] hover:bg-gray-50"
               >
-                <svg
-                  className="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-                </svg>
+                <X className="h-5 w-5" />
               </button>
             </div>
             <ModalSidebar />
