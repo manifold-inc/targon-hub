@@ -110,12 +110,16 @@ try {
 }`,
       typescript: `import OpenAI from 'openai';
 
-const client = new OpenAI({ baseURL: "${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1", apiKey: "${displayedKey}", dangerouslyAllowBrowser: true });
+const client = new OpenAI({
+  baseURL: "${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1",
+  apiKey: "${displayedKey}",
+  dangerouslyAllowBrowser: true
+});
 
 const chat = async () => {
   try {
     const stream = await client.chat.completions.create({
-      model: "NTQAI/Nxcode-CQ-7B-orpo",
+      model: "${model}",
       stream: true,
       messages: [
         { role: "system", content: "You are a helpful programming assistant." },
@@ -201,7 +205,7 @@ void chat();`,
             <h4 className="text-sm font-medium text-gray-900">
               Chat Completion Example
             </h4>
-            <p className="pt-1 text-[13px] leading-relaxed text-gray-600">
+            <p className="pt-1 text-sm leading-relaxed text-gray-600">
               Basic example of chat completion with the selected model
             </p>
           </div>
@@ -242,8 +246,8 @@ void chat();`,
                   margin: 0,
                   padding: "1.25rem",
                   background: "transparent",
-                  fontSize: "13px",
-                  lineHeight: "1.6",
+                  fontSize: "12px",
+                  lineHeight: "1.5",
                 }}
                 codeTagProps={{
                   style: {

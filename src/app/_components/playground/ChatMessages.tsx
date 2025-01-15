@@ -83,7 +83,7 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
     if (!container) return;
 
     const { offsetHeight, scrollHeight, scrollTop } = container;
-    // Check if user is near bottom (within 100px margin)
+    // Check if user is near bottom (within 300px margin)
     if (scrollHeight <= scrollTop + offsetHeight + 300) {
       container.scrollTop = scrollHeight;
     }
