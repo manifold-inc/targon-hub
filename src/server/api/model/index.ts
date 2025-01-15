@@ -76,6 +76,14 @@ export const modelRouter = createTRPCRouter({
         orgs: z.array(z.string()).optional(),
         modalities: z.array(z.enum(MODALITIES)).optional(),
         endpoints: z.array(z.string()).optional(),
+        showLiveOnly: z.boolean().optional(),
+        showLeaseableOnly: z.boolean().optional(),
+        sortBy: z.enum(["newest", "oldest"]).nullable().optional(),
+        minTPS: z.number().nullable().optional(),
+        minWeeklyPrice: z.number().nullable().optional(),
+        maxWeeklyPrice: z.number().nullable().optional(),
+        page: z.number().min(1).default(1),
+        limit: z.number().min(1).default(10),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -88,11 +96,20 @@ export const modelRouter = createTRPCRouter({
           requiredGpus: Model.requiredGpus,
           modality: Model.modality,
           enabled: Model.enabled,
+          customBuild: Model.customBuild,
           createdAt: Model.createdAt,
+          avgTPS: sql<number>`(
+            SELECT AVG(${DailyModelTokenCounts.avgTPS})
+            FROM ${DailyModelTokenCounts}
+            WHERE ${DailyModelTokenCounts.modelName} = ${Model.name}
+            AND ${DailyModelTokenCounts.createdAt} >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+          )`.mapWith(Number),
+          weeklyPrice: sql<number>`${Model.requiredGpus} * 250`.mapWith(Number),
         })
         .from(Model)
-        .$dynamic()
-        .limit(15);
+        .$dynamic();
+
+      // Apply filters
       const filters = [];
       if (input.name?.length) {
         filters.push(like(Model.name, `%${input.name}%`));
@@ -100,7 +117,7 @@ export const modelRouter = createTRPCRouter({
       if (input.orgs?.length) {
         const or_filters = [];
         for (const org of input.orgs) {
-          or_filters.push(like(Model.name, `${org}%`));
+          or_filters.push(like(Model.name, `${org}/%`));
         }
         filters.push(or(...or_filters));
       }
@@ -108,10 +125,75 @@ export const modelRouter = createTRPCRouter({
         filters.push(inArray(Model.modality, input.modalities));
       }
       if (input.endpoints?.length) {
-        filters.push(like(Model.name, `%${input.name}%`));
+        const endpointChecks = input.endpoints.map(
+          (endpoint) =>
+            sql`JSON_CONTAINS(${Model.supportedEndpoints}, ${JSON.stringify(endpoint)}, '$')`,
+        );
+        filters.push(or(...endpointChecks));
+      }
+      if (input.showLiveOnly) {
+        filters.push(eq(Model.enabled, true));
+      }
+      if (input.showLeaseableOnly) {
+        filters.push(eq(Model.enabled, false));
       }
 
-      return await query.where(and(...filters));
+      // Apply TPS filter
+      if (input.minTPS !== null && input.minTPS !== undefined) {
+        filters.push(sql`(
+          SELECT AVG(${DailyModelTokenCounts.avgTPS})
+          FROM ${DailyModelTokenCounts}
+          WHERE ${DailyModelTokenCounts.modelName} = ${Model.name}
+          AND ${DailyModelTokenCounts.createdAt} >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+        ) >= ${input.minTPS}`);
+      }
+
+      // Apply price range filter
+      const weeklyPrice = sql<number>`${Model.requiredGpus} * 250`;
+      if (input.minWeeklyPrice !== null && input.minWeeklyPrice !== undefined) {
+        filters.push(sql`${weeklyPrice} >= ${input.minWeeklyPrice}`);
+      }
+      if (input.maxWeeklyPrice !== null && input.maxWeeklyPrice !== undefined) {
+        filters.push(sql`${weeklyPrice} <= ${input.maxWeeklyPrice}`);
+      }
+
+      if (filters.length > 0) {
+        await query.where(and(...filters));
+      }
+
+      // Apply sorting
+      if (input.sortBy === "newest") {
+        await query.orderBy(desc(Model.createdAt));
+      } else if (input.sortBy === "oldest") {
+        await query.orderBy(asc(Model.createdAt));
+      }
+
+      // Get total count for pagination
+      const countQuery = ctx.db
+        .select({ count: sql<number>`count(*)`.mapWith(Number) })
+        .from(Model)
+        .$dynamic();
+
+      if (filters.length > 0) {
+        await countQuery.where(and(...filters));
+      }
+
+      const [countResult] = await countQuery;
+
+      const total = countResult?.count ?? 0;
+
+      // Apply pagination
+      const offset = (input.page - 1) * input.limit;
+      await query.limit(input.limit).offset(offset);
+
+      const items = await query;
+
+      return {
+        items,
+        total,
+        totalPages: Math.ceil(total / input.limit),
+        currentPage: input.page,
+      };
     }),
   getModelInfo: publicAuthlessProcedure
     .input(z.object({ model: z.string() }))
@@ -515,4 +597,21 @@ export const modelRouter = createTRPCRouter({
 
       return dailyStats;
     }),
+  getOrganizations: publicAuthlessProcedure.query(async ({ ctx }) => {
+    const models = await ctx.db
+      .select({
+        name: Model.name,
+      })
+      .from(Model);
+
+    const orgs = Array.from(
+      new Set(
+        models
+          .map((model) => model.name?.split("/")[0])
+          .filter((org): org is string => org !== undefined),
+      ),
+    ).sort();
+
+    return orgs;
+  }),
 });

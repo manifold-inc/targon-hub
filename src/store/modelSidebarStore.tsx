@@ -2,17 +2,38 @@ import { create } from "zustand";
 
 import { type MODALITIES } from "@/schema/schema";
 
+export type SortOption = "newest" | "oldest" | null;
+
 interface ModalSidebarState {
   // Section open/close state
   openSections: {
     modality: boolean;
-    contextLength: boolean;
-    promptPricing: boolean;
+    sorting: boolean;
+    liveStatus: boolean;
     organization: boolean;
     supportedEndpoints: boolean;
-    parameters: boolean;
   };
   toggleSection: (section: keyof ModalSidebarState["openSections"]) => void;
+
+  // Live filter state
+  showLiveOnly: boolean;
+  setShowLiveOnly: (show: boolean) => void;
+  showLeaseableOnly: boolean;
+  setShowLeaseableOnly: (show: boolean) => void;
+
+  // Sorting state
+  sortBy: SortOption;
+  setSortBy: (option: SortOption) => void;
+
+  // Performance filter state
+  minTPS: number | null | undefined;
+  setMinTPS: (value: number | null | undefined) => void;
+
+  // Price filter state
+  minWeeklyPrice: number | null | undefined;
+  setMinWeeklyPrice: (value: number | null | undefined) => void;
+  maxWeeklyPrice: number | null | undefined;
+  setMaxWeeklyPrice: (value: number | null | undefined) => void;
 
   // Modality state
   activeModality: Array<(typeof MODALITIES)[number]>;
@@ -23,14 +44,6 @@ interface ModalSidebarState {
           prev: Array<(typeof MODALITIES)[number]>,
         ) => Array<(typeof MODALITIES)[number]>),
   ) => void;
-
-  // Context length state
-  activeContextLength: number;
-  setActiveContextLength: (length: number) => void;
-
-  // Prompt pricing state
-  activePromptPricing: [number, number];
-  setActivePromptPricing: (pricing: [number, number]) => void;
 
   // Organization state
   activeOrganization: string[];
@@ -45,27 +58,16 @@ interface ModalSidebarState {
   setActiveSupportedEndpoints: (
     supportedEndpointsOrUpdater: string[] | ((prev: string[]) => string[]),
   ) => void;
-  showAllSupportedEndpoints: boolean;
-  setShowAllSupportedEndpoints: (show: boolean) => void;
-
-  // Parameters state
-  activeParameters: string[];
-  setActiveParameters: (
-    parametersOrUpdater: string[] | ((prev: string[]) => string[]),
-  ) => void;
-  showAllParameters: boolean;
-  setShowAllParameters: (show: boolean) => void;
 }
 
 export const useModalSidebarStore = create<ModalSidebarState>((set) => ({
   // Initial section states
   openSections: {
     modality: false,
-    contextLength: false,
-    promptPricing: false,
+    sorting: false,
+    liveStatus: false,
     organization: false,
     supportedEndpoints: false,
-    parameters: false,
   },
   toggleSection: (section) =>
     set((state) => ({
@@ -74,6 +76,26 @@ export const useModalSidebarStore = create<ModalSidebarState>((set) => ({
         [section]: !state.openSections[section],
       },
     })),
+
+  // Live filter
+  showLiveOnly: false,
+  setShowLiveOnly: (show) => set({ showLiveOnly: show }),
+  showLeaseableOnly: false,
+  setShowLeaseableOnly: (show) => set({ showLeaseableOnly: show }),
+
+  // Sorting
+  sortBy: null,
+  setSortBy: (option) => set({ sortBy: option }),
+
+  // Performance filter
+  minTPS: null,
+  setMinTPS: (value) => set({ minTPS: value }),
+
+  // Price filter
+  minWeeklyPrice: null,
+  setMinWeeklyPrice: (value) => set({ minWeeklyPrice: value }),
+  maxWeeklyPrice: null,
+  setMaxWeeklyPrice: (value) => set({ maxWeeklyPrice: value }),
 
   // Modality
   activeModality: [],
@@ -85,16 +107,8 @@ export const useModalSidebarStore = create<ModalSidebarState>((set) => ({
           : modalityOrUpdater,
     })),
 
-  // Context length
-  activeContextLength: 4000,
-  setActiveContextLength: (length) => set({ activeContextLength: length }),
-
-  // Prompt pricing
-  activePromptPricing: [0, 10] as [number, number],
-  setActivePromptPricing: (pricing) => set({ activePromptPricing: pricing }),
-
   // Organization
-  activeOrganization: [] as string[],
+  activeOrganization: [],
   setActiveOrganization: (organizationOrUpdater) =>
     set((state) => ({
       activeOrganization:
@@ -106,7 +120,7 @@ export const useModalSidebarStore = create<ModalSidebarState>((set) => ({
   setShowAllOrganization: (show) => set({ showAllOrganization: show }),
 
   // Supported endpoints
-  activeSupportedEndpoints: [] as string[],
+  activeSupportedEndpoints: [],
   setActiveSupportedEndpoints: (supportedEndpointsOrUpdater) =>
     set((state) => ({
       activeSupportedEndpoints:
@@ -114,19 +128,4 @@ export const useModalSidebarStore = create<ModalSidebarState>((set) => ({
           ? supportedEndpointsOrUpdater(state.activeSupportedEndpoints)
           : supportedEndpointsOrUpdater,
     })),
-  showAllSupportedEndpoints: false,
-  setShowAllSupportedEndpoints: (show) =>
-    set({ showAllSupportedEndpoints: show }),
-
-  // Parameters
-  activeParameters: [] as string[],
-  setActiveParameters: (parametersOrUpdater) =>
-    set((state) => ({
-      activeParameters:
-        typeof parametersOrUpdater === "function"
-          ? parametersOrUpdater(state.activeParameters)
-          : parametersOrUpdater,
-    })),
-  showAllParameters: false,
-  setShowAllParameters: (show) => set({ showAllParameters: show }),
 }));

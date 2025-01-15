@@ -3,8 +3,8 @@ import clsx from "clsx";
 import {
   ArrowUpDown,
   Binary,
-  ChevronLeft,
-  ChevronRight,
+  ChevronDown,
+  ChevronUp,
   Hash,
   HelpCircle,
   Percent,
@@ -69,7 +69,7 @@ function NumberInput({
       step={step}
       value={localValue}
       onChange={handleChange}
-      className="h-9 w-16 rounded-lg border-0 bg-[#142900]/5 px-3 text-right text-sm font-semibold text-[#142900] [appearance:textfield] hover:bg-[#142900]/10 focus:border-2 focus:border-black focus:outline-none focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+      className="h-9 w-16 rounded-lg border-0 px-3 text-right text-sm font-semibold text-[#142900] [appearance:textfield] hover:bg-[#142900]/10 focus:border-2 focus:border-black focus:outline-none focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
     />
   );
 }
@@ -80,6 +80,8 @@ export function ParameterControls({
   isOpen,
   setIsOpen,
 }: ParameterControlsProps) {
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
+
   const parameters = [
     {
       name: "Temperature",
@@ -146,25 +148,25 @@ export function ParameterControls({
           isOpen ? "translate-x-0" : "translate-x-full",
         )}
       >
-        <div className="border-b border-gray-200 p-4">
+        <div className="border-b border-gray-200 p-3">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-900">Parameters</h2>
             <button
               onClick={() => setIsOpen(false)}
-              className="rounded-lg p-2 text-gray-500 hover:bg-gray-100"
+              className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100"
             >
               <X className="h-5 w-5" />
             </button>
           </div>
         </div>
-        <div className="p-4">
+        <div className="h-[calc(100%-3.5rem)] overflow-y-auto p-3">
           {/* Parameters */}
-          <div className="space-y-6">
+          <div className="space-y-4">
             {parameters.map((param) => (
               <div key={param.key}>
-                <div className="mb-2 flex items-center justify-between text-sm">
+                <div className="mb-1.5 flex items-center justify-between text-sm">
                   <label className="flex items-center space-x-2 font-medium text-gray-600">
-                    <param.icon className="h-5 w-5 shrink-0" />
+                    <param.icon className="h-4 w-4 shrink-0" />
                     <span>{param.name}</span>
                   </label>
                   <NumberInput
@@ -190,8 +192,10 @@ export function ParameterControls({
                     })
                   }
                   className="relative h-1.5 w-full cursor-pointer appearance-none rounded-full bg-[#142900]/10
-                  before:absolute before:h-1.5 before:w-[var(--range-percent)] before:rounded-l-full before:bg-[#142900] before:content-[''] [&::-moz-range-thumb]:h-4
-                  [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-webkit-slider-thumb]:h-4
+                  before:absolute before:h-1.5 before:w-[var(--range-percent)] before:rounded-l-full
+                  before:bg-[#142900] before:content-[''] [&::-moz-range-progress]:h-1.5
+                  [&::-moz-range-progress]:rounded-l-full [&::-moz-range-progress]:bg-[#142900] [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none
+                  [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-[#142900]/10 [&::-webkit-slider-thumb]:h-4
                   [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#142900] [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
                   style={
                     {
@@ -204,29 +208,39 @@ export function ParameterControls({
           </div>
 
           {/* Help Section */}
-          <div className="border-t border-gray-100 pt-6">
-            <h3 className="mb-3 flex items-center space-x-2 text-xs font-semibold uppercase text-gray-500">
-              <HelpCircle className="h-3.5 w-3.5" />
-              <span>Understanding Parameters</span>
-            </h3>
-            <div className="space-y-2">
-              {parameters.map((param) => (
-                <div
-                  key={`help-${param.key}`}
-                  className="flex items-start space-x-2.5 rounded-lg p-2 text-xs text-gray-500 transition-colors"
-                >
-                  <param.icon className="mt-0.5 h-3.5 w-3.5 shrink-0 transition-colors" />
-                  <div>
-                    <span className="font-medium text-gray-600 transition-colors">
-                      {param.name}
-                    </span>
-                    <p className="mt-0.5 leading-relaxed">
-                      {param.description}
-                    </p>
+          <div className="mt-4 border-t border-gray-100 pt-3">
+            <button
+              onClick={() => setIsHelpOpen(!isHelpOpen)}
+              className="mb-2 flex w-full items-center justify-between text-xs font-semibold uppercase text-gray-500 hover:text-gray-700"
+            >
+              <div className="flex items-center space-x-2">
+                <HelpCircle className="h-3.5 w-3.5" />
+                <span>Understanding Parameters</span>
+              </div>
+              {isHelpOpen ? (
+                <ChevronUp className="h-3.5 w-3.5" />
+              ) : (
+                <ChevronDown className="h-3.5 w-3.5" />
+              )}
+            </button>
+            {isHelpOpen && (
+              <div className="space-y-2">
+                {parameters.map((param) => (
+                  <div
+                    key={`help-${param.key}`}
+                    className="flex items-start space-x-2 rounded-lg py-1 text-xs text-gray-500"
+                  >
+                    <param.icon className="mt-0.5 h-3 w-3 shrink-0" />
+                    <div>
+                      <span className="font-medium text-gray-600">
+                        {param.name}
+                      </span>
+                      <p className="leading-snug">{param.description}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -249,8 +263,13 @@ export function ParameterControls({
         >
           <div className="flex w-full items-center justify-between p-4 text-sm font-medium text-gray-600 hover:text-[#142900]">
             <span className="whitespace-nowrap">Model Parameters</span>
-            <button onClick={() => setIsOpen(false)}>
-              <ChevronLeft className="h-4 w-4" />
+            <button
+              onClick={() => {
+                setIsHelpOpen(false);
+                setIsOpen(false);
+              }}
+            >
+              <ChevronDown className="h-4 w-4" />
             </button>
           </div>
 
@@ -286,8 +305,10 @@ export function ParameterControls({
                     })
                   }
                   className="relative h-1.5 w-full cursor-pointer appearance-none rounded-full bg-[#142900]/10
-                  before:absolute before:h-1.5 before:w-[var(--range-percent)] before:rounded-l-full before:bg-[#142900] before:content-[''] [&::-moz-range-thumb]:h-4
-                  [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-webkit-slider-thumb]:h-4
+                  before:absolute before:h-1.5 before:w-[var(--range-percent)] before:rounded-l-full
+                  before:bg-[#142900] before:content-[''] [&::-moz-range-progress]:h-1.5
+                  [&::-moz-range-progress]:rounded-l-full [&::-moz-range-progress]:bg-[#142900] [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none
+                  [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-[#142900]/10 [&::-webkit-slider-thumb]:h-4
                   [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#142900] [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
                   style={
                     {
@@ -302,28 +323,40 @@ export function ParameterControls({
           {/* Help Section */}
           <div className="border-t border-gray-100">
             <div className="p-4">
-              <h3 className="mb-3 flex items-center space-x-2 text-xs font-semibold uppercase text-gray-500">
-                <HelpCircle className="h-3.5 w-3.5" />
-                <span>Understanding Parameters</span>
-              </h3>
-              <div className="space-y-3">
-                {parameters.map((param) => (
-                  <div
-                    key={`help-${param.key}`}
-                    className="flex items-start space-x-2.5 rounded-lg p-2 text-xs text-gray-500 transition-colors"
-                  >
-                    <param.icon className="mt-0.5 h-3.5 w-3.5 shrink-0 transition-colors" />
-                    <div>
-                      <span className="font-medium text-gray-600 transition-colors">
-                        {param.name}
-                      </span>
-                      <p className="mt-0.5 leading-relaxed">
-                        {param.description}
-                      </p>
+              <button
+                onClick={() => setIsHelpOpen(!isHelpOpen)}
+                className="mb-3 flex w-full items-center justify-between text-xs font-semibold uppercase text-gray-500 hover:text-gray-700"
+              >
+                <div className="flex items-center space-x-2">
+                  <HelpCircle className="h-3.5 w-3.5" />
+                  <span>Understanding Parameters</span>
+                </div>
+                {isHelpOpen ? (
+                  <ChevronUp className="h-3.5 w-3.5" />
+                ) : (
+                  <ChevronDown className="h-3.5 w-3.5" />
+                )}
+              </button>
+              {isHelpOpen && (
+                <div className="animate-slide-in space-y-3">
+                  {parameters.map((param) => (
+                    <div
+                      key={`help-${param.key}`}
+                      className="flex items-start space-x-2.5 rounded-lg p-2 text-xs text-gray-500 transition-colors"
+                    >
+                      <param.icon className="mt-0.5 h-3.5 w-3.5 shrink-0 transition-colors" />
+                      <div>
+                        <span className="font-medium text-gray-600 transition-colors">
+                          {param.name}
+                        </span>
+                        <p className="mt-0.5 leading-relaxed">
+                          {param.description}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -341,7 +374,7 @@ export function ParameterControls({
               onClick={() => setIsOpen(true)}
               className="flex h-9 w-9 shrink-0 items-center justify-center transition-colors duration-200 hover:text-[#142900]"
             >
-              <ChevronRight className="h-5 w-5 shrink-0" />
+              <ChevronUp className="h-5 w-5 shrink-0" />
             </button>
             {parameters.map((param) => (
               <button
