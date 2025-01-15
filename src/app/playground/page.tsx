@@ -63,9 +63,8 @@ export default function Example() {
 
       // Show shortcuts when Command/Control is pressed alone
       if (e.key === "Meta" || e.key === "Control") {
-        if (nav === "code") return;
         e.preventDefault();
-        setShowShortcuts(true);
+        setShowShortcuts(!showShortcuts);
       }
       // Hide shortcuts when any other key is pressed
       else if (showShortcuts) {
@@ -75,7 +74,7 @@ export default function Example() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [showShortcuts, setIsParamsOpen, nav]);
+  }, [showShortcuts, setIsParamsOpen]);
 
   const trigger = useCallback(
     async (chat: string, chatlog: typeof chats) => {
