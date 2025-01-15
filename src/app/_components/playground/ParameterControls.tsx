@@ -192,8 +192,10 @@ export function ParameterControls({
                     })
                   }
                   className="relative h-1.5 w-full cursor-pointer appearance-none rounded-full bg-[#142900]/10
-                  before:absolute before:h-1.5 before:w-[var(--range-percent)] before:rounded-l-full before:bg-[#142900] before:content-[''] [&::-moz-range-thumb]:h-4
-                  [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-webkit-slider-thumb]:h-4
+                  before:absolute before:h-1.5 before:w-[var(--range-percent)] before:rounded-l-full
+                  before:bg-[#142900] before:content-[''] [&::-moz-range-progress]:h-1.5
+                  [&::-moz-range-progress]:rounded-l-full [&::-moz-range-progress]:bg-[#142900] [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none
+                  [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-[#142900]/10 [&::-webkit-slider-thumb]:h-4
                   [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#142900] [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
                   style={
                     {
@@ -303,8 +305,10 @@ export function ParameterControls({
                     })
                   }
                   className="relative h-1.5 w-full cursor-pointer appearance-none rounded-full bg-[#142900]/10
-                  before:absolute before:h-1.5 before:w-[var(--range-percent)] before:rounded-l-full before:bg-[#142900] before:content-[''] [&::-moz-range-thumb]:h-4
-                  [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-webkit-slider-thumb]:h-4
+                  before:absolute before:h-1.5 before:w-[var(--range-percent)] before:rounded-l-full
+                  before:bg-[#142900] before:content-[''] [&::-moz-range-progress]:h-1.5
+                  [&::-moz-range-progress]:rounded-l-full [&::-moz-range-progress]:bg-[#142900] [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none
+                  [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-[#142900]/10 [&::-webkit-slider-thumb]:h-4
                   [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#142900] [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
                   style={
                     {

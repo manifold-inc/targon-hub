@@ -89,6 +89,51 @@ interface SliderProps {
   formatValue: (value: number) => string;
 }
 
+function Slider({
+  label,
+  value,
+  onChange,
+  min,
+  max,
+  step,
+  formatValue,
+}: SliderProps) {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newValue = Number(e.target.value);
+    onChange(newValue);
+  };
+
+  const currentValue = value ?? min;
+  const percent = ((currentValue - min) / (max - min)) * 100;
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      <div className="flex items-center justify-between text-xs">
+        <span className="font-medium text-[#475467]">{label}</span>
+        <span className="font-medium text-[#475467]">
+          {formatValue(currentValue)}
+        </span>
+      </div>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={currentValue}
+        onChange={handleChange}
+        className="relative h-1.5 w-full cursor-pointer appearance-none rounded-full bg-[#142900]/10
+        [&::-moz-range-progress]:h-1.5 [&::-moz-range-progress]:rounded-l-full [&::-moz-range-progress]:bg-[#142900] [&::-moz-range-thumb]:h-4
+        [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full
+        [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-[#142900]/10
+        [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#142900] [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
+        style={{
+          background: `linear-gradient(to right, #142900 0%, #142900 ${percent}%, #e5e7eb ${percent}%, #e5e7eb 100%)`,
+        }}
+      />
+    </div>
+  );
+}
+
 function PriceRangeSlider({
   minValue,
   maxValue,
@@ -122,8 +167,6 @@ function PriceRangeSlider({
 
   const currentMin = minValue ?? min;
   const currentMax = maxValue ?? max;
-  const minPos = ((currentMin - min) / (max - min)) * 100;
-  const maxPos = ((currentMax - min) / (max - min)) * 100;
 
   return (
     <div className="flex flex-col gap-2">
@@ -133,15 +176,8 @@ function PriceRangeSlider({
           ${currentMin} - ${currentMax}
         </span>
       </div>
-      <div className="relative h-2">
-        <div className="absolute h-full w-full rounded-lg bg-gray-200" />
-        <div
-          className="absolute h-full rounded-lg bg-[#142900]"
-          style={{
-            left: `${minPos}%`,
-            right: `${100 - maxPos}%`,
-          }}
-        />
+      <div className="relative h-1.5">
+        <div className="absolute h-1.5 w-full rounded-full bg-[#142900]/10" />
         <input
           type="range"
           min={min}
@@ -149,7 +185,13 @@ function PriceRangeSlider({
           step={step}
           value={currentMin}
           onChange={handleMinChange}
-          className="pointer-events-none absolute h-full w-full cursor-pointer appearance-none bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#142900] [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
+          className="pointer-events-none absolute h-1.5 w-full cursor-pointer appearance-none rounded-full bg-transparent
+          [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none
+          [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-[#142900]/10
+          [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#142900] [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
+          style={{
+            zIndex: 2,
+          }}
         />
         <input
           type="range"
@@ -158,49 +200,22 @@ function PriceRangeSlider({
           step={step}
           value={currentMax}
           onChange={handleMaxChange}
-          className="pointer-events-none absolute h-full w-full cursor-pointer appearance-none bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#142900] [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
+          className="pointer-events-none absolute h-1.5 w-full cursor-pointer appearance-none rounded-full bg-transparent
+          [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none
+          [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-[#142900]/10
+          [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#142900] [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
+          style={{
+            zIndex: 1,
+          }}
+        />
+        <div
+          className="absolute h-1.5 rounded-full bg-[#142900]"
+          style={{
+            left: `${((currentMin - min) / (max - min)) * 100}%`,
+            right: `${100 - ((currentMax - min) / (max - min)) * 100}%`,
+          }}
         />
       </div>
-    </div>
-  );
-}
-
-function Slider({
-  label,
-  value,
-  onChange,
-  min,
-  max,
-  step,
-  formatValue,
-}: SliderProps) {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newValue = Number(e.target.value);
-    onChange(newValue);
-  };
-
-  const currentValue = value ?? min;
-
-  return (
-    <div className="flex flex-col gap-1.5">
-      <div className="flex items-center justify-between text-xs">
-        <span className="font-medium text-[#475467]">{label}</span>
-        <span className="font-medium text-[#475467]">
-          {formatValue(currentValue)}
-        </span>
-      </div>
-      <input
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={currentValue}
-        onChange={handleChange}
-        className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-gray-200 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#142900] [&::-webkit-slider-thumb]:transition-colors hover:[&::-webkit-slider-thumb]:bg-[#142900]/90"
-        style={{
-          background: `linear-gradient(to right, #142900 0%, #142900 ${((currentValue - min) / (max - min)) * 100}%, #e5e7eb ${((currentValue - min) / (max - min)) * 100}%, #e5e7eb 100%)`,
-        }}
-      />
     </div>
   );
 }
