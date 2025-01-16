@@ -107,6 +107,7 @@ export const modelRouter = createTRPCRouter({
           weeklyPrice: sql<number>`${Model.requiredGpus} * 250`.mapWith(Number),
         })
         .from(Model)
+        .where(eq(Model.customBuild, false))
         .$dynamic();
 
       // Apply filters
@@ -172,6 +173,7 @@ export const modelRouter = createTRPCRouter({
       const countQuery = ctx.db
         .select({ count: sql<number>`count(*)`.mapWith(Number) })
         .from(Model)
+        .where(eq(Model.customBuild, false))
         .$dynamic();
 
       if (filters.length > 0) {
