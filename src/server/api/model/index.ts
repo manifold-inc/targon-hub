@@ -315,10 +315,8 @@ export const modelRouter = createTRPCRouter({
 
       // Get library name from model info
       if (!modelInfo.library_name) {
-        throw new TRPCError({
-          message: `Model "${input}" does not have any library metadata on the Hub.`,
-          code: "BAD_REQUEST",
-        });
+        // Don't love this but many models on HF are transformer models but dont have the library_name set. Let the gpu estimator handle it.
+        modelInfo.library_name = "transformers";
       }
 
       if (!["transformers", "timm"].includes(modelInfo.library_name)) {
@@ -397,38 +395,9 @@ export const modelRouter = createTRPCRouter({
             code: "BAD_REQUEST",
           });
         }
-
-        // Check if model requires custom code
-        const hasCustomCode = modelInfo.tags?.includes("custom_code");
-        const hasAutoMap =
-          modelInfo.config.auto_map &&
-          typeof modelInfo.config.auto_map === "object" &&
-          Object.values(modelInfo.config.auto_map).every(
-            (path) => !path.includes(".py"),
-          );
-        const hasAutoModel = modelInfo.transformersInfo?.auto_model;
-
-        if (hasCustomCode || (!hasAutoMap && !hasAutoModel)) {
-          await ctx.db.insert(Model).values({
-            name: modelInfo.id,
-            modality,
-            requiredGpus: 0,
-            supportedEndpoints,
-            cpt: 0,
-            enabled: false,
-            customBuild: true,
-            description: description ?? "No description provided",
-          });
-          return {
-            gpus: 0,
-            enabled: false,
-            message:
-              "Model requires custom build. It has been marked for review by our team.",
-          };
-        }
       }
 
-      // Now that we've validated everything and confirmed no custom code, try to get the GPU requirements
+      // Now try to get the GPU requirements - if this fails with 500, it needs custom build
       const gpuResponse = await fetch(`${env.HUB_API_ESTIMATE_GPU_ENDPOINT}`, {
         method: "POST",
         headers: {
@@ -439,6 +408,25 @@ export const modelRouter = createTRPCRouter({
           library_name: modelInfo.library_name,
         }),
       });
+
+      if (gpuResponse.status === 500) {
+        await ctx.db.insert(Model).values({
+          name: modelInfo.id,
+          modality,
+          requiredGpus: 0,
+          supportedEndpoints,
+          cpt: 0,
+          enabled: false,
+          customBuild: true,
+          description: description ?? "No description provided",
+        });
+        return {
+          gpus: 0,
+          enabled: false,
+          message:
+            "Model requires custom build. It has been marked for review by our team.",
+        };
+      }
 
       if (!gpuResponse.ok) {
         throw new TRPCError({
