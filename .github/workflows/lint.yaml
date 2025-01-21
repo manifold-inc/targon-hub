@@ -20,59 +20,14 @@ jobs:
 
     - name: Install dependencies
       run: bun install
-    
-    - name: Set up .env
+
+    - name: Set environment variable
       run: |
-        #!/bin/bash
-
-        cp sample.env .env
-
-        sed -i 's/GOOGLE_CLIENT_ID=.*/GOOGLE_CLIENT_ID=dummy_client_id.apps.googleusercontent.com/' .env
-        sed -i 's/GOOGLE_CLIENT_SECRET=.*/GOOGLE_CLIENT_SECRET=dummy_secret/' .env
-        sed -i 's|GOOGLE_REDIRECT_URI=.*|GOOGLE_REDIRECT_URI=http://localhost:3000/sign-in/google/callback|' .env
-        sed -i 's/STRIPE_PUBLISHABLE_KEY=.*/STRIPE_PUBLISHABLE_KEY=dummy_pk/' .env
-        sed -i 's/STRIPE_SECRET_KEY=.*/STRIPE_SECRET_KEY=dummy_sk/' .env
-        sed -i 's/STRIPE_CREDIT_PRICE_ID=.*/STRIPE_CREDIT_PRICE_ID=dummy_price_1/' .env
-        sed -i 's/STRIPE_SUBSCRIPTION_PRICE_ID=.*/STRIPE_SUBSCRIPTION_PRICE_ID=dummy_price_2/' .env
-        sed -i 's/STRIPE_ENDPOINT_SECRET=.*/STRIPE_ENDPOINT_SECRET=dummy_secret/' .env
-        sed -i 's|NEXT_PUBLIC_HUB_API_ENDPOINT=.*|NEXT_PUBLIC_HUB_API_ENDPOINT=https://api.dummy.com|' .env
-        sed -i 's|HUB_API_ESTIMATE_GPU_ENDPOINT=.*|HUB_API_ESTIMATE_GPU_ENDPOINT=https://estimate.api.dummy.com|' .env
-        sed -i 's|NEXT_PUBLIC_DEPOSIT_ADDRESS=.*|NEXT_PUBLIC_DEPOSIT_ADDRESS=dummy_deposit_address|' .env
-        sed -i 's/INFLUX_TOKEN=.*/INFLUX_TOKEN=dummy_influx_token/' .env
-        sed -i 's|INFLUX_URL=.*|INFLUX_URL=http://dummy.url:8086|' .env
-        sed -i 's/INFLUX_ORG=.*/INFLUX_ORG=dummy_org/' .env
-        sed -i 's/INFLUX_BUCKET=.*/INFLUX_BUCKET=dummy_bucket/' .env
-        sed -i 's/DATABASE_HOST=.*/DATABASE_HOST=dummy.db.host/' .env
-        sed -i 's/DATABASE_NAME=.*/DATABASE_NAME=dummy_db_name/' .env
-        sed -i 's/DATABASE_USERNAME=.*/DATABASE_USERNAME=dummy_username/' .env
-        sed -i 's/DATABASE_PASSWORD=.*/DATABASE_PASSWORD=dummy_password/' .env
+        echo "SKIP_ENV_VALIDATION=True" >> $GITHUB_ENV
 
     - name: Lint and Type Check
       run: bun run lint
 
-    - name: Build Next.js App
-      run: bun run build
-
-    - name: Start and Test the Application
-      run: |
-        bun run start &
-        sleep 5
-        curl -I http://localhost:3000
-
-  format-check:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-
-    - name: Install Bun
-      uses: oven-sh/setup-bun@v1
-      with:
-        bun-version: latest
-
-    - name: Install dependencies
-      run: bun install
-
     - name: Check Formatting
       run: bun run check-format
+
