@@ -123,7 +123,7 @@ export const ModelLeasingSection = () => {
           </div>
           <div className="pt-6 text-center sm:text-left">
             <Link
-              href="/infrastructure/immunity"
+              href="/models/immunity"
               className="group relative z-10 inline-flex items-center text-sm font-medium text-[#142900] hover:text-[#1e3b00]"
             >
               View full timeline
