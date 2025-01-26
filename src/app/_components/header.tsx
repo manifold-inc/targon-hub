@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   Dialog,
   DialogPanel,
@@ -18,7 +18,6 @@ import { CREDIT_PER_DOLLAR } from "@/constants";
 import { formatLargeNumber } from "@/utils/utils";
 import SearchBar from "./landing/SearchBar";
 import { useAuth } from "./providers";
-import SettingsModal from "./SettingsModal";
 
 const NAVIGATION = [
   { slug: "/browse", title: "Browse" },
@@ -29,38 +28,18 @@ const NAVIGATION = [
 export const Header = () => {
   const auth = useAuth();
   const pathName = usePathname();
-  const searchParams = useSearchParams();
-  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const activeTab =
-    (searchParams.get("tab") as
-      | "dashboard"
-      | "credits"
-      | "activity"
-      | "keys") ?? null;
   const [hasScrolled, setHasScrolled] = useState(false);
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
+  // Add scroll listener
+  useEffect(() => {
+    const handleScroll = () => {
+      setHasScrolled(window.scrollY > 0);
+    };
 
-      return params.toString();
-    },
-    [searchParams],
-  );
-  const setActiveTab = useCallback(
-    (path: string) => {
-      const query = createQueryString("tab", path);
-      router.push(pathName + "?" + query);
-    },
-    [router, pathName, createQueryString],
-  );
-
-  const handleSettingsModalClose = () => {
-    setActiveTab("dashboard");
-    router.push(pathName, { scroll: false });
-  };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // keydown controller
   useEffect(() => {
@@ -88,16 +67,6 @@ export const Header = () => {
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
-  // Add scroll listener
-  useEffect(() => {
-    const handleScroll = () => {
-      setHasScrolled(window.scrollY > 0);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -193,44 +162,36 @@ export const Header = () => {
                               </div>
                             </MenuItem>
                             <MenuItem>
-                              <button
-                                onClick={() => {
-                                  setActiveTab("dashboard");
-                                }}
+                              <Link
+                                href="/settings"
                                 className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
                               >
                                 Settings
-                              </button>
+                              </Link>
                             </MenuItem>
                             <MenuItem>
-                              <button
-                                onClick={() => {
-                                  setActiveTab("credits");
-                                }}
+                              <Link
+                                href="/settings/credits"
                                 className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
                               >
                                 Credits
-                              </button>
+                              </Link>
                             </MenuItem>
                             <MenuItem>
-                              <button
-                                onClick={() => {
-                                  setActiveTab("activity");
-                                }}
+                              <Link
+                                href="/settings/activity"
                                 className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
                               >
                                 Activity
-                              </button>
+                              </Link>
                             </MenuItem>
                             <MenuItem>
-                              <button
-                                onClick={() => {
-                                  setActiveTab("keys");
-                                }}
+                              <Link
+                                href="/settings/keys"
                                 className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
                               >
                                 Keys
-                              </button>
+                              </Link>
                             </MenuItem>
                             <MenuItem>
                               <Link
@@ -246,24 +207,13 @@ export const Header = () => {
                       </>
                     )}
                   </Menu>
-                  <SettingsModal
-                    isOpen={!!activeTab}
-                    onClose={handleSettingsModalClose}
-                    activeTab={activeTab}
-                    onTabChange={(tab) => {
-                      setActiveTab(tab);
-                    }}
-                  />
                 </>
               ) : (
                 <Link
-                  className="inline-flex h-9 items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white 
-                  bg-white px-3 py-2 shadow transition-all hover:bg-gray-50 hover:shadow-md"
                   href="/sign-in"
+                  className="inline-flex h-9 items-center justify-center gap-1 rounded-full px-3 py-2 text-sm leading-tight text-mf-gray-600 hover:underline whitespace-nowrap"
                 >
-                  <span className="text-sm leading-tight text-[#344054]">
-                    Sign in
-                  </span>
+                  Sign In
                 </Link>
               )}
             </div>
