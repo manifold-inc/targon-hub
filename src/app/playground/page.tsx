@@ -62,7 +62,7 @@ export default function Example() {
       }
 
       // Show shortcuts when Command/Control is pressed alone
-      if (e.key === "Meta" || e.key === "Control") {
+      if (e.key === "?") {
         e.preventDefault();
         setShowShortcuts(!showShortcuts);
       }
