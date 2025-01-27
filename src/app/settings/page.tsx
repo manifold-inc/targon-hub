@@ -191,7 +191,8 @@ export default function SettingsPage() {
             className="inline-flex h-24 w-full flex-col items-start justify-center gap-2 rounded-xl bg-gray-50 p-4 hover:bg-gray-100 sm:h-32 sm:w-32 sm:gap-4 sm:p-6"
           >
             <p className="whitespace-nowrap text-lg font-medium leading-7 text-black">
-              ${formatLargeNumber((user.data?.credits ?? 0) / CREDIT_PER_DOLLAR)}
+              $
+              {formatLargeNumber((user.data?.credits ?? 0) / CREDIT_PER_DOLLAR)}
             </p>
             <p className="text-sm leading-tight text-black">Credits</p>
           </Link>
@@ -285,4 +286,4 @@ export default function SettingsPage() {
       </div>
     </div>
   );
-} 
+}

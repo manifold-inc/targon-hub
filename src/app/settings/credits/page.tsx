@@ -31,7 +31,9 @@ export default function CreditsPage() {
 
   const paymentHistory = reactClient.account.getUserPaymentHistory.useQuery();
 
-  const [showAmounts, setShowAmounts] = useState<"credits" | "amounts">("amounts");
+  const [showAmounts, setShowAmounts] = useState<"credits" | "amounts">(
+    "amounts",
+  );
   const [showQR, setShowQR] = useState(false);
 
   const handleCopyAddress = () => {
@@ -236,7 +238,9 @@ export default function CreditsPage() {
                         : `$${formatLargeNumber(Math.ceil(Number(payment.credits ?? 0) / CREDIT_PER_DOLLAR))}`}
                   </td>
                   <td className="px-4 text-right text-xs text-[#101828] sm:text-sm">
-                    <div>via {payment.type === "stripe" ? "Stripe" : "TAO"}</div>
+                    <div>
+                      via {payment.type === "stripe" ? "Stripe" : "TAO"}
+                    </div>
                   </td>
                   <td className="px-4 text-center">
                     <div className="relative mx-auto flex h-5 w-8 items-center justify-center rounded border border-[#e4e7ec] bg-white p-1 sm:h-6 sm:w-10">
@@ -260,7 +264,8 @@ export default function CreditsPage() {
                               className="h-3 w-4 sm:h-4 sm:w-6"
                             />
                           )}
-                          {payment.cardBrand?.toLowerCase() === "mastercard" && (
+                          {payment.cardBrand?.toLowerCase() ===
+                            "mastercard" && (
                             <Image
                               src="/cards/Mastercard.svg"
                               alt="Mastercard"
@@ -289,4 +294,4 @@ export default function CreditsPage() {
       </div>
     </div>
   );
-} 
+}
