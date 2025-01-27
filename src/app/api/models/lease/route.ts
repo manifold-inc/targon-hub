@@ -1,5 +1,6 @@
 import { type NextRequest } from "next/server";
 import { eq, inArray } from "drizzle-orm";
+import { z } from "zod";
 
 import { COST_PER_GPU, CREDIT_PER_DOLLAR, MAX_GPU_SLOTS } from "@/constants";
 import { db } from "@/schema/db";
@@ -7,17 +8,13 @@ import { ApiKey, Model, ModelLeasing, User } from "@/schema/schema";
 
 export async function POST(request: NextRequest): Promise<Response> {
   try {
-    /**
-     * Authenticate user
-     * grab user, credits, and wallet address from db
-     */
     const auth = request.headers.get("Authorization");
     const token = auth?.split(" ").at(-1);
     if (!token) {
       return Response.json({ error: "Unauthorized", status: 401 });
     }
     const [user] = await db
-      .select({ credits: User.credits, ss58: User.ss58, id: User.id })
+      .select({ credits: User.credits, id: User.id })
       .from(User)
       .innerJoin(ApiKey, eq(User.id, ApiKey.userId))
       .where(eq(ApiKey.key, token));
@@ -25,27 +22,20 @@ export async function POST(request: NextRequest): Promise<Response> {
       return Response.json({ error: "Unauthorized", status: 401 });
     }
 
-    /**
-     * Grab model from db
-     * check if model exists
-     * check if model is enabled
-     * check if user has enough credits
-     * calculate gpu slots?
-     * remove models to make room? models that are enabled for the longest with no subscription
-     * update model db - enabled = true, enabledDate = now
-     * update user db - credits = user.credits - gpu * cost per gpu
-     * create leasing record - userId, modelName, amount
-     */
+    const { requestedModelName } = z
+      .object({ requestedModelName: z.string().min(1) })
+      .parse(await request.json());
 
-    const requestedModelName = request.headers.get("Model-Name");
     if (!requestedModelName) {
       return Response.json({ error: "Model name is required", status: 400 });
     }
 
-    const [[requiredGPU], enabledModels] = await Promise.all([
+    const [[requestedModels], enabledModels] = await Promise.all([
       db
         .select({
-          gpu: Model.requiredGpus,
+          name: Model.name,
+          requiredGpus: Model.requiredGpus,
+          enabled: Model.enabled,
         })
         .from(Model)
         .where(eq(Model.name, requestedModelName)),
@@ -60,25 +50,22 @@ export async function POST(request: NextRequest): Promise<Response> {
         .where(eq(Model.enabled, true)),
     ]);
 
-    const [model] = await db
-      .select()
-      .from(Model)
-      .where(eq(Model.name, requestedModelName));
-    if (!model) {
+    if (!requestedModels) {
       return Response.json({ error: "Model not found", status: 404 });
     }
-    if (model.enabled) {
+    if (requestedModels.enabled) {
       return Response.json({ error: "Model is already enabled", status: 400 });
     }
-    if (model.requiredGpus > 8) {
+    if (requestedModels.requiredGpus > 8) {
       return Response.json({
         error: "Cannot lease more than 8 GPUs",
         status: 400,
       });
     }
-    if (user.credits < (requiredGPU?.gpu ?? 0)) {
+    if (user.credits < requestedModels.requiredGpus * Number(COST_PER_GPU)) {
       return Response.json({
-        error: "Insufficient credits to lease this model",
+        error: "Insufficient funds to lease this model",
+        message: `User has $${user.credits / Number(CREDIT_PER_DOLLAR)}, but requires $${(requestedModels.requiredGpus * Number(COST_PER_GPU)) / Number(CREDIT_PER_DOLLAR)} to lease this model`,
         status: 400,
       });
     }
@@ -98,7 +85,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       (sum, model) => sum + (model.requiredGpus ?? 0),
       0,
     );
-    const requestedGPU = model.requiredGpus;
+    const requestedGPU = requestedModels.requiredGpus;
 
     // Check if we need to remove to make room
     if (currentGPUUsage + requestedGPU > MAX_GPU_SLOTS) {
@@ -120,7 +107,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 
       await db
         .update(Model)
-        .set({ enabled: true, enabledDate: null })
+        .set({ enabled: false, enabledDate: null })
         .where(
           inArray(
             Model.name,
