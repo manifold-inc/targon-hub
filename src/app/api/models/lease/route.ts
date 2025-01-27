@@ -42,6 +42,24 @@ export async function POST(request: NextRequest): Promise<Response> {
       return Response.json({ error: "Model name is required", status: 400 });
     }
 
+    const [[requiredGPU], enabledModels] = await Promise.all([
+      db
+        .select({
+          gpu: Model.requiredGpus,
+        })
+        .from(Model)
+        .where(eq(Model.name, requestedModelName)),
+
+      db
+        .select({
+          name: Model.name,
+          requiredGpus: Model.requiredGpus,
+          enabledDate: Model.enabledDate,
+        })
+        .from(Model)
+        .where(eq(Model.enabled, true)),
+    ]);
+
     const [model] = await db
       .select()
       .from(Model)
@@ -58,7 +76,7 @@ export async function POST(request: NextRequest): Promise<Response> {
         status: 400,
       });
     }
-    if (user.credits < 0) {
+    if (user.credits < (requiredGPU?.gpu ?? 0)) {
       return Response.json({
         error: "Insufficient credits to lease this model",
         status: 400,
@@ -69,10 +87,6 @@ export async function POST(request: NextRequest): Promise<Response> {
     const now = new Date();
 
     // Calculate how many gpu slots are currently used
-    const enabledModels = await db
-      .select()
-      .from(Model)
-      .where(eq(Model.enabled, true));
     const eligibleForRemoval = enabledModels
       .filter((model) => {
         if (!model.enabledDate) return false;
