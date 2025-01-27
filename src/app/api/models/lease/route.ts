@@ -1,8 +1,9 @@
 import { type NextRequest } from "next/server";
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 
+import { COST_PER_GPU, CREDIT_PER_DOLLAR, MAX_GPU_SLOTS } from "@/constants";
 import { db } from "@/schema/db";
-import { ApiKey, Model, User } from "@/schema/schema";
+import { ApiKey, Model, ModelLeasing, User } from "@/schema/schema";
 
 export async function POST(request: NextRequest): Promise<Response> {
   try {
@@ -16,7 +17,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       return Response.json({ error: "Unauthorized", status: 401 });
     }
     const [user] = await db
-      .select({ credits: User.credits, ss58: User.ss58 })
+      .select({ credits: User.credits, ss58: User.ss58, id: User.id })
       .from(User)
       .innerJoin(ApiKey, eq(User.id, ApiKey.userId))
       .where(eq(ApiKey.key, token));
@@ -78,12 +79,60 @@ export async function POST(request: NextRequest): Promise<Response> {
         return now.getTime() - model.enabledDate.getTime() > immunityPeriod;
       })
       .sort((a, b) => b.enabledDate!.getTime() - a.enabledDate!.getTime());
+
     const currentGPUUsage = enabledModels.reduce(
       (sum, model) => sum + (model.requiredGpus ?? 0),
       0,
     );
     const requestedGPU = model.requiredGpus;
 
+    // Check if we need to remove to make room
+    if (currentGPUUsage + requestedGPU > MAX_GPU_SLOTS) {
+      let gpuToRemove = currentGPUUsage + requestedGPU - MAX_GPU_SLOTS;
+      const modelsToDisable = [];
+
+      for (const model of eligibleForRemoval) {
+        if (gpuToRemove <= 0) break;
+        modelsToDisable.push(model.name);
+        gpuToRemove -= model.requiredGpus;
+      }
+
+      if (gpuToRemove > 0) {
+        return Response.json({
+          error: `Cannot free up enough GPU slots. Need ${gpuToRemove} more GPUs. Try again when more models become eligible for removal.`,
+          status: 400,
+        });
+      }
+
+      await db
+        .update(Model)
+        .set({ enabled: true, enabledDate: null })
+        .where(
+          inArray(
+            Model.name,
+            modelsToDisable.filter((name): name is string => name !== null),
+          ),
+        );
+    }
+
+    await Promise.all([
+      db
+        .update(Model)
+        .set({ enabled: true, enabledDate: now })
+        .where(eq(Model.name, requestedModelName)),
+
+      db
+        .update(User)
+        .set({ credits: user.credits - requestedGPU * Number(COST_PER_GPU) })
+        .where(eq(User.id, user.id)),
+
+      db.insert(ModelLeasing).values({
+        userId: user.id,
+        modelName: requestedModelName,
+        amount:
+          (requestedGPU * Number(COST_PER_GPU)) / Number(CREDIT_PER_DOLLAR),
+      }),
+    ]);
     return Response.json({ status: 200 });
   } catch (err) {
     return new Response(`Error: ${err instanceof Error && err.message}`, {
