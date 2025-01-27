@@ -51,12 +51,13 @@ export default function Example() {
   // Add global keyboard listener for shortcuts helper
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger shortcuts when focused on chat input
+      if (document.activeElement === textareaRef.current) {
+        return;
+      }
+
       // Toggle parameters: P
       if (e.key === "p") {
-        // Only prevent when focused on the chat input
-        if (document.activeElement === textareaRef.current) {
-          return;
-        }
         setIsParamsOpen((prev) => !prev);
         return;
       }
