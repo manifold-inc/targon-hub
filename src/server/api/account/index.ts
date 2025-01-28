@@ -72,7 +72,7 @@ export const accountRouter = createTRPCRouter({
       if (password.length < 8 || password.length > 255) {
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "Password should be atleast 8 characters",
+          message: "Password should be at least 8 characters",
         });
       }
       const [existing] = await ctx.db
