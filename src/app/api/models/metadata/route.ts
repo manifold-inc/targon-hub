@@ -1,12 +1,18 @@
-import { NextRequest } from "next/server";
+import { type NextRequest } from "next/server";
 import { eq } from "drizzle-orm";
+import { z } from "zod";
 
 import { db } from "@/schema/db";
 import { Model } from "@/schema/schema";
 
 export async function POST(request: NextRequest): Promise<Response> {
+  const { requestedModelName } = z
+    .object({ requestedModelName: z.string() })
+    .parse(await request.json());
+  if (!requestedModelName) {
+    return Response.json({ error: "Invalid input", status: 400 });
+  }
   try {
-    const { requestedModelName } = await request.json();
     const [model] = await db
       .select({
         name: Model.name,
