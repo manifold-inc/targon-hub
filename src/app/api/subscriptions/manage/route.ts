@@ -27,7 +27,7 @@ export async function GET(request: NextRequest): Promise<Response> {
       customer: user.customerId,
       return_url: `${request.nextUrl.origin}/models`,
     });
-    return Response.json({ url: session.url });
+    return Response.json({ customer_portal: session.url });
   } catch (err) {
     if (err instanceof Error) {
       return Response.json({

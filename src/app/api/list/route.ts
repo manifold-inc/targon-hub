@@ -76,13 +76,14 @@ export function GET(): Response {
         Description: "Grabs the total Targon requests for the hour and day.",
       },
     ],
-    // Stripe: [
-    //   {
-    //     Route: "/api/stripe/webhook",
-    //     Method: "POST",
-
-    //   }
-    // ],
+    Subscriptions: [
+      {
+        Route: "/api/subscriptions/manage",
+        Method: "GET",
+        Authorization_Required: true,
+        Description: "Returns the user's Stripe customer's portal link.",
+      },
+    ],
     User: [
       {
         Route: "/api/user/create",
