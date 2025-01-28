@@ -33,7 +33,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     const [organization, modelName] = modelId.split("/");
     if (!organization || !modelName) {
       return Response.json({
-        error: `Invalid model ID format for "${modelId}". Expected: organization/modelName`,
+        error: `Invalid model ID format for '${modelId}'. Expected: organization/modelName`,
         status: 400,
       });
     }
@@ -49,12 +49,12 @@ export async function POST(request: NextRequest): Promise<Response> {
     if (existingModel) {
       if (existingModel.enabled) {
         return Response.json({
-          error: `Model "${modelId}" is already enabled. It can be used immediately.`,
+          error: `Model '${modelId}' is already enabled. It can be used immediately.`,
           status: 400,
         });
       }
       return Response.json({
-        error: `Model "${modelId}" already exists`,
+        error: `Model '${modelId}' already exists`,
         status: 400,
       });
     }
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 
     if (!response.ok) {
       return Response.json({
-        error: `Failed to fetch model info for "${modelId}" from HuggingFace: ${response.statusText}`,
+        error: `Failed to fetch model info for '${modelId}' from HuggingFace: ${response.statusText}`,
         status: 404,
       });
     }
@@ -79,7 +79,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     // Validate model accessibility
     if (modelInfo.private || modelInfo.gated) {
       return Response.json({
-        error: `Model "${modelId}" is private or gated and is not supported`,
+        error: `Model '${modelId}' is private or gated and is not supported`,
         status: 400,
       });
     }
@@ -92,7 +92,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 
     if (!["transformers", "timm"].includes(modelInfo.library_name)) {
       return Response.json({
-        error: `Library "${modelInfo.library_name}" for model "${modelId}" is not supported yet. Only transformers and timm are supported.`,
+        error: `Library '${modelInfo.library_name}' for model '${modelId}' is not supported yet. Only transformers and timm are supported.`,
         status: 400,
       });
     }
@@ -151,12 +151,93 @@ export async function POST(request: NextRequest): Promise<Response> {
       !(MODALITIES as readonly string[]).includes(modelInfo.pipeline_tag)
     ) {
       return Response.json({
-        error: `Model "${modelId}" has unsupported modality: ${modelInfo.pipeline_tag}. Supported modalities are: ${MODALITIES.join(", ")}`,
+        error: `Model '${modelId}' has unsupported modality: ${modelInfo.pipeline_tag}. Supported modalities are: ${MODALITIES.join(", ")}`,
+        status: 400,
+      });
+    }
+    const modality = modelInfo.pipeline_tag as (typeof MODALITIES)[number];
+
+    // For transformers models, check config
+    if (modelInfo.library_name === "transformers") {
+      if (!modelInfo.config) {
+        return Response.json({
+          error: `Tried to load '${modelId}' with transformers but it does not have any metadata.`,
+          status: 400,
+        });
+      }
+    }
+
+    // Now try to get the GPU requirements - if this fails with 500, it needs custom build
+    const gpuResponse = await fetch(
+      `${process.env.HUB_API_ESTIMATE_GPU_ENDPOINT}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: modelInfo.id,
+          library_name: modelInfo.library_name,
+        }),
+      },
+    );
+
+    if (gpuResponse.status === 500) {
+      await db.insert(Model).values({
+        name: modelInfo.id,
+        modality,
+        requiredGpus: 0,
+        supportedEndpoints,
+        cpt: 0,
+        enabled: false,
+        customBuild: true,
+        description: description ?? "No description provided",
+      });
+      return Response.json({
+        message:
+          "Model requires custom build. It has been marked for review by our team.",
+        status: 200,
+      });
+    }
+
+    if (!gpuResponse.ok) {
+      return Response.json({
+        error: `Failed to estimate GPU requirements for model '${modelId}': ${gpuResponse.statusText}`,
+        status: 500,
+      });
+    }
+
+    const gpuData = (await gpuResponse.json()) as { required_gpus: number };
+
+    if (!gpuData.required_gpus) {
+      return Response.json({
+        error: `Failed getting required GPUs for model '${modelId}'`,
+        status: 500,
+      });
+    }
+
+    if (gpuData.required_gpus > 8) {
+      return Response.json({
+        error: `Model '${modelId}' requires ${gpuData.required_gpus} GPUs, which exceeds our limit of 8 GPUs. We will not be able to run this model.`,
         status: 400,
       });
     }
 
-    return Response.json({ message: "Model added", status: 200 });
+    await db.insert(Model).values({
+      name: modelInfo.id,
+      modality,
+      requiredGpus: gpuData.required_gpus,
+      supportedEndpoints,
+      cpt: gpuData.required_gpus,
+      enabled: false,
+      customBuild: false,
+      description: description ?? "No description provided",
+    });
+
+    return Response.json({
+      message: `Model '${modelId}' added`,
+      status: 200,
+    });
   } catch (err) {
     return Response.json({ error: "Invalid request", status: 400 });
   }
