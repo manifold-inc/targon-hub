@@ -22,11 +22,13 @@ export async function POST(request: NextRequest) {
       return Response.json({ error: "Unauthorized", status: 401 });
     }
 
-    // Is it okay to have explicit error handling or remove the zod validation?
+    // zod validation?
     const { keyName } = z
-      .object({ keyName: z.string().min(1) })
+      .object({ keyName: z.string() })
       .parse(await request.json());
-
+    if (keyName.length === 0) {
+      return Response.json({ error: "Key name cannot be empty", status: 400 });
+    }
     const apiKey = genId.apikey();
     await db.insert(ApiKey).values({
       userId: user.id,
@@ -36,6 +38,6 @@ export async function POST(request: NextRequest) {
 
     return Response.json({ key: apiKey, message: "Key created", status: 200 });
   } catch (err) {
-    return Response.json({ error: err, status: 400 });
+    return Response.json({ error: "Invalid request", status: 400 });
   }
 }
