@@ -1,5 +1,5 @@
 import { type NextRequest } from "next/server";
-import { eq, inArray } from "drizzle-orm";
+import { eq, inArray, is } from "drizzle-orm";
 import { z } from "zod";
 
 import { COST_PER_GPU, CREDIT_PER_DOLLAR, MAX_GPU_SLOTS } from "@/constants";
@@ -7,29 +7,28 @@ import { db } from "@/schema/db";
 import { ApiKey, Model, ModelLeasing, User } from "@/schema/schema";
 
 export async function POST(request: NextRequest): Promise<Response> {
+  const auth = request.headers.get("Authorization");
+  const token = auth?.split(" ").at(-1);
+  if (!token) {
+    return Response.json({ error: "Unauthorized", status: 401 });
+  }
+  const [user] = await db
+    .select({ credits: User.credits, id: User.id })
+    .from(User)
+    .innerJoin(ApiKey, eq(User.id, ApiKey.userId))
+    .where(eq(ApiKey.key, token));
+  if (!user) {
+    return Response.json({ error: "Unauthorized", status: 401 });
+  }
+
+  const { requestedModelName } = z
+    .object({ requestedModelName: z.string().min(1) })
+    .parse(await request.json());
+  if (!requestedModelName) {
+    return Response.json({ error: "Model name is required", status: 400 });
+  }
+
   try {
-    const auth = request.headers.get("Authorization");
-    const token = auth?.split(" ").at(-1);
-    if (!token) {
-      return Response.json({ error: "Unauthorized", status: 401 });
-    }
-    const [user] = await db
-      .select({ credits: User.credits, id: User.id })
-      .from(User)
-      .innerJoin(ApiKey, eq(User.id, ApiKey.userId))
-      .where(eq(ApiKey.key, token));
-    if (!user) {
-      return Response.json({ error: "Unauthorized", status: 401 });
-    }
-
-    const { requestedModelName } = z
-      .object({ requestedModelName: z.string().min(1) })
-      .parse(await request.json());
-
-    if (!requestedModelName) {
-      return Response.json({ error: "Model name is required", status: 400 });
-    }
-
     const [[requestedModels], enabledModels] = await Promise.all([
       db
         .select({
@@ -134,10 +133,22 @@ export async function POST(request: NextRequest): Promise<Response> {
           (requestedGPU * Number(COST_PER_GPU)) / Number(CREDIT_PER_DOLLAR),
       }),
     ]);
-    return Response.json({ status: 200 });
+    return Response.json({
+      message: `Model ${requestedModelName} leased`,
+      status: 200,
+    });
   } catch (err) {
-    return new Response(`Error: ${err instanceof Error && err.message}`, {
-      status: 400,
+    if (err instanceof Error) {
+      return Response.json({
+        error: "Failed to lease model",
+        details: err.message,
+        status: 500,
+      });
+    }
+    return Response.json({
+      error: "Failed to lease model",
+      details: "An unknown error occurred",
+      status: 500,
     });
   }
 }
