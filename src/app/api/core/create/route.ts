@@ -34,7 +34,6 @@ export async function POST(request: NextRequest): Promise<Response> {
       key: newApiKey,
       name: keyName,
     });
-
     return Response.json({
       key: newApiKey,
       message: "Key created",
