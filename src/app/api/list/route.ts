@@ -1,4 +1,4 @@
-export async function GET(): Promise<Response> {
+export function GET(): Response {
   return Response.json({
     Keys: [
       {
