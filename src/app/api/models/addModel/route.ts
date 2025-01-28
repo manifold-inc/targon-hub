@@ -26,14 +26,14 @@ interface HuggingFaceModelInfo {
 
 export async function POST(request: NextRequest): Promise<Response> {
   try {
-    const { modelId } = z
-      .object({ modelId: z.string().min(1) })
+    const { requestedModelName } = z
+      .object({ requestedModelName: z.string().min(1) })
       .parse(await request.json());
 
-    const [organization, modelName] = modelId.split("/");
+    const [organization, modelName] = requestedModelName.split("/");
     if (!organization || !modelName) {
       return Response.json({
-        error: `Invalid model ID format for '${modelId}'. Expected: organization/modelName`,
+        error: `Invalid model ID format for '${requestedModelName}'. Expected: organization/modelName`,
         status: 400,
       });
     }
@@ -44,17 +44,17 @@ export async function POST(request: NextRequest): Promise<Response> {
         enabled: Model.enabled,
       })
       .from(Model)
-      .where(eq(Model.name, modelId));
+      .where(eq(Model.name, requestedModelName));
 
     if (existingModel) {
       if (existingModel.enabled) {
         return Response.json({
-          error: `Model '${modelId}' is already enabled. It can be used immediately.`,
+          error: `Model '${requestedModelName}' is already enabled. It can be used immediately.`,
           status: 400,
         });
       }
       return Response.json({
-        error: `Model '${modelId}' already exists`,
+        error: `Model '${requestedModelName}' already exists`,
         status: 400,
       });
     }
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 
     if (!response.ok) {
       return Response.json({
-        error: `Failed to fetch model info for '${modelId}' from HuggingFace: ${response.statusText}`,
+        error: `Failed to fetch model info for '${requestedModelName}' from HuggingFace: ${response.statusText}`,
         status: 404,
       });
     }
@@ -79,7 +79,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     // Validate model accessibility
     if (modelInfo.private || modelInfo.gated) {
       return Response.json({
-        error: `Model '${modelId}' is private or gated and is not supported`,
+        error: `Model '${requestedModelName}' is private or gated and is not supported`,
         status: 400,
       });
     }
@@ -92,7 +92,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 
     if (!["transformers", "timm"].includes(modelInfo.library_name)) {
       return Response.json({
-        error: `Library '${modelInfo.library_name}' for model '${modelId}' is not supported yet. Only transformers and timm are supported.`,
+        error: `Library '${modelInfo.library_name}' for model '${requestedModelName}' is not supported yet. Only transformers and timm are supported.`,
         status: 400,
       });
     }
@@ -151,7 +151,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       !(MODALITIES as readonly string[]).includes(modelInfo.pipeline_tag)
     ) {
       return Response.json({
-        error: `Model '${modelId}' has unsupported modality: ${modelInfo.pipeline_tag}. Supported modalities are: ${MODALITIES.join(", ")}`,
+        error: `Model '${requestedModelName}' has unsupported modality: ${modelInfo.pipeline_tag}. Supported modalities are: ${MODALITIES.join(", ")}`,
         status: 400,
       });
     }
@@ -161,7 +161,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     if (modelInfo.library_name === "transformers") {
       if (!modelInfo.config) {
         return Response.json({
-          error: `Tried to load '${modelId}' with transformers but it does not have any metadata.`,
+          error: `Tried to load '${requestedModelName}' with transformers but it does not have any metadata.`,
           status: 400,
         });
       }
@@ -202,7 +202,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 
     if (!gpuResponse.ok) {
       return Response.json({
-        error: `Failed to estimate GPU requirements for model '${modelId}': ${gpuResponse.statusText}`,
+        error: `Failed to estimate GPU requirements for model '${requestedModelName}': ${gpuResponse.statusText}`,
         status: 500,
       });
     }
@@ -211,14 +211,14 @@ export async function POST(request: NextRequest): Promise<Response> {
 
     if (!gpuData.required_gpus) {
       return Response.json({
-        error: `Failed getting required GPUs for model '${modelId}'`,
+        error: `Failed getting required GPUs for model '${requestedModelName}'`,
         status: 500,
       });
     }
 
     if (gpuData.required_gpus > 8) {
       return Response.json({
-        error: `Model '${modelId}' requires ${gpuData.required_gpus} GPUs, which exceeds our limit of 8 GPUs. We will not be able to run this model.`,
+        error: `Model '${requestedModelName}' requires ${gpuData.required_gpus} GPUs, which exceeds our limit of 8 GPUs. We will not be able to run this model.`,
         status: 400,
       });
     }
@@ -235,7 +235,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     });
 
     return Response.json({
-      message: `Model '${modelId}' added`,
+      message: `Model '${requestedModelName}' added`,
       status: 200,
     });
   } catch (err) {

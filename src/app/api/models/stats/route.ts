@@ -7,8 +7,8 @@ import { DailyModelTokenCounts, Model } from "@/schema/schema";
 
 export async function POST(request: NextRequest): Promise<Response> {
   try {
-    const { requestedModelNames } = z
-      .object({ requestedModelNames: z.array(z.string().min(1)) })
+    const { requestedModelName } = z
+      .object({ requestedModelName: z.array(z.string().min(1)) })
       .parse(await request.json());
 
     const stats = await db
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       })
       .from(DailyModelTokenCounts)
       .leftJoin(Model, eq(DailyModelTokenCounts.modelName, Model.name))
-      .where(inArray(DailyModelTokenCounts.modelName, requestedModelNames))
+      .where(inArray(DailyModelTokenCounts.modelName, requestedModelName))
       .orderBy(asc(DailyModelTokenCounts.createdAt));
     /**
      * Average TPS

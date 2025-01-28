@@ -19,13 +19,11 @@ export async function POST(request: NextRequest): Promise<Response> {
       })
       .from(Model)
       .where(eq(Model.name, requestedModelName));
-
     if (!model) {
       return Response.json({ error: "Model not found", status: 404 });
     }
-
     return Response.json(model);
   } catch (error) {
-    return Response.json({ error: "Internal server error", status: 500 });
+    return Response.json({ error: "Invalid request", status: 400 });
   }
 }
