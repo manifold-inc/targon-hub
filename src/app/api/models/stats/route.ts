@@ -6,11 +6,14 @@ import { db } from "@/schema/db";
 import { DailyModelTokenCounts } from "@/schema/schema";
 
 export async function POST(request: NextRequest): Promise<Response> {
-  try {
-    const { requestedModelName } = z
-      .object({ requestedModelName: z.array(z.string().min(1)) })
-      .parse(await request.json());
+  const { requestedModelName } = z
+    .object({ requestedModelName: z.array(z.string()) })
+    .parse(await request.json());
+  if (!requestedModelName) {
+    return Response.json({ error: "Invalid input", status: 400 });
+  }
 
+  try {
     const stats = await db
       .select({
         modelName: DailyModelTokenCounts.modelName,
@@ -21,8 +24,19 @@ export async function POST(request: NextRequest): Promise<Response> {
       .where(inArray(DailyModelTokenCounts.modelName, requestedModelName))
       .orderBy(asc(DailyModelTokenCounts.createdAt));
 
-    return Response.json({ stats: stats });
+    return Response.json({ model_stats: stats, status: 200 });
   } catch (err) {
-    return Response.json({ error: "Invalid request", status: 400 });
+    if (err instanceof Error) {
+      return Response.json({
+        error: "Failed to grab model stats",
+        details: err.message,
+        status: 500,
+      });
+    }
+    return Response.json({
+      error: "Failed to grab model stats",
+      details: "An unknown error occurred",
+      status: 500,
+    });
   }
 }

@@ -1,5 +1,5 @@
 import { type NextRequest } from "next/server";
-import { eq, inArray, is } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 
 import { COST_PER_GPU, CREDIT_PER_DOLLAR, MAX_GPU_SLOTS } from "@/constants";
