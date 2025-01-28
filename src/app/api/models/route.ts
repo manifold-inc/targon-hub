@@ -14,8 +14,19 @@ export async function POST(request: NextRequest): Promise<Response> {
       .select({ name: Model.name })
       .from(Model)
       .where(eq(Model.enabled, isLive));
-    return Response.json({ models: models });
+    return Response.json({ models: models, status: 200 });
   } catch (err) {
-    return Response.json({ error: "Invalid request", status: 400 });
+    if (err instanceof Error) {
+      return Response.json({
+        error: "Failed to grab models",
+        details: err.message,
+        status: 500,
+      });
+    }
+    return Response.json({
+      error: "Failed to grab models",
+      details: "An unknown error occurred",
+      status: 500,
+    });
   }
 }
