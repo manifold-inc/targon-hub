@@ -33,13 +33,13 @@ export async function DELETE(request: NextRequest): Promise<Response> {
   } catch (err) {
     if (err instanceof Error) {
       return Response.json({
-        error: "Failed to delete api key",
+        error: "Failed to delete API key",
         details: err.message,
         status: 500,
       });
     }
     return Response.json({
-      error: "Failed to delete api key",
+      error: "Failed to delete API key",
       details: "An unknown error occured",
       status: 500,
     });

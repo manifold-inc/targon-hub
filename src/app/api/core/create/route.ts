@@ -42,13 +42,13 @@ export async function POST(request: NextRequest): Promise<Response> {
   } catch (err) {
     if (err instanceof Error) {
       return Response.json({
-        error: "Failed to create api key",
+        error: "Failed to create API key",
         details: err.message,
         status: 500,
       });
     }
     return Response.json({
-      error: "Failed to create api key",
+      error: "Failed to create API key",
       details: "An unknown error occurred",
       status: 500,
     });
