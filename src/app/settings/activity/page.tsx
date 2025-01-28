@@ -14,10 +14,10 @@ export default function ActivityPage() {
         <div className="flex flex-col items-center justify-start gap-6">
           <div className="w-full">
             {activity.data?.length ? (
-              <div className="relative h-80 overflow-x-auto">
-                <table className="w-full text-xs sm:text-sm">
+              <div className="relative h-80 overflow-x-auto rounded-xl border border-gray-200">
+                <table className="w-full border-0 text-xs sm:text-sm">
                   <thead>
-                    <tr className="h-8 border-b border-t border-[#e4e7ec] bg-gray-50">
+                    <tr className="h-8 border-b border-[#e4e7ec] bg-gray-50">
                       <th className="px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
                         Timestamp
                       </th>
@@ -53,10 +53,7 @@ export default function ActivityPage() {
                           {activity.creditsUsed >= 1_000_000
                             ? `${(activity.creditsUsed / 1_000_000).toFixed(1)}M`
                             : formatLargeNumber(activity.creditsUsed)}{" "}
-                          / $
-                          {(activity.creditsUsed / CREDIT_PER_DOLLAR).toFixed(
-                            2,
-                          )}
+                          / ${(activity.creditsUsed / CREDIT_PER_DOLLAR).toFixed(2)}
                         </td>
                       </tr>
                     ))}

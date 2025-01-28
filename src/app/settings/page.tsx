@@ -9,10 +9,24 @@ import type {
 import type { Signer } from "@polkadot/types/types";
 import { Copy, CreditCard, Loader2, User, Wallet } from "lucide-react";
 import { toast } from "sonner";
+import {
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ScatterChart,
+  Scatter,
+  ZAxis,
+  Line,
+  Area,
+  ComposedChart,
+} from "recharts";
 
 import { CREDIT_PER_DOLLAR } from "@/constants";
 import { reactClient } from "@/trpc/react";
-import { copyToClipboard, formatDate, formatLargeNumber } from "@/utils/utils";
+import { copyToClipboard, formatLargeNumber } from "@/utils/utils";
+import { env } from "@/env.mjs";
 
 let web3FromAddress: (address: string) => Promise<{ signer: Signer }>;
 let web3Enable: (appName: string) => Promise<InjectedExtension[]>;
@@ -29,6 +43,32 @@ if (typeof window !== "undefined") {
       console.error("Failed to load Polkadot extension:", error);
     });
 }
+
+// Remove the hardcoded MODEL_COLORS and replace with a color generator
+const COLORS = [
+  '#2563eb', // blue
+  '#16a34a', // green
+  '#9333ea', // purple
+  '#7c3aed', // violet
+  '#6366f1', // indigo
+  '#4f46e5', // darker indigo
+  '#dc2626', // red
+  '#ea580c', // orange
+  '#0891b2', // cyan
+  '#0d9488', // teal
+];
+
+// Create a Map to store model-to-color mappings
+const modelColorMap = new Map<string, string>();
+let colorIndex = 0;
+
+const getModelColor = (model: string) => {
+  if (!modelColorMap.has(model)) {
+    modelColorMap.set(model, COLORS[colorIndex % COLORS.length]!);
+    colorIndex++;
+  }
+  return modelColorMap.get(model) || '#6b7280'; // fallback to gray
+};
 
 export default function SettingsPage() {
   const user = reactClient.account.getUserDashboard.useQuery();
@@ -148,224 +188,343 @@ export default function SettingsPage() {
     }
   };
 
+  const prepareChartData = () => {
+    if (!activity.data) return { scatterData: {}, lineData: [] };
+    
+    const modelData: Record<string, { x: number; y: number; z: number; model: string }[]> = {};
+    const timePoints: number[] = [];
+    
+    activity.data.forEach(item => {
+      if (item.model && item.responseTokens) {
+        if (!modelData[item.model]) {
+          modelData[item.model] = [];
+        }
+        const timestamp = item.createdAt.getTime();
+        modelData[item.model]!.push({
+          x: timestamp,
+          y: item.responseTokens,
+          z: item.creditsUsed,
+          model: item.model,
+        });
+        timePoints.push(timestamp);
+      }
+    });
+
+    // Calculate moving average
+    const windowSize = 5;
+    const sortedPoints = timePoints.sort((a, b) => a - b);
+    const averageData = sortedPoints.map(timestamp => {
+      const nearbyPoints = activity.data!.filter(item => 
+        Math.abs(item.createdAt.getTime() - timestamp) < windowSize * 24 * 60 * 60 * 1000 
+      );
+      
+      const average = nearbyPoints.reduce((sum, item) => sum + item.responseTokens!, 0) / nearbyPoints.length;
+      
+      return {
+        x: timestamp,
+        y: average
+      };
+    });
+
+    return { scatterData: modelData, lineData: averageData };
+  };
+
   return (
     <div>
       <h2 className="text-center text-2xl font-semibold text-gray-900 sm:text-3xl lg:text-left">
         Dashboard
       </h2>
-      <div className="flex flex-col py-2 sm:py-4">
-        <div className="flex h-12 items-center justify-between sm:h-14">
-          <div className="flex items-center gap-3 sm:gap-6">
-            <div className="hidden h-14 w-14 items-center justify-center rounded-full border-2 border-white shadow sm:flex">
-              <User className="w-13 h-13" />
-            </div>
-            <div className="inline-flex flex-col items-start justify-center gap-1 sm:gap-2">
-              <div className="text-sm text-black sm:text-base">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        {/* Account Info Panel */}
+        <div className="rounded-2xl border border-gray-200 p-6 bg-white col-span-2">
+          <h3 className="text-lg font-semibold mb-4">Account</h3>
+          <div className="flex flex-col">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-14 w-14 flex items-center justify-center rounded-full border-2 border-white shadow">
+                <User className="w-13 h-13" />
+              </div>
+              <div className="text-sm text-black">
                 {user.data?.email}
               </div>
             </div>
-          </div>
-          <div className="flex gap-2">
-            <Link
-              href="/sign-out"
-              className="inline-flex h-8 items-center justify-center gap-1 rounded-full px-3 py-2 hover:bg-blue-50 sm:h-9"
-              prefetch={false}
-            >
-              <span className="text-sm font-semibold leading-tight text-[#1d4ed8]">
-                Change Email
-              </span>
-            </Link>
-            <Link
-              href="/sign-out"
-              className="inline-flex h-8 items-center justify-center gap-1 rounded-full px-3 py-2 hover:bg-blue-50 sm:h-9"
-              prefetch={false}
-            >
-              <span className="text-sm font-semibold leading-tight text-[#1d4ed8]">
-                Change Password
-              </span>
-            </Link>
-            <Link
-              href="/sign-out"
-              className="inline-flex h-8 items-center justify-center gap-1 rounded-full px-3 py-2 hover:bg-blue-50 sm:h-9"
-              prefetch={false}
-            >
-              <span className="text-sm font-semibold leading-tight text-[#1d4ed8]">
-                Logout
-              </span>
-            </Link>
+            <div className="flex flex-wrap gap-2">
+              <Link
+                href="/sign-out"
+                className="inline-flex h-8 items-center justify-center gap-1 rounded-full px-3 py-2 hover:bg-blue-50"
+                prefetch={false}
+              >
+                <span className="text-sm font-semibold leading-tight text-[#1d4ed8]">
+                  Change Email
+                </span>
+              </Link>
+              <Link
+                href="/sign-out"
+                className="inline-flex h-8 items-center justify-center gap-1 rounded-full px-3 py-2 hover:bg-blue-50"
+                prefetch={false}
+              >
+                <span className="text-sm font-semibold leading-tight text-[#1d4ed8]">
+                  Change Password
+                </span>
+              </Link>
+              <Link
+                href="/sign-out"
+                className="inline-flex h-8 items-center justify-center gap-1 rounded-full px-3 py-2 hover:bg-blue-50"
+                prefetch={false}
+              >
+                <span className="text-sm font-semibold leading-tight text-[#1d4ed8]">
+                  Logout
+                </span>
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-      <h1 className="mb-6 pt-8 text-xl font-semibold text-black">
-        <Link href="/settings/credits">Credits</Link>
-      </h1>
 
-      <div className="flex flex-col gap-3 overflow-y-auto pb-8 sm:flex-row sm:flex-wrap sm:gap-6 sm:overflow-visible">
-        <Link
-          href="/settings/credits"
-          className="flex items-center justify-center gap-2 rounded-xl bg-gray-50 p-4 text-center hover:bg-gray-100 sm:h-12 sm:w-12 sm:gap-4 sm:p-6"
-        >
-          <p className="whitespace-nowrap text-lg font-medium leading-7 text-black">
+        {/* API Key Panel */}
+        <div className="rounded-2xl border border-gray-200 p-6 bg-white">
+          <h3 className="text-lg font-semibold mb-4">
+            <Link href="/settings/keys">API Key</Link>
+          </h3>
+          <div
+            className="flex h-14 cursor-pointer items-center justify-between rounded-xl bg-gray-50 p-4 hover:bg-gray-100 mb-4"
+            onClick={() => {
+              void copyToClipboard(keys.data?.[0]?.key ?? "");
+              toast("Copied API Key to Clipboard");
+            }}
+          >
+            <p className="truncate leading-7 text-black">
+              {keys.data?.[0]?.key || "No API key"}
+            </p>
+            <Copy className="h-4 w-4 flex-shrink-0" />
+          </div>
+          <div className="inline-flex w-full justify-between">
+            <Link
+              href="/settings/keys"
+              className="flex h-8 items-center justify-center gap-1 rounded-full px-3 py-4 hover:bg-blue-50"
+              prefetch={false}
+            >
+              <span className="text-sm font-semibold leading-tight text-[#1d4ed8]">
+                View All
+              </span>
+            </Link>
+            
+            <div 
+              className="flex text-sm text-gray-500 h-8 items-center justify-center gap-1 rounded-full px-3 py-4 hover:bg-blue-50 cursor-pointer"
+              onClick={() => {
+                void copyToClipboard(`${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1`);
+                toast("Copied URL to Clipboard");
+              }}
+            >
+              {env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1
+            </div>
+          </div>
+        </div>
+
+
+        {/* Credits Panel */}
+        <div className="rounded-2xl border border-gray-200 p-6 bg-white">
+          <h3 className="text-lg font-semibold mb-4">
+            <Link href="/settings/credits">Credits</Link>
+          </h3>
+          <p className="text-5xl font-medium text-black">
             ${formatLargeNumber((user.data?.credits ?? 0) / CREDIT_PER_DOLLAR)}
           </p>
-        </Link>
-      </div>
-
-      <h1 className="mb-6 pt-8 text-xl font-semibold text-black">
-        <Link href="/settings/activity">Activity</Link>
-      </h1>
-
-      <div className="w-full">
-        {activity.data?.length ? (
-          <div className="relative h-80 overflow-x-auto rounded-xl border border-gray-200">
-            <table className="w-full border-0 text-xs sm:text-sm">
-              <thead>
-                <tr className="h-8 border-b border-[#e4e7ec] bg-gray-50">
-                  <th className="px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
-                    Timestamp
-                  </th>
-                  <th className="px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
-                    Model
-                  </th>
-                  <th className="px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
-                    Response Tokens
-                  </th>
-                  <th className="px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
-                    Cost
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {activity.data?.map((activity) => (
-                  <tr
-                    key={activity.createdAt.getTime()}
-                    className="h-8 border-b border-[#e4e7ec] bg-white"
-                  >
-                    <td className="px-2 py-1 text-center leading-tight text-[#101828]">
-                      {window.innerWidth < 640
-                        ? activity.createdAt.toLocaleDateString()
-                        : formatDate(activity.createdAt)}
-                    </td>
-                    <td className="max-w-40 truncate px-2 py-1 text-center leading-tight text-[#101828]">
-                      {activity.model}
-                    </td>
-                    <td className="px-2 py-1 text-center leading-tight text-[#101828]">
-                      {activity.responseTokens}
-                    </td>
-                    <td className="whitespace-nowrap px-2 py-1 text-center leading-tight text-[#101828]">
-                      {activity.creditsUsed >= 1_000_000
-                        ? `${(activity.creditsUsed / 1_000_000).toFixed(1)}M`
-                        : formatLargeNumber(activity.creditsUsed)}{" "}
-                      / ${(activity.creditsUsed / CREDIT_PER_DOLLAR).toFixed(2)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="flex h-full items-center justify-center text-gray-500">
-            No activity yet
-          </div>
-        )}
-      </div>
-
-      <h1 className="mb-6 pt-8 text-xl font-semibold text-black">
-        <Link href="/settings/keys">Latest API Key</Link>
-      </h1>
-
-      <div className="flex flex-col gap-3 overflow-y-auto pb-8 sm:flex-row sm:flex-wrap sm:gap-6 sm:overflow-visible">
-        <div
-          className="flex h-12 w-96 cursor-pointer items-center justify-center gap-2 rounded-xl bg-gray-50 p-4 text-center hover:bg-gray-100 sm:gap-4 sm:p-6"
-          onClick={() => {
-            void copyToClipboard(keys.data?.[0]?.key || "");
-            toast("Copied API Key to Clipboard");
-          }}
-        >
-          <p className="whitespace-nowrap leading-7 text-black">
-            {keys.data?.[0]?.key || "No API key"}
-          </p>
-          <Copy className="h-4 w-4" />
         </div>
-      </div>
 
-      <h1 className="mb-6 pt-8 text-xl font-semibold text-black">
-        Subscription
-      </h1>
-
-      <button
-        onClick={handleManageSubscriptions}
-        disabled={isLoading}
-        className="inline-flex h-24 w-full flex-col items-start justify-center gap-2 rounded-xl bg-gray-50 p-4 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50 sm:h-32 sm:w-32 sm:gap-4 sm:p-6"
-      >
-        {isLoading ? (
-          <Loader2 className="h-6 w-6 animate-spin" />
-        ) : (
-          <CreditCard className="h-6 w-6" />
-        )}
-        <p className="whitespace-break text-left text-sm leading-tight text-black">
-          Manage Subscriptions
-        </p>
-      </button>
-
-      <h1 className="mb-6 pt-8 text-xl font-semibold text-black">
-        Link Bittensor
-      </h1>
-
-      {!user.data?.ss58 ? (
-        !showSS58Input ? (
-          <button
-            onClick={() => setShowSS58Input(true)}
-            className="inline-flex h-24 w-full flex-col items-start justify-center gap-2 rounded-xl bg-gray-50 p-4 hover:bg-gray-100 sm:h-32 sm:w-32 sm:gap-4 sm:p-6"
-          >
-            <Wallet className="h-6 w-6 text-black" />
-            <p className="whitespace-nowrap text-left text-sm leading-tight text-black">
-              Link Bittensor
-            </p>
-          </button>
-        ) : (
-          <div className="flex w-3/4 flex-col gap-2">
-            <div className="flex w-full items-center">
-              <input
-                type="text"
-                value={ss58Address}
-                onChange={(e) => setSS58Address(e.target.value)}
-                className="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
-                placeholder="Enter your SS58 address"
-              />
+        {/* Activity Panel */}
+        <div className="rounded-2xl border border-gray-200 p-6 bg-white col-span-2 row-span-2">
+          <h3 className="text-lg font-semibold mb-4">
+            <Link href="/settings/activity">Activity</Link>
+          </h3>
+          {activity.data?.length ? (
+            <div className="relative h-80 w-full">
+              <ResponsiveContainer width="100%" height="95%">
+                  <ComposedChart>
+                    <XAxis
+                      type="number"
+                      dataKey="x"
+                      domain={['auto', 'auto']}
+                      tickFormatter={(timestamp: string) => {
+                        return timestamp
+                      }}
+                      axisLine={false}
+                      tickLine={false}
+                      tick={false}
+                    />
+                    <YAxis 
+                      type="number"
+                      dataKey="y"
+                      axisLine={false}
+                      tickLine={false}
+                      tick={false}
+                    />
+                    <Area
+                      type="monotone"
+                      data={prepareChartData().lineData}
+                      dataKey="y"
+                      stroke="none"
+                      fill="url(#lineGradient)"
+                    />
+                    <Line
+                      type="monotone"
+                      data={prepareChartData().lineData}
+                      dataKey="y"
+                      stroke="#22C55D"
+                      strokeWidth={2}
+                      dot={false}
+                    />
+                  </ComposedChart>
+              </ResponsiveContainer>
+              <ResponsiveContainer width="100%" height="100%" className="absolute inset-0 -x">
+                <ScatterChart>
+                  <defs>
+                    <linearGradient id="lineGradient" x1="1" y1="0" x2="1" y2="1">
+                      <stop offset="50%" stopColor="#22C55D" stopOpacity={0.5}/>
+                      <stop offset="100%" stopColor="#22C55D" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <XAxis
+                    name="Time"
+                    type="number"
+                    dataKey="x"
+                    domain={['auto', 'auto']}
+                    tickFormatter={(timestamp: string) => {
+                      return new Date(timestamp).toLocaleString('en-US', { month: 'short', day: 'numeric' })
+                    }}
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 14, fontWeight: 50 }}
+                  />
+                  <YAxis 
+                    type="number"
+                    name="Tokens"
+                    dataKey="y"
+                    axisLine={false}
+                    tickLine={false}
+                    tick={false}
+                  />
+                  <ZAxis 
+                    type="number"
+                    dataKey="z"
+                    range={[50, 600]}
+                    name="Credits"
+                  />
+                  <Tooltip
+                    cursor={false}
+                    contentStyle={{
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '0.75rem',
+                      padding: '0.75rem'
+                    }}
+                    itemStyle={{ color: '#374151' }}
+                    labelStyle={{ color: '#374151' }}
+                    separator=": "
+                    formatter={(value: number, name: string) => {
+                      if (name === 'Time') return [new Date(value).toLocaleString()];
+                      if (name === 'Tokens') return [`${value} Tokens`];
+                      if (name === 'Credits') return [`${value} / $0.00`];
+                      return name;
+                    }}
+                  />
+                  <Legend 
+                    wrapperStyle={{
+                      fontSize: '12px',
+                    }}
+                    iconSize={0}
+                  />
+                  {Object.entries(prepareChartData().scatterData).map(([model, data]) => (
+                    <Scatter
+                      key={model}
+                      name={model}
+                      data={data}
+                      fill={getModelColor(model)}
+                      shape="circle"
+                    />
+                  ))}
+                </ScatterChart>
+              </ResponsiveContainer>
             </div>
-            <div className="flex gap-2">
-              <button
-                onClick={() => {
-                  setShowSS58Input(false);
-                  setSS58Address("");
-                }}
-                className="flex h-9 items-center rounded-full border-2 border-white bg-white px-3 py-4 shadow hover:bg-gray-50"
-              >
-                <span className="flex items-center gap-2 px-0.5 text-sm font-semibold leading-tight text-black">
-                  Cancel
-                </span>
-              </button>
-              <button
-                onClick={handleBittensorLink}
-                disabled={isLinking || !ss58Address}
-                className="flex h-9 items-center rounded-full border-2 border-white bg-[#101828] px-3 py-4 shadow hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <span className="flex items-center gap-2 px-0.5 text-sm font-semibold leading-tight text-white">
-                  {isLinking ? (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                      Linking...
-                    </>
-                  ) : (
-                    "Link"
-                  )}
-                </span>
-              </button>
+          ) : (
+            <div className="flex h-full items-center justify-center text-gray-500">
+              No activity yet
             </div>
+          )}
+        </div>
+        {/* Links Panel */}
+        <div className="rounded-2xl border border-gray-200 p-6 bg-white flex items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+            <button
+              onClick={handleManageSubscriptions}
+              disabled={isLoading}
+              className="inline-flex h-24 w-full flex-col items-center justify-center gap-3 rounded-lg bg-gray-50 p-4 hover:bg-gray-100"
+            >
+              {isLoading ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : (
+                <CreditCard className="h-5 w-5" />
+              )}
+              <p className="text-sm leading-tight text-black">
+                Manage Subscriptions
+              </p>
+            </button>
+            {!user.data?.ss58 ? (
+              !showSS58Input ? (
+                <button
+                  onClick={() => setShowSS58Input(true)}
+                  className="inline-flex h-24 w-full flex-col items-center justify-center gap-3 rounded-lg bg-gray-50 p-4 hover:bg-gray-100"
+                >
+                  <Wallet className="h-5 w-5 text-black" />
+                  <p className="whitespace-nowrap text-sm leading-tight text-black">
+                    Link Bittensor
+                  </p>
+                </button>
+              ) : (
+                <div className="flex flex-col-1 gap-2">
+                  <div className="flex w-full items-center">
+                    <input
+                      type="text"
+                      value={ss58Address}
+                      onChange={(e) => setSS58Address(e.target.value)}
+                      className="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+                      placeholder="Enter your SS58 address"
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => {
+                        setShowSS58Input(false);
+                        setSS58Address("");
+                      }}
+                      className="flex h-8 items-center rounded-md border border-gray-200 bg-white px-3 py-2 shadow-sm hover:bg-gray-50"
+                    >
+                      <span className="flex items-center gap-2 text-sm font-semibold leading-tight text-black">
+                        Cancel
+                      </span>
+                    </button>
+                    <button
+                      onClick={handleBittensorLink}
+                      disabled={isLinking || !ss58Address}
+                      className="flex h-8 items-center rounded-md border border-gray-800 bg-[#101828] px-3 py-2 shadow-sm hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      <span className="flex items-center gap-2 text-sm font-semibold leading-tight text-white">
+                        {isLinking ? (
+                          <>
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                            Linking...
+                          </>
+                        ) : (
+                          "Link"
+                        )}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              )
+            ) : null}
           </div>
-        )
-      ) : null}
+        </div>
+
+      </div>
     </div>
   );
 }
