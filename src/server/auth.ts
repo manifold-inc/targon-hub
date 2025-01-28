@@ -82,17 +82,17 @@ export const createAccount = async ({
     metadata: { user_id: userId },
   });
 
-  let hashedPassowrd = null;
+  let hashedPassword = null;
   if (password) {
-    hashedPassowrd = await new Scrypt().hash(password);
+    hashedPassword = await new Scrypt().hash(password);
   }
   const res = await db.insert(User).values({
     pubId: userId,
     email,
     googleId,
     stripeCustomerId: stripeId.id,
-    password: hashedPassowrd,
-    verified: !hashedPassowrd,
+    password: hashedPassword,
+    verified: !hashedPassword,
   });
   const apiKey = genId.apikey();
   await db.insert(ApiKey).values({
