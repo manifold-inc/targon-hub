@@ -1,9 +1,9 @@
 import { type NextRequest } from "next/server";
-import { asc, eq, inArray } from "drizzle-orm";
+import { asc, inArray } from "drizzle-orm";
 import { z } from "zod";
 
 import { db } from "@/schema/db";
-import { DailyModelTokenCounts, Model } from "@/schema/schema";
+import { DailyModelTokenCounts } from "@/schema/schema";
 
 export async function POST(request: NextRequest): Promise<Response> {
   try {
