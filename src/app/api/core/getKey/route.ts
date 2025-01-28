@@ -1,6 +1,5 @@
 import { NextRequest } from "next/server";
 import { eq } from "drizzle-orm";
-import { z } from "zod";
 
 import { db } from "@/schema/db";
 import { ApiKey, User } from "@/schema/schema";
@@ -21,16 +20,16 @@ export async function GET(request: NextRequest) {
       return Response.json({ error: "Unauthorized", status: 401 });
     }
 
-    const [apiKey] = await db
+    const apiKey = await db
       .select({ key: ApiKey.key })
       .from(ApiKey)
       .where(eq(ApiKey.userId, user.id));
-    if (!apiKey) {
+    if (apiKey.length === 0) {
       return Response.json({ error: "User has no API keys", status: 401 });
     }
 
-    return Response.json({ key: apiKey.key, status: 200 });
+    return Response.json({ keys: apiKey.map((key) => key.key), status: 200 });
   } catch (err) {
-    return Response.json({ error: "Unauthorized", status: 401 });
+    return Response.json({ error: "Invalid request", status: 400 });
   }
 }
