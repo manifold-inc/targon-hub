@@ -5,7 +5,7 @@ import { z } from "zod";
 import { db } from "@/schema/db";
 import { ApiKey, genId, User } from "@/schema/schema";
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<Response> {
   try {
     const auth = request.headers.get("Authorization");
     const token = auth?.split(" ").at(-1);
