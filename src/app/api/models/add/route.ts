@@ -25,11 +25,14 @@ interface HuggingFaceModelInfo {
 }
 
 export async function POST(request: NextRequest): Promise<Response> {
-  try {
-    const { requestedModelName } = z
-      .object({ requestedModelName: z.string().min(1) })
-      .parse(await request.json());
+  const { requestedModelName } = z
+    .object({ requestedModelName: z.string() })
+    .parse(await request.json());
+  if (!requestedModelName) {
+    return Response.json({ error: "Invalid input", status: 400 });
+  }
 
+  try {
     const [organization, modelName] = requestedModelName.split("/");
     if (!organization || !modelName) {
       return Response.json({
@@ -54,7 +57,7 @@ export async function POST(request: NextRequest): Promise<Response> {
         });
       }
       return Response.json({
-        error: `Model '${requestedModelName}' already exists`,
+        error: `Model '${requestedModelName}' is not enabled but can be leased.`,
         status: 400,
       });
     }
@@ -239,6 +242,17 @@ export async function POST(request: NextRequest): Promise<Response> {
       status: 200,
     });
   } catch (err) {
-    return Response.json({ error: "Invalid request", status: 400 });
+    if (err instanceof Error) {
+      return Response.json({
+        error: "Failed to add model",
+        details: err.message,
+        status: 500,
+      });
+    }
+    return Response.json({
+      error: "Failed to add model",
+      details: "An unknown error occurred",
+      status: 500,
+    });
   }
 }

@@ -16,18 +16,11 @@ export async function POST(request: NextRequest): Promise<Response> {
         modelName: DailyModelTokenCounts.modelName,
         totalTokens: DailyModelTokenCounts.totalTokens,
         avgTPS: DailyModelTokenCounts.avgTPS,
-        cpt: Model.cpt,
       })
       .from(DailyModelTokenCounts)
-      .leftJoin(Model, eq(DailyModelTokenCounts.modelName, Model.name))
       .where(inArray(DailyModelTokenCounts.modelName, requestedModelName))
       .orderBy(asc(DailyModelTokenCounts.createdAt));
-    /**
-     * Average TPS
-     * Total Tokens
-     * Request Tokens
-     */
-    // iterate through list if multiple models
+
     return Response.json({ stats: stats });
   } catch (err) {
     return Response.json({ error: "Invalid request", status: 400 });
