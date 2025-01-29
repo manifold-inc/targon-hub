@@ -22,14 +22,14 @@ export async function POST(request: NextRequest): Promise<Response> {
   }
 
   const { requestedModelName } = z
-    .object({ requestedModelName: z.string().min(1) })
+    .object({ requestedModelName: z.string() })
     .parse(await request.json());
   if (!requestedModelName) {
     return Response.json({ error: "Model name is required", status: 400 });
   }
 
   try {
-    const [[requestedModels], enabledModels] = await Promise.all([
+    const [[currentModel], enabledModels] = await Promise.all([
       db
         .select({
           name: Model.name,
@@ -49,22 +49,22 @@ export async function POST(request: NextRequest): Promise<Response> {
         .where(eq(Model.enabled, true)),
     ]);
 
-    if (!requestedModels) {
+    if (!currentModel) {
       return Response.json({ error: "Model not found", status: 404 });
     }
-    if (requestedModels.enabled) {
+    if (currentModel.enabled) {
       return Response.json({ error: "Model is already enabled", status: 400 });
     }
-    if (requestedModels.requiredGpus > 8) {
+    if (currentModel.requiredGpus > 8) {
       return Response.json({
         error: "Cannot lease more than 8 GPUs",
         status: 400,
       });
     }
-    if (user.credits < requestedModels.requiredGpus * Number(COST_PER_GPU)) {
+    if (user.credits < currentModel.requiredGpus * Number(COST_PER_GPU)) {
       return Response.json({
         error: "Insufficient funds to lease this model",
-        message: `User has $${user.credits / Number(CREDIT_PER_DOLLAR)}, but requires $${(requestedModels.requiredGpus * Number(COST_PER_GPU)) / Number(CREDIT_PER_DOLLAR)} to lease this model`,
+        message: `User has $${user.credits / Number(CREDIT_PER_DOLLAR)}, but requires $${(currentModel.requiredGpus * Number(COST_PER_GPU)) / Number(CREDIT_PER_DOLLAR)} to lease this model`,
         status: 400,
       });
     }
@@ -84,7 +84,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       (sum, model) => sum + (model.requiredGpus ?? 0),
       0,
     );
-    const requestedGPU = requestedModels.requiredGpus;
+    const requestedGPU = currentModel.requiredGpus;
 
     // Check if we need to remove to make room
     if (currentGPUUsage + requestedGPU > MAX_GPU_SLOTS) {
