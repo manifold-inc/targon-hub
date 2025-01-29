@@ -2,31 +2,36 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import type {
   InjectedAccountWithMeta,
   InjectedExtension,
 } from "@polkadot/extension-inject/types";
 import type { Signer } from "@polkadot/types/types";
-import { Copy, CreditCard, Loader2, User, Wallet } from "lucide-react";
-import { toast } from "sonner";
 import {
+  ChevronDown,
+  Copy,
+  CreditCard,
+  InfoIcon,
+  Loader2,
+  User,
+  Wallet,
+} from "lucide-react";
+import {
+  Bar,
+  ComposedChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  ScatterChart,
-  Scatter,
-  ZAxis,
-  Line,
-  Area,
-  ComposedChart,
 } from "recharts";
+import { toast } from "sonner";
 
-import { CREDIT_PER_DOLLAR } from "@/constants";
+import { CREDIT_PER_DOLLAR, MIN_PURCHASE_IN_DOLLARS } from "@/constants";
+import { env } from "@/env.mjs";
 import { reactClient } from "@/trpc/react";
 import { copyToClipboard, formatLargeNumber } from "@/utils/utils";
-import { env } from "@/env.mjs";
 
 let web3FromAddress: (address: string) => Promise<{ signer: Signer }>;
 let web3Enable: (appName: string) => Promise<InjectedExtension[]>;
@@ -46,16 +51,16 @@ if (typeof window !== "undefined") {
 
 // Remove the hardcoded MODEL_COLORS and replace with a color generator
 const COLORS = [
-  '#2563eb', // blue
-  '#16a34a', // green
-  '#9333ea', // purple
-  '#7c3aed', // violet
-  '#6366f1', // indigo
-  '#4f46e5', // darker indigo
-  '#dc2626', // red
-  '#ea580c', // orange
-  '#0891b2', // cyan
-  '#0d9488', // teal
+  "#2563eb", // blue
+  "#16a34a", // green
+  "#9333ea", // purple
+  "#7c3aed", // violet
+  "#6366f1", // indigo
+  "#4f46e5", // darker indigo
+  "#dc2626", // red
+  "#ea580c", // orange
+  "#0891b2", // cyan
+  "#0d9488", // teal
 ];
 
 // Create a Map to store model-to-color mappings
@@ -67,8 +72,15 @@ const getModelColor = (model: string) => {
     modelColorMap.set(model, COLORS[colorIndex % COLORS.length]!);
     colorIndex++;
   }
-  return modelColorMap.get(model) || '#6b7280'; // fallback to gray
+  return modelColorMap.get(model) || "#000000";
 };
+
+// Add this interface before prepareChartData function
+interface ChartDataItem {
+  date: string;
+  total: number;
+  [key: string]: number | string; // For dynamic model names
+}
 
 export default function SettingsPage() {
   const user = reactClient.account.getUserDashboard.useQuery();
@@ -81,6 +93,30 @@ export default function SettingsPage() {
 
   const { mutateAsync: createPortalSession, isLoading } =
     reactClient.subscriptions.createPortalSession.useMutation();
+
+  const [showPurchaseInput, setShowPurchaseInput] = useState(false);
+  const [purchaseAmount, setPurchaseAmount] = useState<number | null>(null);
+  const pathName = usePathname();
+  const router = useRouter();
+  const checkout = reactClient.credits.checkout.useMutation({
+    onError: (e) => {
+      toast.error(`Failed getting checkout session: ${e.message}`);
+    },
+    onSuccess: (url) => {
+      router.push(url);
+    },
+  });
+
+  const [selectedModels, setSelectedModels] = useState<string[]>([]);
+
+  const getUniqueModels = () => {
+    if (!activity.data) return [];
+    const models = new Set<string>();
+    activity.data.forEach((item) => {
+      if (item.model) models.add(item.model);
+    });
+    return Array.from(models);
+  };
 
   const handleBittensorLink = async () => {
     setIsLinking(true);
@@ -189,44 +225,59 @@ export default function SettingsPage() {
   };
 
   const prepareChartData = () => {
-    if (!activity.data) return { scatterData: {}, lineData: [] };
-    
-    const modelData: Record<string, { x: number; y: number; z: number; model: string }[]> = {};
-    const timePoints: number[] = [];
-    
-    activity.data.forEach(item => {
-      if (item.model && item.responseTokens) {
-        if (!modelData[item.model]) {
-          modelData[item.model] = [];
-        }
-        const timestamp = item.createdAt.getTime();
-        modelData[item.model]!.push({
-          x: timestamp,
-          y: item.responseTokens,
-          z: item.creditsUsed,
-          model: item.model,
-        });
-        timePoints.push(timestamp);
+    if (!activity.data) return [];
+
+    // Find date range
+    const dates = activity.data.map((item) => item.createdAt);
+    const minDate = new Date(Math.min(...dates.map((d) => d.getTime())));
+    const maxDate = new Date(Math.max(...dates.map((d) => d.getTime())));
+
+    // Create array of all dates in range
+    const allDates: Date[] = [];
+    const currentDate = new Date(minDate);
+    while (currentDate <= maxDate) {
+      allDates.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    // Create initial data structure with all dates
+    const initialData = allDates.reduce(
+      (acc: Record<string, ChartDataItem>, date) => {
+        const dateStr = date.toISOString().split("T")[0]!;
+        acc[dateStr] = {
+          date: dateStr,
+          total: 0,
+        };
+        return acc;
+      },
+      {},
+    );
+
+    // Fill in activity data
+    activity.data.forEach((item) => {
+      if (!item.model || !item.responseTokens) return;
+
+      // Skip if model is not selected (when filters are active)
+      if (selectedModels.length > 0 && !selectedModels.includes(item.model)) {
+        return;
+      }
+
+      const date = item.createdAt.toISOString().split("T")[0]!;
+
+      // Ensure the date exists in initialData (TypeScript safety)
+      if (initialData[date]) {
+        // Add model-specific tokens
+        initialData[date][item.model] =
+          ((initialData[date][item.model] as number) || 0) +
+          item.responseTokens;
+        initialData[date].total += item.responseTokens;
       }
     });
 
-    // Calculate moving average
-    const windowSize = 5;
-    const sortedPoints = timePoints.sort((a, b) => a - b);
-    const averageData = sortedPoints.map(timestamp => {
-      const nearbyPoints = activity.data!.filter(item => 
-        Math.abs(item.createdAt.getTime() - timestamp) < windowSize * 24 * 60 * 60 * 1000 
-      );
-      
-      const average = nearbyPoints.reduce((sum, item) => sum + item.responseTokens!, 0) / nearbyPoints.length;
-      
-      return {
-        x: timestamp,
-        y: average
-      };
-    });
-
-    return { scatterData: modelData, lineData: averageData };
+    // Convert to array and sort by date
+    return Object.values(initialData).sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+    );
   };
 
   return (
@@ -235,18 +286,16 @@ export default function SettingsPage() {
         Dashboard
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {/* Account Info Panel */}
-        <div className="rounded-2xl border border-gray-200 p-6 bg-white col-span-2">
-          <h3 className="text-lg font-semibold mb-4">Account</h3>
+        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white p-6">
+          <h3 className="mb-4 text-lg font-semibold">Account</h3>
           <div className="flex flex-col">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-14 w-14 flex items-center justify-center rounded-full border-2 border-white shadow">
+            <div className="mb-4 flex items-center gap-3">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-white shadow">
                 <User className="w-13 h-13" />
               </div>
-              <div className="text-sm text-black">
-                {user.data?.email}
-              </div>
+              <div className="text-sm text-black">{user.data?.email}</div>
             </div>
             <div className="flex flex-wrap gap-2">
               <Link
@@ -281,12 +330,12 @@ export default function SettingsPage() {
         </div>
 
         {/* API Key Panel */}
-        <div className="rounded-2xl border border-gray-200 p-6 bg-white">
-          <h3 className="text-lg font-semibold mb-4">
+        <div className="rounded-2xl border border-gray-200 bg-white p-6">
+          <h3 className="mb-4 text-lg font-semibold">
             <Link href="/settings/keys">API Key</Link>
           </h3>
           <div
-            className="flex h-14 cursor-pointer items-center justify-between rounded-xl bg-gray-50 p-4 hover:bg-gray-100 mb-4"
+            className="mb-4 flex h-14 cursor-pointer items-center justify-between rounded-xl bg-gray-50 p-4 hover:bg-gray-100"
             onClick={() => {
               void copyToClipboard(keys.data?.[0]?.key ?? "");
               toast("Copied API Key to Clipboard");
@@ -307,9 +356,9 @@ export default function SettingsPage() {
                 View All
               </span>
             </Link>
-            
-            <div 
-              className="flex text-sm text-gray-500 h-8 items-center justify-center gap-1 rounded-full px-3 py-4 hover:bg-blue-50 cursor-pointer"
+
+            <div
+              className="flex h-8 cursor-pointer items-center justify-center gap-1 rounded-full px-3 py-4 text-sm text-gray-500 hover:bg-blue-50"
               onClick={() => {
                 void copyToClipboard(`${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1`);
                 toast("Copied URL to Clipboard");
@@ -320,128 +369,230 @@ export default function SettingsPage() {
           </div>
         </div>
 
-
         {/* Credits Panel */}
-        <div className="rounded-2xl border border-gray-200 p-6 bg-white">
-          <h3 className="text-lg font-semibold mb-4">
+        <div className="rounded-2xl border border-gray-200 bg-white p-6 pb-0">
+          <h3 className="pb-8 text-lg font-semibold">
             <Link href="/settings/credits">Credits</Link>
           </h3>
-          <p className="text-5xl font-medium text-black">
-            ${formatLargeNumber((user.data?.credits ?? 0) / CREDIT_PER_DOLLAR)}
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-5xl font-medium text-black">
+              $
+              {formatLargeNumber((user.data?.credits ?? 0) / CREDIT_PER_DOLLAR)}
+            </p>
+            <button
+              onClick={() => {
+                setShowPurchaseInput(!showPurchaseInput);
+              }}
+              className="hover:bg-gray-10 mt-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-sm text-black"
+            >
+              {showPurchaseInput ? "Cancel" : "Add Credits"}
+            </button>
+          </div>
+
+          <div
+            className={`flex flex-row gap-4 pt-2 ${showPurchaseInput ? "visible" : "invisible"}`}
+          >
+            <div className="flex items-center gap-2">
+              <div className="relative rounded-md shadow-sm">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                  <span className="text-gray-500 sm:text-sm">{"$"}</span>
+                </div>
+                <input
+                  type="text"
+                  value={purchaseAmount ?? ""}
+                  onChange={(e) =>
+                    setPurchaseAmount(
+                      e.target.value.length === 0
+                        ? null
+                        : Number(e.target.value.replace(/[^0-9]/g, "")),
+                    )
+                  }
+                  className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  placeholder="0"
+                />
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                  <span className="text-gray-500 sm:text-sm">{"USD"}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex w-full items-center justify-end">
+              <div className="group relative">
+                <span className="pointer-events-none absolute left-1/2 m-4 mx-auto hidden w-max max-w-sm -translate-x-1/2 translate-y-1/4 text-wrap rounded-md bg-gray-800 p-1.5 text-center text-sm text-gray-100 opacity-0 transition-opacity group-hover:opacity-100 sm:block">
+                  {`$1 USD is ${formatLargeNumber(CREDIT_PER_DOLLAR)} Credits`}
+                </span>
+                <InfoIcon className="m-2 h-4 w-4 text-gray-500" />
+              </div>
+              <button
+                onClick={() => {
+                  if (!purchaseAmount) {
+                    return;
+                  }
+                  if (purchaseAmount < MIN_PURCHASE_IN_DOLLARS) {
+                    toast.error(
+                      `Must purchase a minimum of $${MIN_PURCHASE_IN_DOLLARS} or ${formatLargeNumber(MIN_PURCHASE_IN_DOLLARS * CREDIT_PER_DOLLAR)} credits`,
+                    );
+                    return;
+                  }
+
+                  checkout.mutate({
+                    purchaseAmount,
+                    redirectTo: pathName,
+                  });
+                }}
+                disabled={checkout.isLoading || !purchaseAmount}
+                className="rounded-full border border-black bg-white px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {checkout.isLoading ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Processing...
+                  </div>
+                ) : (
+                  <>
+                    Purchase{" "}
+                    {!purchaseAmount ? "Credits" : `$${purchaseAmount}`}
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Activity Panel */}
-        <div className="rounded-2xl border border-gray-200 p-6 bg-white col-span-2 row-span-2">
-          <h3 className="text-lg font-semibold mb-4">
-            <Link href="/settings/activity">Activity</Link>
-          </h3>
+        <div className="col-span-2 row-span-2 rounded-2xl border border-gray-200 bg-white p-6">
+          <div className="mb-4 flex flex-row items-center justify-between">
+            <h3 className="text-lg font-semibold">
+              <Link href="/settings/activity">Activity</Link>
+            </h3>
+
+            <div className="flex items-center gap-2">
+              <Menu as="div" className="relative">
+                <MenuButton className="flex items-center gap-2 rounded-full border border-gray-200 px-3 py-1 text-sm text-gray-700 hover:bg-gray-50">
+                  {selectedModels.length === 0 ? (
+                    <>
+                      Models
+                      <ChevronDown className="h-4 w-4" />
+                    </>
+                  ) : (
+                    <>
+                      {`${selectedModels.length} Selected`}
+                      <ChevronDown className="h-4 w-4" />
+                    </>
+                  )}
+                </MenuButton>
+
+                <MenuItems className="absolute right-0 top-full z-10 mt-1 w-96 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+                  {getUniqueModels().map((model) => (
+                    <MenuItem key={model}>
+                      {({ active }) => (
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setSelectedModels((prev) => {
+                              if (prev.includes(model)) {
+                                return prev.filter((m) => m !== model);
+                              } else {
+                                return [...prev, model];
+                              }
+                            });
+                          }}
+                          className={`flex w-full items-center px-4 py-2 text-sm text-gray-700 ${
+                            active ? "bg-gray-100" : ""
+                          }`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <div
+                              className="h-3 w-3 rounded-full"
+                              style={{ backgroundColor: getModelColor(model) }}
+                            />
+                            <span>{model}</span>
+                          </div>
+                          {selectedModels.includes(model) && (
+                            <span className="ml-auto">✓</span>
+                          )}
+                        </button>
+                      )}
+                    </MenuItem>
+                  ))}
+                  {selectedModels.length > 0 && (
+                    <MenuItem>
+                      {({ active }) => (
+                        <button
+                          onClick={() => {
+                            setSelectedModels([]);
+                          }}
+                          className={`w-full border-t border-gray-100 px-4 py-2 text-sm text-gray-500 ${
+                            active ? "bg-gray-100" : ""
+                          }`}
+                        >
+                          Clear all
+                        </button>
+                      )}
+                    </MenuItem>
+                  )}
+                </MenuItems>
+              </Menu>
+            </div>
+          </div>
+
           {activity.data?.length ? (
             <div className="relative h-80 w-full">
-              <ResponsiveContainer width="100%" height="95%">
-                  <ComposedChart>
-                    <XAxis
-                      type="number"
-                      dataKey="x"
-                      domain={['auto', 'auto']}
-                      tickFormatter={(timestamp: string) => {
-                        return timestamp
-                      }}
-                      axisLine={false}
-                      tickLine={false}
-                      tick={false}
-                    />
-                    <YAxis 
-                      type="number"
-                      dataKey="y"
-                      axisLine={false}
-                      tickLine={false}
-                      tick={false}
-                    />
-                    <Area
-                      type="monotone"
-                      data={prepareChartData().lineData}
-                      dataKey="y"
-                      stroke="none"
-                      fill="url(#lineGradient)"
-                    />
-                    <Line
-                      type="monotone"
-                      data={prepareChartData().lineData}
-                      dataKey="y"
-                      stroke="#22C55D"
-                      strokeWidth={2}
-                      dot={false}
-                    />
-                  </ComposedChart>
-              </ResponsiveContainer>
-              <ResponsiveContainer width="100%" height="100%" className="absolute inset-0 -x">
-                <ScatterChart>
-                  <defs>
-                    <linearGradient id="lineGradient" x1="1" y1="0" x2="1" y2="1">
-                      <stop offset="50%" stopColor="#22C55D" stopOpacity={0.5}/>
-                      <stop offset="100%" stopColor="#22C55D" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
+                className="absolute inset-0"
+              >
+                <ComposedChart data={prepareChartData()}>
                   <XAxis
-                    name="Time"
-                    type="number"
-                    dataKey="x"
-                    domain={['auto', 'auto']}
-                    tickFormatter={(timestamp: string) => {
-                      return new Date(timestamp).toLocaleString('en-US', { month: 'short', day: 'numeric' })
+                    dataKey="date"
+                    tickFormatter={(date: string) => {
+                      return new Date(date).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      });
                     }}
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fontSize: 14, fontWeight: 50 }}
+                    tick={{ fontSize: 12 }}
+                    interval="preserveStartEnd"
+                    minTickGap={50}
                   />
-                  <YAxis 
-                    type="number"
-                    name="Tokens"
-                    dataKey="y"
+                  <YAxis
                     axisLine={false}
                     tickLine={false}
-                    tick={false}
-                  />
-                  <ZAxis 
-                    type="number"
-                    dataKey="z"
-                    range={[50, 600]}
-                    name="Credits"
+                    tick={{ fontSize: 12 }}
+                    tickFormatter={(value: number): string =>
+                      typeof value === "number" ? value.toLocaleString() : "0"
+                    }
                   />
                   <Tooltip
-                    cursor={false}
                     contentStyle={{
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '0.75rem',
-                      padding: '0.75rem'
+                      border: "1px solid #e5e7eb",
+                      borderRadius: "0.75rem",
+                      padding: "0.75rem",
                     }}
-                    itemStyle={{ color: '#374151' }}
-                    labelStyle={{ color: '#374151' }}
-                    separator=": "
                     formatter={(value: number, name: string) => {
-                      if (name === 'Time') return [new Date(value).toLocaleString()];
-                      if (name === 'Tokens') return [`${value} Tokens`];
-                      if (name === 'Credits') return [`${value} / $0.00`];
-                      return name;
+                      if (name === "total") return null;
+                      return [`${value.toLocaleString()} tokens`, name];
                     }}
+                    cursor={false}
                   />
-                  <Legend 
-                    wrapperStyle={{
-                      fontSize: '12px',
-                    }}
-                    iconSize={0}
-                  />
-                  {Object.entries(prepareChartData().scatterData).map(([model, data]) => (
-                    <Scatter
-                      key={model}
-                      name={model}
-                      data={data}
-                      fill={getModelColor(model)}
-                      shape="circle"
-                    />
-                  ))}
-                </ScatterChart>
+                  {getUniqueModels()
+                    .filter(
+                      (model) =>
+                        selectedModels.length === 0 ||
+                        selectedModels.includes(model),
+                    )
+                    .map((model) => (
+                      <Bar
+                        key={model}
+                        dataKey={model}
+                        stackId="a"
+                        fill={getModelColor(model)}
+                      />
+                    ))}
+                </ComposedChart>
               </ResponsiveContainer>
             </div>
           ) : (
@@ -451,27 +602,31 @@ export default function SettingsPage() {
           )}
         </div>
         {/* Links Panel */}
-        <div className="rounded-2xl border border-gray-200 p-6 bg-white flex items-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-            <button
-              onClick={handleManageSubscriptions}
-              disabled={isLoading}
-              className="inline-flex h-24 w-full flex-col items-center justify-center gap-3 rounded-lg bg-gray-50 p-4 hover:bg-gray-100"
-            >
-              {isLoading ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
-              ) : (
-                <CreditCard className="h-5 w-5" />
-              )}
-              <p className="text-sm leading-tight text-black">
-                Manage Subscriptions
-              </p>
-            </button>
+        <div className="flex items-center rounded-2xl border border-gray-200 bg-white p-6">
+          <div
+            className={`grid grid-cols-1 ${!showSS58Input ? "sm:grid-cols-2" : ""} w-full gap-4`}
+          >
+            {!showSS58Input && (
+              <button
+                onClick={handleManageSubscriptions}
+                disabled={isLoading}
+                className="inline-flex h-24 w-full flex-col items-center justify-center gap-3 p-4"
+              >
+                {isLoading ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <CreditCard className="h-5 w-5" />
+                )}
+                <p className="text-sm leading-tight text-black">
+                  Manage Subscriptions
+                </p>
+              </button>
+            )}
             {!user.data?.ss58 ? (
               !showSS58Input ? (
                 <button
                   onClick={() => setShowSS58Input(true)}
-                  className="inline-flex h-24 w-full flex-col items-center justify-center gap-3 rounded-lg bg-gray-50 p-4 hover:bg-gray-100"
+                  className="inline-flex h-24 w-full flex-col items-center justify-center gap-3 p-4"
                 >
                   <Wallet className="h-5 w-5 text-black" />
                   <p className="whitespace-nowrap text-sm leading-tight text-black">
@@ -479,51 +634,53 @@ export default function SettingsPage() {
                   </p>
                 </button>
               ) : (
-                <div className="flex flex-col-1 gap-2">
-                  <div className="flex w-full items-center">
-                    <input
-                      type="text"
-                      value={ss58Address}
-                      onChange={(e) => setSS58Address(e.target.value)}
-                      className="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
-                      placeholder="Enter your SS58 address"
-                    />
+                <>
+                  <h3 className="pb-6 font-semibold">Link Bittensor</h3>
+                  <div className="flex-col-1 flex gap-2">
+                    <div className="flex w-full items-center">
+                      <input
+                        type="text"
+                        value={ss58Address}
+                        onChange={(e) => setSS58Address(e.target.value)}
+                        className="block h-8 w-full rounded-md border-0 px-3 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+                        placeholder="Enter your SS58 address"
+                      />
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => {
+                          setShowSS58Input(false);
+                          setSS58Address("");
+                        }}
+                        className="flex h-8 items-center rounded-md border border-gray-200 bg-white px-3 py-2 shadow-sm hover:bg-gray-50"
+                      >
+                        <span className="flex items-center gap-2 text-sm font-semibold leading-tight text-black">
+                          Cancel
+                        </span>
+                      </button>
+                      <button
+                        onClick={handleBittensorLink}
+                        disabled={isLinking || !ss58Address}
+                        className="flex h-8 items-center rounded-md border border-gray-800 bg-[#101828] px-3 py-2 shadow-sm hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        <span className="flex items-center gap-2 text-sm font-semibold leading-tight text-white">
+                          {isLinking ? (
+                            <>
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              Linking...
+                            </>
+                          ) : (
+                            "Link"
+                          )}
+                        </span>
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => {
-                        setShowSS58Input(false);
-                        setSS58Address("");
-                      }}
-                      className="flex h-8 items-center rounded-md border border-gray-200 bg-white px-3 py-2 shadow-sm hover:bg-gray-50"
-                    >
-                      <span className="flex items-center gap-2 text-sm font-semibold leading-tight text-black">
-                        Cancel
-                      </span>
-                    </button>
-                    <button
-                      onClick={handleBittensorLink}
-                      disabled={isLinking || !ss58Address}
-                      className="flex h-8 items-center rounded-md border border-gray-800 bg-[#101828] px-3 py-2 shadow-sm hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      <span className="flex items-center gap-2 text-sm font-semibold leading-tight text-white">
-                        {isLinking ? (
-                          <>
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                            Linking...
-                          </>
-                        ) : (
-                          "Link"
-                        )}
-                      </span>
-                    </button>
-                  </div>
-                </div>
+                </>
               )
             ) : null}
           </div>
         </div>
-
       </div>
     </div>
   );

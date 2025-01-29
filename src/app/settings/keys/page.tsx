@@ -53,11 +53,11 @@ export default function KeysPage() {
       <div className="relative h-full py-2 sm:py-4">
         <div className="flex items-center gap-2">
           <button
-            className="flex h-9 items-center rounded-full border-2 border-white bg-[#101828] px-3 py-4 shadow hover:bg-gray-700"
+            className="hover:bg-gray-10 rounded-full border border-black bg-white px-3 py-2 text-sm font-semibold text-gray-500"
             onClick={handleCreate}
             disabled={createApiKey.isLoading}
           >
-            <span className="flex items-center gap-2 px-0.5 text-sm font-semibold leading-tight text-white">
+            <span className="flex items-center gap-2 px-0.5 text-sm font-semibold leading-tight text-black">
               {createApiKey.isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -80,67 +80,73 @@ export default function KeysPage() {
             />
           )}
         </div>
-        <div className="relative h-full overflow-hidden pt-4">
-          <div className="relative max-h-full w-full overflow-hidden overflow-y-scroll pb-4 text-xs sm:text-sm">
-            <table className="w-full border-separate border-spacing-0 text-xs sm:text-sm">
-              <thead>
-                <tr className="sticky top-0 h-8 w-full bg-gray-50">
-                  <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
-                    Name
-                  </th>
-                  <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
-                    Key
-                  </th>
-                  <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
-                    Created
-                  </th>
-                  <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-center font-semibold leading-tight text-[#101828]" />
-                </tr>
-              </thead>
-              <tbody className="w-full whitespace-nowrap">
-                {keys.data?.map((key, index) => (
-                  <tr key={index} className="h-8 bg-white">
-                    <td className="px-2 py-1 text-center leading-tight text-[#101828]">
-                      {key.name}
-                    </td>
-                    <td className="px-2 py-1 text-center leading-tight text-[#101828]">
-                      <span className="inline-flex items-center gap-2">
-                        {key.key.slice(0, 3) + "..." + key.key.slice(-3)}
-                        <button
-                          className="cursor-pointer"
-                          onClick={() => handleCopyClipboard(key.key)}
-                        >
-                          <Copy className="h-4 w-4 text-gray-300 hover:text-gray-500" />
-                        </button>
-                      </span>
-                    </td>
-                    <td className="px-2 py-1 text-center leading-tight text-[#101828]">
-                      {key.createdAt ? formatDate(key.createdAt) : "-"}
-                    </td>
-                    <td className="px-2 py-1 text-center leading-tight text-[#101828]">
-                      <button
-                        type="button"
-                        disabled={deleteApiKey.isLoading}
-                        onClick={() => deleteApiKey.mutate({ apiKey: key.key })}
-                        className={`group rounded-full p-1.5 transition-colors ${
-                          deleteApiKey.isLoading
-                            ? "cursor-not-allowed bg-gray-100"
-                            : "hover:bg-gray-100"
-                        }`}
-                      >
-                        <XCircle
-                          className={`h-6 w-6 ${
-                            deleteApiKey.isLoading
-                              ? "text-gray-300"
-                              : "text-gray-300 group-hover:text-red-500"
-                          } transition-colors`}
-                        />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="max-h-full overflow-auto whitespace-nowrap py-8">
+          <div className="flex flex-col items-center justify-start gap-6">
+            <div className="w-full">
+              <div className="relative overflow-x-auto rounded-xl border border-gray-200">
+                <table className="w-full border-separate border-spacing-0 text-xs sm:text-sm">
+                  <thead>
+                    <tr className="sticky top-0 h-8 w-full bg-gray-50">
+                      <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
+                        Name
+                      </th>
+                      <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
+                        Key
+                      </th>
+                      <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-center font-semibold leading-tight text-[#101828]">
+                        Created
+                      </th>
+                      <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-center font-semibold leading-tight text-[#101828]" />
+                    </tr>
+                  </thead>
+                  <tbody className="w-full whitespace-nowrap">
+                    {keys.data?.map((key, index) => (
+                      <tr key={index} className="h-8 bg-white">
+                        <td className="px-2 py-1 text-center leading-tight text-[#101828]">
+                          {key.name}
+                        </td>
+                        <td className="px-2 py-1 text-center leading-tight text-[#101828]">
+                          <span className="inline-flex items-center gap-2">
+                            {key.key.slice(0, 3) + "..." + key.key.slice(-3)}
+                            <button
+                              className="cursor-pointer"
+                              onClick={() => handleCopyClipboard(key.key)}
+                            >
+                              <Copy className="h-4 w-4 text-gray-300 hover:text-gray-500" />
+                            </button>
+                          </span>
+                        </td>
+                        <td className="px-2 py-1 text-center leading-tight text-[#101828]">
+                          {key.createdAt ? formatDate(key.createdAt) : "-"}
+                        </td>
+                        <td className="px-2 py-1 text-center leading-tight text-[#101828]">
+                          <button
+                            type="button"
+                            disabled={deleteApiKey.isLoading}
+                            onClick={() =>
+                              deleteApiKey.mutate({ apiKey: key.key })
+                            }
+                            className={`group rounded-full p-1.5 transition-colors ${
+                              deleteApiKey.isLoading
+                                ? "cursor-not-allowed bg-gray-100"
+                                : "hover:bg-gray-100"
+                            }`}
+                          >
+                            <XCircle
+                              className={`h-6 w-6 ${
+                                deleteApiKey.isLoading
+                                  ? "text-gray-300"
+                                  : "text-gray-300 group-hover:text-red-500"
+                              } transition-colors`}
+                            />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>

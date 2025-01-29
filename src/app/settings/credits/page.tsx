@@ -58,7 +58,7 @@ export default function CreditsPage() {
                   setShowPurchaseInput(!showPurchaseInput);
                   setShowCryptoInput(false);
                 }}
-                className="rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow hover:bg-gray-800"
+                className="rounded-full border border-black bg-white px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Add Credits
               </button>
@@ -71,7 +71,7 @@ export default function CreditsPage() {
                   setShowCryptoInput(!showCryptoInput);
                   setShowPurchaseInput(false);
                 }}
-                className="rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-full border border-black bg-white px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Use Crypto
               </button>
@@ -122,7 +122,7 @@ export default function CreditsPage() {
                       });
                     }}
                     disabled={checkout.isLoading || !purchaseAmount}
-                    className="w-full rounded-full border-2 border-white bg-[#101828] px-3 py-2 text-sm font-semibold text-white shadow disabled:cursor-not-allowed disabled:opacity-50"
+                    className="w-full rounded-full border border-white bg-white px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {checkout.isLoading ? (
                       <div className="flex items-center justify-center gap-2">

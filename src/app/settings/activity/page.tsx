@@ -53,7 +53,10 @@ export default function ActivityPage() {
                           {activity.creditsUsed >= 1_000_000
                             ? `${(activity.creditsUsed / 1_000_000).toFixed(1)}M`
                             : formatLargeNumber(activity.creditsUsed)}{" "}
-                          / ${(activity.creditsUsed / CREDIT_PER_DOLLAR).toFixed(2)}
+                          / $
+                          {(activity.creditsUsed / CREDIT_PER_DOLLAR).toFixed(
+                            2,
+                          )}
                         </td>
                       </tr>
                     ))}
