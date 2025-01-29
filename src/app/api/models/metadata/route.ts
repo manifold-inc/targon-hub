@@ -1,5 +1,5 @@
 import { type NextRequest } from "next/server";
-import { eq, inArray } from "drizzle-orm";
+import { inArray } from "drizzle-orm";
 import { z } from "zod";
 
 import { db } from "@/schema/db";

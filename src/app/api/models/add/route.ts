@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { db } from "@/schema/db";
 import { MODALITIES, Model } from "@/schema/schema";
-import { HuggingFaceModelInfo } from "@/server/api/model";
+import { type HuggingFaceModelInfo } from "@/server/api/model";
 
 export async function POST(request: NextRequest): Promise<Response> {
   const { requestedModelName } = z
