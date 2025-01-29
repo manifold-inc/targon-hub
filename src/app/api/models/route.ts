@@ -7,8 +7,9 @@ import { Model } from "@/schema/schema";
 
 export async function POST(request: NextRequest): Promise<Response> {
   try {
+    // Still need to input an empty json - annoying
     const { isLive } = z
-      .object({ isLive: z.boolean().default(true) })
+      .object({ isLive: z.boolean().optional().default(true) })
       .parse(await request.json());
     const models = await db
       .select({ name: Model.name })
