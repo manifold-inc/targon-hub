@@ -4,25 +4,7 @@ import { z } from "zod";
 
 import { db } from "@/schema/db";
 import { MODALITIES, Model } from "@/schema/schema";
-
-interface HuggingFaceModelInfo {
-  id: string;
-  private: boolean;
-  gated: boolean | "auto";
-  library_name: string;
-  pipeline_tag?: string;
-  tags?: string[];
-  transformersInfo?: {
-    auto_model: string;
-  };
-  config?: {
-    auto_map?: Record<string, string>;
-
-    tokenizer_config?: {
-      chat_template?: string;
-    };
-  };
-}
+import { HuggingFaceModelInfo } from "@/server/api/model";
 
 export async function POST(request: NextRequest): Promise<Response> {
   const { requestedModelName } = z
