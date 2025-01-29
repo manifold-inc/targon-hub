@@ -9,7 +9,7 @@ export async function POST(request: NextRequest): Promise<Response> {
   const { requestedModelName } = z
     .object({ requestedModelName: z.array(z.string()) })
     .parse(await request.json());
-  if (!requestedModelName) {
+  if (requestedModelName.length === 0) {
     return Response.json({ error: "Invalid input", status: 400 });
   }
 
@@ -23,7 +23,9 @@ export async function POST(request: NextRequest): Promise<Response> {
       .from(DailyModelTokenCounts)
       .where(inArray(DailyModelTokenCounts.modelName, requestedModelName))
       .orderBy(asc(DailyModelTokenCounts.createdAt));
-
+    if (stats.length === 0) {
+      return Response.json({ error: "Model not found", status: 404 });
+    }
     return Response.json({ model_stats: stats, status: 200 });
   } catch (err) {
     if (err instanceof Error) {
