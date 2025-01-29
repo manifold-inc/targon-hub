@@ -35,7 +35,7 @@ export async function DELETE(request: NextRequest): Promise<Response> {
       await db.delete(ApiKey).where(eq(ApiKey.key, apiKey));
       return Response.json({ message: `Key ${apiKey} deleted`, status: 200 });
     }
-    await db.delete(ApiKey).where(eq(ApiKey.name, keyName as string));
+    await db.delete(ApiKey).where(eq(ApiKey.name, keyName!));
     return Response.json({ message: `Key ${keyName} deleted`, status: 200 });
   } catch (err) {
     if (err instanceof Error) {

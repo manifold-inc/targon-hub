@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     return Response.json({ error: "Unauthorized", status: 401 });
   }
   const [user] = await db
-    .select({ credits: User.credits, id: User.id })
+    .select({ id: User.id })
     .from(User)
     .innerJoin(ApiKey, eq(User.id, ApiKey.userId))
     .where(eq(ApiKey.key, token));
