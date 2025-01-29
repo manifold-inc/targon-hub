@@ -330,15 +330,15 @@ export default function SettingsPage() {
         </div>
 
         {/* API Key Panel */}
-        <div className="rounded-2xl border border-gray-200 bg-white p-6">
-          <h3 className="mb-4 text-lg font-semibold">
+        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white p-6 lg:col-span-1">
+          <h3 className="mb-4 overflow-hidden whitespace-nowrap text-lg font-semibold">
             <Link href="/settings/keys">API Key</Link>
           </h3>
           <div
             className="mb-4 flex h-14 cursor-pointer items-center justify-between rounded-xl bg-gray-50 p-4 hover:bg-gray-100"
             onClick={() => {
               void copyToClipboard(keys.data?.[0]?.key ?? "");
-              toast("Copied API Key to Clipboard");
+              toast.success("Copied API Key to Clipboard");
             }}
           >
             <p className="truncate leading-7 text-black">
@@ -349,7 +349,7 @@ export default function SettingsPage() {
           <div className="inline-flex w-full justify-between">
             <Link
               href="/settings/keys"
-              className="flex h-8 items-center justify-center gap-1 rounded-full px-3 py-4 hover:bg-blue-50"
+              className="flex h-8 flex-shrink-0 items-center justify-center gap-1 rounded-full px-3 py-4 hover:bg-blue-50"
               prefetch={false}
             >
               <span className="text-sm font-semibold leading-tight text-[#1d4ed8]">
@@ -358,10 +358,10 @@ export default function SettingsPage() {
             </Link>
 
             <div
-              className="flex h-8 cursor-pointer items-center justify-center gap-1 rounded-full px-3 py-4 text-sm text-gray-500 hover:bg-blue-50"
+              className="hidden h-8 cursor-pointer items-center justify-center gap-1 rounded-full px-3 py-4 text-sm text-gray-500 hover:bg-blue-50 xl:flex"
               onClick={() => {
                 void copyToClipboard(`${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1`);
-                toast("Copied URL to Clipboard");
+                toast.success("Copied URL to Clipboard");
               }}
             >
               {env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1
@@ -370,7 +370,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Credits Panel */}
-        <div className="rounded-2xl border border-gray-200 bg-white p-6 pb-0">
+        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white p-6 pb-0 lg:col-span-1">
           <h3 className="pb-8 text-lg font-semibold">
             <Link href="/settings/credits">Credits</Link>
           </h3>
@@ -390,10 +390,10 @@ export default function SettingsPage() {
           </div>
 
           <div
-            className={`flex flex-row gap-4 pt-2 ${showPurchaseInput ? "visible" : "invisible"}`}
+            className={`flex flex-col gap-4 pt-2 xl:flex-row ${showPurchaseInput ? "visible" : "invisible"}`}
           >
             <div className="flex items-center gap-2">
-              <div className="relative rounded-md shadow-sm">
+              <div className="relative w-full rounded-md shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                   <span className="text-gray-500 sm:text-sm">{"$"}</span>
                 </div>
@@ -407,7 +407,7 @@ export default function SettingsPage() {
                         : Number(e.target.value.replace(/[^0-9]/g, "")),
                     )
                   }
-                  className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   placeholder="0"
                 />
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
@@ -418,7 +418,7 @@ export default function SettingsPage() {
 
             <div className="flex w-full items-center justify-end">
               <div className="group relative">
-                <span className="pointer-events-none absolute left-1/2 m-4 mx-auto hidden w-max max-w-sm -translate-x-1/2 translate-y-1/4 text-wrap rounded-md bg-gray-800 p-1.5 text-center text-sm text-gray-100 opacity-0 transition-opacity group-hover:opacity-100 sm:block">
+                <span className="pointer-events-none absolute left-1/2 m-4 mx-auto hidden w-max max-w-sm -translate-x-1/2 translate-y-1/4 text-wrap rounded-md bg-gray-800 p-1.5 text-center text-sm text-gray-100 opacity-0 transition-opacity group-hover:opacity-100">
                   {`$1 USD is ${formatLargeNumber(CREDIT_PER_DOLLAR)} Credits`}
                 </span>
                 <InfoIcon className="m-2 h-4 w-4 text-gray-500" />
@@ -441,7 +441,7 @@ export default function SettingsPage() {
                   });
                 }}
                 disabled={checkout.isLoading || !purchaseAmount}
-                className="rounded-full border border-black bg-white px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
+                className="mb-2 whitespace-nowrap rounded-full border border-black bg-white px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {checkout.isLoading ? (
                   <div className="flex items-center justify-center gap-2">
@@ -602,7 +602,7 @@ export default function SettingsPage() {
           )}
         </div>
         {/* Links Panel */}
-        <div className="flex items-center rounded-2xl border border-gray-200 bg-white p-6">
+        <div className="col-span-2 flex items-center rounded-2xl border border-gray-200 bg-white p-6 lg:col-span-1">
           <div
             className={`grid grid-cols-1 ${!showSS58Input ? "sm:grid-cols-2" : ""} w-full gap-4`}
           >
