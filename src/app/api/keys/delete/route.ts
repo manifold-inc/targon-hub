@@ -20,16 +20,23 @@ export async function DELETE(request: NextRequest): Promise<Response> {
     return Response.json({ error: "Unauthorized", status: 401 });
   }
 
-  const { apiKey } = z
-    .object({ apiKey: z.string() })
+  const { keyName, apiKey } = z
+    .object({
+      keyName: z.string().optional(),
+      apiKey: z.string().optional(),
+    })
     .parse(await request.json());
-  if (apiKey.length === 0) {
+  if (!keyName && !apiKey) {
     return Response.json({ error: "Key cannot be empty", status: 400 });
   }
 
   try {
-    await db.delete(ApiKey).where(eq(ApiKey.key, apiKey));
-    return Response.json({ message: "Key deleted", status: 200 });
+    if (apiKey) {
+      await db.delete(ApiKey).where(eq(ApiKey.key, apiKey));
+      return Response.json({ message: `Key ${apiKey} deleted`, status: 200 });
+    }
+    await db.delete(ApiKey).where(eq(ApiKey.name, keyName as string));
+    return Response.json({ message: `Key ${keyName} deleted`, status: 200 });
   } catch (err) {
     if (err instanceof Error) {
       return Response.json({
