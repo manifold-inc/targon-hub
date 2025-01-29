@@ -288,7 +288,7 @@ export default function SettingsPage() {
 
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {/* Account Info Panel */}
-        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white p-6">
+        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6">
           <h3 className="mb-4 text-lg font-semibold">Account</h3>
           <div className="flex flex-col">
             <div className="mb-4 flex items-center gap-3">
@@ -330,7 +330,7 @@ export default function SettingsPage() {
         </div>
 
         {/* API Key Panel */}
-        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white p-6 lg:col-span-1">
+        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
           <h3 className="mb-4 overflow-hidden whitespace-nowrap text-lg font-semibold">
             <Link href="/settings/keys">API Key</Link>
           </h3>
@@ -370,7 +370,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Credits Panel */}
-        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white p-6 pb-0 lg:col-span-1">
+        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6 pb-0 lg:col-span-1">
           <h3 className="pb-8 text-lg font-semibold">
             <Link href="/settings/credits">Credits</Link>
           </h3>
@@ -460,7 +460,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Activity Panel */}
-        <div className="col-span-2 row-span-2 rounded-2xl border border-gray-200 bg-white p-6">
+        <div className="col-span-2 row-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent p-6">
           <div className="mb-4 flex flex-row items-center justify-between">
             <h3 className="text-lg font-semibold">
               <Link href="/settings/activity">Activity</Link>
@@ -602,7 +602,7 @@ export default function SettingsPage() {
           )}
         </div>
         {/* Links Panel */}
-        <div className="col-span-2 flex items-center rounded-2xl border border-gray-200 bg-white p-6 lg:col-span-1">
+        <div className="col-span-2 flex items-center rounded-2xl border border-gray-200 bg-white bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
           <div
             className={`grid grid-cols-1 ${!showSS58Input ? "sm:grid-cols-2" : ""} w-full gap-4`}
           >
