@@ -100,7 +100,10 @@ export const creditsRouter = createTRPCRouter({
       }
 
       // Check if user has enough credits
-      if (!user || user.credits < (requiredGPU?.gpu ?? 0)) {
+      if (
+        !user ||
+        user.credits < (requiredGPU?.gpu ?? 0) * Number(COST_PER_GPU)
+      ) {
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Insufficient credits to lease this model",

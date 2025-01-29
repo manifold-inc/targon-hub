@@ -23,7 +23,7 @@ import {
 } from "@/schema/schema";
 import { createTRPCRouter, publicAuthlessProcedure } from "../trpc";
 
-interface HuggingFaceModelInfo {
+export interface HuggingFaceModelInfo {
   id: string;
   private: boolean;
   gated: boolean | "auto";
