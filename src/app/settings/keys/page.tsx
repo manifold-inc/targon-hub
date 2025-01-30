@@ -51,35 +51,6 @@ export default function KeysPage() {
     <div>
       <h1 className="mb-6 text-xl font-semibold text-black">API Keys</h1>
       <div className="relative h-full py-2 sm:py-4">
-        <div className="flex items-center gap-2">
-          <button
-            className="hover:bg-gray-10 rounded-full border border-black bg-white px-3 py-2 text-sm font-semibold text-gray-500"
-            onClick={handleCreate}
-            disabled={createApiKey.isLoading}
-          >
-            <span className="flex items-center gap-2 px-0.5 text-sm font-semibold leading-tight text-black">
-              {createApiKey.isLoading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Creating...
-                </>
-              ) : isCreating ? (
-                "Confirm"
-              ) : (
-                "Create Key"
-              )}
-            </span>
-          </button>
-          {isCreating && (
-            <input
-              type="text"
-              value={apiKeyName}
-              onChange={(e) => setApiKeyName(e.target.value)}
-              className="block w-3/4 rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
-              placeholder="Enter key name"
-            />
-          )}
-        </div>
         <div className="max-h-full overflow-auto whitespace-nowrap py-8">
           <div className="flex flex-col items-center justify-start gap-6">
             <div className="w-full">
@@ -147,6 +118,37 @@ export default function KeysPage() {
                 </table>
               </div>
             </div>
+          </div>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="flex items-center gap-2">
+            {isCreating && (
+              <input
+                type="text"
+                value={apiKeyName}
+                onChange={(e) => setApiKeyName(e.target.value)}
+                className="block w-48 rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+                placeholder="Enter key name"
+              />
+            )}
+            <button
+              className="hover:bg-gray-10 rounded-full border border-black bg-white px-3 py-2 text-sm font-semibold text-gray-500"
+              onClick={handleCreate}
+              disabled={createApiKey.isLoading}
+            >
+              <span className="flex items-center gap-2 px-0.5 text-sm font-semibold leading-tight text-black">
+                {createApiKey.isLoading ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Creating...
+                  </>
+                ) : isCreating ? (
+                  "Confirm"
+                ) : (
+                  "Create Key"
+                )}
+              </span>
+            </button>
           </div>
         </div>
       </div>
