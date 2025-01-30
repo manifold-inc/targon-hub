@@ -28,6 +28,7 @@ import {
 } from "recharts";
 import { toast } from "sonner";
 
+import { useAuth } from "@/app/_components/providers";
 import { CREDIT_PER_DOLLAR, MIN_PURCHASE_IN_DOLLARS } from "@/constants";
 import { env } from "@/env.mjs";
 import { reactClient } from "@/trpc/react";
@@ -83,6 +84,7 @@ interface ChartDataItem {
 }
 
 export default function SettingsPage() {
+  const auth = useAuth();
   const user = reactClient.account.getUserDashboard.useQuery();
   const activity = reactClient.account.getUserActivity.useQuery(); // paginate and optional limit
   const keys = reactClient.core.getApiKeys.useQuery(); // get key?
@@ -280,6 +282,10 @@ export default function SettingsPage() {
     );
   };
 
+  if (auth.status === "UNAUTHED") {
+    router.push("/sign-in");
+  }
+
   return (
     <div>
       <h2 className="text-center text-2xl font-semibold text-gray-900 sm:text-3xl lg:text-left">
@@ -441,7 +447,7 @@ export default function SettingsPage() {
                   });
                 }}
                 disabled={checkout.isLoading || !purchaseAmount}
-                className="mb-2 whitespace-nowrap rounded-full border border-black bg-white px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
+                className="mb-2 mt-2 whitespace-nowrap rounded-full border border-black bg-white px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {checkout.isLoading ? (
                   <div className="flex items-center justify-center gap-2">
@@ -618,7 +624,7 @@ export default function SettingsPage() {
                   <CreditCard className="h-5 w-5" />
                 )}
                 <p className="text-sm leading-tight text-black">
-                  Manage Subscriptions
+                  Subscriptions
                 </p>
               </button>
             )}
