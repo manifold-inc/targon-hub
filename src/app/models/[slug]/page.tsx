@@ -277,6 +277,7 @@ export default async function Page({ params }: Props) {
                   <CodeSamples
                     model={data.name}
                     apiKey={first_key}
+                    typesShown={["chat", "completions"]}
                     params={{
                       temperature: 0.7,
                       max_tokens: 256,

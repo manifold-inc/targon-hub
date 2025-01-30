@@ -12,6 +12,7 @@ import { copyToClipboard } from "@/utils/utils";
 interface CodeSamplesProps {
   model: string | null;
   apiKey: string;
+  typesShown?: string[];
   params: {
     temperature: number;
     max_tokens: number;
@@ -28,16 +29,25 @@ const languages = [
   { id: "typescript", name: "TypeScript" },
 ] as const;
 
-export function CodeSamples({ model, apiKey, params }: CodeSamplesProps) {
+export function CodeSamples({
+  model,
+  apiKey,
+  typesShown = ["completions"],
+  params,
+}: CodeSamplesProps) {
   const [selectedLang, setSelectedLang] =
     useState<(typeof languages)[number]["id"]>("curl");
   const [showApiKey, setShowApiKey] = useState(false);
 
-  const getCodeExample = (lang: typeof selectedLang) => {
+  const getCodeExample = (
+    type: (typeof typesShown)[number],
+    lang: typeof selectedLang,
+  ) => {
     const displayedKey = showApiKey ? apiKey : "YOUR_API_KEY";
 
     const examples = {
-      curl: `curl ${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1/chat/completions \\
+      chat: {
+        curl: `curl ${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1/chat/completions \\
   -H "Content-Type: application/json" \\
   -H "Authorization: Bearer ${displayedKey}" \\
   -N \\
@@ -54,7 +64,7 @@ export function CodeSamples({ model, apiKey, params }: CodeSamplesProps) {
     "frequency_penalty": ${params.frequency_penalty},
     "presence_penalty": ${params.presence_penalty}
   }'`,
-      python: `from openai import OpenAI
+        python: `from openai import OpenAI
 
 client = OpenAI(
     base_url="${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1",
@@ -80,7 +90,7 @@ try:
             print(chunk.choices[0].delta.content, end="")
 except Exception as e:
     print(f"Error: {e}")`,
-      javascript: `import OpenAI from 'openai';
+        javascript: `import OpenAI from 'openai';
 
 const client = new OpenAI({
   baseURL: "${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1",
@@ -108,7 +118,7 @@ try {
 } catch (error) {
   console.error('Error:', error);
 }`,
-      typescript: `import OpenAI from 'openai';
+        typescript: `import OpenAI from 'openai';
 
 const client = new OpenAI({
   baseURL: "${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1",
@@ -139,9 +149,102 @@ const chat = async () => {
 };
 
 void chat();`,
+      },
+      completions: {
+        curl: `curl ${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1/completions \\
+    -H "Content-TESTTTTTType: application/json" \\
+    -H "Authorization: Bearer ${displayedKey}" \\
+    -N \\
+    -d '{
+      "model": "${model}",
+      "stream": true,
+      "prompt": "The x y problem is",
+      "temperature": ${params.temperature},
+      "max_tokens": ${params.max_tokens},
+      "top_p": ${params.top_p},
+      "frequency_penalty": ${params.frequency_penalty},
+      "presence_penalty": ${params.presence_penalty}
+    }'`,
+        python: `from openai import OpenAI
+  
+  client = OpenAI(
+      base_url="${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1",
+      api_key="${displayedKey}"
+  )
+  
+  try:
+      response = client.completions.create(
+          model="${model}",
+          stream=True,
+          prompt="The x y problem is",
+          temperature=${params.temperature},
+          max_tokens=${params.max_tokens},
+          top_p=${params.top_p},
+          frequency_penalty=${params.frequency_penalty},
+          presence_penalty=${params.presence_penalty}
+      )
+      for chunk in response:
+          if chunk.choices[0].text is not None:
+              print(chunk.choices[0].text, end="")
+  except Exception as e:
+      print(f"Error: {e}")`,
+        javascript: `import OpenAI from 'openai';
+  
+  const client = new OpenAI({
+    baseURL: "${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1",
+    apiKey: "${displayedKey}"
+  });
+  
+  try {
+    const stream = await client.completions.create({
+      model: "${model}",
+      stream: true,
+      prompt="The x y problem is",
+      temperature: ${params.temperature},
+      max_tokens: ${params.max_tokens},
+      top_p: ${params.top_p},
+      frequency_penalty: ${params.frequency_penalty},
+      presence_penalty: ${params.presence_penalty}
+    });
+    for await (const chunk of stream) {
+      const text = chunk.choices[0]?.text || "";
+      process.stdout.write(text);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }`,
+        typescript: `import OpenAI from 'openai';
+  
+  const client = new OpenAI({
+    baseURL: "${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1",
+    apiKey: "${displayedKey}",
+    dangerouslyAllowBrowser: true
+  });
+  
+  const chat = async () => {
+    try {
+      const stream = await client.completions.create({
+        model: "${model}",
+        stream: true,
+        prompt="The x y problem is",
+        temperature: ${params.temperature},
+        max_tokens: ${params.max_tokens},
+        top_p: ${params.top_p},
+        frequency_penalty: ${params.frequency_penalty},
+        presence_penalty: ${params.presence_penalty}
+      });
+      for await (const chunk of stream) {
+        const text = chunk.choices[0]?.text || "";
+        process.stdout.write(text);
+      }
+    } catch (error) { console.error('Error:', error); }
+  };
+  
+  void chat();`,
+      },
     };
 
-    return examples[lang];
+    return examples[type as keyof typeof examples][lang];
   };
 
   const getPrismLanguage = (lang: typeof selectedLang) => {
@@ -200,75 +303,77 @@ void chat();`,
           </div>
         </div>
 
-        <div>
-          <div className="pb-4 text-center">
-            <h4 className="text-sm font-medium text-gray-900">
-              Chat Completion Example
-            </h4>
-            <p className="pt-1 text-sm leading-relaxed text-gray-600">
-              Basic example of chat completion with the selected model
-            </p>
-          </div>
-          <div className="overflow-hidden rounded-lg bg-[#0D1117] shadow-sm">
-            <div className="flex items-center justify-between border-b border-gray-800/40 bg-[#161B22] px-4 py-2.5">
-              <div className="flex items-center gap-2">
-                <div className="text-xs font-medium uppercase tracking-wider text-gray-400">
-                  {selectedLang}
+        {typesShown.map((type) => (
+          <div key={type}>
+            <div className="pb-4 pt-8 text-center">
+              <h4 className="text-sm font-medium text-gray-900">
+                {type.charAt(0).toUpperCase() + type.slice(1)} Example
+              </h4>
+              <p className="pt-1 text-sm leading-relaxed text-gray-600">
+                Basic example of {type} with the selected model
+              </p>
+            </div>
+            <div className="overflow-hidden rounded-lg bg-[#0D1117] shadow-sm">
+              <div className="flex items-center justify-between border-b border-gray-800/40 bg-[#161B22] px-4 py-2.5">
+                <div className="flex items-center gap-2">
+                  <div className="text-xs font-medium uppercase tracking-wider text-gray-400">
+                    {selectedLang}
+                  </div>
+                </div>
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => setShowApiKey(!showApiKey)}
+                    className="rounded-md p-1.5 text-gray-400 hover:bg-gray-800/40 hover:text-gray-300"
+                  >
+                    {showApiKey ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                  <button
+                    onClick={() => {
+                      void copyToClipboard(getCodeExample(type, selectedLang));
+                      toast.success("Copied to clipboard");
+                    }}
+                    className="rounded-md p-1.5 text-gray-400 hover:bg-gray-800/40 hover:text-gray-300"
+                  >
+                    <Copy className="h-4 w-4" />
+                  </button>
                 </div>
               </div>
-              <div className="flex items-center gap-1">
-                <button
-                  onClick={() => setShowApiKey(!showApiKey)}
-                  className="rounded-md p-1.5 text-gray-400 hover:bg-gray-800/40 hover:text-gray-300"
-                >
-                  {showApiKey ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
-                </button>
-                <button
-                  onClick={() => {
-                    void copyToClipboard(getCodeExample(selectedLang));
-                    toast.success("Copied to clipboard");
+              <div className="overflow-x-auto">
+                <SyntaxHighlighter
+                  language={getPrismLanguage(selectedLang)}
+                  style={oneDark}
+                  customStyle={{
+                    margin: 0,
+                    padding: "1.25rem",
+                    background: "transparent",
+                    fontSize: "12px",
+                    lineHeight: "1.5",
                   }}
-                  className="rounded-md p-1.5 text-gray-400 hover:bg-gray-800/40 hover:text-gray-300"
+                  codeTagProps={{
+                    style: {
+                      fontFamily:
+                        "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+                    },
+                  }}
+                  showLineNumbers
+                  lineNumberStyle={{
+                    minWidth: "3em",
+                    paddingRight: "1em",
+                    color: "#484848",
+                    textAlign: "right",
+                    userSelect: "none",
+                  }}
                 >
-                  <Copy className="h-4 w-4" />
-                </button>
+                  {getCodeExample(type, selectedLang)}
+                </SyntaxHighlighter>
               </div>
             </div>
-            <div className="overflow-x-auto">
-              <SyntaxHighlighter
-                language={getPrismLanguage(selectedLang)}
-                style={oneDark}
-                customStyle={{
-                  margin: 0,
-                  padding: "1.25rem",
-                  background: "transparent",
-                  fontSize: "12px",
-                  lineHeight: "1.5",
-                }}
-                codeTagProps={{
-                  style: {
-                    fontFamily:
-                      "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
-                  },
-                }}
-                showLineNumbers
-                lineNumberStyle={{
-                  minWidth: "3em",
-                  paddingRight: "1em",
-                  color: "#484848",
-                  textAlign: "right",
-                  userSelect: "none",
-                }}
-              >
-                {getCodeExample(selectedLang)}
-              </SyntaxHighlighter>
-            </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );
