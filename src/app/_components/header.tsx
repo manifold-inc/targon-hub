@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   Dialog,
   DialogPanel,
@@ -12,13 +12,13 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, MenuIcon, User, XIcon } from "lucide-react";
 
 import { CREDIT_PER_DOLLAR } from "@/constants";
 import { formatLargeNumber } from "@/utils/utils";
 import SearchBar from "./landing/SearchBar";
 import { useAuth } from "./providers";
-import SettingsModal from "./SettingsModal";
 
 const NAVIGATION = [
   { slug: "/browse", title: "Browse" },
@@ -29,38 +29,12 @@ const NAVIGATION = [
 export const Header = () => {
   const auth = useAuth();
   const pathName = usePathname();
-  const searchParams = useSearchParams();
-  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const activeTab =
-    (searchParams.get("tab") as
-      | "dashboard"
-      | "credits"
-      | "activity"
-      | "keys") ?? null;
+
   const [hasScrolled, setHasScrolled] = useState(false);
-
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams],
-  );
-  const setActiveTab = useCallback(
-    (path: string) => {
-      const query = createQueryString("tab", path);
-      router.push(pathName + "?" + query);
-    },
-    [router, pathName, createQueryString],
-  );
-
-  const handleSettingsModalClose = () => {
-    setActiveTab("dashboard");
-    router.push(pathName, { scroll: false });
-  };
+  const [isBrowseOpen, setIsBrowseOpen] = useState(false);
+  const [isInfrastructureOpen, setIsInfrastructureOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   // keydown controller
   useEffect(() => {
@@ -111,13 +85,13 @@ export const Header = () => {
             : "bg-transparent"
       }`}
     >
-      <nav className="text-manifold-green flex items-center justify-between p-4">
+      <nav className="text-manifold-green flex items-center justify-between p-2">
         {!mobileMenuOpen && (
           <>
             <div className="w-60">
               <Link
                 href="/"
-                className="flex h-11 w-fit items-center justify-start gap-2 rounded-full p-2 hover:bg-gray-200"
+                className="flex h-11 w-fit items-center justify-start gap-2 p-2"
               >
                 <Image
                   src="/ManifoldMarkTransparentGreenSVG.svg"
@@ -129,52 +103,198 @@ export const Header = () => {
                 <p className="text-md font-semibold">Targon</p>
               </Link>
             </div>
-            <div className="hidden flex-grow justify-center lg:flex">
-              <div className="relative w-2/5">
+            <div className="hidden flex-grow justify-center xl:flex">
+              <div className="relative w-1/2 2xl:w-2/6">
                 <SearchBar />
               </div>
             </div>
-            <div className="hidden w-52 items-center justify-end gap-4 sm:flex">
-              {NAVIGATION.map((page) => (
-                <Link
-                  key={page.slug}
-                  href={page.slug}
-                  className="inline-flex h-9 items-center justify-center gap-1 rounded-full px-3 py-2 text-sm leading-tight text-mf-gray-600 hover:underline"
+            <div className="hidden w-60 items-center justify-end gap-2 sm:flex">
+              <div className="flex items-center">
+                <Menu
+                  as="div"
+                  className="relative"
+                  onMouseEnter={() => setIsBrowseOpen(true)}
+                  onMouseLeave={() => setIsBrowseOpen(false)}
                 >
-                  {page.title}
+                  <MenuButton
+                    className={`inline-flex w-40 justify-center gap-x-1.5 rounded-md rounded-b-none px-3 py-2 text-sm font-medium text-gray-900 ${
+                      isBrowseOpen ? "bg-white" : ""
+                    }`}
+                  >
+                    <Link href="/browse">Browse</Link>
+                  </MenuButton>
+                  <AnimatePresence>
+                    {isBrowseOpen && (
+                      <MenuItems
+                        static
+                        as={motion.div}
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="focus:outline-hidden absolute right-0 top-7 z-10 mt-2 w-40 origin-top rounded-md rounded-t-none bg-white text-center shadow-lg"
+                      >
+                        <MenuItem>
+                          <Link
+                            className={
+                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                            }
+                            href="/models"
+                          >
+                            Models
+                          </Link>
+                        </MenuItem>
+                        <MenuItem>
+                          <Link
+                            className={
+                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                            }
+                            href="/models/lease"
+                          >
+                            Lease
+                          </Link>
+                        </MenuItem>
+                        <MenuItem>
+                          <Link
+                            className={
+                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                            }
+                            href="/roadmap"
+                          >
+                            Image Generation
+                          </Link>
+                        </MenuItem>
+                        <MenuItem>
+                          <Link
+                            className={
+                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                            }
+                            href="/roadmap"
+                          >
+                            GPU Compute
+                          </Link>
+                        </MenuItem>
+                        <MenuItem>
+                          <Link
+                            className={
+                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 2xl:hidden"
+                            }
+                            href="/infrastructure"
+                          >
+                            Infrastructure
+                          </Link>
+                        </MenuItem>
+                        <MenuItem>
+                          <Link
+                            className={
+                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 2xl:hidden"
+                            }
+                            href="/timeline"
+                          >
+                            Timeline
+                          </Link>
+                        </MenuItem>
+                      </MenuItems>
+                    )}
+                  </AnimatePresence>
+                </Menu>
+                <Menu
+                  as="div"
+                  className="relative hidden 2xl:block"
+                  onMouseEnter={() => setIsInfrastructureOpen(true)}
+                  onMouseLeave={() => setIsInfrastructureOpen(false)}
+                >
+                  <MenuButton
+                    className={`inline-flex w-40 justify-center gap-x-1.5 rounded-md rounded-b-none px-3 py-2 text-sm font-medium text-gray-900 ${
+                      isInfrastructureOpen ? "bg-white" : ""
+                    }`}
+                  >
+                    <Link href="/infrastructure">Infrastructure</Link>
+                  </MenuButton>
+                  <AnimatePresence>
+                    {isInfrastructureOpen && (
+                      <MenuItems
+                        static
+                        as={motion.div}
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="focus:outline-hidden absolute right-0 top-7 z-10 mt-2 w-40 origin-top-right rounded-md rounded-t-none bg-white text-center shadow-lg"
+                      >
+                        <MenuItem>
+                          <Link
+                            className={
+                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                            }
+                            href="/infrastructure"
+                          >
+                            Targon
+                          </Link>
+                        </MenuItem>
+                        <MenuItem>
+                          <Link
+                            className={
+                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                            }
+                            href="/models/immunity"
+                          >
+                            Timeline
+                          </Link>
+                        </MenuItem>
+                      </MenuItems>
+                    )}
+                  </AnimatePresence>
+                </Menu>
+                <Link
+                  className="inline-flex w-40 justify-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-medium text-mf-green hover:bg-white"
+                  href="/playground"
+                >
+                  Playground
                 </Link>
-              ))}
-              {auth.status === "AUTHED" ? (
-                <>
-                  <Menu as="div" className="relative inline-block text-left">
-                    {({ open }) => (
-                      <>
-                        <MenuButton className="inline-flex w-full items-center justify-center gap-x-2 rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                          {open ? (
-                            <ChevronDown
-                              aria-hidden="true"
-                              className="text-manifold-green h-4 w-4"
-                            />
-                          ) : (
-                            <MenuIcon
-                              aria-hidden="true"
-                              className="text-manifold-green h-4 w-4"
-                            />
-                          )}
-                          <User
+              </div>
+              <div className="pr-1.5">
+                {auth.status === "AUTHED" ? (
+                  <Menu
+                    as="div"
+                    onMouseEnter={() => setIsUserMenuOpen(true)}
+                    onMouseLeave={() => setIsUserMenuOpen(false)}
+                    className="relative"
+                  >
+                    <Link href="/settings">
+                      <MenuButton className="inline-flex h-9 w-24 items-center justify-center gap-x-2 rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        {isUserMenuOpen ? (
+                          <ChevronDown
                             aria-hidden="true"
-                            className="h-4 w-4 rounded-full bg-gray-700 text-white"
+                            className="text-manifold-green h-4 w-4"
                           />
-                          <span className="text-xs font-medium text-gray-900">
-                            $
-                            {formatLargeNumber(
-                              (auth.user?.credits ?? 0) / CREDIT_PER_DOLLAR,
-                            )}
-                          </span>
-                        </MenuButton>
-
-                        <MenuItems className="absolute right-0 mt-1 w-36 rounded-md bg-white pt-1 shadow-lg ring-1 ring-black ring-opacity-5">
-                          <div className="border-b border-gray-200 py-1">
+                        ) : (
+                          <MenuIcon
+                            aria-hidden="true"
+                            className="text-manifold-green h-4 w-4"
+                          />
+                        )}
+                        <User
+                          aria-hidden="true"
+                          className="h-4 w-4 rounded-full bg-mf-green text-white"
+                        />
+                        <span className="text-xs font-medium text-gray-900">
+                          $
+                          {formatLargeNumber(
+                            (auth.user?.credits ?? 0) / CREDIT_PER_DOLLAR,
+                          )}
+                        </span>
+                      </MenuButton>
+                    </Link>
+                    <AnimatePresence>
+                      {isUserMenuOpen && (
+                        <MenuItems
+                          static
+                          as={motion.div}
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="focus:outline-hidden absolute right-0 top-7 z-10 mt-2 w-40 origin-top rounded-md bg-white text-center shadow-lg"
+                        >
+                          <div className="border-b border-gray-200">
                             <MenuItem>
                               <div className="block w-full px-4 py-2 text-center">
                                 <div className="text-sm tracking-wider text-gray-500">
@@ -193,44 +313,12 @@ export const Header = () => {
                               </div>
                             </MenuItem>
                             <MenuItem>
-                              <button
-                                onClick={() => {
-                                  setActiveTab("dashboard");
-                                }}
-                                className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
+                              <Link
+                                href="/settings"
+                                className="block w-full px-4 py-2 text-center text-sm hover:bg-gray-100"
                               >
                                 Settings
-                              </button>
-                            </MenuItem>
-                            <MenuItem>
-                              <button
-                                onClick={() => {
-                                  setActiveTab("credits");
-                                }}
-                                className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
-                              >
-                                Credits
-                              </button>
-                            </MenuItem>
-                            <MenuItem>
-                              <button
-                                onClick={() => {
-                                  setActiveTab("activity");
-                                }}
-                                className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
-                              >
-                                Activity
-                              </button>
-                            </MenuItem>
-                            <MenuItem>
-                              <button
-                                onClick={() => {
-                                  setActiveTab("keys");
-                                }}
-                                className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
-                              >
-                                Keys
-                              </button>
+                              </Link>
                             </MenuItem>
                             <MenuItem>
                               <Link
@@ -243,29 +331,18 @@ export const Header = () => {
                             </MenuItem>
                           </div>
                         </MenuItems>
-                      </>
-                    )}
+                      )}
+                    </AnimatePresence>
                   </Menu>
-                  <SettingsModal
-                    isOpen={!!activeTab}
-                    onClose={handleSettingsModalClose}
-                    activeTab={activeTab}
-                    onTabChange={(tab) => {
-                      setActiveTab(tab);
-                    }}
-                  />
-                </>
-              ) : (
-                <Link
-                  className="inline-flex h-9 items-center justify-center gap-1 whitespace-nowrap rounded-full border-2 border-white 
-                  bg-white px-3 py-2 shadow transition-all hover:bg-gray-50 hover:shadow-md"
-                  href="/sign-in"
-                >
-                  <span className="text-sm leading-tight text-[#344054]">
-                    Sign in
-                  </span>
-                </Link>
-              )}
+                ) : (
+                  <Link
+                    className="inline-flex h-9 w-24 items-center justify-center gap-x-2 rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    href="/sign-in"
+                  >
+                    <span className="text-sm font-medium">Sign in</span>
+                  </Link>
+                )}
+              </div>
             </div>
             <div className="flex sm:hidden">
               <button
@@ -286,14 +363,14 @@ export const Header = () => {
         <Dialog
           open={mobileMenuOpen}
           onClose={setMobileMenuOpen}
-          className="lg:hidden"
+          className="xl:hidden"
         >
           <div className="fixed inset-0 z-10" />
           <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
               <Link
                 href="/"
-                className="flex h-11 w-fit items-center justify-start gap-2 rounded-full p-2 hover:bg-gray-200"
+                className="flex h-11 w-fit items-center justify-start gap-2 p-2"
               >
                 <Image
                   src="/ManifoldMarkTransparentGreenSVG.svg"
@@ -324,7 +401,7 @@ export const Header = () => {
                       key={item.title}
                       href={item.slug}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                      className="-mx-3 block px-3 py-2 text-base/7 font-semibold text-gray-900"
                     >
                       {item.title}
                     </Link>

@@ -107,7 +107,7 @@ export default function Page() {
       <div className="flex">
         {/* Left sidebar - desktop */}
         <div className="hidden w-80 lg:block">
-          <div className="fixed w-80 border-r border-[#f2f4f7] bg-white">
+          <div className="sticky top-14 min-h-screen overflow-y-auto border-r border-[#f2f4f7] bg-white">
             <ModalSidebar />
           </div>
         </div>
