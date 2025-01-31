@@ -39,23 +39,13 @@ export function CodeSamples({
     useState<(typeof languages)[number]["id"]>("curl");
   const [showApiKey, setShowApiKey] = useState(false);
 
-  const handleLanguageChange = useCallback((lang: typeof selectedLang) => {
-    setSelectedLang(lang);
-  }, []);
+  const getCodeExample = useCallback(
+    (type: (typeof typesShown)[number], lang: typeof selectedLang) => {
+      const displayedKey = showApiKey ? apiKey : "YOUR_API_KEY";
 
-  const toggleApiKeyVisibility = useCallback(() => {
-    setShowApiKey((prev) => !prev);
-  }, []);
-
-  const getCodeExample = (
-    type: (typeof typesShown)[number],
-    lang: typeof selectedLang,
-  ) => {
-    const displayedKey = showApiKey ? apiKey : "YOUR_API_KEY";
-
-    const examples = {
-      chat: {
-        curl: `curl ${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1/chat/completions \\
+      const examples = {
+        chat: {
+          curl: `curl ${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1/chat/completions \\
   -H "Content-Type: application/json" \\
   -H "Authorization: Bearer ${displayedKey}" \\
   -N \\
@@ -72,7 +62,7 @@ export function CodeSamples({
     "frequency_penalty": ${params.frequency_penalty},
     "presence_penalty": ${params.presence_penalty}
   }'`,
-        python: `from openai import OpenAI
+          python: `from openai import OpenAI
 
 client = OpenAI(
     base_url="${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1",
@@ -98,7 +88,7 @@ try:
             print(chunk.choices[0].delta.content, end="")
 except Exception as e:
     print(f"Error: {e}")`,
-        javascript: `import OpenAI from 'openai';
+          javascript: `import OpenAI from 'openai';
 
 const client = new OpenAI({
   baseURL: "${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1",
@@ -126,7 +116,7 @@ try {
 } catch (error) {
   console.error('Error:', error);
 }`,
-        typescript: `import OpenAI from 'openai';
+          typescript: `import OpenAI from 'openai';
 
 const client = new OpenAI({
   baseURL: "${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1",
@@ -157,9 +147,9 @@ const chat = async () => {
 };
 
 void chat();`,
-      },
-      completions: {
-        curl: `curl ${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1/completions \\
+        },
+        completions: {
+          curl: `curl ${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1/completions \\
     -H "Content-TESTTTTTType: application/json" \\
     -H "Authorization: Bearer ${displayedKey}" \\
     -N \\
@@ -173,7 +163,7 @@ void chat();`,
       "frequency_penalty": ${params.frequency_penalty},
       "presence_penalty": ${params.presence_penalty}
     }'`,
-        python: `from openai import OpenAI
+          python: `from openai import OpenAI
   
   client = OpenAI(
       base_url="${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1",
@@ -196,7 +186,7 @@ void chat();`,
               print(chunk.choices[0].text, end="")
   except Exception as e:
       print(f"Error: {e}")`,
-        javascript: `import OpenAI from 'openai';
+          javascript: `import OpenAI from 'openai';
   
   const client = new OpenAI({
     baseURL: "${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1",
@@ -221,7 +211,7 @@ void chat();`,
   } catch (error) {
     console.error('Error:', error);
   }`,
-        typescript: `import OpenAI from 'openai';
+          typescript: `import OpenAI from 'openai';
   
   const client = new OpenAI({
     baseURL: "${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1",
@@ -249,11 +239,13 @@ void chat();`,
   };
   
   void chat();`,
-      },
-    };
+        },
+      };
 
-    return examples[type as keyof typeof examples][lang];
-  };
+      return examples[type as keyof typeof examples][lang];
+    },
+    [model, apiKey, showApiKey, params],
+  );
 
   const getPrismLanguage = (lang: typeof selectedLang) => {
     const mapping = {
@@ -297,7 +289,7 @@ void chat();`,
             {languages.map((lang) => (
               <button
                 key={lang.id}
-                onClick={() => handleLanguageChange(lang.id)}
+                onClick={() => setSelectedLang(lang.id)}
                 className={clsx(
                   "w-full rounded-lg py-2 text-sm font-medium leading-5",
                   selectedLang === lang.id
@@ -330,7 +322,7 @@ void chat();`,
                 </div>
                 <div className="flex items-center gap-1">
                   <button
-                    onClick={toggleApiKeyVisibility}
+                    onClick={() => setShowApiKey(!showApiKey)}
                     className="rounded-md p-1.5 text-gray-400 hover:bg-gray-800/40 hover:text-gray-300"
                   >
                     {showApiKey ? (
