@@ -13,7 +13,17 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, MenuIcon, User, XIcon } from "lucide-react";
+import {
+  ChevronDown,
+  Clock,
+  FileBox,
+  Map,
+  MenuIcon,
+  Server,
+  User,
+  Wallet,
+  XIcon,
+} from "lucide-react";
 
 import { CREDIT_PER_DOLLAR } from "@/constants";
 import { formatLargeNumber } from "@/utils/utils";
@@ -21,8 +31,23 @@ import SearchBar from "./landing/SearchBar";
 import { useAuth } from "./providers";
 
 const NAVIGATION = [
-  { slug: "/browse", title: "Browse" },
-  { slug: "/infrastructure", title: "Infrastructure" },
+  {
+    slug: "/browse",
+    title: "Browse",
+    subpages: [
+      { slug: "/browse", title: "Models" },
+      { slug: "/models/lease", title: "Lease" },
+    ],
+  },
+  {
+    slug: "/infrastructure",
+    title: "Explore",
+    subpages: [
+      { slug: "/infrastructure", title: "Infrastructure" },
+      { slug: "/roadmap", title: "Roadmap" },
+      { slug: "/models/immunity", title: "Timeline" },
+    ],
+  },
   { slug: "/playground", title: "Playground" },
 ];
 
@@ -85,7 +110,7 @@ export const Header = () => {
             : "bg-transparent"
       }`}
     >
-      <nav className="text-manifold-green flex items-center justify-between p-2">
+      <nav className="text-manifold-green flex h-16 items-center justify-between p-2">
         {!mobileMenuOpen && (
           <>
             <div className="w-60">
@@ -108,148 +133,204 @@ export const Header = () => {
                 <SearchBar />
               </div>
             </div>
-            <div className="hidden w-60 items-center justify-end gap-2 sm:flex">
+            <div className="hidden w-60 items-center justify-end sm:flex">
               <div className="flex items-center">
-                <Menu
-                  as="div"
-                  className="relative"
-                  onMouseEnter={() => setIsBrowseOpen(true)}
-                  onMouseLeave={() => setIsBrowseOpen(false)}
-                >
-                  <MenuButton
-                    className={`inline-flex w-40 justify-center gap-x-1.5 rounded-md rounded-b-none px-3 py-2 text-sm font-medium text-gray-900 ${
-                      isBrowseOpen ? "bg-white" : ""
-                    }`}
+                <div className="flex items-center gap-16">
+                  <Menu
+                    as="div"
+                    className="relative"
+                    onMouseEnter={() => setIsBrowseOpen(true)}
+                    onMouseLeave={() => setIsBrowseOpen(false)}
                   >
-                    <Link href="/browse">Browse</Link>
-                  </MenuButton>
-                  <AnimatePresence>
-                    {isBrowseOpen && (
-                      <MenuItems
-                        static
-                        as={motion.div}
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="focus:outline-hidden absolute right-0 top-7 z-10 mt-2 w-40 origin-top rounded-md rounded-t-none bg-white text-center shadow-lg"
-                      >
-                        <MenuItem>
-                          <Link
-                            className={
-                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-                            }
-                            href="/models"
-                          >
-                            Models
-                          </Link>
-                        </MenuItem>
-                        <MenuItem>
-                          <Link
-                            className={
-                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-                            }
-                            href="/models/lease"
-                          >
-                            Lease
-                          </Link>
-                        </MenuItem>
-                        <MenuItem>
-                          <Link
-                            className={
-                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-                            }
-                            href="/roadmap"
-                          >
-                            Image Generation
-                          </Link>
-                        </MenuItem>
-                        <MenuItem>
-                          <Link
-                            className={
-                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-                            }
-                            href="/roadmap"
-                          >
-                            GPU Compute
-                          </Link>
-                        </MenuItem>
-                        <MenuItem>
-                          <Link
-                            className={
-                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 2xl:hidden"
-                            }
-                            href="/infrastructure"
-                          >
-                            Infrastructure
-                          </Link>
-                        </MenuItem>
-                        <MenuItem>
-                          <Link
-                            className={
-                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 2xl:hidden"
-                            }
-                            href="/timeline"
-                          >
-                            Timeline
-                          </Link>
-                        </MenuItem>
-                      </MenuItems>
-                    )}
-                  </AnimatePresence>
-                </Menu>
-                <Menu
-                  as="div"
-                  className="relative hidden 2xl:block"
-                  onMouseEnter={() => setIsInfrastructureOpen(true)}
-                  onMouseLeave={() => setIsInfrastructureOpen(false)}
-                >
-                  <MenuButton
-                    className={`inline-flex w-40 justify-center gap-x-1.5 rounded-md rounded-b-none px-3 py-2 text-sm font-medium text-gray-900 ${
-                      isInfrastructureOpen ? "bg-white" : ""
-                    }`}
+                    <MenuButton
+                      className={
+                        "inline-flex w-20 cursor-default justify-center py-9 text-sm font-medium text-gray-900"
+                      }
+                    >
+                      Browse
+                    </MenuButton>
+                    <AnimatePresence>
+                      {isBrowseOpen && (
+                        <MenuItems
+                          static
+                          as={motion.div}
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{
+                            opacity: 0,
+                            y: -10,
+                            transition: { delay: 0.2 },
+                          }}
+                          className="focus:outline-hidden absolute -left-36 top-20 z-10 mt-2 w-96 origin-top rounded-md bg-white text-center shadow-lg"
+                        >
+                          <MenuItem>
+                            <Link
+                              className={
+                                "group flex items-center gap-2 px-4 py-4 text-sm text-black"
+                              }
+                              href="/models"
+                            >
+                              <FileBox className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                              <div className="flex flex-col gap-0 pl-2 text-left">
+                                <p className="text-xs">Models</p>
+                                <p className="text-xs text-gray-500">
+                                  Search and deploy models
+                                </p>
+                              </div>
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              className={
+                                "group flex items-center gap-2 px-4 py-4 text-sm text-black"
+                              }
+                              href="/models/lease"
+                            >
+                              <Wallet className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                              <div className="flex flex-col gap-0 pl-2 text-left">
+                                <p className="text-xs">Lease</p>
+                                <p className="text-xs text-gray-500">
+                                  Add any model
+                                </p>
+                              </div>
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              className={
+                                "block px-4 py-4 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 2xl:hidden"
+                              }
+                              href="/infrastructure"
+                            >
+                              <div className="group flex items-center gap-2">
+                                <Server className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                                <div className="flex flex-col gap-0 pl-2 text-left">
+                                  <p className="text-xs">Infrastructure</p>
+                                  <p className="text-xs text-gray-500">
+                                    Explore our platform
+                                  </p>
+                                </div>
+                              </div>
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              className={
+                                "block px-4 py-4 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 2xl:hidden"
+                              }
+                              href="/roadmap"
+                            >
+                              <div className="group flex items-center gap-2">
+                                <Map className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                                <div className="flex flex-col gap-0 pl-2 text-left">
+                                  <p className="text-xs">Roadmap</p>
+                                  <p className="text-xs text-gray-500">
+                                    Our vision
+                                  </p>
+                                </div>
+                              </div>
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              className={
+                                "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 2xl:hidden"
+                              }
+                              href="/timeline"
+                            >
+                              <div className="group flex items-center gap-2">
+                                <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                                <div className="flex flex-col gap-0 pl-2 text-left">
+                                  <p className="text-xs">Timeline</p>
+                                  <p className="text-xs text-gray-500">
+                                    View our progress
+                                  </p>
+                                </div>
+                              </div>
+                            </Link>
+                          </MenuItem>
+                        </MenuItems>
+                      )}
+                    </AnimatePresence>
+                  </Menu>
+                  <Menu
+                    as="div"
+                    className="relative hidden 2xl:block"
+                    onMouseEnter={() => setIsInfrastructureOpen(true)}
+                    onMouseLeave={() => setIsInfrastructureOpen(false)}
                   >
-                    <Link href="/infrastructure">Infrastructure</Link>
-                  </MenuButton>
-                  <AnimatePresence>
-                    {isInfrastructureOpen && (
-                      <MenuItems
-                        static
-                        as={motion.div}
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="focus:outline-hidden absolute right-0 top-7 z-10 mt-2 w-40 origin-top-right rounded-md rounded-t-none bg-white text-center shadow-lg"
-                      >
-                        <MenuItem>
-                          <Link
-                            className={
-                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-                            }
-                            href="/infrastructure"
-                          >
-                            Targon
-                          </Link>
-                        </MenuItem>
-                        <MenuItem>
-                          <Link
-                            className={
-                              "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-                            }
-                            href="/models/immunity"
-                          >
-                            Timeline
-                          </Link>
-                        </MenuItem>
-                      </MenuItems>
-                    )}
-                  </AnimatePresence>
-                </Menu>
-                <Link
-                  className="inline-flex w-40 justify-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-medium text-mf-green hover:bg-white"
-                  href="/playground"
-                >
-                  Playground
-                </Link>
+                    <MenuButton
+                      className={
+                        "inline-flex w-20 cursor-default justify-center py-9 text-sm font-medium text-gray-900"
+                      }
+                    >
+                      Resources
+                    </MenuButton>
+                    <AnimatePresence>
+                      {isInfrastructureOpen && (
+                        <MenuItems
+                          static
+                          as={motion.div}
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="focus:outline-hidden absolute -left-36 top-20 z-10 mt-2 w-96 origin-top rounded-md bg-white text-center shadow-lg"
+                        >
+                          <MenuItem>
+                            <Link
+                              className="group flex items-center gap-2 px-4 py-4 text-sm text-black"
+                              href="/infrastructure"
+                            >
+                              <Server className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                              <div className="flex flex-col gap-0 pl-2 text-left">
+                                <p className="text-xs">Infrastructure</p>
+                                <p className="text-xs text-gray-500">
+                                  Explore our platform
+                                </p>
+                              </div>
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              className="group flex items-center gap-2 px-4 py-4 text-sm text-black"
+                              href="/roadmap"
+                            >
+                              <Map className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                              <div className="flex flex-col gap-0 pl-2 text-left">
+                                <p className="text-xs">Roadmap</p>
+                                <p className="text-xs text-gray-500">
+                                  Our vision
+                                </p>
+                              </div>
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              className="group flex items-center gap-2 px-4 py-4 text-sm text-black"
+                              href="/models/immunity"
+                            >
+                              <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                              <div className="flex flex-col gap-0 pl-2 text-left">
+                                <p className="text-xs">Timeline</p>
+                                <p className="text-xs text-gray-500">
+                                  Model immunity
+                                </p>
+                              </div>
+                            </Link>
+                          </MenuItem>
+                        </MenuItems>
+                      )}
+                    </AnimatePresence>
+                  </Menu>
+                </div>
+                <div className="flex items-center gap-16 px-12">
+                  <Link
+                    className="inline-flex w-32 justify-center gap-x-1.5 rounded-md py-2 text-sm font-medium hover:bg-white hover:shadow-md"
+                    href="/playground"
+                  >
+                    Playground
+                  </Link>
+                </div>
               </div>
               <div className="pr-1.5">
                 {auth.status === "AUTHED" ? (
@@ -260,7 +341,11 @@ export const Header = () => {
                     className="relative"
                   >
                     <Link href="/settings">
-                      <MenuButton className="inline-flex h-9 w-24 items-center justify-center gap-x-2 rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                      <MenuButton
+                        className={`inline-flex h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-gray-50 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-200 ${
+                          isUserMenuOpen ? "rounded-b-none ring-white" : ""
+                        }`}
+                      >
                         {isUserMenuOpen ? (
                           <ChevronDown
                             aria-hidden="true"
@@ -274,7 +359,7 @@ export const Header = () => {
                         )}
                         <User
                           aria-hidden="true"
-                          className="h-4 w-4 rounded-full bg-mf-green text-white"
+                          className="h-4 w-4 rounded-full bg-black text-white"
                         />
                         <span className="text-xs font-medium text-gray-900">
                           $
@@ -292,7 +377,7 @@ export const Header = () => {
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="focus:outline-hidden absolute right-0 top-7 z-10 mt-2 w-40 origin-top rounded-md bg-white text-center shadow-lg"
+                          className="focus:outline-hidden absolute right-0 top-6 z-10 mt-2 w-28 origin-top rounded-md rounded-t-none bg-gray-50 text-center shadow-lg"
                         >
                           <div className="border-b border-gray-200">
                             <MenuItem>
@@ -336,7 +421,7 @@ export const Header = () => {
                   </Menu>
                 ) : (
                   <Link
-                    className="inline-flex h-9 w-24 items-center justify-center gap-x-2 rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    className="inline-flex h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     href="/sign-in"
                   >
                     <span className="text-sm font-medium">Sign in</span>
@@ -397,17 +482,35 @@ export const Header = () => {
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="space-y-2 py-6">
                   {NAVIGATION.map((item) => (
-                    <Link
-                      key={item.title}
-                      href={item.slug}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="-mx-3 block px-3 py-2 text-base/7 font-semibold text-gray-900"
-                    >
-                      {item.title}
-                    </Link>
+                    <div key={item.title}>
+                      <Link
+                        href={item.slug}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="-mx-3 block px-3 py-2 text-base/7 font-semibold text-gray-900"
+                      >
+                        {item.title}
+                      </Link>
+                      {item.subpages?.map((sub) => (
+                        <Link
+                          key={sub.title}
+                          href={sub.slug}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="-mx-3 block py-2 pl-6 text-base/7 font-semibold text-gray-600"
+                        >
+                          {sub.title}
+                        </Link>
+                      ))}
+                    </div>
                   ))}
                 </div>
                 <div className="py-6">
+                  <Link
+                    href="/settings"
+                    prefetch={false}
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                  >
+                    Settings
+                  </Link>
                   {auth.status === "AUTHED" ? (
                     <Link
                       href="/sign-out"

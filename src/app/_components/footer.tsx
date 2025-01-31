@@ -6,13 +6,11 @@ const navigation = {
   browse: [
     { name: "Models", href: "/models" },
     { name: "Lease", href: "/models/lease" },
-    { name: "Roadmap", href: "/roadmap" },
-    { name: "Image Generation", href: "/roadmap" },
-    { name: "GPU Compute", href: "/roadmap" },
+    { name: "Playground", href: "/playground" },
   ],
   infrastructure: [
-    { name: "Targon", href: "/infrastructure" },
-    { name: "Playground", href: "/playground" },
+    { name: "Infrastructure", href: "/infrastructure" },
+    { name: "Roadmap", href: "/roadmap" },
     { name: "Timeline", href: "/models/immunity" },
   ],
   account: [
@@ -59,8 +57,8 @@ const navigation = {
 
 export const Footer = () => {
   return (
-    <footer className="bg-white">
-      <div className="mx-auto max-w-7xl px-6 py-10 sm:pb-16 sm:pt-32">
+    <footer className="border-t border-[#E5E7EB] bg-white">
+      <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="lg:grid lg:grid-cols-3 lg:gap-8">
           <div className="flex flex-col gap-y-4">
             <div className="flex">
@@ -92,82 +90,72 @@ export const Footer = () => {
               </p>
             </div>
           </div>
-          <div className="mt-16 grid grid-cols-2 gap-8 pl-20 lg:col-span-2 lg:mt-0">
-            <div className="md:grid md:grid-cols-2 md:gap-8">
+          <div className="mt-16 grid grid-cols-2 gap-4 pl-20 lg:col-span-2 lg:mt-0">
+            <div className="md:grid md:grid-cols-2 md:gap-4">
               <div>
-                <Link href="/browse">
-                  <h3 className="text-sm/6 font-semibold text-gray-900">
-                    Browse
-                  </h3>
-                </Link>
-                <ul role="list" className="mt-6 space-y-4">
+                <h3 className="text-sm/6 font-semibold text-gray-900">
+                  Browse
+                </h3>
+                <ul role="list" className="mt-4 space-y-2">
                   {navigation.browse.map((item) => (
                     <li key={item.name}>
-                      <a
+                      <Link
                         href={item.href}
                         className="text-sm/6 text-gray-600 hover:text-gray-900"
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="mt-10 md:mt-0">
-                <Link href="/infrastructure">
-                  <h3 className="text-sm/6 font-semibold text-gray-900">
-                    Infrastructure
-                  </h3>
-                </Link>
-                <ul role="list" className="mt-6 space-y-4">
+              <div className="mt-5 md:mt-0">
+                <h3 className="text-sm/6 font-semibold text-gray-900">
+                  Infrastructure
+                </h3>
+                <ul role="list" className="mt-4 space-y-2">
                   {navigation.infrastructure.map((item) => (
                     <li key={item.name}>
-                      <a
+                      <Link
                         href={item.href}
                         className="text-sm/6 text-gray-600 hover:text-gray-900"
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
-            <div className="md:grid md:grid-cols-2 md:gap-8">
+            <div className="md:grid md:grid-cols-2 md:gap-4">
               <div>
-                <Link href="/settings">
-                  <h3 className="text-sm/6 font-semibold text-gray-900">
-                    Account
-                  </h3>
-                </Link>
-                <ul role="list" className="mt-6 space-y-4">
+                <h3 className="text-sm/6 font-semibold text-gray-900">
+                  Account
+                </h3>
+                <ul role="list" className="mt-4 space-y-2">
                   {navigation.account.map((item) => (
                     <li key={item.name}>
-                      <a
+                      <Link
                         href={item.href}
                         className="text-sm/6 text-gray-600 hover:text-gray-900"
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <Link href="/privacy">
-                  <h3 className="text-sm/6 font-semibold text-gray-900">
-                    Legal
-                  </h3>
-                </Link>
-                <ul role="list" className="mt-6 space-y-4">
+                <h3 className="text-sm/6 font-semibold text-gray-900">Legal</h3>
+                <ul role="list" className="mt-4 space-y-2">
                   {navigation.legal.map((item) => (
                     <li key={item.name}>
-                      <a
+                      <Link
                         href={item.href}
                         className="text-sm/6 text-gray-600 hover:text-gray-900"
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
