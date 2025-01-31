@@ -1,14 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import {
-  ArrowUpDown,
-  Binary,
-  Hash,
-  Percent,
-  Thermometer,
-  UserRound,
-} from "lucide-react";
+import { UserRound } from "lucide-react";
 
 import { CodeSamples } from "@/app/_components/CodeSamples";
 import ModelsNav from "@/app/_components/ModelsNav";
@@ -24,65 +17,9 @@ type Props = {
   };
 };
 
-interface Params {
-  temperature: number;
-  max_tokens: number;
-  top_p: number;
-  frequency_penalty: number;
-  presence_penalty: number;
-}
-
 export default async function Page({ params }: Props) {
   const { user, session } = await uncachedValidateRequest();
   const caller = createCaller({ user, db: db, req: null, session: session });
-
-  const parameters = [
-    {
-      name: "Temperature",
-      key: "temperature" as keyof Params,
-      icon: Thermometer,
-      min: 0,
-      max: 2,
-      step: 0.1,
-      description: "Controls randomness: 0 is focused, 2 is more random",
-    },
-    {
-      name: "Max Tokens",
-      key: "max_tokens" as keyof Params,
-      icon: Hash,
-      min: 1,
-      max: 2048,
-      step: 1,
-      description: "Maximum number of tokens to generate",
-    },
-    {
-      name: "Top P",
-      key: "top_p" as keyof Params,
-      icon: Percent,
-      min: 0,
-      max: 1,
-      step: 0.1,
-      description: "Controls diversity via nucleus sampling",
-    },
-    {
-      name: "Frequency Penalty",
-      key: "frequency_penalty" as keyof Params,
-      icon: ArrowUpDown,
-      min: -2.0,
-      max: 2.0,
-      step: 0.1,
-      description: "Reduces repetition of token frequencies",
-    },
-    {
-      name: "Presence Penalty",
-      key: "presence_penalty" as keyof Params,
-      icon: Binary,
-      min: -2.0,
-      max: 2.0,
-      step: 0.1,
-      description: "Reduces repetition of topics and concepts",
-    },
-  ];
 
   const data = await caller.model.getModelInfo({
     model: decodeURIComponent(params.slug),
@@ -122,11 +59,11 @@ export default async function Page({ params }: Props) {
                   href={
                     user?.id
                       ? data.enabled
-                        ? `#parameters`
+                        ? `#code-samples`
                         : `/models/lease?model=${encodeURIComponent(params.slug)}`
                       : `/sign-in?redirect=${encodeURIComponent("/models" + params.slug)}`
                   }
-                  className="group relative flex h-12 w-full items-center justify-center self-center sm:w-32 sm:self-auto"
+                  className="group relative flex h-9 w-full items-center justify-center self-center sm:w-32 sm:self-auto"
                 >
                   <span className="inline-flex w-full items-center justify-center gap-1 whitespace-nowrap rounded-full border border-black bg-white px-3 py-2 text-black group-hover:bg-gray-100 sm:w-auto">
                     <span className="w-full text-center text-sm font-semibold leading-tight sm:w-24">
@@ -247,29 +184,6 @@ export default async function Page({ params }: Props) {
                   </li>
                 ))}
               </ol>
-            </section>
-            <section id="parameters" data-section>
-              <div className="mt-4 border-t border-gray-100">
-                <p className="py-4 text-2xl leading-loose text-[#101828]">
-                  Parameters
-                </p>
-                <div className="space-y-2">
-                  {parameters.map((param) => (
-                    <div
-                      key={`help-${param.key}`}
-                      className="flex items-start space-x-2 rounded-lg py-1 text-sm text-gray-500"
-                    >
-                      <param.icon className="mt-0.5 h-4 w-4 shrink-0" />
-                      <div>
-                        <span className="font-medium text-black">
-                          {param.name}
-                        </span>
-                        <p className="leading-snug">{param.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </section>
             <section id="code-samples" data-section>
               <div className="mt-10 border-t border-gray-100 py-4">

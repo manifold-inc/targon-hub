@@ -6,11 +6,7 @@ const ModelsNav = () => {
   const [activeSection, setActiveSection] = useState<string>("overview");
   const sections = useRef<Element[]>([]);
 
-  const navItems = [
-    { label: "Overview" },
-    { label: "Parameters" },
-    { label: "Code Samples" },
-  ];
+  const navItems = [{ label: "Overview" }, { label: "Code Samples" }];
 
   const handleScroll = () => {
     const pageYOffset = window.scrollY;

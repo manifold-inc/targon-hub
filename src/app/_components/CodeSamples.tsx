@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import clsx from "clsx";
 import { Copy, Eye, EyeOff } from "lucide-react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -38,6 +38,14 @@ export function CodeSamples({
   const [selectedLang, setSelectedLang] =
     useState<(typeof languages)[number]["id"]>("curl");
   const [showApiKey, setShowApiKey] = useState(false);
+
+  const handleLanguageChange = useCallback((lang: typeof selectedLang) => {
+    setSelectedLang(lang);
+  }, []);
+
+  const toggleApiKeyVisibility = useCallback(() => {
+    setShowApiKey((prev) => !prev);
+  }, []);
 
   const getCodeExample = (
     type: (typeof typesShown)[number],
@@ -289,7 +297,7 @@ void chat();`,
             {languages.map((lang) => (
               <button
                 key={lang.id}
-                onClick={() => setSelectedLang(lang.id)}
+                onClick={() => handleLanguageChange(lang.id)}
                 className={clsx(
                   "w-full rounded-lg py-2 text-sm font-medium leading-5",
                   selectedLang === lang.id
@@ -322,7 +330,7 @@ void chat();`,
                 </div>
                 <div className="flex items-center gap-1">
                   <button
-                    onClick={() => setShowApiKey(!showApiKey)}
+                    onClick={toggleApiKeyVisibility}
                     className="rounded-md p-1.5 text-gray-400 hover:bg-gray-800/40 hover:text-gray-300"
                   >
                     {showApiKey ? (
