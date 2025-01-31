@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
@@ -120,7 +120,7 @@ export default function SettingsPage() {
     return Array.from(models);
   };
 
-  const handleBittensorLink = async () => {
+  const handleBittensorLink = useCallback(async () => {
     setIsLinking(true);
     try {
       // Initialize Polkadot extension
@@ -215,7 +215,7 @@ export default function SettingsPage() {
     } finally {
       setIsLinking(false);
     }
-  };
+  }, [ss58Address, user.data?.id]);
 
   const handleManageSubscriptions = async () => {
     try {
