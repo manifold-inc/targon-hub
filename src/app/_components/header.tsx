@@ -59,7 +59,7 @@ export const Header = () => {
   const [isBrowseOpen, setIsBrowseOpen] = useState(false);
   const [isInfrastructureOpen, setIsInfrastructureOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  
+
   // keydown controller
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -87,7 +87,7 @@ export const Header = () => {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
-    
+
   // Add scroll listener
   useEffect(() => {
     const handleScroll = () => {
@@ -103,17 +103,16 @@ export const Header = () => {
     setIsUserMenuOpen(() => false);
     setIsInfrastructureOpen(() => false);
   }, [pathName]);
-    
+
   return (
     <header
       id="navbar"
-      className={`fixed top-0 z-20 w-full animate-slide-in transition-[top_.3s] ${
-        pathName !== "/"
+      className={`fixed top-0 z-20 w-full animate-slide-in transition-[top_.3s] ${pathName !== "/"
           ? "border-b border-gray-200 bg-white"
           : hasScrolled
             ? "bg-white/20 backdrop-blur-md backdrop-saturate-150"
             : "bg-transparent"
-      }`}
+        }`}
     >
       <nav className="text-manifold-green flex h-16 items-center justify-between p-2">
         {!mobileMenuOpen && (
@@ -343,9 +342,8 @@ export const Header = () => {
                   >
                     <Link href="/settings">
                       <MenuButton
-                        className={`inline-flex h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-gray-50 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-200 ${
-                          isUserMenuOpen ? "rounded-b-none ring-white" : ""
-                        }`}
+                        className={`inline-flex h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-gray-50 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-200 ${isUserMenuOpen ? "rounded-b-none ring-white" : ""
+                          }`}
                       >
                         {isUserMenuOpen ? (
                           <ChevronDown
@@ -390,7 +388,7 @@ export const Header = () => {
                                   $
                                   {Number(
                                     (auth.user?.credits ?? 0) /
-                                      CREDIT_PER_DOLLAR,
+                                    CREDIT_PER_DOLLAR,
                                   ).toLocaleString("en-US", {
                                     minimumFractionDigits: 2,
                                     maximumFractionDigits: 2,
@@ -443,28 +441,28 @@ export const Header = () => {
                       )}
                     </AnimatePresence>
                   </Menu>
-                </>
-              ) : (
-                <Link
-                  href="/sign-in"
-                  className="inline-flex h-9 items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-sm leading-tight text-mf-gray-600 hover:underline"
+                ) : (
+                  <Link
+                    href="/sign-in"
+                    className="inline-flex h-9 items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-sm leading-tight text-mf-gray-600 hover:underline"
+                  >
+                    Sign In
+                  </Link>
+                )}
+              </div>
+              <div className="flex sm:hidden">
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen(true)}
+                  className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
                 >
-                  Sign In
-                </Link>
-              )}
-            </div>
-            <div className="flex sm:hidden">
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(true)}
-                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-              >
-                <span className="sr-only">Open main menu</span>
-                <MenuIcon
-                  aria-hidden="true"
-                  className="h-6 w-6 text-mf-gray-600"
-                />
-              </button>
+                  <span className="sr-only">Open main menu</span>
+                  <MenuIcon
+                    aria-hidden="true"
+                    className="h-6 w-6 text-mf-gray-600"
+                  />
+                </button>
+              </div>
             </div>
           </>
         )}
