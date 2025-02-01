@@ -72,13 +72,12 @@ export const Header = () => {
   return (
     <header
       id="navbar"
-      className={`fixed top-0 z-20 w-full animate-slide-in transition-[top_.3s] ${
-        pathName !== "/"
+      className={`fixed top-0 z-20 w-full animate-slide-in transition-[top_.3s] ${pathName !== "/"
           ? "border-b border-gray-200 bg-white"
           : hasScrolled
             ? "bg-white/20 backdrop-blur-md backdrop-saturate-150"
             : "bg-transparent"
-      }`}
+        }`}
     >
       <nav className="text-manifold-green flex items-center justify-between p-4">
         {!mobileMenuOpen && (
@@ -153,7 +152,7 @@ export const Header = () => {
                                   $
                                   {Number(
                                     (auth.user?.credits ?? 0) /
-                                      CREDIT_PER_DOLLAR,
+                                    CREDIT_PER_DOLLAR,
                                   ).toLocaleString("en-US", {
                                     minimumFractionDigits: 2,
                                     maximumFractionDigits: 2,
@@ -194,13 +193,12 @@ export const Header = () => {
                               </Link>
                             </MenuItem>
                             <MenuItem>
-                              <Link
-                                prefetch={false}
+                              <a
                                 href="/sign-out"
                                 className="block px-4 py-2 text-center text-sm hover:bg-gray-100"
                               >
                                 Sign Out
-                              </Link>
+                              </a>
                             </MenuItem>
                           </div>
                         </MenuItems>
@@ -282,14 +280,13 @@ export const Header = () => {
                 </div>
                 <div className="py-6">
                   {auth.status === "AUTHED" ? (
-                    <Link
+                    <a
                       href="/sign-out"
-                      prefetch={false}
                       onClick={() => setMobileMenuOpen(false)}
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                     >
                       Sign out
-                    </Link>
+                    </a>
                   ) : (
                     <Link
                       href="/sign-in"

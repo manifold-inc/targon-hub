@@ -292,15 +292,14 @@ export default function SettingsPage() {
               <div className="text-sm text-black">{user.data?.email}</div>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Link
+              <a
                 href="/sign-out"
                 className="inline-flex h-8 items-center justify-center gap-1 rounded-full px-3 py-2 hover:bg-blue-50"
-                prefetch={false}
               >
                 <span className="text-sm font-semibold leading-tight text-[#1d4ed8]">
                   Logout
                 </span>
-              </Link>
+              </a>
             </div>
           </div>
         </div>
