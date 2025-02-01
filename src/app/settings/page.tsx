@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import type {
   InjectedAccountWithMeta,
@@ -13,7 +13,6 @@ import {
   ChevronDown,
   Copy,
   CreditCard,
-  InfoIcon,
   Loader2,
   User,
   Wallet,
@@ -29,7 +28,7 @@ import {
 import { toast } from "sonner";
 
 import { useAuth } from "@/app/_components/providers";
-import { CREDIT_PER_DOLLAR, MIN_PURCHASE_IN_DOLLARS } from "@/constants";
+import { CREDIT_PER_DOLLAR } from "@/constants";
 import { env } from "@/env.mjs";
 import { reactClient } from "@/trpc/react";
 import { copyToClipboard, formatLargeNumber } from "@/utils/utils";
@@ -96,18 +95,7 @@ export default function SettingsPage() {
   const { mutateAsync: createPortalSession, isLoading } =
     reactClient.subscriptions.createPortalSession.useMutation();
 
-  const [showPurchaseInput, setShowPurchaseInput] = useState(false);
-  const [purchaseAmount, setPurchaseAmount] = useState<number | null>(null);
-  const pathName = usePathname();
   const router = useRouter();
-  const checkout = reactClient.credits.checkout.useMutation({
-    onError: (e) => {
-      toast.error(`Failed getting checkout session: ${e.message}`);
-    },
-    onSuccess: (url) => {
-      router.push(url);
-    },
-  });
 
   const [selectedModels, setSelectedModels] = useState<string[]>([]);
 
@@ -310,24 +298,6 @@ export default function SettingsPage() {
                 prefetch={false}
               >
                 <span className="text-sm font-semibold leading-tight text-[#1d4ed8]">
-                  Change Email
-                </span>
-              </Link>
-              <Link
-                href="/sign-out"
-                className="inline-flex h-8 items-center justify-center gap-1 rounded-full px-3 py-2 hover:bg-blue-50"
-                prefetch={false}
-              >
-                <span className="text-sm font-semibold leading-tight text-[#1d4ed8]">
-                  Change Password
-                </span>
-              </Link>
-              <Link
-                href="/sign-out"
-                className="inline-flex h-8 items-center justify-center gap-1 rounded-full px-3 py-2 hover:bg-blue-50"
-                prefetch={false}
-              >
-                <span className="text-sm font-semibold leading-tight text-[#1d4ed8]">
                   Logout
                 </span>
               </Link>
@@ -347,7 +317,7 @@ export default function SettingsPage() {
               toast.success("Copied API Key to Clipboard");
             }}
           >
-            <p className="truncate leading-7 text-black">
+            <p className="truncate font-mono leading-7 text-black">
               {keys.data?.[0]?.key || "No API key"}
             </p>
             <Copy className="h-4 w-4 flex-shrink-0" />
@@ -364,7 +334,7 @@ export default function SettingsPage() {
             </Link>
 
             <div
-              className="hidden h-8 cursor-pointer items-center justify-center gap-1 rounded-full px-3 py-4 text-sm text-gray-500 hover:bg-blue-50 xl:flex"
+              className="hidden h-8 cursor-pointer items-center justify-center gap-1 rounded-full px-3 py-4 font-mono text-sm text-gray-500 hover:bg-blue-50 xl:flex"
               onClick={() => {
                 void copyToClipboard(`${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1`);
                 toast.success("Copied URL to Clipboard");
@@ -385,83 +355,12 @@ export default function SettingsPage() {
               $
               {formatLargeNumber((user.data?.credits ?? 0) / CREDIT_PER_DOLLAR)}
             </p>
-            <button
-              onClick={() => {
-                setShowPurchaseInput(!showPurchaseInput);
-              }}
-              className="hover:bg-gray-10 mt-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-sm text-black"
+            <Link
+              className="mt-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-sm text-black hover:bg-gray-50"
+              href="/settings/credits"
             >
-              {showPurchaseInput ? "Cancel" : "Add Credits"}
-            </button>
-          </div>
-
-          <div
-            className={`flex flex-col gap-4 pt-2 xl:flex-row ${showPurchaseInput ? "visible" : "invisible"}`}
-          >
-            <div className="flex items-center gap-2">
-              <div className="relative w-full rounded-md shadow-sm">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span className="text-gray-500 sm:text-sm">{"$"}</span>
-                </div>
-                <input
-                  type="text"
-                  value={purchaseAmount ?? ""}
-                  onChange={(e) =>
-                    setPurchaseAmount(
-                      e.target.value.length === 0
-                        ? null
-                        : Number(e.target.value.replace(/[^0-9]/g, "")),
-                    )
-                  }
-                  className="w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  placeholder="0"
-                />
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                  <span className="text-gray-500 sm:text-sm">{"USD"}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex w-full items-center justify-end">
-              <div className="group relative">
-                <span className="pointer-events-none absolute left-1/2 m-4 mx-auto hidden w-max max-w-sm -translate-x-1/2 translate-y-1/4 text-wrap rounded-md bg-gray-800 p-1.5 text-center text-sm text-gray-100 opacity-0 transition-opacity group-hover:opacity-100">
-                  {`$1 USD is ${formatLargeNumber(CREDIT_PER_DOLLAR)} Credits`}
-                </span>
-                <InfoIcon className="m-2 h-4 w-4 text-gray-500" />
-              </div>
-              <button
-                onClick={() => {
-                  if (!purchaseAmount) {
-                    return;
-                  }
-                  if (purchaseAmount < MIN_PURCHASE_IN_DOLLARS) {
-                    toast.error(
-                      `Must purchase a minimum of $${MIN_PURCHASE_IN_DOLLARS} or ${formatLargeNumber(MIN_PURCHASE_IN_DOLLARS * CREDIT_PER_DOLLAR)} credits`,
-                    );
-                    return;
-                  }
-
-                  checkout.mutate({
-                    purchaseAmount,
-                    redirectTo: pathName,
-                  });
-                }}
-                disabled={checkout.isLoading || !purchaseAmount}
-                className="mb-2 mt-2 whitespace-nowrap rounded-full border border-black bg-white px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {checkout.isLoading ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Processing...
-                  </div>
-                ) : (
-                  <>
-                    Purchase{" "}
-                    {!purchaseAmount ? "Credits" : `$${purchaseAmount}`}
-                  </>
-                )}
-              </button>
-            </div>
+              Add Credits
+            </Link>
           </div>
         </div>
 
@@ -503,9 +402,8 @@ export default function SettingsPage() {
                               }
                             });
                           }}
-                          className={`flex w-full items-center px-4 py-2 text-sm text-gray-700 ${
-                            active ? "bg-gray-100" : ""
-                          }`}
+                          className={`flex w-full items-center px-4 py-2 text-sm text-gray-700 ${active ? "bg-gray-100" : ""
+                            }`}
                         >
                           <div className="flex items-center gap-2">
                             <div
@@ -528,9 +426,8 @@ export default function SettingsPage() {
                           onClick={() => {
                             setSelectedModels([]);
                           }}
-                          className={`w-full border-t border-gray-100 px-4 py-2 text-sm text-gray-500 ${
-                            active ? "bg-gray-100" : ""
-                          }`}
+                          className={`w-full border-t border-gray-100 px-4 py-2 text-sm text-gray-500 ${active ? "bg-gray-100" : ""
+                            }`}
                         >
                           Clear all
                         </button>

@@ -94,7 +94,7 @@ export default function CreditsPage() {
                             : Number(e.target.value.replace(/[^0-9]/g, "")),
                         )
                       }
-                      className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                       placeholder="0"
                     />
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
