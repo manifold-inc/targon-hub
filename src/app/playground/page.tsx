@@ -8,9 +8,9 @@ import { toast } from "sonner";
 
 import { env } from "@/env.mjs";
 import { reactClient } from "@/trpc/react";
+import { CodeSamples } from "../_components/CodeSamples";
 import { ChatInput } from "../_components/playground/ChatInput";
 import { ChatMessages } from "../_components/playground/ChatMessages";
-import { CodeSamples } from "../_components/playground/CodeSamples";
 import { EmptyState } from "../_components/playground/EmptyState";
 import { KeyboardShortcuts } from "../_components/playground/KeyboardShortcuts";
 import { ParameterControls } from "../_components/playground/ParameterControls";
@@ -51,18 +51,19 @@ export default function Example() {
   // Add global keyboard listener for shortcuts helper
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger shortcuts when focused on chat input
+      if (document.activeElement === textareaRef.current) {
+        return;
+      }
+
       // Toggle parameters: P
       if (e.key === "p") {
-        // Only prevent when focused on the chat input
-        if (document.activeElement === textareaRef.current) {
-          return;
-        }
         setIsParamsOpen((prev) => !prev);
         return;
       }
 
       // Show shortcuts when Command/Control is pressed alone
-      if (e.key === "Meta" || e.key === "Control") {
+      if (e.key === "?") {
         e.preventDefault();
         setShowShortcuts(!showShortcuts);
       }
