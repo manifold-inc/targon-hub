@@ -107,12 +107,13 @@ export const Header = () => {
   return (
     <header
       id="navbar"
-      className={`fixed top-0 z-20 w-full animate-slide-in transition-[top_.3s] ${pathName !== "/"
+      className={`fixed top-0 z-20 w-full animate-slide-in transition-[top_.3s] ${
+        pathName !== "/"
           ? "border-b border-gray-200 bg-white"
           : hasScrolled
             ? "bg-white/20 backdrop-blur-md backdrop-saturate-150"
             : "bg-transparent"
-        }`}
+      }`}
     >
       <nav className="text-manifold-green flex h-16 items-center justify-between p-2">
         {!mobileMenuOpen && (
@@ -342,8 +343,9 @@ export const Header = () => {
                   >
                     <Link href="/settings">
                       <MenuButton
-                        className={`inline-flex h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-gray-50 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-200 ${isUserMenuOpen ? "rounded-b-none ring-white" : ""
-                          }`}
+                        className={`inline-flex h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-gray-50 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-200 ${
+                          isUserMenuOpen ? "rounded-b-none ring-white" : ""
+                        }`}
                       >
                         {isUserMenuOpen ? (
                           <ChevronDown
@@ -388,7 +390,7 @@ export const Header = () => {
                                   $
                                   {Number(
                                     (auth.user?.credits ?? 0) /
-                                    CREDIT_PER_DOLLAR,
+                                      CREDIT_PER_DOLLAR,
                                   ).toLocaleString("en-US", {
                                     minimumFractionDigits: 2,
                                     maximumFractionDigits: 2,
