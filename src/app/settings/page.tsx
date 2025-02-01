@@ -401,8 +401,9 @@ export default function SettingsPage() {
                               }
                             });
                           }}
-                          className={`flex w-full items-center px-4 py-2 text-sm text-gray-700 ${active ? "bg-gray-100" : ""
-                            }`}
+                          className={`flex w-full items-center px-4 py-2 text-sm text-gray-700 ${
+                            active ? "bg-gray-100" : ""
+                          }`}
                         >
                           <div className="flex items-center gap-2">
                             <div
@@ -425,8 +426,9 @@ export default function SettingsPage() {
                           onClick={() => {
                             setSelectedModels([]);
                           }}
-                          className={`w-full border-t border-gray-100 px-4 py-2 text-sm text-gray-500 ${active ? "bg-gray-100" : ""
-                            }`}
+                          className={`w-full border-t border-gray-100 px-4 py-2 text-sm text-gray-500 ${
+                            active ? "bg-gray-100" : ""
+                          }`}
                         >
                           Clear all
                         </button>

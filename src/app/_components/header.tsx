@@ -72,12 +72,13 @@ export const Header = () => {
   return (
     <header
       id="navbar"
-      className={`fixed top-0 z-20 w-full animate-slide-in transition-[top_.3s] ${pathName !== "/"
+      className={`fixed top-0 z-20 w-full animate-slide-in transition-[top_.3s] ${
+        pathName !== "/"
           ? "border-b border-gray-200 bg-white"
           : hasScrolled
             ? "bg-white/20 backdrop-blur-md backdrop-saturate-150"
             : "bg-transparent"
-        }`}
+      }`}
     >
       <nav className="text-manifold-green flex items-center justify-between p-4">
         {!mobileMenuOpen && (
@@ -152,7 +153,7 @@ export const Header = () => {
                                   $
                                   {Number(
                                     (auth.user?.credits ?? 0) /
-                                    CREDIT_PER_DOLLAR,
+                                      CREDIT_PER_DOLLAR,
                                   ).toLocaleString("en-US", {
                                     minimumFractionDigits: 2,
                                     maximumFractionDigits: 2,

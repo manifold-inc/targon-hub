@@ -97,16 +97,18 @@ export default function KeysPage() {
                             onClick={() =>
                               deleteApiKey.mutate({ apiKey: key.key })
                             }
-                            className={`group rounded-full p-1.5 transition-colors ${deleteApiKey.isLoading
+                            className={`group rounded-full p-1.5 transition-colors ${
+                              deleteApiKey.isLoading
                                 ? "cursor-not-allowed bg-gray-100"
                                 : "hover:bg-gray-100"
-                              }`}
+                            }`}
                           >
                             <XCircle
-                              className={`h-6 w-6 ${deleteApiKey.isLoading
+                              className={`h-6 w-6 ${
+                                deleteApiKey.isLoading
                                   ? "text-gray-300"
                                   : "text-gray-300 group-hover:text-red-500"
-                                } transition-colors`}
+                              } transition-colors`}
                             />
                           </button>
                         </td>
