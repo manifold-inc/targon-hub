@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   AlertCircle,
   FileCode,
@@ -50,7 +50,15 @@ const INFO_SECTIONS: readonly InfoSection[] = [
 
 export default function ModelPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [model, setModel] = useState("");
+
+  useEffect(() => {
+    const modelParam = searchParams.get("model");
+    if (modelParam) {
+      setModel(decodeURIComponent(modelParam));
+    }
+  }, [searchParams]);
 
   const addModelMutation = reactClient.model.addModel.useMutation({
     onSuccess: (response) => {
@@ -106,7 +114,7 @@ export default function ModelPage() {
               className="flex-shrink-0 cursor-text pl-4 text-sm text-gray-500"
               onClick={() => document.getElementById("modelUrl")?.focus()}
             >
-              https://huggingface.com/
+              https://huggingface.co/
             </span>
             <input
               type="text"
