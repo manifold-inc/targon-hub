@@ -1,15 +1,25 @@
 import { type SVGProps } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 const navigation = {
-  main: [
-    { name: "Browse", href: "/browse" },
-    { name: "Infrastructure", href: "/infrastructure" },
-    { name: "Lease", href: "/models/lease" },
+  browse: [
     { name: "Models", href: "/models" },
-    { name: "Immunity", href: "/models/immunity" },
+    { name: "Lease", href: "/models/lease" },
     { name: "Playground", href: "/playground" },
-    { name: "Roadmap", href: "/roadmap" },
   ],
+  infrastructure: [
+    { name: "Infrastructure", href: "/infrastructure" },
+    { name: "Roadmap", href: "/roadmap" },
+    { name: "Timeline", href: "/models/immunity" },
+  ],
+  account: [
+    { name: "Settings", href: "/settings" },
+    { name: "Credits", href: "/settings/credits" },
+    { name: "Activity", href: "/settings/activity" },
+    { name: "API Keys", href: "/settings/keys" },
+  ],
+  legal: [{ name: "Privacy policy", href: "#" }],
   social: [
     {
       name: "Discord",
@@ -47,38 +57,112 @@ const navigation = {
 
 export const Footer = () => {
   return (
-    <footer className="bg-background border-border border-t text-mf-green">
-      <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
-        <nav
-          aria-label="Footer"
-          className="-mb-6 flex flex-wrap justify-center gap-x-12 gap-y-3 text-sm/6"
-        >
-          {navigation.main.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-muted-foreground hover:text-foreground transition-colors hover:underline"
-            >
-              {item.name}
-            </a>
-          ))}
-        </nav>
-        <div className="mt-16 flex justify-center gap-x-10">
-          {navigation.social.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <span className="sr-only">{item.name}</span>
-              <item.icon aria-hidden="true" className="size-6" />
-            </a>
-          ))}
+    <footer className="border-t border-[#E5E7EB] bg-white">
+      <div className="mx-auto max-w-7xl px-6 py-16">
+        <div className="lg:grid lg:grid-cols-3 lg:gap-8">
+          <div className="flex flex-col gap-y-4">
+            <div className="flex">
+              <Image
+                src="/ManifoldMarkTransparentGreenSVG.svg"
+                width={32}
+                height={28}
+                alt="Manifold Labs"
+                className="block"
+              />
+              <span className="pl-2 text-xl font-semibold">Manifold Labs</span>
+            </div>
+            <div className="flex h-full flex-col justify-end gap-y-4">
+              <div className="flex gap-x-5 pl-1">
+                {navigation.social.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <span className="sr-only">{item.name}</span>
+                    <item.icon aria-hidden="true" className="size-6" />
+                  </a>
+                ))}
+              </div>
+              <p className="text-muted-foreground pl-1 text-sm/6">
+                &copy; {new Date().getFullYear()} Manifold Labs, Inc. All rights
+                reserved.
+              </p>
+            </div>
+          </div>
+          <div className="mt-16 grid grid-cols-2 gap-4 pl-20 lg:col-span-2 lg:mt-0">
+            <div className="md:grid md:grid-cols-2 md:gap-4">
+              <div>
+                <h3 className="text-sm/6 font-semibold text-gray-900">
+                  Browse
+                </h3>
+                <ul role="list" className="mt-4 space-y-2">
+                  {navigation.browse.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        href={item.href}
+                        className="text-sm/6 text-gray-600 hover:text-gray-900"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-5 md:mt-0">
+                <h3 className="text-sm/6 font-semibold text-gray-900">
+                  Infrastructure
+                </h3>
+                <ul role="list" className="mt-4 space-y-2">
+                  {navigation.infrastructure.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        href={item.href}
+                        className="text-sm/6 text-gray-600 hover:text-gray-900"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="md:grid md:grid-cols-2 md:gap-4">
+              <div>
+                <h3 className="text-sm/6 font-semibold text-gray-900">
+                  Account
+                </h3>
+                <ul role="list" className="mt-4 space-y-2">
+                  {navigation.account.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        href={item.href}
+                        className="text-sm/6 text-gray-600 hover:text-gray-900"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-10 md:mt-0">
+                <h3 className="text-sm/6 font-semibold text-gray-900">Legal</h3>
+                <ul role="list" className="mt-4 space-y-2">
+                  {navigation.legal.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        href={item.href}
+                        className="text-sm/6 text-gray-600 hover:text-gray-900"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
-        <p className="text-muted-foreground mt-10 text-center text-sm/6">
-          &copy; {new Date().getFullYear()} Manifold Labs, Inc. All rights
-          reserved.
-        </p>
       </div>
     </footer>
   );
