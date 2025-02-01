@@ -1,23 +1,14 @@
 import { type NextRequest } from "next/server";
-import { eq } from "drizzle-orm";
 import { z } from "zod";
 
 import { db } from "@/schema/db";
-import { ApiKey, genId, User } from "@/schema/schema";
+import { ApiKey, genId } from "@/schema/schema";
+import { authorize } from "../../utils";
 
 export async function POST(request: NextRequest): Promise<Response> {
-  const auth = request.headers.get("Authorization");
-  const token = auth?.split(" ").at(-1);
-  if (!token) {
-    return Response.json({ error: "Unauthorized", status: 401 });
-  }
-  const [user] = await db
-    .select({ id: User.id })
-    .from(User)
-    .innerJoin(ApiKey, eq(User.id, ApiKey.userId))
-    .where(eq(ApiKey.key, token));
-  if (!user) {
-    return Response.json({ error: "Unauthorized", status: 401 });
+  const [user_id, err] = await authorize(request);
+  if (err) {
+    return err;
   }
 
   const { keyName } = z
@@ -30,7 +21,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 
   try {
     await db.insert(ApiKey).values({
-      userId: user.id,
+      userId: user_id,
       key: newApiKey,
       name: keyName,
     });
