@@ -55,7 +55,6 @@ export const Header = () => {
   const auth = useAuth();
   const pathName = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const [hasScrolled, setHasScrolled] = useState(false);
   const [isBrowseOpen, setIsBrowseOpen] = useState(false);
   const [isInfrastructureOpen, setIsInfrastructureOpen] = useState(false);
@@ -402,19 +401,42 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 href="/settings"
-                                className="block w-full px-4 py-2 text-center text-sm hover:bg-gray-100"
+                                className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
                               >
                                 Settings
                               </Link>
                             </MenuItem>
                             <MenuItem>
                               <Link
-                                prefetch={false}
+                                href="/settings/credits"
+                                className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
+                              >
+                                Credits
+                              </Link>
+                            </MenuItem>
+                            <MenuItem>
+                              <Link
+                                href="/settings/activity"
+                                className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
+                              >
+                                Activity
+                              </Link>
+                            </MenuItem>
+                            <MenuItem>
+                              <Link
+                                href="/settings/keys"
+                                className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
+                              >
+                                Keys
+                              </Link>
+                            </MenuItem>
+                            <MenuItem>
+                              <a
                                 href="/sign-out"
                                 className="block px-4 py-2 text-center text-sm hover:bg-gray-100"
                               >
                                 Sign Out
-                              </Link>
+                              </a>
                             </MenuItem>
                           </div>
                         </MenuItems>
@@ -423,26 +445,26 @@ export const Header = () => {
                   </Menu>
                 ) : (
                   <Link
-                    className="inline-flex h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     href="/sign-in"
+                    className="inline-flex h-9 items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-sm leading-tight text-mf-gray-600 hover:underline"
                   >
-                    <span className="text-sm font-medium">Sign in</span>
+                    Sign In
                   </Link>
                 )}
               </div>
-            </div>
-            <div className="flex sm:hidden">
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(true)}
-                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-              >
-                <span className="sr-only">Open main menu</span>
-                <MenuIcon
-                  aria-hidden="true"
-                  className="h-6 w-6 text-mf-gray-600"
-                />
-              </button>
+              <div className="flex sm:hidden">
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen(true)}
+                  className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+                >
+                  <span className="sr-only">Open main menu</span>
+                  <MenuIcon
+                    aria-hidden="true"
+                    className="h-6 w-6 text-mf-gray-600"
+                  />
+                </button>
+              </div>
             </div>
           </>
         )}
@@ -514,14 +536,13 @@ export const Header = () => {
                     Settings
                   </Link>
                   {auth.status === "AUTHED" ? (
-                    <Link
+                    <a
                       href="/sign-out"
-                      prefetch={false}
                       onClick={() => setMobileMenuOpen(false)}
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                     >
                       Sign out
-                    </Link>
+                    </a>
                   ) : (
                     <Link
                       href="/sign-in"
