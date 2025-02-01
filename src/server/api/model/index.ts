@@ -69,6 +69,26 @@ export const modelRouter = createTRPCRouter({
       .where(and(eq(Model.enabled, true)));
     return models;
   }),
+  getActiveSearchModels: publicAuthlessProcedure
+    .input(z.object({ name: z.string().optional() }))
+    .query(async ({ ctx, input }) => {
+      const query = ctx.db
+        .select({
+          name: Model.name,
+          createdAt: Model.createdAt,
+        })
+        .from(Model)
+        .$dynamic();
+
+      const filters = [eq(Model.enabled, true)];
+
+      if (input.name) {
+        filters.push(like(Model.name, `%${input.name}%`));
+      }
+
+      const models = await query.where(and(...filters));
+      return models;
+    }),
   getModels: publicAuthlessProcedure
     .input(
       z.object({
