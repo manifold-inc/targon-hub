@@ -17,7 +17,6 @@ export const coreRouter = createTRPCRouter({
       .where(eq(ApiKey.userId, ctx.user.id))
       .orderBy(desc(ApiKey.createdAt));
   }),
-
   createApiKey: protectedProcedure
     .input(z.object({ name: z.string() }))
     .mutation(async ({ ctx, input }) => {
