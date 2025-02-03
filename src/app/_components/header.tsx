@@ -455,7 +455,6 @@ export const Header = () => {
             </div>
             <div className="flex sm:hidden">
               <button
-                type="button"
                 onClick={() => setMobileMenuOpen(true)}
                 className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
               >
@@ -491,7 +490,6 @@ export const Header = () => {
                 <p className="text-md font-semibold">Targon</p>
               </Link>
               <button
-                type="button"
                 onClick={() => setMobileMenuOpen(false)}
                 className="-m-2.5 rounded-md p-2.5 text-gray-700"
               >
