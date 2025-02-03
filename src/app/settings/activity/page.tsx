@@ -14,7 +14,7 @@ export default function ActivityPage() {
         <div className="flex flex-col items-center justify-start gap-6">
           <div className="w-full">
             {activity.data?.length ? (
-              <div className="relative h-80 overflow-x-auto rounded-xl border border-gray-200">
+              <div className="relative h-full overflow-x-auto rounded-xl border border-gray-200">
                 <table className="w-full border-0 text-xs sm:text-sm">
                   <thead>
                     <tr className="h-8 border-b border-[#e4e7ec] bg-gray-50">
