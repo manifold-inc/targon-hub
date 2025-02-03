@@ -420,35 +420,11 @@ export const Header = () => {
                             </MenuItem>
                             <MenuItem>
                               <Link
-                                href="/settings/credits"
-                                className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
-                              >
-                                Credits
-                              </Link>
-                            </MenuItem>
-                            <MenuItem>
-                              <Link
-                                href="/settings/activity"
-                                className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
-                              >
-                                Activity
-                              </Link>
-                            </MenuItem>
-                            <MenuItem>
-                              <Link
-                                href="/settings/keys"
-                                className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
-                              >
-                                Keys
-                              </Link>
-                            </MenuItem>
-                            <MenuItem>
-                              <a
                                 href="/sign-out"
                                 className="block px-4 py-2 text-center text-sm hover:bg-gray-100"
                               >
                                 Sign Out
-                              </a>
+                              </Link>
                             </MenuItem>
                           </div>
                         </MenuItems>
