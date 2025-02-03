@@ -94,9 +94,7 @@ significant changes by posting an updated version on our Site.
 
 If you have any questions about this Privacy Policy, please contact us at:
 
-Manifold Labs, Inc.  
-1107 S 8th Street  
-Austin, TX 78704
+Manifold Labs, Inc. 1107 S 8th Street Austin, TX 78704
 
 By using our Services, you acknowledge that you have read and understood this
 Privacy Policy.

@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import { marked } from "marked";
 
 export default async function Page() {
-  const filepath = path.join(process.cwd(), "src/markdown/legal/privacy.md");
+  const filepath = path.join(process.cwd(), "src/markdown/legal/terms.md");
   try {
     const file = await fsPromises.readFile(filepath, "utf8");
     const data = matter(file);
@@ -17,6 +17,6 @@ export default async function Page() {
     );
   } catch (error) {
     console.error(error);
-    return <div>Error loading privacy policy</div>;
+    return <div>Error loading terms of service</div>;
   }
 }
