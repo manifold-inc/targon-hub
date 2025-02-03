@@ -431,12 +431,12 @@ export const Header = () => {
                               </Link>
                             </MenuItem>
                             <MenuItem>
-                              <a
+                              <Link
                                 href="/sign-out"
                                 className="block px-4 py-2 text-center text-sm hover:bg-gray-100"
                               >
                                 Sign Out
-                              </a>
+                              </Link>
                             </MenuItem>
                           </div>
                         </MenuItems>
@@ -452,19 +452,19 @@ export const Header = () => {
                   </Link>
                 )}
               </div>
-              <div className="flex sm:hidden">
-                <button
-                  type="button"
-                  onClick={() => setMobileMenuOpen(true)}
-                  className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-                >
-                  <span className="sr-only">Open main menu</span>
-                  <MenuIcon
-                    aria-hidden="true"
-                    className="h-6 w-6 text-mf-gray-600"
-                  />
-                </button>
-              </div>
+            </div>
+            <div className="flex sm:hidden">
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(true)}
+                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+              >
+                <span className="sr-only">Open main menu</span>
+                <MenuIcon
+                  aria-hidden="true"
+                  className="h-6 w-6 text-mf-gray-600"
+                />
+              </button>
             </div>
           </>
         )}
@@ -536,13 +536,13 @@ export const Header = () => {
                     Settings
                   </Link>
                   {auth.status === "AUTHED" ? (
-                    <a
+                    <Link
                       href="/sign-out"
                       onClick={() => setMobileMenuOpen(false)}
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                     >
                       Sign out
-                    </a>
+                    </Link>
                   ) : (
                     <Link
                       href="/sign-in"
