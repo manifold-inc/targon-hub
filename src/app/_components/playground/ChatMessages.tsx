@@ -77,7 +77,6 @@ interface ChatMessagesProps {
 export function ChatMessages({ messages }: ChatMessagesProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hiddenMessages, setHiddenMessages] = useState<number[]>([]);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Handle new messages
   useEffect(() => {
@@ -88,20 +87,6 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
     if (scrollHeight <= scrollTop + offsetHeight + 300) {
       container.scrollTop = scrollHeight;
     }
-  }, [messages]);
-
-  // Add global keyboard listener for shortcuts helper
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (document.activeElement === textareaRef.current) return;
-      if (e.key === "d") {
-        setHiddenMessages(messages.map((_, index) => index));
-        e.preventDefault();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [messages]);
 
   if (messages.length === 0) return null;

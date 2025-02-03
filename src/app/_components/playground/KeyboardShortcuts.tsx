@@ -14,7 +14,6 @@ export function KeyboardShortcuts({ isOpen, onClose }: KeyboardShortcutsProps) {
   const shortcuts: ShortcutItem[] = [
     { keys: ["↑"], description: "Previous message" },
     { keys: ["↓"], description: "Next message" },
-    { keys: ["d"], description: "Delete messages" },
     { keys: ["p"], description: "Show/hide parameters" },
     { keys: ["Esc"], description: "Unfocus input" },
     { keys: ["Enter"], description: "Send message" },
