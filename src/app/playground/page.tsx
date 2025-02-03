@@ -8,9 +8,9 @@ import { toast } from "sonner";
 
 import { env } from "@/env.mjs";
 import { reactClient } from "@/trpc/react";
+import { CodeSamples } from "../_components/CodeSamples";
 import { ChatInput } from "../_components/playground/ChatInput";
 import { ChatMessages } from "../_components/playground/ChatMessages";
-import { CodeSamples } from "../_components/playground/CodeSamples";
 import { EmptyState } from "../_components/playground/EmptyState";
 import { KeyboardShortcuts } from "../_components/playground/KeyboardShortcuts";
 import { ParameterControls } from "../_components/playground/ParameterControls";
