@@ -170,7 +170,7 @@ export const Header = () => {
                             y: -10,
                             transition: { duration: 0.1 },
                           }}
-                          className="focus:outline-hidden absolute -left-36 top-20 z-10 mt-2 w-96 origin-top overflow-hidden rounded-md bg-white text-center shadow-lg"
+                          className="focus:outline-hidden absolute -left-36 top-20 z-20 mt-2 w-96 origin-top overflow-hidden rounded-md bg-white text-center shadow-lg"
                         >
                           <MenuItem>
                             <Link
@@ -283,7 +283,7 @@ export const Header = () => {
                             y: -10,
                             transition: { duration: 0.15 },
                           }}
-                          className="focus:outline-hidden absolute -left-36 top-20 z-10 mt-2 w-96 origin-top overflow-hidden rounded-md bg-white text-center shadow-lg"
+                          className="focus:outline-hidden absolute -left-36 top-20 z-20 mt-2 w-96 origin-top overflow-hidden rounded-md bg-white text-center shadow-lg"
                         >
                           <MenuItem>
                             <Link
@@ -390,7 +390,7 @@ export const Header = () => {
                             y: -10,
                             transition: { duration: 0.15 },
                           }}
-                          className="focus:outline-hidden absolute right-0 top-6 z-10 mt-2 w-28 origin-top rounded-md rounded-t-none bg-gray-50 text-center shadow-lg"
+                          className="focus:outline-hidden absolute right-0 top-6 z-20 mt-2 w-28 origin-top rounded-md rounded-t-none bg-gray-50 text-center shadow-lg"
                         >
                           <div className="border-b border-gray-200">
                             <MenuItem>
@@ -485,8 +485,8 @@ export const Header = () => {
           onClose={setMobileMenuOpen}
           className="xl:hidden"
         >
-          <div className="fixed inset-0 z-10" />
-          <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div className="fixed inset-0 z-20" />
+          <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
               <Link
                 href="/"
@@ -541,7 +541,7 @@ export const Header = () => {
                   <Link
                     href="/settings"
                     prefetch={false}
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900"
                   >
                     Settings
                   </Link>
@@ -549,7 +549,7 @@ export const Header = () => {
                     <Link
                       href="/sign-out"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900"
                     >
                       Sign out
                     </Link>
@@ -557,7 +557,7 @@ export const Header = () => {
                     <Link
                       href="/sign-in"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900"
                     >
                       Log in
                     </Link>
