@@ -434,7 +434,7 @@ export const Header = () => {
                 ) : (
                   <Link
                     href="/sign-in"
-                    className="inline-flex h-9 items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-sm leading-tight text-mf-gray-600 hover:underline"
+                    className="inline-flex w-20 cursor-pointer justify-center py-9 text-sm font-medium text-gray-900"
                   >
                     Sign In
                   </Link>
