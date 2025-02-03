@@ -19,7 +19,7 @@ const navigation = {
     { name: "Activity", href: "/settings/activity" },
     { name: "API Keys", href: "/settings/keys" },
   ],
-  legal: [{ name: "Privacy policy", href: "/privacy" }],
+  legal: [{ name: "Privacy Policy", href: "/privacy" }],
   social: [
     {
       name: "Discord",
@@ -58,7 +58,7 @@ const navigation = {
 export const Footer = () => {
   return (
     <footer className="border-t border-[#E5E7EB] bg-white">
-      <div className="mx-auto max-w-7xl px-6 py-16">
+      <div className="mx-auto max-w-7xl px-16 py-16">
         <div className="lg:grid lg:grid-cols-3 lg:gap-8">
           <div className="flex flex-col gap-y-4">
             <div className="flex">
@@ -90,7 +90,7 @@ export const Footer = () => {
               </p>
             </div>
           </div>
-          <div className="mt-16 grid grid-cols-2 gap-4 pl-20 lg:col-span-2 lg:mt-0">
+          <div className="mt-16 grid grid-cols-2 gap-4 lg:col-span-2 lg:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-4">
               <div>
                 <h3 className="text-sm/6 font-semibold text-gray-900">

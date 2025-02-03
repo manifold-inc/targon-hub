@@ -156,7 +156,7 @@ void chat();`,
     -d '{
       "model": "${model}",
       "stream": true,
-      "prompt": "The x y problem is",
+      "prompt"= "The x y problem is",
       "temperature": ${params.temperature},
       "max_tokens": ${params.max_tokens},
       "top_p": ${params.top_p},

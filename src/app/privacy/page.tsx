@@ -7,8 +7,8 @@ export default async function Page() {
   const filepath = path.join(
     process.cwd(),
     "src",
-    "app",
-    "privacy",
+    "markdown",
+    "legal",
     "privacy.md",
   );
   try {
@@ -17,7 +17,7 @@ export default async function Page() {
 
     return (
       <div
-        className={"prose !max-w-none p-16 text-sm dark:prose-invert"}
+        className={"prose prose !max-w-none p-16 text-sm"}
         dangerouslySetInnerHTML={{ __html: marked(data.content) }}
       />
     );
