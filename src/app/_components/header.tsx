@@ -160,11 +160,15 @@ export const Header = () => {
                           static
                           as={motion.div}
                           initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
+                          animate={{
+                            opacity: 1,
+                            y: 0,
+                            transition: { duration: 0.1 },
+                          }}
                           exit={{
                             opacity: 0,
                             y: -10,
-                            transition: { delay: 0.2 },
+                            transition: { duration: 0.1 },
                           }}
                           className="focus:outline-hidden absolute -left-36 top-20 z-10 mt-2 w-96 origin-top overflow-hidden rounded-md bg-white text-center shadow-lg"
                         >
@@ -274,7 +278,11 @@ export const Header = () => {
                           as={motion.div}
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
+                          exit={{
+                            opacity: 0,
+                            y: -10,
+                            transition: { duration: 0.15 },
+                          }}
                           className="focus:outline-hidden absolute -left-36 top-20 z-10 mt-2 w-96 origin-top overflow-hidden rounded-md bg-white text-center shadow-lg"
                         >
                           <MenuItem>
@@ -377,7 +385,11 @@ export const Header = () => {
                           as={motion.div}
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
+                          exit={{
+                            opacity: 0,
+                            y: -10,
+                            transition: { duration: 0.15 },
+                          }}
                           className="focus:outline-hidden absolute right-0 top-6 z-10 mt-2 w-28 origin-top rounded-md rounded-t-none bg-gray-50 text-center shadow-lg"
                         >
                           <div className="border-b border-gray-200">

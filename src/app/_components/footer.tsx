@@ -1,6 +1,9 @@
+"use client";
+
 import { type SVGProps } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navigation = {
   browse: [
@@ -56,6 +59,12 @@ const navigation = {
 };
 
 export const Footer = () => {
+  const pathname = usePathname();
+
+  if (pathname === "/playground") {
+    return null;
+  }
+
   return (
     <footer className="border-t border-[#E5E7EB] bg-white">
       <div className="mx-auto max-w-7xl px-16 py-16">
