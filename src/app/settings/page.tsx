@@ -79,9 +79,6 @@ export default function SettingsPage() {
   const auth = useAuth();
   const user = reactClient.account.getUserDashboard.useQuery();
   const activity = reactClient.account.getUserActivityDaily.useQuery();
-
-  console.log(activity.data);
-
   const keys = reactClient.core.getApiKeys.useQuery();
 
   const [showSS58Input, setShowSS58Input] = useState(false);
