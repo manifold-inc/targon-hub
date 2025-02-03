@@ -22,16 +22,10 @@ const navigation = {
     { name: "Activity", href: "/settings/activity" },
     { name: "API Keys", href: "/settings/keys" },
   ],
-<<<<<<< HEAD
-  legal: [{ name: "Privacy Policy", href: "/privacy" }],
-||||||| 320a815
-  legal: [{ name: "Privacy policy", href: "#" }],
-=======
   legal: [
     { name: "Privacy Policy", href: "/privacy" },
     { name: "Terms of Service", href: "/terms" },
   ],
->>>>>>> main
   social: [
     {
       name: "Discord",
