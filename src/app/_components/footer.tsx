@@ -19,7 +19,10 @@ const navigation = {
     { name: "Activity", href: "/settings/activity" },
     { name: "API Keys", href: "/settings/keys" },
   ],
-  legal: [{ name: "Privacy policy", href: "#" }],
+  legal: [
+    { name: "Privacy Policy", href: "/privacy" },
+    { name: "Terms of Service", href: "/terms" },
+  ],
   social: [
     {
       name: "Discord",
