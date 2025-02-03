@@ -304,8 +304,8 @@ void chat();`,
         </div>
 
         {typesShown.map((type) => (
-          <div key={type}>
-            <div className="pb-4 pt-8 text-center">
+          <div key={type} className="pb-4">
+            <div className="pb-4 text-center">
               <h4 className="text-sm font-medium text-gray-900">
                 {type.charAt(0).toUpperCase() + type.slice(1)} Example
               </h4>

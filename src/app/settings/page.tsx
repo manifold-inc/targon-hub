@@ -75,18 +75,14 @@ const getModelColor = (model: string) => {
   return modelColorMap.get(model) || "#000000";
 };
 
-// Add this interface before prepareChartData function
-interface ChartDataItem {
-  date: string;
-  total: number;
-  [key: string]: number | string; // For dynamic model names
-}
-
 export default function SettingsPage() {
   const auth = useAuth();
   const user = reactClient.account.getUserDashboard.useQuery();
-  const activity = reactClient.account.getUserActivity.useQuery(); // paginate and optional limit
-  const keys = reactClient.core.getApiKeys.useQuery(); // get key?
+  const activity = reactClient.account.getUserActivityDaily.useQuery();
+
+  console.log(activity.data);
+
+  const keys = reactClient.core.getApiKeys.useQuery();
 
   const [showSS58Input, setShowSS58Input] = useState(false);
   const [ss58Address, setSS58Address] = useState("");
@@ -217,56 +213,39 @@ export default function SettingsPage() {
   const prepareChartData = () => {
     if (!activity.data) return [];
 
-    // Find date range
-    const dates = activity.data.map((item) => item.createdAt);
-    const minDate = new Date(Math.min(...dates.map((d) => d.getTime())));
-    const maxDate = new Date(Math.max(...dates.map((d) => d.getTime())));
+    // Create a map to store aggregated data by date
+    const dataMap = new Map<
+      string,
+      { [key: string]: number | string; date: string }
+    >();
 
-    // Create array of all dates in range
-    const allDates: Date[] = [];
-    const currentDate = new Date(minDate);
-    while (currentDate <= maxDate) {
-      allDates.push(new Date(currentDate));
-      currentDate.setDate(currentDate.getDate() + 1);
+    // Generate dates for the last 30 days
+    const today = new Date();
+    for (let i = 29; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(date.getDate() - i);
+      const dateStr = date.toISOString().split("T")[0]!;
+      dataMap.set(dateStr, { date: dateStr });
     }
 
-    // Create initial data structure with all dates
-    const initialData = allDates.reduce(
-      (acc: Record<string, ChartDataItem>, date) => {
-        const dateStr = date.toISOString().split("T")[0]!;
-        acc[dateStr] = {
-          date: dateStr,
-          total: 0,
-        };
-        return acc;
-      },
-      {},
-    );
-
-    // Fill in activity data
+    // Add activity data
     activity.data.forEach((item) => {
-      if (!item.model || !item.responseTokens) return;
+      const date = new Date(item.date).toISOString().split("T")[0];
 
-      // Skip if model is not selected (when filters are active)
-      if (selectedModels.length > 0 && !selectedModels.includes(item.model)) {
-        return;
+      if (!dataMap.has(date!)) {
+        dataMap.set(date!, { date: date! });
       }
 
-      const date = item.createdAt.toISOString().split("T")[0]!;
+      const dateData = dataMap.get(date!)!;
+      const model = item.model ?? "unknown";
 
-      // Ensure the date exists in initialData (TypeScript safety)
-      if (initialData[date]) {
-        // Add model-specific tokens
-        initialData[date][item.model] =
-          ((initialData[date][item.model] as number) || 0) +
-          item.responseTokens;
-        initialData[date].total += item.responseTokens;
-      }
+      dateData[model] =
+        Number(dateData[model] || 0) + Number(item.totalResponseTokens);
     });
 
-    // Convert to array and sort by date
-    return Object.values(initialData).sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+    // Convert map to array and sort by date
+    return Array.from(dataMap.values()).sort((a, b) =>
+      a.date.localeCompare(b.date),
     );
   };
 
@@ -345,7 +324,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Credits Panel */}
-        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6 pb-0 lg:col-span-1">
+        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
           <h3 className="pb-8 text-lg font-semibold">
             <Link href="/settings/credits">Credits</Link>
           </h3>
@@ -500,7 +479,7 @@ export default function SettingsPage() {
               </ResponsiveContainer>
             </div>
           ) : (
-            <div className="flex h-full items-center justify-center text-gray-500">
+            <div className="flex h-72 items-center justify-center text-gray-500">
               No activity yet
             </div>
           )}

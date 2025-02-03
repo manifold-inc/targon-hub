@@ -17,7 +17,7 @@ export default async function Page() {
 
     return (
       <div
-        className={"prose prose !max-w-none p-16 text-sm"}
+        className={"prose !max-w-none p-16 text-sm"}
         dangerouslySetInnerHTML={{ __html: marked(data.content) }}
       />
     );

@@ -334,7 +334,7 @@ export const Header = () => {
                 </div>
                 <div className="flex items-center gap-16 px-12">
                   <Link
-                    className="inline-flex w-32 justify-center gap-x-1.5 rounded-md py-2 text-sm font-medium hover:bg-white hover:shadow-md"
+                    className="inline-flex w-32 justify-center gap-x-1.5 rounded-md py-2 text-sm font-medium"
                     href="/playground"
                   >
                     Playground

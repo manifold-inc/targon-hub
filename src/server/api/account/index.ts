@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { TRPCError } from "@trpc/server";
-import { count, desc, eq } from "drizzle-orm";
+import { and, count, desc, eq, gte, sum } from "drizzle-orm";
 import { Scrypt } from "lucia";
 import { z } from "zod";
 
@@ -171,6 +171,34 @@ export const accountRouter = createTRPCRouter({
       .where(eq(Request.userId, ctx.user.id))
       .orderBy(desc(Request.createdAt))
       .limit(100);
+    return activity ?? null;
+  }),
+  getUserActivityDaily: publicProcedure.query(async ({ ctx }) => {
+    if (!ctx.user?.id) return null;
+
+    // Get date from 30 days ago
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const activity = await ctx.db
+      .select({
+        date: Request.createdAt,
+        model: Model.name,
+        totalCreditsUsed: sum(Request.creditsUsed),
+        totalResponseTokens: sum(Request.responseTokens),
+        requestCount: count(),
+      })
+      .from(Request)
+      .leftJoin(Model, eq(Request.model, Model.id))
+      .where(
+        and(
+          eq(Request.userId, ctx.user.id),
+          gte(Request.createdAt, thirtyDaysAgo),
+        ),
+      )
+      .groupBy(Request.createdAt, Model.name)
+      .orderBy(desc(Request.createdAt));
+
     return activity ?? null;
   }),
 });

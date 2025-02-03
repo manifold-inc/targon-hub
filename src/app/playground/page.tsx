@@ -26,7 +26,9 @@ export default function Example() {
   const [selected, setSelected] = useState<string | null>(null);
   const [isLoading, setIsloading] = useState(false);
   const [text, setText] = useState("");
-  const [chats, setChats] = useState<Array<ChatCompletionMessageParam>>([]);
+  const [chats, setChats] = useState<
+    Array<ChatCompletionMessageParam & { shown: boolean }>
+  >([]);
   const [params, setParams] = useState({
     temperature: 0.5,
     max_tokens: 500,
@@ -59,6 +61,7 @@ export default function Example() {
       // Toggle parameters: P
       if (e.key === "p") {
         setIsParamsOpen((prev) => !prev);
+        e.preventDefault();
         return;
       }
 
@@ -82,14 +85,14 @@ export default function Example() {
       if (!current_model) return;
       setText("");
       setIsloading(true);
-      setChats((c) => [...c, { role: "user", content: chat }]);
+      setChats((c) => [...c, { role: "user", content: chat, shown: true }]);
       const stream = await client.chat.completions.create({
         stream: true,
         messages: [...chatlog, { role: "user", content: chat }],
         model: current_model,
         ...params,
       });
-      setChats((c) => [...c, { role: "assistant", content: "" }]);
+      setChats((c) => [...c, { role: "assistant", content: "", shown: true }]);
       for await (const chunk of stream) {
         const content = chunk.choices[0]?.delta?.content || "";
         setChats((c) => {
@@ -181,7 +184,7 @@ export default function Example() {
 
   return (
     <>
-      <div className="flex min-h-[calc(100vh-4rem)] flex-col pt-7 lg:flex-row">
+      <div className="flex min-h-[calc(100vh-3rem)] flex-col pt-4 lg:flex-row">
         {/* Parameter Controls - Move before main content for desktop */}
         <ParameterControls
           params={params}

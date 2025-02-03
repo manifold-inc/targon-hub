@@ -64,9 +64,7 @@ export default function ActivityPage() {
                 </table>
               </div>
             ) : (
-              <div className="flex h-full items-center justify-center text-gray-500">
-                No activity yet
-              </div>
+              <div className="flex h-full items-center justify-center text-gray-500"></div>
             )}
           </div>
         </div>
