@@ -104,7 +104,7 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
           onClick={() => setHiddenMessages([...Array(messages.length).keys()])}
           className={clsx(buttonBaseClass, buttonDisabledClass)}
         >
-          <Trash className="h-4 w-4" />
+          <Trash className="h-4 w-4 text-gray-300" />
         </button>
       </div>
       <div ref={containerRef} className="h-full overflow-y-auto">
@@ -141,8 +141,8 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
                 >
                   <X
                     className={clsx(
-                      "h-3.5 w-3.5 text-gray-400",
-                      message.role === "user" && "text-gray-900",
+                      "h-3.5 w-3.5 text-gray-300",
+                      message.role === "user" && "text-gray-700",
                     )}
                   />
                 </button>
