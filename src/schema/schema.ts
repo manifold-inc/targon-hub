@@ -213,6 +213,7 @@ export const Model = mysqlTable("model", {
   supportedEndpoints: json("supported_endpoints").notNull().$type<string[]>(),
   enabledDate: timestamp("enabled_date", { mode: "date" }),
   customBuild: boolean("custom_build").default(false).notNull(),
+  context_length: int("context_length"),
 });
 
 export const DailyModelTokenCounts = mysqlTable("daily_model_token_counts", {

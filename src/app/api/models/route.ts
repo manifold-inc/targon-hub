@@ -5,12 +5,12 @@ import { Model } from "@/schema/schema";
 
 export async function GET(): Promise<Response> {
   const models = await db
-    .select({ name: Model.name })
+    .select({ name: Model.name, context_length: Model.context_length })
     .from(Model)
     .where(eq(Model.enabled, true));
 
   return Response.json(
-    models.map((m) => m.name),
+    models.map((m) => ({ model: m.name, context_length: m.context_length })),
     { status: 200 },
   );
 }
