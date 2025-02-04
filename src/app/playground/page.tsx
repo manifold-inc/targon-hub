@@ -27,7 +27,7 @@ export default function Example() {
   const [isLoading, setIsloading] = useState(false);
   const [text, setText] = useState("");
   const [chats, setChats] = useState<
-    Array<ChatCompletionMessageParam & { shown: boolean }>
+    Array<ChatCompletionMessageParam>
   >([]);
   const [params, setParams] = useState({
     temperature: 0.5,
@@ -85,14 +85,14 @@ export default function Example() {
       if (!current_model) return;
       setText("");
       setIsloading(true);
-      setChats((c) => [...c, { role: "user", content: chat, shown: true }]);
+      setChats((c) => [...c, { role: "user", content: chat }]);
       const stream = await client.chat.completions.create({
         stream: true,
         messages: [...chatlog, { role: "user", content: chat }],
         model: current_model,
         ...params,
       });
-      setChats((c) => [...c, { role: "assistant", content: "", shown: true }]);
+      setChats((c) => [...c, { role: "assistant", content: "" }]);
       for await (const chunk of stream) {
         const content = chunk.choices[0]?.delta?.content || "";
         setChats((c) => {
