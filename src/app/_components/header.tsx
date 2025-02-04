@@ -160,13 +160,17 @@ export const Header = () => {
                           static
                           as={motion.div}
                           initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
+                          animate={{
+                            opacity: 1,
+                            y: 0,
+                            transition: { duration: 0.1 },
+                          }}
                           exit={{
                             opacity: 0,
                             y: -10,
-                            transition: { delay: 0.2 },
+                            transition: { duration: 0.1 },
                           }}
-                          className="focus:outline-hidden absolute -left-36 top-20 z-10 mt-2 w-96 origin-top overflow-hidden rounded-md bg-white text-center shadow-lg"
+                          className="focus:outline-hidden absolute -left-36 top-20 z-20 mt-2 w-96 origin-top overflow-hidden rounded-md bg-white text-center shadow-lg"
                         >
                           <MenuItem>
                             <Link
@@ -274,8 +278,12 @@ export const Header = () => {
                           as={motion.div}
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          className="focus:outline-hidden absolute -left-36 top-20 z-10 mt-2 w-96 origin-top overflow-hidden rounded-md bg-white text-center shadow-lg"
+                          exit={{
+                            opacity: 0,
+                            y: -10,
+                            transition: { duration: 0.15 },
+                          }}
+                          className="focus:outline-hidden absolute -left-36 top-20 z-20 mt-2 w-96 origin-top overflow-hidden rounded-md bg-white text-center shadow-lg"
                         >
                           <MenuItem>
                             <Link
@@ -326,7 +334,7 @@ export const Header = () => {
                 </div>
                 <div className="flex items-center gap-16 px-12">
                   <Link
-                    className="inline-flex w-32 justify-center gap-x-1.5 rounded-md py-2 text-sm font-medium hover:bg-white hover:shadow-md"
+                    className="inline-flex w-32 justify-center gap-x-1.5 rounded-md py-2 text-sm font-medium"
                     href="/playground"
                   >
                     Playground
@@ -377,8 +385,12 @@ export const Header = () => {
                           as={motion.div}
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          className="focus:outline-hidden absolute right-0 top-6 z-10 mt-2 w-28 origin-top rounded-md rounded-t-none bg-gray-50 text-center shadow-lg"
+                          exit={{
+                            opacity: 0,
+                            y: -10,
+                            transition: { duration: 0.15 },
+                          }}
+                          className="focus:outline-hidden absolute right-0 top-6 z-20 mt-2 w-28 origin-top rounded-md rounded-t-none bg-gray-50 text-center shadow-lg"
                         >
                           <div className="border-b border-gray-200">
                             <MenuItem>
@@ -408,35 +420,11 @@ export const Header = () => {
                             </MenuItem>
                             <MenuItem>
                               <Link
-                                href="/settings/credits"
-                                className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
-                              >
-                                Credits
-                              </Link>
-                            </MenuItem>
-                            <MenuItem>
-                              <Link
-                                href="/settings/activity"
-                                className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
-                              >
-                                Activity
-                              </Link>
-                            </MenuItem>
-                            <MenuItem>
-                              <Link
-                                href="/settings/keys"
-                                className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
-                              >
-                                Keys
-                              </Link>
-                            </MenuItem>
-                            <MenuItem>
-                              <a
                                 href="/sign-out"
                                 className="block px-4 py-2 text-center text-sm hover:bg-gray-100"
                               >
                                 Sign Out
-                              </a>
+                              </Link>
                             </MenuItem>
                           </div>
                         </MenuItems>
@@ -446,25 +434,24 @@ export const Header = () => {
                 ) : (
                   <Link
                     href="/sign-in"
-                    className="inline-flex h-9 items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-sm leading-tight text-mf-gray-600 hover:underline"
+                    className="inline-flex w-20 cursor-pointer justify-center py-9 text-sm font-medium text-gray-900"
                   >
                     Sign In
                   </Link>
                 )}
               </div>
-              <div className="flex sm:hidden">
-                <button
-                  type="button"
-                  onClick={() => setMobileMenuOpen(true)}
-                  className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-                >
-                  <span className="sr-only">Open main menu</span>
-                  <MenuIcon
-                    aria-hidden="true"
-                    className="h-6 w-6 text-mf-gray-600"
-                  />
-                </button>
-              </div>
+            </div>
+            <div className="flex sm:hidden">
+              <button
+                onClick={() => setMobileMenuOpen(true)}
+                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+              >
+                <span className="sr-only">Open main menu</span>
+                <MenuIcon
+                  aria-hidden="true"
+                  className="h-6 w-6 text-mf-gray-600"
+                />
+              </button>
             </div>
           </>
         )}
@@ -474,8 +461,8 @@ export const Header = () => {
           onClose={setMobileMenuOpen}
           className="xl:hidden"
         >
-          <div className="fixed inset-0 z-10" />
-          <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div className="fixed inset-0 z-20" />
+          <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
               <Link
                 href="/"
@@ -491,7 +478,6 @@ export const Header = () => {
                 <p className="text-md font-semibold">Targon</p>
               </Link>
               <button
-                type="button"
                 onClick={() => setMobileMenuOpen(false)}
                 className="-m-2.5 rounded-md p-2.5 text-gray-700"
               >
@@ -531,23 +517,23 @@ export const Header = () => {
                   <Link
                     href="/settings"
                     prefetch={false}
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900"
                   >
                     Settings
                   </Link>
                   {auth.status === "AUTHED" ? (
-                    <a
+                    <Link
                       href="/sign-out"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900"
                     >
                       Sign out
-                    </a>
+                    </Link>
                   ) : (
                     <Link
                       href="/sign-in"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900"
                     >
                       Log in
                     </Link>

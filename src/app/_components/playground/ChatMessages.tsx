@@ -76,14 +76,12 @@ interface ChatMessagesProps {
 
 export function ChatMessages({ messages }: ChatMessagesProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-
   // Handle new messages
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     const { offsetHeight, scrollHeight, scrollTop } = container;
-    // Check if user is near bottom (within 300px margin)
     if (scrollHeight <= scrollTop + offsetHeight + 300) {
       container.scrollTop = scrollHeight;
     }
@@ -93,7 +91,7 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
 
   return (
     <div ref={containerRef} className="h-full overflow-y-auto">
-      <div className="space-y-4 px-4 py-6 lg:space-y-6">
+      <div className="space-y-4 p-6 px-4 lg:space-y-6">
         {messages.map((message, i) => (
           <div
             key={i}
@@ -104,37 +102,39 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
           >
             <div
               className={clsx(
-                "w-[95%] overflow-hidden rounded-2xl px-4 py-3 lg:w-[85%] lg:px-6 lg:py-4",
+                "relative w-[95%] overflow-hidden rounded-2xl px-4 py-3 lg:w-[85%] lg:px-6 lg:py-4",
                 message.role === "user"
                   ? "bg-[#142900]/80 text-white shadow-sm backdrop-blur-sm"
                   : "bg-gray-100 text-gray-900",
               )}
             >
-              <Markdown
-                components={{
-                  code: CodeBlock,
-                }}
-                className={clsx(
-                  "prose prose-sm max-w-none break-words lg:prose-base",
-                  "prose-headings:mb-2 prose-headings:mt-4 prose-headings:font-semibold first:prose-headings:mt-0 lg:prose-headings:mb-3 lg:prose-headings:mt-6",
-                  "prose-p:my-1.5 prose-p:leading-relaxed lg:prose-p:my-2",
-                  "prose-ul:my-1.5 prose-ul:list-disc prose-ul:pl-4 lg:prose-ul:my-2",
-                  "prose-ol:my-1.5 prose-ol:list-decimal prose-ol:pl-4 lg:prose-ol:my-2",
-                  "prose-li:my-0.5",
-                  "prose-code:before:content-none prose-code:after:content-none",
-                  "prose-pre:my-2 prose-pre:bg-transparent prose-pre:p-0 lg:prose-pre:my-3",
-                  message.role === "user" && [
-                    "prose-invert",
-                    "prose-p:text-white/90",
-                    "prose-headings:text-white",
-                    "prose-strong:text-white",
-                    "prose-a:text-white hover:prose-a:text-white/90",
-                    "prose-li:text-white/90",
-                  ],
-                )}
-              >
-                {message.content as string}
-              </Markdown>
+              <div>
+                <Markdown
+                  components={{
+                    code: CodeBlock,
+                  }}
+                  className={clsx(
+                    "prose prose-sm max-w-none break-words lg:prose-base",
+                    "prose-headings:mb-2 prose-headings:mt-4 prose-headings:font-semibold first:prose-headings:mt-0 lg:prose-headings:mb-3 lg:prose-headings:mt-6",
+                    "prose-p:my-1.5 prose-p:leading-relaxed lg:prose-p:my-2",
+                    "prose-ul:my-1.5 prose-ul:list-disc prose-ul:pl-4 lg:prose-ul:my-2",
+                    "prose-ol:my-1.5 prose-ol:list-decimal prose-ol:pl-4 lg:prose-ol:my-2",
+                    "prose-li:my-0.5",
+                    "prose-code:before:content-none prose-code:after:content-none",
+                    "prose-pre:my-2 prose-pre:bg-transparent prose-pre:p-0 lg:prose-pre:my-3",
+                    message.role === "user" && [
+                      "prose-invert",
+                      "prose-p:text-white/90",
+                      "prose-headings:text-white",
+                      "prose-strong:text-white",
+                      "prose-a:text-white hover:prose-a:text-white/90",
+                      "prose-li:text-white/90",
+                    ],
+                  )}
+                >
+                  {message.content as string}
+                </Markdown>
+              </div>
             </div>
           </div>
         ))}

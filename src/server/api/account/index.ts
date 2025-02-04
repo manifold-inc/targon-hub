@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { TRPCError } from "@trpc/server";
-import { count, desc, eq } from "drizzle-orm";
+import { and, count, desc, eq, gte, sql, sum } from "drizzle-orm";
 import { Scrypt } from "lucia";
 import { z } from "zod";
 
@@ -161,6 +161,7 @@ export const accountRouter = createTRPCRouter({
     if (!ctx.user?.id) return null;
     const activity = await ctx.db
       .select({
+        id: Request.id,
         createdAt: Request.createdAt,
         model: Model.name,
         creditsUsed: Request.creditsUsed,
@@ -172,5 +173,71 @@ export const accountRouter = createTRPCRouter({
       .orderBy(desc(Request.createdAt))
       .limit(100);
     return activity ?? null;
+  }),
+  getUserActivityMonthly: publicProcedure.query(async ({ ctx }) => {
+    if (!ctx.user?.id) return null;
+    // Get date from 30 days ago
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const rawActivity = await ctx.db
+      .select({
+        date: sql<string>`DATE(${Request.createdAt})`,
+        model: Model.name,
+        totalResponseTokens: sum(Request.responseTokens),
+        requestCount: count(),
+      })
+      .from(Request)
+      .leftJoin(Model, eq(Request.model, Model.id))
+      .where(
+        and(
+          eq(Request.userId, ctx.user.id),
+          gte(Request.createdAt, thirtyDaysAgo),
+        ),
+      )
+      .groupBy(sql`DATE(${Request.createdAt})`, Model.name)
+      .orderBy(sql`DATE(${Request.createdAt})`);
+
+    if (!rawActivity?.length) return null;
+
+    // Get unique models
+    const models = new Set<string>();
+    rawActivity.forEach((item) => {
+      if (item.model) models.add(item.model);
+    });
+
+    // Create a map to store data by date
+    const dataByDate = new Map<string, Record<string, number>>();
+
+    // Initialize all dates with all models set to 0
+    rawActivity.forEach((item) => {
+      const dateStr = item.date;
+      if (dateStr && !dataByDate.has(dateStr)) {
+        const modelData: Record<string, number> = {};
+        Array.from(models).forEach((model) => {
+          modelData[model] = 0;
+        });
+        dataByDate.set(dateStr, modelData);
+      }
+    });
+
+    // Fill in the actual values
+    rawActivity.forEach((item) => {
+      const dateStr = item.date;
+      if (dateStr) {
+        const dateData = dataByDate.get(dateStr);
+        if (dateData && item.model) {
+          dateData[item.model] = Number(item.totalResponseTokens) || 0;
+        }
+      }
+    });
+
+    // Convert map to array and sort by date
+    return Array.from(dataByDate.entries())
+      .map(([date, modelData]) => ({
+        date,
+        ...modelData,
+      }))
+      .sort((a, b) => a.date.localeCompare(b.date));
   }),
 });

@@ -59,6 +59,7 @@ export default function Example() {
       // Toggle parameters: P
       if (e.key === "p") {
         setIsParamsOpen((prev) => !prev);
+        e.preventDefault();
         return;
       }
 
@@ -181,7 +182,7 @@ export default function Example() {
 
   return (
     <>
-      <div className="flex min-h-[calc(100vh-4rem)] flex-col pt-7 lg:flex-row">
+      <div className="flex min-h-[calc(100vh-3rem)] flex-col pt-4 lg:flex-row">
         {/* Parameter Controls - Move before main content for desktop */}
         <ParameterControls
           params={params}

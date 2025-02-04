@@ -75,18 +75,52 @@ const getModelColor = (model: string) => {
   return modelColorMap.get(model) || "#000000";
 };
 
-// Add this interface before prepareChartData function
-interface ChartDataItem {
-  date: string;
-  total: number;
-  [key: string]: number | string; // For dynamic model names
+interface TooltipProps {
+  active?: boolean;
+  payload?: Array<{
+    value: number;
+    name: string;
+    color: string;
+  }>;
+  label?: string;
 }
+
+const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
+  if (!active || !payload?.length || !label) {
+    return null;
+  }
+
+  return (
+    <div className="rounded-md border border-gray-200 bg-white p-2 text-xs shadow-sm">
+      <p className="mb-1 font-medium text-gray-600">
+        {new Date(label).toLocaleDateString("en-US", {
+          month: "numeric",
+          day: "numeric",
+        })}
+      </p>
+      {payload.map(
+        (entry, index) =>
+          entry.value > 0 && (
+            <div
+              key={index}
+              className="flex items-center justify-between gap-3"
+            >
+              <span style={{ color: entry.color }}>{entry.name}</span>
+              <span className="font-medium">
+                {entry.value.toLocaleString()}
+              </span>
+            </div>
+          ),
+      )}
+    </div>
+  );
+};
 
 export default function SettingsPage() {
   const auth = useAuth();
   const user = reactClient.account.getUserDashboard.useQuery();
-  const activity = reactClient.account.getUserActivity.useQuery(); // paginate and optional limit
-  const keys = reactClient.core.getApiKeys.useQuery(); // get key?
+  const activity = reactClient.account.getUserActivityMonthly.useQuery();
+  const keys = reactClient.core.getApiKeys.useQuery();
 
   const [showSS58Input, setShowSS58Input] = useState(false);
   const [ss58Address, setSS58Address] = useState("");
@@ -102,8 +136,8 @@ export default function SettingsPage() {
   const getUniqueModels = () => {
     if (!activity.data) return [];
     const models = new Set<string>();
-    activity.data.forEach((item) => {
-      if (item.model) models.add(item.model);
+    Object.keys(activity.data[0] || {}).forEach((key) => {
+      if (key !== "date") models.add(key);
     });
     return Array.from(models);
   };
@@ -214,62 +248,6 @@ export default function SettingsPage() {
     }
   };
 
-  const prepareChartData = () => {
-    if (!activity.data) return [];
-
-    // Find date range
-    const dates = activity.data.map((item) => item.createdAt);
-    const minDate = new Date(Math.min(...dates.map((d) => d.getTime())));
-    const maxDate = new Date(Math.max(...dates.map((d) => d.getTime())));
-
-    // Create array of all dates in range
-    const allDates: Date[] = [];
-    const currentDate = new Date(minDate);
-    while (currentDate <= maxDate) {
-      allDates.push(new Date(currentDate));
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    // Create initial data structure with all dates
-    const initialData = allDates.reduce(
-      (acc: Record<string, ChartDataItem>, date) => {
-        const dateStr = date.toISOString().split("T")[0]!;
-        acc[dateStr] = {
-          date: dateStr,
-          total: 0,
-        };
-        return acc;
-      },
-      {},
-    );
-
-    // Fill in activity data
-    activity.data.forEach((item) => {
-      if (!item.model || !item.responseTokens) return;
-
-      // Skip if model is not selected (when filters are active)
-      if (selectedModels.length > 0 && !selectedModels.includes(item.model)) {
-        return;
-      }
-
-      const date = item.createdAt.toISOString().split("T")[0]!;
-
-      // Ensure the date exists in initialData (TypeScript safety)
-      if (initialData[date]) {
-        // Add model-specific tokens
-        initialData[date][item.model] =
-          ((initialData[date][item.model] as number) || 0) +
-          item.responseTokens;
-        initialData[date].total += item.responseTokens;
-      }
-    });
-
-    // Convert to array and sort by date
-    return Object.values(initialData).sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-    );
-  };
-
   if (auth.status === "UNAUTHED") {
     router.push("/sign-in");
   }
@@ -306,46 +284,52 @@ export default function SettingsPage() {
 
         {/* API Key Panel */}
         <div className="col-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
-          <h3 className="mb-4 overflow-hidden whitespace-nowrap text-lg font-semibold">
+          <h3 className="mb-6 text-lg font-semibold">
             <Link href="/settings/keys">API Key</Link>
           </h3>
           <div
-            className="mb-4 flex h-14 cursor-pointer items-center justify-between rounded-xl bg-gray-50 p-4 hover:bg-gray-100"
+            className="group relative mb-6 cursor-pointer rounded-xl border border-gray-100 bg-gray-50 p-4 transition-all hover:border-gray-200 hover:bg-gray-100"
             onClick={() => {
               void copyToClipboard(keys.data?.[0]?.key ?? "");
               toast.success("Copied API Key to Clipboard");
             }}
           >
-            <p className="truncate font-mono leading-7 text-black">
-              {keys.data?.[0]?.key || "No API key"}
-            </p>
-            <Copy className="h-4 w-4 flex-shrink-0" />
+            <div className="flex items-center justify-between gap-3">
+              <p className="truncate font-mono text-sm text-gray-600">
+                {keys.data?.[0]?.key || "No API key"}
+              </p>
+              <Copy className="h-4 w-4 flex-shrink-0 text-gray-400 transition-colors group-hover:text-gray-600" />
+            </div>
           </div>
-          <div className="inline-flex w-full justify-between">
-            <Link
-              href="/settings/keys"
-              className="flex h-8 flex-shrink-0 items-center justify-center gap-1 rounded-full px-3 py-4 hover:bg-blue-50"
-              prefetch={false}
-            >
-              <span className="text-sm font-semibold leading-tight text-[#1d4ed8]">
-                View All
-              </span>
-            </Link>
+          <div className="border-t border-gray-100 pt-4">
+            <div className="flex flex-col items-center justify-center gap-2">
+              <Link
+                href="/settings/keys"
+                className="flex w-fit items-center gap-1 rounded-full px-2.5 py-1 text-sm font-medium text-[#1d4ed8] transition-colors hover:bg-blue-50"
+                prefetch={false}
+              >
+                View All Keys
+              </Link>
 
-            <div
-              className="hidden h-8 cursor-pointer items-center justify-center gap-1 rounded-full px-3 py-4 font-mono text-sm text-gray-500 hover:bg-blue-50 xl:flex"
-              onClick={() => {
-                void copyToClipboard(`${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1`);
-                toast.success("Copied URL to Clipboard");
-              }}
-            >
-              {env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1
+              <button
+                className="hidden w-fit items-center gap-2 rounded-full px-2.5 py-1 text-sm text-gray-500 transition-colors hover:bg-gray-50 xl:flex"
+                onClick={() => {
+                  void copyToClipboard(
+                    `${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1`,
+                  );
+                  toast.success("Copied URL to Clipboard");
+                }}
+              >
+                <span className="font-mono">
+                  Endpoint: {env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1
+                </span>
+              </button>
             </div>
           </div>
         </div>
 
         {/* Credits Panel */}
-        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6 pb-0 lg:col-span-1">
+        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
           <h3 className="pb-8 text-lg font-semibold">
             <Link href="/settings/credits">Credits</Link>
           </h3>
@@ -364,7 +348,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Activity Panel */}
-        <div className="col-span-2 row-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent p-6">
+        <div className="col-span-2 row-span-2 h-[400px] rounded-2xl border border-gray-200 bg-white bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent p-6">
           <div className="mb-4 flex flex-row items-center justify-between">
             <h3 className="text-lg font-semibold">
               <Link href="/settings/activity">Activity</Link>
@@ -389,7 +373,7 @@ export default function SettingsPage() {
                 <MenuItems className="absolute right-0 top-full z-10 mt-1 w-96 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
                   {getUniqueModels().map((model) => (
                     <MenuItem key={model}>
-                      {({ active }) => (
+                      {() => (
                         <button
                           onClick={(e) => {
                             e.preventDefault();
@@ -401,9 +385,7 @@ export default function SettingsPage() {
                               }
                             });
                           }}
-                          className={`flex w-full items-center px-4 py-2 text-sm text-gray-700 ${
-                            active ? "bg-gray-100" : ""
-                          }`}
+                          className={`flex w-full items-center px-4 py-2 text-sm text-gray-700`}
                         >
                           <div className="flex items-center gap-2">
                             <div
@@ -421,14 +403,12 @@ export default function SettingsPage() {
                   ))}
                   {selectedModels.length > 0 && (
                     <MenuItem>
-                      {({ active }) => (
+                      {() => (
                         <button
                           onClick={() => {
                             setSelectedModels([]);
                           }}
-                          className={`w-full border-t border-gray-100 px-4 py-2 text-sm text-gray-500 ${
-                            active ? "bg-gray-100" : ""
-                          }`}
+                          className={`w-full border-t border-gray-100 px-4 py-2 text-sm text-gray-500`}
                         >
                           Clear all
                         </button>
@@ -447,20 +427,18 @@ export default function SettingsPage() {
                 height="100%"
                 className="absolute inset-0"
               >
-                <ComposedChart data={prepareChartData()}>
+                <ComposedChart data={activity.data}>
                   <XAxis
                     dataKey="date"
                     tickFormatter={(date: string) => {
                       return new Date(date).toLocaleDateString("en-US", {
-                        month: "short",
+                        month: "numeric",
                         day: "numeric",
                       });
                     }}
                     axisLine={false}
                     tickLine={false}
                     tick={{ fontSize: 12 }}
-                    interval="preserveStartEnd"
-                    minTickGap={50}
                   />
                   <YAxis
                     axisLine={false}
@@ -470,18 +448,7 @@ export default function SettingsPage() {
                       typeof value === "number" ? value.toLocaleString() : "0"
                     }
                   />
-                  <Tooltip
-                    contentStyle={{
-                      border: "1px solid #e5e7eb",
-                      borderRadius: "0.75rem",
-                      padding: "0.75rem",
-                    }}
-                    formatter={(value: number, name: string) => {
-                      if (name === "total") return null;
-                      return [`${value.toLocaleString()} tokens`, name];
-                    }}
-                    cursor={false}
-                  />
+                  <Tooltip content={<CustomTooltip />} cursor={false} />
                   {getUniqueModels()
                     .filter(
                       (model) =>
@@ -494,13 +461,14 @@ export default function SettingsPage() {
                         dataKey={model}
                         stackId="a"
                         fill={getModelColor(model)}
+                        barSize={20}
                       />
                     ))}
                 </ComposedChart>
               </ResponsiveContainer>
             </div>
           ) : (
-            <div className="flex h-full items-center justify-center text-gray-500">
+            <div className="flex h-72 items-center justify-center text-gray-500">
               No activity yet
             </div>
           )}

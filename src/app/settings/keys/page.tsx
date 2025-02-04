@@ -27,7 +27,9 @@ export default function KeysPage() {
   const deleteApiKey = reactClient.core.deleteApiKey.useMutation({
     onSuccess: () => {
       void utils.core.getApiKeys.invalidate();
-      toast.success("Key deleted");
+      toast.success("Key deleted", {
+        style: { color: "red", background: "#fee2e2" },
+      });
     },
     onError: () => {
       toast.error("Failed to delete key");
