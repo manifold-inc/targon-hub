@@ -2,7 +2,6 @@ import { TRPCError } from "@trpc/server";
 import { and, eq, notInArray } from "drizzle-orm";
 import { z } from "zod";
 
-import { MAX_GPU_SLOTS } from "@/constants";
 import { env } from "@/env.mjs";
 import { Model, ModelSubscription, User } from "@/schema/schema";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
@@ -25,14 +24,6 @@ export const subscriptionRouter = createTRPCRouter({
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Model not found",
-        });
-      }
-
-      //this shouldn't happen but just in case
-      if (model.requiredGpus < 1 || model.requiredGpus > MAX_GPU_SLOTS) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Invalid GPU count",
         });
       }
 

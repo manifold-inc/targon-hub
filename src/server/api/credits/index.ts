@@ -90,7 +90,14 @@ export const creditsRouter = createTRPCRouter({
       }
 
       // Check if user has enough credits
-      if (!user || user.credits < (requiredGPU?.gpu ?? 0)) {
+      if (!user || !requiredGPU?.gpu) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "User not found, or gpus not found.",
+        });
+      }
+
+      if (BigInt(user.credits) < BigInt(requiredGPU.gpu) * COST_PER_GPU) {
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Insufficient credits to lease this model",
@@ -109,14 +116,14 @@ export const creditsRouter = createTRPCRouter({
         db
           .update(User)
           .set({
-            credits: user.credits - requiredGPU!.gpu * Number(COST_PER_GPU),
+            credits: user.credits - requiredGPU.gpu * Number(COST_PER_GPU),
           })
           .where(eq(User.id, ctx.user.id)),
 
         db.insert(ModelLeasing).values({
           userId: ctx.user.id,
           modelName: input.model,
-          amount: (requiredGPU!.gpu * Number(COST_PER_GPU)) / CREDIT_PER_DOLLAR,
+          amount: (requiredGPU.gpu * Number(COST_PER_GPU)) / CREDIT_PER_DOLLAR,
         }),
       ]);
 
