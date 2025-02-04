@@ -160,7 +160,7 @@ export default function RoadmapPage() {
         </div>
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-16 lg:px-8">
         {/* Header Section */}
         <motion.div
           initial="initial"
@@ -169,20 +169,20 @@ export default function RoadmapPage() {
           className="mx-auto max-w-2xl text-center"
         >
           <motion.div variants={animations.fadeInUp}>
-            <span className="inline-block rounded-full bg-[#142900]/5 px-4 py-1.5 text-sm font-medium text-mf-green">
+            <span className="inline-block rounded-full bg-[#142900]/5 px-3 py-1 sm:px-4 sm:py-1.5 text-sm font-medium text-mf-green">
               Product Roadmap
             </span>
           </motion.div>
           <motion.h1
             variants={animations.fadeInUp}
-            className="font-display pt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
+            className="font-display pt-4 text-3xl sm:text-4xl lg:text-6xl font-bold tracking-tight text-gray-900"
           >
             Building the future of{" "}
             <p className="text-mf-green">AI infrastructure</p>
           </motion.h1>
           <motion.p
             variants={animations.fadeInUp}
-            className="pt-6 text-lg leading-8 text-gray-600"
+            className="pt-4 sm:pt-6 text-base sm:text-lg leading-7 sm:leading-8 text-gray-600"
           >
             Our vision for revolutionizing how businesses deploy and scale AI
             models
@@ -190,12 +190,12 @@ export default function RoadmapPage() {
         </motion.div>
 
         {/* Roadmap Grid */}
-        <div className="relative pb-8 pt-16">
+        <div className="relative pb-4 sm:pb-8 pt-8 sm:pt-16">
           <motion.div
             initial="initial"
             animate="animate"
             variants={animations.stagger}
-            className="grid gap-6 lg:grid-cols-3"
+            className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3"
           >
             {roadmapItems.map((item, idx) => (
               <motion.div
@@ -210,7 +210,7 @@ export default function RoadmapPage() {
                 }}
                 className="group relative h-full"
               >
-                <div className="relative flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-lg">
+                <div className="relative flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-4 sm:p-6 lg:p-8 shadow-sm transition-all duration-300 hover:shadow-lg">
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white via-white to-gray-50/50" />
 
                   <div className="relative flex h-full flex-col">
