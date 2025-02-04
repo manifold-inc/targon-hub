@@ -169,20 +169,20 @@ export default function RoadmapPage() {
           className="mx-auto max-w-2xl text-center"
         >
           <motion.div variants={animations.fadeInUp}>
-            <span className="inline-block rounded-full bg-[#142900]/5 px-3 py-1 sm:px-4 sm:py-1.5 text-sm font-medium text-mf-green">
+            <span className="inline-block rounded-full bg-[#142900]/5 px-3 py-1 text-sm font-medium text-mf-green sm:px-4 sm:py-1.5">
               Product Roadmap
             </span>
           </motion.div>
           <motion.h1
             variants={animations.fadeInUp}
-            className="font-display pt-4 text-3xl sm:text-4xl lg:text-6xl font-bold tracking-tight text-gray-900"
+            className="font-display pt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-6xl"
           >
             Building the future of{" "}
             <p className="text-mf-green">AI infrastructure</p>
           </motion.h1>
           <motion.p
             variants={animations.fadeInUp}
-            className="pt-4 sm:pt-6 text-base sm:text-lg leading-7 sm:leading-8 text-gray-600"
+            className="pt-4 text-base leading-7 text-gray-600 sm:pt-6 sm:text-lg sm:leading-8"
           >
             Our vision for revolutionizing how businesses deploy and scale AI
             models
@@ -190,7 +190,7 @@ export default function RoadmapPage() {
         </motion.div>
 
         {/* Roadmap Grid */}
-        <div className="relative pb-4 sm:pb-8 pt-8 sm:pt-16">
+        <div className="relative pb-4 pt-8 sm:pb-8 sm:pt-16">
           <motion.div
             initial="initial"
             animate="animate"
@@ -210,7 +210,7 @@ export default function RoadmapPage() {
                 }}
                 className="group relative h-full"
               >
-                <div className="relative flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-4 sm:p-6 lg:p-8 shadow-sm transition-all duration-300 hover:shadow-lg">
+                <div className="relative flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-all duration-300 hover:shadow-lg sm:p-6 lg:p-8">
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white via-white to-gray-50/50" />
 
                   <div className="relative flex h-full flex-col">

@@ -5,7 +5,7 @@ import {
   type ComponentPropsWithoutRef,
 } from "react";
 import clsx from "clsx";
-import { Check, Copy} from "lucide-react";
+import { Check, Copy } from "lucide-react";
 import { type ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import Markdown, { type Components } from "react-markdown";
 import { toast } from "sonner";

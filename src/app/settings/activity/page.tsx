@@ -12,7 +12,7 @@ export default function ActivityPage() {
       <h1 className="pb-6 text-xl font-semibold text-black">Activity</h1>
       <div className="max-h-full overflow-auto whitespace-nowrap py-2 sm:py-2">
         <div className="flex flex-col items-center justify-start gap-6">
-          <div className="w-full max-h-96">
+          <div className="max-h-96 w-full">
             {activity.data?.length ? (
               <div className="relative h-full overflow-x-auto rounded-xl border border-gray-200">
                 <table className="w-full border-0 text-xs sm:text-sm">

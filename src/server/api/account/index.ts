@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { TRPCError } from "@trpc/server";
-import { and, count, desc, eq, gte, sum, sql } from "drizzle-orm";
+import { and, count, desc, eq, gte, sql, sum } from "drizzle-orm";
 import { Scrypt } from "lucia";
 import { z } from "zod";
 
@@ -208,19 +208,19 @@ export const accountRouter = createTRPCRouter({
 
     // Create a map to store data by date
     const dataByDate = new Map<string, Record<string, number>>();
-    
+
     // Initialize all dates with all models set to 0
     rawActivity.forEach((item) => {
       const dateStr = item.date;
       if (dateStr && !dataByDate.has(dateStr)) {
         const modelData: Record<string, number> = {};
-        Array.from(models).forEach(model => {
+        Array.from(models).forEach((model) => {
           modelData[model] = 0;
         });
         dataByDate.set(dateStr, modelData);
       }
     });
-    
+
     // Fill in the actual values
     rawActivity.forEach((item) => {
       const dateStr = item.date;
@@ -231,12 +231,12 @@ export const accountRouter = createTRPCRouter({
         }
       }
     });
-    
+
     // Convert map to array and sort by date
     return Array.from(dataByDate.entries())
       .map(([date, modelData]) => ({
         date,
-        ...modelData
+        ...modelData,
       }))
       .sort((a, b) => a.date.localeCompare(b.date));
   }),

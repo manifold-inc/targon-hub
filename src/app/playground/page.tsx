@@ -26,9 +26,7 @@ export default function Example() {
   const [selected, setSelected] = useState<string | null>(null);
   const [isLoading, setIsloading] = useState(false);
   const [text, setText] = useState("");
-  const [chats, setChats] = useState<
-    Array<ChatCompletionMessageParam>
-  >([]);
+  const [chats, setChats] = useState<Array<ChatCompletionMessageParam>>([]);
   const [params, setParams] = useState({
     temperature: 0.5,
     max_tokens: 500,

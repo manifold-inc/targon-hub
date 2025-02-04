@@ -95,17 +95,23 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
       <p className="mb-1 font-medium text-gray-600">
         {new Date(label).toLocaleDateString("en-US", {
           month: "numeric",
-          day: "numeric"
+          day: "numeric",
         })}
       </p>
-      {payload.map((entry, index) => (
-        entry.value > 0 && (
-          <div key={index} className="flex items-center justify-between gap-3">
-            <span style={{ color: entry.color }}>{entry.name}</span>
-            <span className="font-medium">{entry.value.toLocaleString()}</span>
-          </div>
-        )
-      ))}
+      {payload.map(
+        (entry, index) =>
+          entry.value > 0 && (
+            <div
+              key={index}
+              className="flex items-center justify-between gap-3"
+            >
+              <span style={{ color: entry.color }}>{entry.name}</span>
+              <span className="font-medium">
+                {entry.value.toLocaleString()}
+              </span>
+            </div>
+          ),
+      )}
     </div>
   );
 };
@@ -130,8 +136,8 @@ export default function SettingsPage() {
   const getUniqueModels = () => {
     if (!activity.data) return [];
     const models = new Set<string>();
-    Object.keys(activity.data[0] || {}).forEach(key => {
-      if (key !== 'date') models.add(key);
+    Object.keys(activity.data[0] || {}).forEach((key) => {
+      if (key !== "date") models.add(key);
     });
     return Array.from(models);
   };
@@ -296,23 +302,27 @@ export default function SettingsPage() {
             </div>
           </div>
           <div className="border-t border-gray-100 pt-4">
-            <div className="flex flex-col gap-2 items-center justify-center">
+            <div className="flex flex-col items-center justify-center gap-2">
               <Link
                 href="/settings/keys"
-                className="flex items-center gap-1 rounded-full px-2.5 py-1 text-sm font-medium text-[#1d4ed8] transition-colors hover:bg-blue-50 w-fit"
+                className="flex w-fit items-center gap-1 rounded-full px-2.5 py-1 text-sm font-medium text-[#1d4ed8] transition-colors hover:bg-blue-50"
                 prefetch={false}
               >
                 View All Keys
               </Link>
 
               <button
-                className="hidden items-center gap-2 rounded-full px-2.5 py-1 text-sm text-gray-500 transition-colors hover:bg-gray-50 xl:flex w-fit"
+                className="hidden w-fit items-center gap-2 rounded-full px-2.5 py-1 text-sm text-gray-500 transition-colors hover:bg-gray-50 xl:flex"
                 onClick={() => {
-                  void copyToClipboard(`${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1`);
+                  void copyToClipboard(
+                    `${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1`,
+                  );
                   toast.success("Copied URL to Clipboard");
                 }}
               >
-                <span className="font-mono">Endpoint: {env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1</span>
+                <span className="font-mono">
+                  Endpoint: {env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1
+                </span>
               </button>
             </div>
           </div>
