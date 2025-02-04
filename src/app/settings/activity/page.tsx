@@ -9,10 +9,10 @@ export default function ActivityPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-xl font-semibold text-black">Activity</h1>
+      <h1 className="pb-6 text-xl font-semibold text-black">Activity</h1>
       <div className="max-h-full overflow-auto whitespace-nowrap py-2 sm:py-2">
         <div className="flex flex-col items-center justify-start gap-6">
-          <div className="w-full">
+          <div className="w-full max-h-96">
             {activity.data?.length ? (
               <div className="relative h-full overflow-x-auto rounded-xl border border-gray-200">
                 <table className="w-full border-0 text-xs sm:text-sm">
@@ -35,7 +35,7 @@ export default function ActivityPage() {
                   <tbody>
                     {activity.data?.map((activity) => (
                       <tr
-                        key={activity.createdAt.getTime()}
+                        key={activity.id}
                         className="h-8 border-b border-[#e4e7ec] bg-white"
                       >
                         <td className="px-2 py-1 text-left leading-tight text-[#101828]">
@@ -64,7 +64,9 @@ export default function ActivityPage() {
                 </table>
               </div>
             ) : (
-              <div className="flex h-full items-center justify-center text-gray-500"></div>
+              <div className="flex h-full items-center justify-center text-gray-500">
+                No activity yet
+              </div>
             )}
           </div>
         </div>
