@@ -5,7 +5,7 @@ import {
   type ComponentPropsWithoutRef,
 } from "react";
 import clsx from "clsx";
-import { Check, Copy, X } from "lucide-react";
+import { Check, Copy} from "lucide-react";
 import { type ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import Markdown, { type Components } from "react-markdown";
 import { toast } from "sonner";
@@ -76,8 +76,6 @@ interface ChatMessagesProps {
 
 export function ChatMessages({ messages }: ChatMessagesProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [hiddenMessages, setHiddenMessages] = useState<number[]>([]);
-
   // Handle new messages
   useEffect(() => {
     const container = containerRef.current;
@@ -100,7 +98,6 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
             className={clsx(
               "flex",
               message.role === "user" ? "justify-end" : "justify-start",
-              hiddenMessages.includes(i) && "hidden",
             )}
           >
             <div
@@ -111,27 +108,6 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
                   : "bg-gray-100 text-gray-900",
               )}
             >
-              <button
-                onClick={() => {
-                  const newHidden = [...hiddenMessages];
-                  if (hiddenMessages.includes(i)) {
-                    const index = newHidden.indexOf(i);
-                    newHidden.splice(index, 1);
-                  } else {
-                    newHidden.push(i);
-                  }
-                  setHiddenMessages(newHidden);
-                }}
-                className="absolute right-2 top-2 p-1"
-              >
-                <X
-                  className={clsx(
-                    "h-3.5 w-3.5 text-gray-500 hover:font-extrabold hover:text-gray-900",
-                    message.role === "user" &&
-                      "text-gray-900 hover:font-extrabold hover:text-black",
-                  )}
-                />
-              </button>
               <div>
                 <Markdown
                   components={{
