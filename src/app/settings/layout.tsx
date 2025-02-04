@@ -35,21 +35,21 @@ export default function SettingsLayout({
     <div className="flex min-h-[calc(100vh-4rem)] flex-col pt-7 lg:flex-row">
       {/* Mobile Navigation */}
       <div className="border-b border-gray-200 lg:hidden">
-        <nav className="flex gap-2 overflow-x-auto p-3 px-4">
+        <nav className="flex flex-wrap items-center justify-center gap-2 p-4">
           {tabs.map((tab) => {
             const isActive = pathname === tab.href;
             return (
               <Link
                 key={tab.id}
                 href={tab.href}
-                className={`flex h-9 flex-none items-center gap-3 rounded-full px-3 py-2 ${
+                className={`flex h-10 items-center gap-2.5 rounded-full px-4 py-2 ${
                   isActive
-                    ? "bg-white text-[#344054] shadow"
-                    : "text-[#475467] hover:bg-gray-100"
+                    ? "bg-gray-50 text-gray-900 shadow-sm"
+                    : "text-gray-600 hover:bg-gray-50/50 hover:text-gray-900"
                 }`}
               >
-                <tab.icon className="h-5 w-5" />
-                <div className="whitespace-nowrap text-sm font-semibold leading-tight">
+                <tab.icon className="h-4.5 w-4.5" />
+                <div className="whitespace-nowrap text-sm font-medium leading-none">
                   {tab.label}
                 </div>
               </Link>
