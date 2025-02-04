@@ -1,11 +1,10 @@
 import { TRPCError } from "@trpc/server";
-import { eq, inArray } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { z } from "zod";
 
 import {
   COST_PER_GPU,
   CREDIT_PER_DOLLAR,
-  MAX_GPU_SLOTS,
   MIN_PURCHASE_IN_DOLLARS,
 } from "@/constants";
 import { env } from "@/env.mjs";
@@ -66,22 +65,13 @@ export const creditsRouter = createTRPCRouter({
   leaseModel: protectedProcedure
     .input(z.object({ model: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const [[requiredGPU], enabledModels, [user]] = await Promise.all([
+      const [[requiredGPU], [user]] = await Promise.all([
         ctx.db
           .select({
             gpu: Model.requiredGpus,
           })
           .from(Model)
           .where(eq(Model.name, input.model)),
-
-        ctx.db
-          .select({
-            name: Model.name,
-            requiredGpus: Model.requiredGpus,
-            enabledDate: Model.enabledDate,
-          })
-          .from(Model)
-          .where(eq(Model.enabled, true)),
 
         ctx.db
           .select({
@@ -107,53 +97,7 @@ export const creditsRouter = createTRPCRouter({
         });
       }
 
-      const immunityPeriod = 7 * 24 * 60 * 60 * 1000;
       const now = new Date();
-
-      // Calculate how many gpu slots are currently used
-      const eligibleForRemoval = enabledModels
-        .filter((model) => {
-          if (!model.enabledDate) return false;
-          return now.getTime() - model.enabledDate.getTime() > immunityPeriod;
-        })
-        .sort((a, b) => b.enabledDate!.getTime() - a.enabledDate!.getTime());
-
-      const currentGPUUsage = enabledModels.reduce(
-        (sum, model) => sum + (model.requiredGpus ?? 0),
-        0,
-      );
-      const requestedGPU = requiredGPU?.gpu ?? 0;
-
-      // Check if we need to remove to make room
-      if (currentGPUUsage + requestedGPU > MAX_GPU_SLOTS) {
-        let gpuToRemove = currentGPUUsage + requestedGPU - MAX_GPU_SLOTS;
-        const modelsToDisable = [];
-
-        for (const model of eligibleForRemoval) {
-          if (gpuToRemove <= 0) break;
-          modelsToDisable.push(model.name);
-          gpuToRemove -= model.requiredGpus;
-        }
-
-        if (gpuToRemove > 0) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: `Cannot free up enough GPU slots. Need ${gpuToRemove} more GPUs. Try again when more models become eligible for removal.`,
-          });
-        }
-        await ctx.db
-          .update(Model)
-          .set({
-            enabled: false,
-            enabledDate: null,
-          })
-          .where(
-            inArray(
-              Model.name,
-              modelsToDisable.filter((name): name is string => name !== null),
-            ),
-          );
-      }
 
       // Lease model
       await Promise.all([
