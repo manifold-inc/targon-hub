@@ -70,8 +70,8 @@ export const Footer = () => {
 
   return (
     <footer className="border-t border-[#E5E7EB] bg-white">
-      <div className="mx-auto max-w-7xl px-16 py-16">
-        <div className="lg:grid lg:grid-cols-3 lg:gap-8">
+      <div className="mx-auto max-w-7xl px-6 py-8 lg:px-16 lg:py-16">
+        <div className="space-y-8 lg:grid lg:grid-cols-3 lg:gap-8 lg:space-y-0">
           <div className="flex flex-col gap-y-4">
             <div className="flex">
               <Image
@@ -102,8 +102,8 @@ export const Footer = () => {
               </p>
             </div>
           </div>
-          <div className="mt-16 grid grid-cols-2 gap-4 lg:col-span-2 lg:mt-0">
-            <div className="md:grid md:grid-cols-2 md:gap-4">
+          <div className="lg:col-span-2">
+            <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
               <div>
                 <h3 className="text-sm/6 font-semibold text-gray-900">
                   Browse
@@ -121,7 +121,7 @@ export const Footer = () => {
                   ))}
                 </ul>
               </div>
-              <div className="mt-5 md:mt-0">
+              <div>
                 <h3 className="text-sm/6 font-semibold text-gray-900">
                   Infrastructure
                 </h3>
@@ -138,8 +138,6 @@ export const Footer = () => {
                   ))}
                 </ul>
               </div>
-            </div>
-            <div className="md:grid md:grid-cols-2 md:gap-4">
               <div>
                 <h3 className="text-sm/6 font-semibold text-gray-900">
                   Account
@@ -157,7 +155,7 @@ export const Footer = () => {
                   ))}
                 </ul>
               </div>
-              <div className="mt-10 md:mt-0">
+              <div>
                 <h3 className="text-sm/6 font-semibold text-gray-900">Legal</h3>
                 <ul role="list" className="mt-4 space-y-2">
                   {navigation.legal.map((item) => (
