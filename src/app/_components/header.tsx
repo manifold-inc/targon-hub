@@ -436,12 +436,12 @@ export const Header = () => {
                               </Link>
                             </MenuItem>
                             <MenuItem>
-                              <Link
+                              <a
                                 href="/sign-out"
                                 className="block px-4 py-2 text-center text-sm hover:bg-gray-100"
                               >
                                 Sign Out
-                              </Link>
+                              </a>
                             </MenuItem>
                           </div>
                         </MenuItems>
@@ -539,13 +539,13 @@ export const Header = () => {
                     Settings
                   </Link>
                   {auth.status === "AUTHED" ? (
-                    <Link
+                    <a
                       href="/sign-out"
                       onClick={() => setMobileMenuOpen(false)}
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900"
                     >
                       Sign out
-                    </Link>
+                    </a>
                   ) : (
                     <Link
                       href="/sign-in"
