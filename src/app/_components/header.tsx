@@ -14,6 +14,7 @@ import {
 } from "@headlessui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
+  BrainCircuit,
   ChevronDown,
   Clock,
   FileBox,
@@ -172,6 +173,22 @@ export const Header = () => {
                           }}
                           className="focus:outline-hidden absolute -left-36 top-20 z-20 mt-2 w-96 origin-top overflow-hidden rounded-md bg-white text-center shadow-lg"
                         >
+                          <MenuItem>
+                            <Link
+                              className={
+                                "group flex items-center gap-2 px-4 py-4 text-sm text-black hover:bg-gray-50"
+                              }
+                              href="/browse"
+                            >
+                              <BrainCircuit className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                              <div className="flex flex-col gap-0 pl-2 text-left">
+                                <p className="text-xs">Explore</p>
+                                <p className="text-xs text-gray-500">
+                                  Explore our platform
+                                </p>
+                              </div>
+                            </Link>
+                          </MenuItem>
                           <MenuItem>
                             <Link
                               className={
