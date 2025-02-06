@@ -74,7 +74,7 @@ export function EmptyState({ startChat }: EmptyStateProps) {
           </div>
         </div>
 
-        <div className="hidden flex-col items-center gap-2 sm:flex">
+        <div className="flex-col items-center gap-2">
           <p className="text-xs text-gray-500 lg:text-sm">
             Press{" "}
             <kbd className="rounded-md border border-gray-200 bg-gray-100 px-1.5 py-0.5 text-xs font-medium text-gray-400">
