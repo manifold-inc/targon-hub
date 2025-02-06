@@ -208,7 +208,7 @@ export default function Example() {
           {nav === "ui" ? (
             <div className="relative flex flex-1 flex-col">
               {chats.length === 0 ? (
-                <div className="absolute inset-0 bottom-16 overflow-y-auto">
+                <div className="absolute inset-0 bottom-16">
                   <EmptyState startChat={startChat} />
                 </div>
               ) : (
