@@ -36,13 +36,14 @@ const NAVIGATION = [
     slug: "/browse",
     title: "Browse",
     subpages: [
-      { slug: "/browse", title: "Models" },
+      { slug: "/browse", title: "Explore" },
+      { slug: "/models", title: "Models" },
       { slug: "/models/lease", title: "Lease" },
     ],
   },
   {
     slug: "/infrastructure",
-    title: "Explore",
+    title: "Resources",
     subpages: [
       { slug: "/infrastructure", title: "Infrastructure" },
       { slug: "/roadmap", title: "Roadmap" },
