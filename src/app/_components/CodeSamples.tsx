@@ -150,7 +150,7 @@ void chat();`,
         },
         completions: {
           curl: `curl ${process.env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1/completions \\
-    -H "Content-TESTTTTTType: application/json" \\
+    -H "Content-Type: application/json" \\
     -H "Authorization: Bearer ${displayedKey}" \\
     -N \\
     -d '{
