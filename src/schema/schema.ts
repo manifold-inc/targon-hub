@@ -208,12 +208,15 @@ export const Model = mysqlTable("model", {
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
   requiredGpus: int("required_gpus").default(0).notNull(),
-  modality: mysqlEnum("modality", MODALITIES).notNull(),
+  modality: mysqlEnum("modality", MODALITIES),
   description: text("description").default("No description provided"),
   supportedEndpoints: json("supported_endpoints").notNull().$type<string[]>(),
   enabledDate: timestamp("enabled_date", { mode: "date" }),
-  customBuild: boolean("custom_build").default(false).notNull(),
-  context_length: int("context_length"),
+  customBuild: boolean("custom_build").default(false),
+  forceEnabled: boolean("force_enabled").default(false).notNull(),
+  supported: boolean("supported").default(true).notNull(),
+  contextLength: int("context_length"),
+  fallbackServer: varchar("fallback_server", { length: 48 }),
 });
 
 export const DailyModelTokenCounts = mysqlTable("daily_model_token_counts", {

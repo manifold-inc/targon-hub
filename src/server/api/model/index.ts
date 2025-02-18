@@ -290,6 +290,7 @@ export const modelRouter = createTRPCRouter({
         .select({
           gpus: Model.requiredGpus,
           enabled: Model.enabled,
+          supported: Model.supported,
         })
         .from(Model)
         .where(eq(Model.name, input));
@@ -300,6 +301,12 @@ export const modelRouter = createTRPCRouter({
             enabled: true,
             message: "Model is already enabled. It can be used immediately.",
           };
+        }
+        if (!existingModel.at(0)!.supported) {
+          throw new TRPCError({
+            message: `Model "${input}" is not supported and cannot be enabled.`,
+            code: "BAD_REQUEST",
+          });
         }
         return {
           gpus: existingModel.at(0)!.gpus,
