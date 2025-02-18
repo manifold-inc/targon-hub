@@ -69,7 +69,7 @@ export const ModelPreviewCard = ({
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       },
-                    )}/1M tokens`}
+                    )}/ M tokens`}
               </span>
             </div>
             <ChevronRight className="h-4 w-4 text-gray-400 transition-transform group-hover:translate-x-0.5" />
