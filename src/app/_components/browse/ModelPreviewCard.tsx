@@ -6,7 +6,6 @@ import { CREDIT_PER_DOLLAR } from "@/constants";
 interface ModelPreviewCardProps {
   name: string;
   endpoints: string[];
-  totalTokens?: number;
   modality: string;
   description: string;
   cpt: number;
