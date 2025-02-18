@@ -12,11 +12,12 @@ interface Model {
   id: number;
   name: string | null;
   requiredGpus: number;
-  modality: "text-generation" | "text-to-image";
+  modality: "text-generation" | "text-to-image" | null;
   enabled: boolean | null;
   supportedEndpoints: string[];
   description: string | null;
   createdAt: Date;
+  cpt: number;
 }
 
 export function ModelTabs() {
@@ -122,6 +123,7 @@ function ModelGrid({ models }: { models: Model[] }) {
             enabled={model.enabled ?? false}
             supportedEndpoints={model.supportedEndpoints}
             description={model.description ?? ""}
+            cpt={model.cpt}
           />
         ))}
       </div>

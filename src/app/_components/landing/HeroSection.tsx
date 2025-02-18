@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { CREDIT_PER_DOLLAR } from "@/constants";
 import SearchBar from "./SearchBar";
 
 export function HeroSection() {
@@ -42,6 +43,14 @@ export function HeroSection() {
 }
 
 function StatsCards() {
+  const basePrice = ((100 * 1_000_000) / CREDIT_PER_DOLLAR).toLocaleString(
+    undefined,
+    {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    },
+  );
+
   return (
     <div className="flex w-full flex-col items-center">
       <div className="flex w-full flex-col items-center">
@@ -49,8 +58,8 @@ function StatsCards() {
           <StatCard title="Greater Than" value="400" unit="Tokens/s" />
           <StatCard
             title="Currently"
-            value="Free Tokens"
-            unit="on All Models"
+            value={`$${basePrice}`}
+            unit="per 1M Tokens"
           />
         </div>
       </div>

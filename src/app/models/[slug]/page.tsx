@@ -6,6 +6,7 @@ import { UserRound } from "lucide-react";
 import { CodeSamples } from "@/app/_components/CodeSamples";
 import ModelsNav from "@/app/_components/ModelsNav";
 import ModelStatusIndicator from "@/app/_components/ModelStatusIndicator";
+import { CREDIT_PER_DOLLAR } from "@/constants";
 import { db } from "@/schema/db";
 import { createCaller } from "@/server/api/root";
 import { uncachedValidateRequest } from "@/server/auth";
@@ -90,7 +91,8 @@ export default async function Page({ params }: Props) {
                 </div>
                 <div className="hidden h-5 w-px bg-[#e4e7ec] sm:block" />
                 <div className="text-xs leading-tight text-[#667085] sm:text-sm">
-                  Free Tokens
+                  ${((data.cpt * 1_000_000) / CREDIT_PER_DOLLAR).toFixed(2)} / M
+                  Tokens
                 </div>
                 <div className="hidden h-5 w-px bg-[#e4e7ec] sm:block" />
                 <ModelStatusIndicator

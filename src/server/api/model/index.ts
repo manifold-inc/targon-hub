@@ -64,6 +64,7 @@ export const modelRouter = createTRPCRouter({
         modality: Model.modality,
         enabled: Model.enabled,
         createdAt: Model.createdAt,
+        cpt: Model.cpt,
       })
       .from(Model)
       .where(and(eq(Model.enabled, true)));
@@ -229,6 +230,7 @@ export const modelRouter = createTRPCRouter({
           modality: Model.modality,
           description: Model.description,
           supportedEndpoints: Model.supportedEndpoints,
+          cpt: Model.cpt,
         })
         .from(Model)
         .where(eq(Model.name, input.model));
@@ -553,6 +555,7 @@ export const modelRouter = createTRPCRouter({
         description: Model.description,
         modality: Model.modality,
         totalTokens: DailyModelTokenCounts.totalTokens,
+        cpt: Model.cpt,
       })
       .from(Model)
       .leftJoin(

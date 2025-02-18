@@ -165,7 +165,7 @@ export default function Page() {
                 <ModelCard
                   key={model.name}
                   name={model.name ?? ""}
-                  modality={model.modality ?? ""}
+                  modality={model.modality ?? "text-generation"}
                   description={model.description ?? ""}
                   enabled={model.enabled ?? false}
                   createdAt={model.createdAt}

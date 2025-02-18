@@ -5,7 +5,7 @@ import { Model } from "@/schema/schema";
 
 export async function GET(): Promise<Response> {
   const models = await db
-    .select({ name: Model.name, context_length: Model.context_length })
+    .select({ name: Model.name, context_length: Model.contextLength })
     .from(Model)
     .where(eq(Model.enabled, true));
 
