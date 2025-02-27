@@ -480,24 +480,23 @@ export const Header = () => {
           className="xl:hidden"
         >
           <div className="fixed inset-0 z-20" />
-          <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-            <div className="flex items-center justify-between">
-              <Link
-                href="/"
-                className="flex h-11 w-fit items-center justify-start gap-2 p-2"
-              >
-                <Image
-                  src="/ManifoldMarkTransparentGreenSVG.svg"
-                  width={32}
-                  height={28}
-                  alt="Targon"
-                  className="block"
-                />
-                <p className="text-md font-semibold">Targon</p>
+          <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div className="flex h-16 items-center justify-between px-4">
+              <Link href="/" className="flex items-center justify-start gap-2">
+                <div className="flex items-center">
+                  <Image
+                    src="/ManifoldMarkTransparentGreenSVG.svg"
+                    width={32}
+                    height={28}
+                    alt="Targon"
+                    className="block"
+                  />
+                </div>
+                <p className="text-md font-semibold leading-none">Targon</p>
               </Link>
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="-m-2.5 rounded-md p-2.5 text-gray-700"
+                className="-mr-3.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
               >
                 <span className="sr-only">Close menu</span>
                 <XIcon
@@ -506,8 +505,8 @@ export const Header = () => {
                 />
               </button>
             </div>
-            <div className="mt-6 flow-root">
-              <div className="-my-6 divide-y divide-gray-500/10">
+            <div className="px-4 pb-6">
+              <div className="divide-y divide-gray-500/10">
                 <div className="space-y-2 py-6">
                   {NAVIGATION.map((item) => (
                     <div key={item.title}>
@@ -535,6 +534,7 @@ export const Header = () => {
                   <Link
                     href="/settings"
                     prefetch={false}
+                    onClick={() => setMobileMenuOpen(false)}
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900"
                   >
                     Settings
