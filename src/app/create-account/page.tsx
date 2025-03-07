@@ -176,10 +176,11 @@ export default function Page() {
                   type="submit"
                   disabled={createAccount.isLoading}
                 >
-                  {createAccount.isLoading && (
+                  {createAccount.isLoading ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    "Create Account"
                   )}
-                  Create Account
                 </button>
               </div>
             </form>
