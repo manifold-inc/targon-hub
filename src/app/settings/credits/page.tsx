@@ -232,11 +232,11 @@ export default function CreditsPage() {
                 </div>
 
                 <div className="flex flex-col gap-4 rounded-lg bg-gray-100 p-4">
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0">
                     <h3 className="text-sm font-medium text-gray-900">
                       TAO Payment Calculator
                     </h3>
-                    <div className="flex items-center gap-2 rounded-full bg-gray-200 px-3 py-1">
+                    <div className="self-start sm:self-auto flex items-center gap-2 rounded-full bg-gray-200 px-3 py-1">
                       <span className="text-xs font-medium text-gray-600">
                         Current Price:
                       </span>
