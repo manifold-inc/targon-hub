@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { type NextRequest } from "next/server";
 import { OAuth2RequestError } from "arctic";
-import { eq } from "drizzle-orm";
+import { eq, or } from "drizzle-orm";
 
 import { db } from "@/schema/db";
 import { User } from "@/schema/schema";
@@ -48,9 +48,13 @@ async function handle(req: NextRequest): Promise<Response> {
 
   const user = (await response.json()) as GoogleUser;
   const [existing] = await db
-    .select()
+    .select({
+      id: User.id,
+      email: User.email,
+      googleId: User.googleId,
+    })
     .from(User)
-    .where(eq(User.googleId, user.sub));
+    .where(or(eq(User.googleId, user.sub), eq(User.email, user.email)));
   const userId =
     existing?.id ??
     (await createAccount({
@@ -59,6 +63,14 @@ async function handle(req: NextRequest): Promise<Response> {
       email: user.email,
       googleId: user.sub,
     }));
+  if (existing?.id && !existing.googleId) {
+    await db
+      .update(User)
+      .set({
+        googleId: user.sub,
+      })
+      .where(eq(User.id, existing.id));
+  }
 
   const session = await lucia.createSession(userId, {});
   const sessionCookie = lucia.createSessionCookie(session.id);
