@@ -99,7 +99,7 @@ export const subscriptionRouter = createTRPCRouter({
 
     const session = await ctx.stripe.billingPortal.sessions.create({
       customer: user.customerId,
-      return_url: `${ctx.req!.nextUrl.origin}/models`,
+      return_url: `${ctx.req!.nextUrl.origin}/settings`,
     });
 
     return session.url;
