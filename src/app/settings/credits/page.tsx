@@ -271,7 +271,10 @@ export default function CreditsPage() {
                             USD Value
                           </span>
                           <span className="text-lg font-semibold text-black">
-                            ${taoConversion.usdAmount.toFixed(2)}
+                            ${taoConversion.usdAmount.toLocaleString(undefined, {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2
+                            })}
                           </span>
                         </div>
                         <div className="flex items-center justify-between">
