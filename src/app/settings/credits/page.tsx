@@ -13,6 +13,12 @@ import { reactClient } from "@/trpc/react";
 import { copyToClipboard, formatDate, formatLargeNumber } from "@/utils/utils";
 import { WatchForSuccess } from "../../_components/WatchForStripeSuccess";
 
+type TaoConversion = {
+  taoAmount: number;
+  usdAmount: number;
+  creditAmount: number;
+};
+
 export default function CreditsPage() {
   const [showPurchaseInput, setShowPurchaseInput] = useState(false);
   const [showCryptoInput, setShowCryptoInput] = useState(false);
@@ -36,9 +42,32 @@ export default function CreditsPage() {
   );
   const [showQR, setShowQR] = useState(false);
 
+  const [taoConversion, setTaoConversion] = useState<TaoConversion>({
+    taoAmount: 0,
+    usdAmount: 0,
+    creditAmount: 0,
+  });
+
+  const taoPrice = reactClient.account.getTaoPrice.useQuery(undefined, {
+    enabled: showCryptoInput,
+    refetchInterval: 60000, // Refetch every minute
+  });
+
   const handleCopyAddress = () => {
     void copyToClipboard(env.NEXT_PUBLIC_DEPOSIT_ADDRESS);
     toast.success("Address copied to Clipboard");
+  };
+
+  const handleTaoAmountChange = (amount: string) => {
+    const taoAmount = parseFloat(amount) || 0;
+    const usdAmount = taoAmount * (taoPrice.data ?? 0);
+    const creditAmount = usdAmount * CREDIT_PER_DOLLAR;
+
+    setTaoConversion({
+      taoAmount,
+      usdAmount,
+      creditAmount,
+    });
   };
 
   return (
@@ -65,6 +94,7 @@ export default function CreditsPage() {
               <button
                 onClick={() => {
                   if (!user.data?.ss58) {
+                    toast.error("Please link your Bittensor account first");
                     router.push("/settings");
                     return;
                   }
@@ -122,7 +152,7 @@ export default function CreditsPage() {
                       });
                     }}
                     disabled={checkout.isLoading || !purchaseAmount}
-                    className="w-full rounded-full border border-white bg-white px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
+                    className="w-full rounded-full border border-gray-800 bg-[#101828] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {checkout.isLoading ? (
                       <div className="flex items-center justify-center gap-2">
@@ -147,53 +177,124 @@ export default function CreditsPage() {
             )}
 
             {showCryptoInput && (
-              <div className="flex flex-col gap-4 rounded-lg bg-gray-100 p-4">
-                <p className="text-sm text-gray-700">
-                  Please send your payment to the following address:
-                </p>
-                <div className="flex flex-col items-center gap-4">
-                  <div className="flex w-full items-center justify-between rounded bg-gray-200 p-3">
-                    {showQR ? (
-                      <QRCodeSVG
-                        value={env.NEXT_PUBLIC_DEPOSIT_ADDRESS}
-                        size={120}
-                        bgColor="#f3f4f6"
-                        fgColor="#101828"
-                        level="L"
-                        className="mx-auto"
-                      />
-                    ) : (
-                      <p className="font-mono text-sm text-gray-700">
-                        {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(0, 6)}...
-                        {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(-4)}
-                      </p>
-                    )}
-                    <div className="flex items-center gap-2">
-                      <QrCode
-                        onClick={() => setShowQR(!showQR)}
-                        className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700"
-                        onMouseEnter={() => toast.info("Show/Hide QR Code")}
-                        onMouseLeave={() => toast.dismiss()}
-                      />
-                      <CopyIcon
-                        className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700"
-                        onClick={handleCopyAddress}
-                        onMouseEnter={() =>
-                          toast.info("Copy Address to Clipboard")
-                        }
-                        onMouseLeave={() => toast.dismiss()}
-                      />
+              <>
+                <div className="flex flex-col gap-4 rounded-lg bg-gray-100 p-4">
+                  <p className="text-sm text-gray-700">
+                    Please send your payment to the following address:
+                  </p>
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="flex w-full items-center justify-between rounded bg-gray-200 p-3">
+                      {showQR ? (
+                        <QRCodeSVG
+                          value={env.NEXT_PUBLIC_DEPOSIT_ADDRESS}
+                          size={120}
+                          bgColor="#f3f4f6"
+                          fgColor="#101828"
+                          level="L"
+                          className="mx-auto"
+                        />
+                      ) : (
+                        <p className="font-mono text-sm text-gray-700">
+                          {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(0, 6)}...
+                          {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(-6)}
+                        </p>
+                      )}
+                      <div className="flex items-center gap-2">
+                        <div className="group relative">
+                          <QrCode
+                            onClick={() => setShowQR(!showQR)}
+                            className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700"
+                          />
+                          <span className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white opacity-0 transition before:absolute before:left-1/2 before:top-full before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-gray-800 before:content-[''] group-hover:opacity-100">
+                            Show/Hide QR Code
+                          </span>
+                        </div>
+
+                        <div className="group relative">
+                          <CopyIcon
+                            className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700"
+                            onClick={handleCopyAddress}
+                          />
+                          <span className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white opacity-0 transition before:absolute before:left-1/2 before:top-full before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-gray-800 before:content-[''] group-hover:opacity-100">
+                            Copy Address to Clipboard
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                  <div className="flex items-center gap-2">
+                    <InfoIcon className="h-4 w-4 text-gray-500" />
+                    <p className="text-sm text-gray-700">
+                      The funds will be credited to your account once they are
+                      confirmed on the blockchain.
+                    </p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <InfoIcon className="h-4 w-4 text-gray-500" />
-                  <p className="text-sm text-gray-700">
-                    The funds will be credited to your account once they are
-                    confirmed on the blockchain.
-                  </p>
+
+                <div className="flex flex-col gap-4 rounded-lg bg-gray-100 p-4">
+                  <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center sm:gap-0">
+                    <h3 className="text-sm font-medium text-gray-900">
+                      TAO Payment Calculator
+                    </h3>
+                    <div className="flex items-center gap-2 self-start rounded-full bg-gray-200 px-3 py-1 sm:self-auto">
+                      <span className="text-xs font-medium text-gray-600">
+                        Current Price:
+                      </span>
+                      <span className="text-sm font-semibold text-black">
+                        ${(taoPrice.data ?? 0).toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <div className="relative flex-1">
+                        <input
+                          type="number"
+                          value={taoConversion.taoAmount || ""}
+                          onChange={(e) =>
+                            handleTaoAmountChange(e.target.value)
+                          }
+                          placeholder="Enter TAO amount"
+                          className="block w-full rounded-md border-0 px-4 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 [appearance:textfield] placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-medium text-gray-500">
+                          TAO
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="rounded bg-gray-200 p-3">
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gray-700">
+                            USD Value
+                          </span>
+                          <span className="text-lg font-semibold text-black">
+                            ${taoConversion.usdAmount.toFixed(2)}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gray-700">Credits</span>
+                          <span className="text-lg font-semibold text-black">
+                            {Math.floor(
+                              taoConversion.creditAmount,
+                            ).toLocaleString()}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 text-xs text-gray-700">
+                    <InfoIcon className="h-4 w-4" />
+                    <span>
+                      Price updates on each calculation. Actual conversion rate
+                      may vary slightly at time of transaction.
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </>
             )}
           </div>
         </div>

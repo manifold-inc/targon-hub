@@ -240,4 +240,18 @@ export const accountRouter = createTRPCRouter({
       }))
       .sort((a, b) => a.date.localeCompare(b.date));
   }),
+
+  getTaoPrice: publicProcedure.query(async () => {
+    const res = await fetch(
+      "https://hermes.pyth.network/v2/updates/price/latest?ids%5B%5D=0x410f41de235f2db824e562ea7ab2d3d3d4ff048316c61d629c0b93f58584e1af",
+    );
+    const body = (await res.json()) as {
+      parsed: { price: { price: string } }[];
+    };
+    const result = Number(body.parsed[0]?.price.price) / 1e8;
+    if (result == 0) {
+      return null;
+    }
+    return result;
+  }),
 });
