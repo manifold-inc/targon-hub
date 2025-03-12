@@ -610,7 +610,7 @@ export const modelRouter = createTRPCRouter({
         .where(
           and(
             eq(DailyModelTokenCounts.modelName, input),
-            sql`DATE(${DailyModelTokenCounts.createdAt}) >= DATE(NOW() - INTERVAL 7 DAY)`,
+            sql`DATE(${DailyModelTokenCounts.createdAt}) >= DATE(NOW() - INTERVAL 6 DAY)`,
           ),
         )
         .orderBy(asc(DailyModelTokenCounts.createdAt));
