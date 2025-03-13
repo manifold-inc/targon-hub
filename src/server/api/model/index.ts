@@ -14,6 +14,7 @@ import {
 import moment from "moment";
 import { z } from "zod";
 
+import { CREDIT_PER_DOLLAR } from "@/constants";
 import { env } from "@/env.mjs";
 import {
   DailyModelTokenCounts,
@@ -633,5 +634,23 @@ export const modelRouter = createTRPCRouter({
     ).sort();
 
     return orgs;
+  }),
+  getCheapestModelPrice: publicAuthlessProcedure.query(async ({ ctx }) => {
+    const models = await ctx.db
+      .select({
+        cpt: Model.cpt,
+      })
+      .from(Model)
+      .where(eq(Model.enabled, true))
+      .orderBy(asc(Model.cpt))
+      .limit(1);
+
+    return (
+      ((models.at(0)?.cpt || 1) * 1_000_000) /
+      CREDIT_PER_DOLLAR
+    ).toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   }),
 });

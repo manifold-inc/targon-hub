@@ -43,13 +43,8 @@ export function HeroSection() {
 }
 
 function StatsCards() {
-  const basePrice = ((100 * 1_000_000) / CREDIT_PER_DOLLAR).toLocaleString(
-    undefined,
-    {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    },
-  );
+  // Calculate price based on the constant value of 500
+  const formattedPrice = `$${((500 * 1_000_000) / CREDIT_PER_DOLLAR).toFixed(2)}`;
 
   return (
     <div className="flex w-full flex-col items-center">
@@ -58,7 +53,7 @@ function StatsCards() {
           <StatCard title="Greater Than" value="400" unit="Tokens/s" />
           <StatCard
             title="Currently"
-            value={`$${basePrice}`}
+            value={formattedPrice}
             unit="per 1M Tokens"
           />
         </div>
