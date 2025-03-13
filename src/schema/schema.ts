@@ -56,6 +56,10 @@ export const Request = mysqlTable("request", {
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
   creditsUsed: int("credits_used").notNull().default(0),
+  usedCredits: bigint("used_credits", {
+    mode: "number",
+    unsigned: true,
+  }).notNull().default(0),
   request: json("request").notNull(),
   response: json("response"),
   model: bigint("model_id", {
