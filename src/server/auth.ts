@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { Google } from "arctic";
 import { Lucia, Scrypt, type User as LuciaUser, type Session } from "lucia";
 
+import { DEFAULT_CREDITS } from "@/constants";
 import { env } from "@/env.mjs";
 import { adapter, type DB } from "@/schema/db";
 import { ApiKey, genId, User } from "@/schema/schema";
@@ -82,17 +83,18 @@ export const createAccount = async ({
     metadata: { user_id: userId },
   });
 
-  let hashedPassowrd = null;
+  let hashedPassword = null;
   if (password) {
-    hashedPassowrd = await new Scrypt().hash(password);
+    hashedPassword = await new Scrypt().hash(password);
   }
   const res = await db.insert(User).values({
     pubId: userId,
     email,
     googleId,
     stripeCustomerId: stripeId.id,
-    password: hashedPassowrd,
-    verified: !hashedPassowrd,
+    password: hashedPassword,
+    verified: !hashedPassword,
+    credits: DEFAULT_CREDITS,
   });
   const apiKey = genId.apikey();
   await db.insert(ApiKey).values({
