@@ -164,7 +164,7 @@ export const accountRouter = createTRPCRouter({
         id: Request.id,
         createdAt: Request.createdAt,
         model: Model.name,
-        creditsUsed: Request.creditsUsed,
+        creditsUsed: Request.usedCredits,
         responseTokens: Request.responseTokens,
       })
       .from(Request)
