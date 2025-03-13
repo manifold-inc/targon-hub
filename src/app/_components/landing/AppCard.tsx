@@ -94,9 +94,9 @@ export const AppCard = ({
               </p>
             </div>
 
-            <div className="flex h-5 items-center justify-between whitespace-nowrap">
+            <div className="flex h-5 text-xs items-center justify-between whitespace-nowrap">
               <div className="flex items-center gap-2">
-                <div className="text-sm leading-tight text-[#667085]">
+                <div className="leading-tight text-[#667085]">
                   ${((cpt * 1_000_000) / CREDIT_PER_DOLLAR).toFixed(2)} / M
                   Tokens
                 </div>
@@ -108,7 +108,7 @@ export const AppCard = ({
                   }`}
                 >
                   <div className="h-5 w-px bg-[#e4e7ec]" />
-                  <p className="text-sm text-mf-green">View More →</p>
+                  <p className="text-mf-green">View More →</p>
                 </div>
               </div>
             </div>
