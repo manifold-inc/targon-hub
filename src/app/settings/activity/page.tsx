@@ -50,11 +50,11 @@ export default function ActivityPage() {
                           {activity.responseTokens}
                         </td>
                         <td className="whitespace-nowrap px-2 py-1 text-right leading-tight text-[#101828]">
-                          {activity.usedCredits >= 1_000_000
-                            ? `${(activity.usedCredits / 1_000_000).toFixed(1)}M`
-                            : formatLargeNumber(activity.usedCredits)}{" "}
+                          {activity.creditsUsed >= 1_000_000
+                            ? `${(activity.creditsUsed / 1_000_000).toFixed(1)}M`
+                            : formatLargeNumber(activity.creditsUsed)}{" "}
                           / $
-                          {(activity.usedCredits / CREDIT_PER_DOLLAR).toFixed(
+                          {(activity.creditsUsed / CREDIT_PER_DOLLAR).toFixed(
                             2,
                           )}
                         </td>
