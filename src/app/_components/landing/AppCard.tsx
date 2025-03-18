@@ -94,7 +94,7 @@ export const AppCard = ({
               </p>
             </div>
 
-            <div className="flex h-5 text-xs items-center justify-between whitespace-nowrap">
+            <div className="flex h-5 items-center justify-between whitespace-nowrap text-xs">
               <div className="flex items-center gap-2">
                 <div className="leading-tight text-[#667085]">
                   ${((cpt * 1_000_000) / CREDIT_PER_DOLLAR).toFixed(2)} / M

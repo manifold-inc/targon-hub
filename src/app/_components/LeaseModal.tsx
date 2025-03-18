@@ -123,6 +123,7 @@ export default function LeaseModal({
           );
           return;
         }
+        /* Payment check disabled 
         if (BigInt(user.data.credits) < COST_PER_GPU * requiredGPUS) {
           checkout.mutate({
             purchaseAmount: 250 * Number(requiredGPUS),
@@ -130,6 +131,7 @@ export default function LeaseModal({
           });
           return;
         }
+        */
         setCurrentStep(currentStep + 1);
         break;
       case 2:
@@ -392,12 +394,14 @@ export default function LeaseModal({
                     <button
                       onClick={() => handleCurrencyToggle(false)}
                       className={`rounded-lg px-4 py-2 text-sm ${!useCredits ? "bg-green-500 text-white" : "bg-gray-100"}`}
+                      disabled={true}
                     >
                       Dollars
                     </button>
                     <button
                       onClick={() => handleCurrencyToggle(true)}
                       className={`rounded-lg px-4 py-2 text-sm ${useCredits ? "bg-green-500 text-white" : "bg-gray-100"}`}
+                      disabled={true}
                     >
                       Credits
                     </button>
@@ -426,6 +430,7 @@ export default function LeaseModal({
                         }
                         className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         placeholder="0"
+                        disabled={true}
                       />
                       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                         <span className="text-gray-500 sm:text-sm">
@@ -446,7 +451,7 @@ export default function LeaseModal({
                           redirectTo: `/models?openLeaseModal=true&model=${encodeURIComponent(model)}&step=1`,
                         });
                       }}
-                      disabled={checkout.isLoading}
+                      disabled={/*checkout.isLoading*/ true}
                       className="relative inline-flex h-10 items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-2 py-2 text-[11px] font-semibold text-white hover:bg-[#101828]/90 sm:px-4 sm:py-2.5 sm:text-sm"
                     >
                       {checkout.isLoading ? (
@@ -583,7 +588,7 @@ export default function LeaseModal({
                         redirectTo: `/models?openLeaseModal=true&model=${encodeURIComponent(model)}&step=1`,
                       })
                     }
-                    disabled={checkout.isLoading}
+                    disabled={/*checkout.isLoading*/ true}
                     className="relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-2 py-2 text-[11px] font-semibold text-white hover:bg-[#101828]/90 sm:w-auto sm:px-4 sm:py-2.5 sm:text-sm"
                   >
                     {checkout.isLoading ? (

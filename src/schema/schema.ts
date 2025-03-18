@@ -59,7 +59,9 @@ export const Request = mysqlTable("request", {
   usedCredits: bigint("used_credits", {
     mode: "number",
     unsigned: true,
-  }).notNull().default(0),
+  })
+    .notNull()
+    .default(0),
   request: json("request").notNull(),
   response: json("response"),
   model: bigint("model_id", {
