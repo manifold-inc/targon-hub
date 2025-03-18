@@ -12,6 +12,7 @@ interface ChatInputProps {
   onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   onShowShortcuts: () => void;
   hasChat?: boolean;
+  disabled?: boolean;
 }
 
 const buttonBaseClass =
@@ -29,6 +30,7 @@ export function ChatInput({
   onKeyDown,
   onShowShortcuts,
   hasChat = false,
+  disabled = false,
 }: ChatInputProps) {
   return (
     <div className="p-3 lg:p-4">
@@ -44,7 +46,7 @@ export function ChatInput({
           placeholder={
             current_model ? "Message..." : "Select a model to start chatting"
           }
-          disabled={!current_model}
+          disabled={!current_model || disabled}
           rows={1}
           className={clsx(
             "w-full resize-none rounded-xl py-3.5 text-base lg:py-3 lg:text-sm",
@@ -63,7 +65,7 @@ export function ChatInput({
           )}
           <button
             onClick={onSend}
-            disabled={isLoading || !current_model || !text.trim()}
+            disabled={isLoading || !current_model || !text.trim() || disabled}
             className={clsx(buttonBaseClass, buttonDisabledClass)}
           >
             <SendHorizonalIcon className="h-5 w-5" />
