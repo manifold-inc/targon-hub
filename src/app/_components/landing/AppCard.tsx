@@ -42,30 +42,30 @@ export const AppCard = ({
   return (
     <Link href={`/models/${encodeURIComponent(name)}`}>
       <div
-        className={`relative h-52 w-full overflow-hidden rounded-xl border bg-white p-5 transition-all duration-200 ${
+        className={`relative h-52 w-full overflow-hidden rounded-xl border bg-mf-milk-500 p-5 transition-all duration-200 ${
           isHovered && isHoverSupported
-            ? "border-mf-green shadow-lg"
-            : "border-[#e4e7ec] shadow-sm"
+            ? "border-mf-blue-500 shadow-lg"
+            : "border-mf-silver-700 shadow-sm"
         }`}
         onMouseEnter={() => isHoverSupported && setIsHovered(true)}
         onMouseLeave={() => isHoverSupported && setIsHovered(false)}
       >
         <div className="flex h-full flex-col justify-between">
           <div className="space-y-2">
-            <p className="text-lg font-medium text-[#667085]">{name}</p>
+            <p className="text-lg font-semibold text-mf-ash-500">{name}</p>
 
-            <p className="line-clamp-2 text-sm font-light leading-snug text-[#667085]">
+            <p className="line-clamp-2 text-sm font-light leading-snug text-mf-ash-500">
               {description}
             </p>
           </div>
 
           <div className="space-y-3 whitespace-nowrap">
             <div className="flex gap-1">
-              <p className="text-xs leading-4 text-[#667085]">
+              <p className="text-xs font-medium leading-4 text-mf-ash-500">
                 {requiredGPUs} GPU{requiredGPUs !== 1 ? "s" : ""}
               </p>
-              <div className="h-5 w-px bg-[#e4e7ec]" />
-              <p className="line-clamp-1 text-xs leading-4 text-[#667085]">
+              <div className="h-5 w-px bg-mf-silver-700" />
+              <p className="line-clamp-1 text-xs leading-4 text-mf-ash-500">
                 {supportedEndpoints
                   .map((endpoint) =>
                     endpoint
@@ -79,8 +79,8 @@ export const AppCard = ({
                   )
                   .join(", ")}
               </p>
-              <div className="h-5 w-px bg-[#e4e7ec]" />
-              <p className="text-xs leading-4 text-[#667085]">
+              <div className="h-5 w-px bg-mf-silver-700" />
+              <p className="text-xs leading-4 text-mf-ash-500">
                 {modality
                   ? modality
                       .split("-")
@@ -96,19 +96,19 @@ export const AppCard = ({
 
             <div className="flex h-5 items-center justify-between whitespace-nowrap text-xs">
               <div className="flex items-center gap-2">
-                <div className="leading-tight text-[#667085]">
+                <div className="leading-tight text-mf-ash-500">
                   ${((cpt * 1_000_000) / CREDIT_PER_DOLLAR).toFixed(2)} / M
                   Tokens
                 </div>
-                <div className="h-5 w-px bg-[#e4e7ec]" />
+                <div className="h-5 w-px bg-mf-silver-700" />
                 <ModelStatusIndicator enabled={enabled} showBorder={false} />
                 <div
                   className={`flex items-center gap-2 transition-opacity duration-200 ${
                     isHovered && isHoverSupported ? "opacity-100" : "opacity-0"
                   }`}
                 >
-                  <div className="h-5 w-px bg-[#e4e7ec]" />
-                  <p className="text-mf-green">View More →</p>
+                  <div className="h-5 w-px bg-mf-silver-700" />
+                  <p className="text-mf-blue-700">View More →</p>
                 </div>
               </div>
             </div>

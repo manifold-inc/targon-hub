@@ -28,7 +28,7 @@ function PurchaseButton({
     <button
       onClick={onClick}
       disabled={isLoading || true}
-      className={`w-full rounded-lg bg-[#101828] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#101828]/90 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+      className={`w-full rounded-lg bg-[#101828] px-4 py-2.5 text-sm font-semibold text-mf-milk-300 shadow-sm hover:bg-[#101828]/90 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
     >
       {isLoading ? (
         <div className="flex items-center justify-center gap-2">
@@ -60,8 +60,8 @@ function SummaryCard({
   const hasEnoughCredits = remainingBalanceUSD >= 0;
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white">
-      <div className="border-b border-gray-200 px-6 py-4">
+    <div className="rounded-xl border border-mf-silver-700 bg-mf-milk-500">
+      <div className="border-b border-mf-silver-700 px-6 py-4">
         <h3 className="text-sm font-medium text-gray-900">Payment Summary</h3>
         <p className="pt-1 text-sm text-gray-500">{model}</p>
       </div>
@@ -226,7 +226,7 @@ export default function ConfirmPage() {
       />
 
       {paymentType === "onetime" && userBalanceUSD < totalCostUSD && (
-        <div className="space-y-4 rounded-xl border border-gray-200 bg-white p-6">
+        <div className="space-y-4 rounded-xl border border-mf-silver-700 bg-mf-milk-500 p-6">
           <PurchaseButton
             isLoading={checkout.isLoading}
             onClick={() => {
@@ -242,10 +242,10 @@ export default function ConfirmPage() {
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200" />
+              <div className="w-full border-t border-mf-silver-700" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-white px-2 text-sm text-gray-500">
+              <span className="bg-mf-milk-500 px-2 text-sm text-gray-500">
                 or enter custom amount
               </span>
             </div>
@@ -260,7 +260,7 @@ export default function ConfirmPage() {
             </label>
             <div className="group relative">
               <InfoIcon className="h-4 w-4 text-gray-400 hover:text-gray-500" />
-              <div className="absolute right-0 top-6 z-10 hidden whitespace-nowrap rounded-md bg-gray-900 px-2 py-1 text-xs text-white group-hover:block">
+              <div className="absolute right-0 top-6 z-10 hidden whitespace-nowrap rounded-md bg-gray-900 px-2 py-1 text-xs text-mf-milk-300 group-hover:block">
                 Minimum purchase amount is $5
               </div>
             </div>
@@ -276,7 +276,7 @@ export default function ConfirmPage() {
               value={purchaseAmount}
               onChange={(e) => setPurchaseAmount(e.target.value)}
               min="0"
-              className="block w-full rounded-lg border border-gray-300 py-2.5 pl-7 pr-12 text-gray-900 shadow-sm focus:border-mf-green focus:outline-none focus:ring-1 focus:ring-mf-green sm:text-sm"
+              className="block w-full rounded-lg border border-gray-300 py-2.5 pl-7 pr-12 text-gray-900 shadow-sm focus:border-mf-blue-500 focus:outline-none focus:ring-1 focus:ring-mf-blue-500 sm:text-sm"
               placeholder="0.00"
             />
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
@@ -296,7 +296,7 @@ export default function ConfirmPage() {
       <div className="flex justify-between">
         <Link
           href={`/models/lease/pricing?model=${encodeURIComponent(model)}`}
-          className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
+          className="rounded-full border border-gray-300 bg-mf-milk-500 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
         >
           Back
         </Link>
@@ -316,7 +316,7 @@ export default function ConfirmPage() {
             (paymentType === "onetime" && userBalanceUSD < totalCostUSD) ||
             paymentType === "subscription"
           }
-          className="rounded-full bg-mf-green px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-full bg-mf-blue-500 px-4 py-2 text-sm font-semibold text-mf-milk-300 shadow-sm hover:bg-opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {leaseModelMutation.isLoading ||
           createSubscriptionMutation.isLoading ? (

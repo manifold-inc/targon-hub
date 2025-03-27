@@ -15,13 +15,13 @@ export default function ModelStatusIndicator({
         showBorder ? "border " : ""
       }${
         enabled
-          ? "border-[#16a34a] text-[#16a34a]"
-          : "border-[#d97706] text-[#d97706]"
+          ? "border-mf-blue-500 text-mf-blue-700"
+          : "border-mf-red text-mf-red"
       }`}
     >
       <div
         className={`h-1.5 w-1.5 rounded-full ${
-          enabled ? "bg-[#16a34a]" : "bg-[#d97706]"
+          enabled ? "bg-mf-blue-500" : "bg-mf-red"
         }`}
       />
       <span className="text-center text-xs font-medium leading-tight">

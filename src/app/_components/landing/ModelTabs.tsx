@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Tab, TabGroup, TabList } from "@headlessui/react";
 import { PlusIcon } from "lucide-react";
@@ -26,7 +27,7 @@ export function ModelTabs() {
 
   const endpoints = models.data
     ? [
-        "ALL",
+        "All",
         ...new Set(
           models.data
             .map((model) =>
@@ -35,7 +36,7 @@ export function ModelTabs() {
             .flat(),
         ),
       ]
-    : ["ALL"];
+    : ["All"];
 
   const filteredModels = models.data
     ? selectedIndex === 0
@@ -48,27 +49,28 @@ export function ModelTabs() {
     : [];
 
   return (
-    <div className="flex animate-slide-in-delay flex-col gap-4">
+    <div className="flex animate-slide-in-delay flex-col gap-8">
       <TabGroup>
-        <TabList className="relative inline-flex w-full items-center justify-start gap-1 overflow-hidden overflow-x-scroll rounded-full border border-[#e4e7ec] bg-white p-1 sm:gap-2 sm:p-2">
+        <TabList className="relative inline-flex w-full items-center justify-start gap-1 overflow-hidden overflow-x-scroll rounded-xl px-1 sm:gap-2 sm:p-2">
           <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-mf-silver-700" />
           <div className="relative z-10 flex w-full items-center gap-1 sm:gap-2">
             {endpoints.map((endpoint, index) => (
               <Tab
                 key={index}
-                className={`flex h-fit w-24 items-center justify-center gap-1 whitespace-nowrap rounded-full px-2 py-1 text-xs font-semibold leading-tight focus:outline-none focus:ring-2 focus:ring-[#142900]/20 focus:ring-offset-2 sm:w-32 sm:px-3 sm:py-2 sm:text-sm ${
+                className={`gap- flex h-fit w-24 items-center justify-center whitespace-nowrap rounded-md px-2 text-xs font-semibold leading-tight focus:border-mf-milk-500 focus:outline-none focus:ring-2 focus:ring-mf-milk-500 sm:w-32 sm:px-3 sm:text-sm ${
                   selectedIndex === index
-                    ? "bg-[#142900]/10 text-[#142900]"
-                    : "text-[#475467] opacity-80 hover:bg-[#142900]/5"
+                    ? "bg-mf-milk-500 ring-2 ring-mf-milk-500"
+                    : "hover:bg-mf-milk-500 hover:ring-2 hover:ring-mf-milk-500"
                 }`}
                 onClick={() => setSelectedIndex(index)}
               >
-                {endpoint}
+                {endpoint.charAt(0).toUpperCase() +
+                  endpoint.slice(1).toLowerCase()}
               </Tab>
             ))}
             <Link href="/playground" className="ml-auto">
-              <Tab className="flex h-fit w-24 items-center justify-center gap-1 whitespace-nowrap rounded-full bg-mf-green px-2 py-1 text-xs font-semibold leading-tight text-white transition-colors hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-[#142900]/20 focus:ring-offset-2 sm:w-32 sm:px-3 sm:py-2 sm:text-sm">
+              <Tab className="flex h-fit w-24 items-center justify-center gap-1 whitespace-nowrap rounded-md bg-mf-ash-300 px-2 text-xs font-semibold leading-tight text-mf-milk-300 ring-2 ring-mf-ash-300 transition-colors hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-[#142900]/20 focus:ring-offset-2 sm:w-32 sm:px-3 sm:text-sm">
                 Try Now
               </Tab>
             </Link>
@@ -76,26 +78,33 @@ export function ModelTabs() {
         </TabList>
       </TabGroup>
 
-      <div className="relative mx-auto w-full overflow-hidden rounded-xl border border-gray-200 bg-white">
+      <div className="relative mx-auto w-full overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-500">
         <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-mf-milk-500" />
 
         <div className="relative h-96 overflow-auto sm:h-auto sm:overflow-visible">
-          <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 p-2 backdrop-blur-md sm:p-3">
+          <div className="sticky top-0 z-10 flex items-center justify-between p-2 backdrop-blur-md sm:p-3">
             <div className="flex h-8 w-16 items-center gap-1.5 sm:w-20">
-              <div className="h-2.5 w-2.5 rounded-full bg-red-400 sm:h-3 sm:w-3"></div>
-              <div className="h-2.5 w-2.5 rounded-full bg-yellow-400 sm:h-3 sm:w-3"></div>
-              <div className="h-2.5 w-2.5 rounded-full bg-green-400 sm:h-3 sm:w-3"></div>
+              <div className="h-2.5 w-2.5 rounded-full bg-mf-blue-700 sm:h-3 sm:w-3"></div>
+              <div className="h-2.5 w-2.5 rounded-full bg-mf-blue-500 sm:h-3 sm:w-3"></div>
+              <div className="h-2.5 w-2.5 rounded-full bg-mf-blue-300 sm:h-3 sm:w-3"></div>
             </div>
             <div className="flex-1 text-center">
-              <span className="inline-flex h-8 items-center rounded-full bg-white px-3 text-xs text-gray-600 sm:px-4 sm:text-sm">
-                targon.com
-              </span>
+              <div className="flex items-center justify-center">
+                <Image
+                  src="/TargonLogo.svg"
+                  width={20}
+                  height={20}
+                  alt="Targon"
+                  className="block"
+                />
+                <p className="px-2 text-2xl font-bold">TARGON</p>
+              </div>
             </div>
             <div className="flex w-16 items-center justify-end sm:w-20">
               <Link
                 href="/models/lease"
-                className="inline-flex h-8 items-center gap-2 whitespace-nowrap rounded-full bg-mf-green px-3 text-xs font-medium text-white shadow-sm transition-all hover:opacity-80 sm:px-4"
+                className="inline-flex h-6 items-center gap-2 whitespace-nowrap rounded-lg bg-mf-blue-500 px-3 text-xs font-semibold text-black shadow-sm transition-all hover:opacity-80 sm:px-4"
               >
                 <PlusIcon className="h-4 w-4" />
                 <span className="hidden sm:inline">Add Model</span>

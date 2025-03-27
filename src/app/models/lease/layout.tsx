@@ -61,7 +61,7 @@ export default function LeaseLayout({
   );
 
   return (
-    <div className="grid h-full grid-cols-1 bg-white lg:grid-cols-2">
+    <div className="grid h-full grid-cols-1 bg-mf-milk-500 lg:grid-cols-2">
       {/* Left column */}
       <div className="relative bg-gray-100 px-6 lg:pl-[max(2rem,calc((100vw-80rem)/2+2rem))] lg:pr-8">
         {/* Background pattern - simplified SVG */}
@@ -108,7 +108,7 @@ export default function LeaseLayout({
                 <div key={title} className="flex items-center gap-x-3">
                   <dt className="flex-none">
                     <span className="sr-only">Feature</span>
-                    <Icon className="h-6 w-6 text-mf-green" />
+                    <Icon className="h-6 w-6 text-mf-blue-700" />
                   </dt>
                   <dd>
                     <span className="font-semibold text-gray-900">{title}</span>
@@ -133,7 +133,7 @@ export default function LeaseLayout({
       </div>
 
       {/* Right column */}
-      <div className="relative bg-white px-6 py-8 sm:py-12 lg:py-48">
+      <div className="relative bg-mf-milk-500 px-6 py-8 sm:py-12 lg:py-48">
         <div className="mx-auto max-w-xl lg:ml-12 lg:mr-[max(4rem,calc((100vw-80rem)/2+4rem))]">
           <StepIndicator steps={steps} />
           <div className="pt-2 sm:pt-8">{children}</div>

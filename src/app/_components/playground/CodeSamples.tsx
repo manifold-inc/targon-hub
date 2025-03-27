@@ -190,8 +190,8 @@ void chat();`,
                 className={clsx(
                   "w-full rounded-lg py-2 text-sm font-medium leading-5",
                   selectedLang === lang.id
-                    ? "bg-white text-[#142900] shadow-sm"
-                    : "text-gray-600 hover:bg-white/50 hover:text-[#142900]",
+                    ? "bg-mf-milk-500 text-[#142900] shadow-sm"
+                    : "text-gray-600 hover:bg-mf-milk-500/50 hover:text-[#142900]",
                 )}
               >
                 {lang.name}

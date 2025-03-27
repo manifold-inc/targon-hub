@@ -27,7 +27,7 @@ export default function ModelCard({
   return (
     <Link
       href={`/models/${encodeURIComponent(name)}`}
-      className={`group relative flex items-start overflow-hidden rounded-xl border border-[#e4e7ec] bg-gradient-to-b from-white to-[#fcfcfd] p-3 transition-all duration-300 hover:shadow-lg sm:p-4 md:p-5 ${
+      className={`group relative flex items-start overflow-hidden rounded-xl border border-mf-silver-700 bg-gradient-to-b from-white to-[#fcfcfd] p-3 transition-all duration-300 hover:shadow-lg sm:p-4 md:p-5 ${
         enabled ? "hover:border-t-emerald-500" : "hover:border-t-blue-500"
       }`}
     >

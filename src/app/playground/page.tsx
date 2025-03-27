@@ -229,7 +229,7 @@ export default function Example() {
                 </div>
               )}
 
-              <div className="absolute bottom-0 left-0 right-0 border-t border-gray-200 bg-white">
+              <div className="absolute bottom-0 left-0 right-0 border-t border-mf-silver-700 bg-mf-milk-500">
                 <ChatInput
                   text={text}
                   setText={setText}

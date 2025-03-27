@@ -47,7 +47,38 @@ export default {
         },
         // manifold colors
         mf: {
-          green: "#1c3836",
+          safety: {
+            300: "#FF9B7A",
+            500: "#FF8159",
+            700: "#D96547",
+          },
+          ash: {
+            300: "#3A3C46",
+            500: "#22242E",
+            700: "#17181F",
+          },
+          night: {
+            300: "#2A2C33",
+            500: "#191B20",
+            700: "#101114",
+          },
+          silver: {
+            500: "#C5DBFF",
+            700: "#A3B5D6",
+          },
+          milk: {
+            300: "#E0EBFF",
+            500: "#D7E5FF",
+            700: "#AEC0D6",
+          },
+          blue: {
+            300: "#AAD6FF",
+            500: "#7BC1FF",
+            700: "#52ABFF",
+          },
+          green: "#57E8B4",
+          red: "#FF5A5A",
+          grey: "#8997ad",
           gray: "#98A1B2",
           "gray-600": "#475467",
         },
@@ -117,6 +148,7 @@ export default {
         "slide-in-6": "slide-in 0.5s ease-out both 0.25s",
         "slide-in-7": "slide-in 0.5s ease-out both 0.3s",
         "scroll-horizontal": "scroll-horizontal 15s linear infinite",
+        "fade-in": "fadeIn 1s ease-in-out",
       },
       keyframes: {
         "slide-in": {
@@ -130,6 +162,10 @@ export default {
         "scroll-horizontal": {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(calc(-250px * 3))" },
+        },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
       },
     },

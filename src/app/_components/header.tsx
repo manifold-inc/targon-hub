@@ -34,7 +34,7 @@ import { useAuth } from "./providers";
 const NAVIGATION = [
   {
     slug: "/browse",
-    title: "Browse",
+    title: "BROWSE",
     subpages: [
       { slug: "/browse", title: "Explore" },
       { slug: "/models", title: "Models" },
@@ -43,21 +43,20 @@ const NAVIGATION = [
   },
   {
     slug: "/infrastructure",
-    title: "Resources",
+    title: "RESOURCES",
     subpages: [
-      { slug: "/infrastructure", title: "Infrastructure" },
-      { slug: "/roadmap", title: "Roadmap" },
-      { slug: "/models/immunity", title: "Timeline" },
+      { slug: "/infrastructure", title: "INFRASTRUCTURE" },
+      { slug: "/roadmap", title: "ROADMAP" },
+      { slug: "/models/immunity", title: "TIMELINE" },
     ],
   },
-  { slug: "/playground", title: "Playground" },
+  { slug: "/playground", title: "PLAYGROUND" },
 ];
 
 export const Header = () => {
   const auth = useAuth();
   const pathName = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
   const [isBrowseOpen, setIsBrowseOpen] = useState(false);
   const [isInfrastructureOpen, setIsInfrastructureOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -90,16 +89,6 @@ export const Header = () => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Add scroll listener
-  useEffect(() => {
-    const handleScroll = () => {
-      setHasScrolled(window.scrollY > 0);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   useEffect(() => {
     setIsBrowseOpen(() => false);
     setIsUserMenuOpen(() => false);
@@ -109,127 +98,195 @@ export const Header = () => {
   return (
     <header
       id="navbar"
-      className={`fixed top-0 z-20 w-full animate-slide-in transition-[top_.3s] ${
-        pathName !== "/"
-          ? "border-b border-gray-200 bg-white"
-          : hasScrolled
-            ? "bg-white/20 backdrop-blur-md backdrop-saturate-150"
-            : "bg-transparent"
-      }`}
+      className="fixed top-0 z-20 w-full animate-slide-in transition-[top_.3s]"
     >
-      <nav className="text-manifold-green flex h-16 items-center justify-between p-2">
+      <nav className="text-manifold-green flex h-16 bg-mf-milk-300 p-2">
         {!mobileMenuOpen && (
           <>
-            <div className="w-60">
+            <div className="flex items-center px-5">
               <Link
                 href="/"
                 className="flex h-11 w-fit items-center justify-start gap-2 p-2"
               >
                 <Image
-                  src="/ManifoldMarkTransparentGreenSVG.svg"
-                  width={32}
-                  height={28}
+                  src="/TargonLogo.svg"
+                  width={20}
+                  height={20}
                   alt="Targon"
                   className="block"
                 />
-                <p className="text-md font-semibold">Targon</p>
+                <p className="text-lg font-bold">TARGON</p>
               </Link>
             </div>
-            <div className="hidden flex-grow justify-center xl:flex">
-              <div className="relative w-1/2 2xl:w-2/6">
-                <SearchBar />
-              </div>
-            </div>
-            <div className="hidden w-60 items-center justify-end sm:flex">
-              <div className="flex items-center">
-                <div className="flex items-center gap-16">
-                  <Menu
-                    as="div"
-                    className="relative"
-                    onMouseEnter={() => setIsBrowseOpen(true)}
-                    onMouseLeave={() => setIsBrowseOpen(false)}
-                  >
-                    <MenuButton
-                      className={
-                        "inline-flex w-20 cursor-default justify-center py-9 text-sm font-medium text-gray-900"
-                      }
+            <div className="flex flex-grow items-center justify-between">
+              <div className="hidden items-center sm:flex">
+                <div className="flex items-center">
+                  <div className="flex items-center gap-8">
+                    <Menu
+                      as="div"
+                      className="relative"
+                      onMouseEnter={() => setIsBrowseOpen(true)}
+                      onMouseLeave={() => setIsBrowseOpen(false)}
                     >
-                      Browse
-                    </MenuButton>
-                    <AnimatePresence>
-                      {isBrowseOpen && (
-                        <MenuItems
-                          static
-                          as={motion.div}
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{
-                            opacity: 1,
-                            y: 0,
-                            transition: { duration: 0.1 },
-                          }}
-                          exit={{
-                            opacity: 0,
-                            y: -10,
-                            transition: { duration: 0.1 },
-                          }}
-                          className="focus:outline-hidden absolute -left-36 top-20 z-20 mt-2 w-96 origin-top overflow-hidden rounded-md bg-white text-center shadow-lg"
-                        >
-                          <MenuItem>
-                            <Link
-                              className={
-                                "group flex items-center gap-2 px-4 py-4 text-sm text-black hover:bg-gray-50"
-                              }
-                              href="/browse"
-                            >
-                              <BrainCircuit className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
-                              <div className="flex flex-col gap-0 pl-2 text-left">
-                                <p className="text-xs">Explore</p>
-                                <p className="text-xs text-gray-500">
-                                  Explore our platform
-                                </p>
-                              </div>
-                            </Link>
-                          </MenuItem>
-                          <MenuItem>
-                            <Link
-                              className={
-                                "group flex items-center gap-2 px-4 py-4 text-sm text-black hover:bg-gray-50"
-                              }
-                              href="/models"
-                            >
-                              <FileBox className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
-                              <div className="flex flex-col gap-0 pl-2 text-left">
-                                <p className="text-xs">Models</p>
-                                <p className="text-xs text-gray-500">
-                                  Search and deploy models
-                                </p>
-                              </div>
-                            </Link>
-                          </MenuItem>
-                          <MenuItem>
-                            <Link
-                              className={
-                                "group flex items-center gap-2 px-4 py-4 text-sm text-black hover:bg-gray-50"
-                              }
-                              href="/models/lease"
-                            >
-                              <Wallet className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
-                              <div className="flex flex-col gap-0 pl-2 text-left">
-                                <p className="text-xs">Lease</p>
-                                <p className="text-xs text-gray-500">
-                                  Add any model
-                                </p>
-                              </div>
-                            </Link>
-                          </MenuItem>
-                          <MenuItem>
-                            <Link
-                              className={
-                                "group block px-4 py-4 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 2xl:hidden"
-                              }
-                              href="/infrastructure"
-                            >
-                              <div className="flex items-center gap-2">
+                      <MenuButton
+                        className={
+                          "inline-flex w-20 cursor-default justify-center py-9 font-light text-mf-blue-700"
+                        }
+                      >
+                        BROWSE
+                      </MenuButton>
+                      <AnimatePresence>
+                        {isBrowseOpen && (
+                          <MenuItems
+                            static
+                            as={motion.div}
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{
+                              opacity: 1,
+                              y: 0,
+                              transition: { duration: 0.1 },
+                            }}
+                            exit={{
+                              opacity: 0,
+                              y: -10,
+                              transition: { duration: 0.1 },
+                            }}
+                            className="focus:outline-hidden absolute -left-36 top-20 z-20 mt-2 w-96 origin-top overflow-hidden rounded-md bg-mf-milk-300 text-center shadow-lg"
+                          >
+                            <MenuItem>
+                              <Link
+                                className={
+                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-gray-50"
+                                }
+                                href="/browse"
+                              >
+                                <BrainCircuit className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                                <div className="flex flex-col gap-0 pl-2 text-left">
+                                  <p className="text-xs">Explore</p>
+                                  <p className="text-xs text-gray-500">
+                                    Explore our platform
+                                  </p>
+                                </div>
+                              </Link>
+                            </MenuItem>
+                            <MenuItem>
+                              <Link
+                                className={
+                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-gray-50"
+                                }
+                                href="/models"
+                              >
+                                <FileBox className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                                <div className="flex flex-col gap-0 pl-2 text-left">
+                                  <p className="text-xs">Models</p>
+                                  <p className="text-xs text-gray-500">
+                                    Search and deploy models
+                                  </p>
+                                </div>
+                              </Link>
+                            </MenuItem>
+                            <MenuItem>
+                              <Link
+                                className={
+                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-gray-50"
+                                }
+                                href="/models/lease"
+                              >
+                                <Wallet className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                                <div className="flex flex-col gap-0 pl-2 text-left">
+                                  <p className="text-xs">Lease</p>
+                                  <p className="text-xs text-gray-500">
+                                    Add any model
+                                  </p>
+                                </div>
+                              </Link>
+                            </MenuItem>
+                            <MenuItem>
+                              <Link
+                                className={
+                                  "group block px-4 py-4 text-gray-700 hover:bg-gray-50 hover:text-gray-900 2xl:hidden"
+                                }
+                                href="/infrastructure"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <Server className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                                  <div className="flex flex-col gap-0 pl-2 text-left">
+                                    <p className="text-xs">Infrastructure</p>
+                                    <p className="text-xs text-gray-500">
+                                      Explore our platform
+                                    </p>
+                                  </div>
+                                </div>
+                              </Link>
+                            </MenuItem>
+                            <MenuItem>
+                              <Link
+                                className={
+                                  "group block px-4 py-4 text-gray-700 hover:bg-gray-50 hover:text-gray-900 2xl:hidden"
+                                }
+                                href="/roadmap"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <Map className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                                  <div className="flex flex-col gap-0 pl-2 text-left">
+                                    <p className="text-xs">Roadmap</p>
+                                    <p className="text-xs text-gray-500">
+                                      Our vision
+                                    </p>
+                                  </div>
+                                </div>
+                              </Link>
+                            </MenuItem>
+                            <MenuItem>
+                              <Link
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-gray-50 2xl:hidden"
+                                href="/models/immunity"
+                              >
+                                <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                                <div className="flex flex-col gap-0 pl-2 text-left">
+                                  <p className="text-xs">Timeline</p>
+                                  <p className="text-xs text-gray-500">
+                                    Model immunity
+                                  </p>
+                                </div>
+                              </Link>
+                            </MenuItem>
+                          </MenuItems>
+                        )}
+                      </AnimatePresence>
+                    </Menu>
+                    <Menu
+                      as="div"
+                      className="relative hidden lg:block"
+                      onMouseEnter={() => setIsInfrastructureOpen(true)}
+                      onMouseLeave={() => setIsInfrastructureOpen(false)}
+                    >
+                      <MenuButton
+                        className={
+                          "inline-flex w-20 cursor-default justify-center py-9 font-light text-gray-900"
+                        }
+                      >
+                        RESOURCES
+                      </MenuButton>
+                      <AnimatePresence>
+                        {isInfrastructureOpen && (
+                          <MenuItems
+                            static
+                            as={motion.div}
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{
+                              opacity: 0,
+                              y: -10,
+                              transition: { duration: 0.15 },
+                            }}
+                            className="focus:outline-hidden absolute -left-36 top-20 z-20 mt-2 w-96 origin-top overflow-hidden rounded-md bg-mf-milk-300 text-center shadow-lg"
+                          >
+                            <MenuItem>
+                              <Link
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-gray-50"
+                                href="/infrastructure"
+                              >
                                 <Server className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-xs">Infrastructure</p>
@@ -237,17 +294,13 @@ export const Header = () => {
                                     Explore our platform
                                   </p>
                                 </div>
-                              </div>
-                            </Link>
-                          </MenuItem>
-                          <MenuItem>
-                            <Link
-                              className={
-                                "group block px-4 py-4 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 2xl:hidden"
-                              }
-                              href="/roadmap"
-                            >
-                              <div className="flex items-center gap-2">
+                              </Link>
+                            </MenuItem>
+                            <MenuItem>
+                              <Link
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-gray-50"
+                                href="/roadmap"
+                              >
                                 <Map className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-xs">Roadmap</p>
@@ -255,111 +308,42 @@ export const Header = () => {
                                     Our vision
                                   </p>
                                 </div>
-                              </div>
-                            </Link>
-                          </MenuItem>
-                          <MenuItem>
-                            <Link
-                              className="group flex items-center gap-2 px-4 py-4 text-sm text-black hover:bg-gray-50 2xl:hidden"
-                              href="/models/immunity"
-                            >
-                              <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
-                              <div className="flex flex-col gap-0 pl-2 text-left">
-                                <p className="text-xs">Timeline</p>
-                                <p className="text-xs text-gray-500">
-                                  Model immunity
-                                </p>
-                              </div>
-                            </Link>
-                          </MenuItem>
-                        </MenuItems>
-                      )}
-                    </AnimatePresence>
-                  </Menu>
-                  <Menu
-                    as="div"
-                    className="relative hidden 2xl:block"
-                    onMouseEnter={() => setIsInfrastructureOpen(true)}
-                    onMouseLeave={() => setIsInfrastructureOpen(false)}
-                  >
-                    <MenuButton
-                      className={
-                        "inline-flex w-20 cursor-default justify-center py-9 text-sm font-medium text-gray-900"
-                      }
+                              </Link>
+                            </MenuItem>
+                            <MenuItem>
+                              <Link
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-gray-50"
+                                href="/models/immunity"
+                              >
+                                <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
+                                <div className="flex flex-col gap-0 pl-2 text-left">
+                                  <p className="text-xs">Timeline</p>
+                                  <p className="text-xs text-gray-500">
+                                    Model immunity
+                                  </p>
+                                </div>
+                              </Link>
+                            </MenuItem>
+                          </MenuItems>
+                        )}
+                      </AnimatePresence>
+                    </Menu>
+                  </div>
+                  <div className="flex items-center gap-8 pl-5">
+                    <Link
+                      className="inline-flex w-32 justify-center gap-x-1.5 rounded-md py-2 font-light"
+                      href="/playground"
                     >
-                      Resources
-                    </MenuButton>
-                    <AnimatePresence>
-                      {isInfrastructureOpen && (
-                        <MenuItems
-                          static
-                          as={motion.div}
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{
-                            opacity: 0,
-                            y: -10,
-                            transition: { duration: 0.15 },
-                          }}
-                          className="focus:outline-hidden absolute -left-36 top-20 z-20 mt-2 w-96 origin-top overflow-hidden rounded-md bg-white text-center shadow-lg"
-                        >
-                          <MenuItem>
-                            <Link
-                              className="group flex items-center gap-2 px-4 py-4 text-sm text-black hover:bg-gray-50"
-                              href="/infrastructure"
-                            >
-                              <Server className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
-                              <div className="flex flex-col gap-0 pl-2 text-left">
-                                <p className="text-xs">Infrastructure</p>
-                                <p className="text-xs text-gray-500">
-                                  Explore our platform
-                                </p>
-                              </div>
-                            </Link>
-                          </MenuItem>
-                          <MenuItem>
-                            <Link
-                              className="group flex items-center gap-2 px-4 py-4 text-sm text-black hover:bg-gray-50"
-                              href="/roadmap"
-                            >
-                              <Map className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
-                              <div className="flex flex-col gap-0 pl-2 text-left">
-                                <p className="text-xs">Roadmap</p>
-                                <p className="text-xs text-gray-500">
-                                  Our vision
-                                </p>
-                              </div>
-                            </Link>
-                          </MenuItem>
-                          <MenuItem>
-                            <Link
-                              className="group flex items-center gap-2 px-4 py-4 text-sm text-black hover:bg-gray-50"
-                              href="/models/immunity"
-                            >
-                              <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
-                              <div className="flex flex-col gap-0 pl-2 text-left">
-                                <p className="text-xs">Timeline</p>
-                                <p className="text-xs text-gray-500">
-                                  Model immunity
-                                </p>
-                              </div>
-                            </Link>
-                          </MenuItem>
-                        </MenuItems>
-                      )}
-                    </AnimatePresence>
-                  </Menu>
-                </div>
-                <div className="flex items-center gap-16 px-12">
-                  <Link
-                    className="inline-flex w-32 justify-center gap-x-1.5 rounded-md py-2 text-sm font-medium"
-                    href="/playground"
-                  >
-                    Playground
-                  </Link>
+                      PLAYGROUND
+                    </Link>
+                  </div>
                 </div>
               </div>
-              <div className="pr-1.5">
+              <div className="flex flex-grow justify-end">
+                <div className="hidden max-w-[400px] flex-grow translate-y-[30px] px-2 sm:block">
+                  <SearchBar />
+                </div>
+
                 {auth.status === "AUTHED" ? (
                   <Menu
                     as="div"
@@ -369,7 +353,7 @@ export const Header = () => {
                   >
                     <Link href="/settings">
                       <MenuButton
-                        className={`inline-flex h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-gray-50 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-200 ${
+                        className={`inline-flex h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-gray-50 py-2 font-semibold ring-1 ring-inset ring-gray-200 ${
                           isUserMenuOpen ? "rounded-b-none ring-white" : ""
                         }`}
                       >
@@ -386,7 +370,7 @@ export const Header = () => {
                         )}
                         <User
                           aria-hidden="true"
-                          className="h-4 w-4 rounded-full bg-black text-white"
+                          className="h-4 w-4 rounded-full bg-black text-mf-milk-300"
                         />
                         <span className="text-xs font-medium text-gray-900">
                           $
@@ -410,13 +394,13 @@ export const Header = () => {
                           }}
                           className="focus:outline-hidden absolute right-0 top-6 z-20 mt-2 w-28 origin-top rounded-md rounded-t-none bg-gray-50 text-center shadow-lg"
                         >
-                          <div className="border-b border-gray-200">
+                          <div>
                             <MenuItem>
                               <div className="block w-full px-4 py-2 text-center">
-                                <div className="text-sm tracking-wider text-gray-500">
+                                <div className="tracking-wider text-gray-500">
                                   Balance
                                 </div>
-                                <div className="text-sm font-medium text-gray-900">
+                                <div className="font-medium text-gray-900">
                                   $
                                   {Number(
                                     (auth.user?.credits ?? 0) /
@@ -431,7 +415,7 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 href="/settings"
-                                className="block w-full px-4 py-2 text-sm hover:bg-gray-100"
+                                className="block w-full px-4 py-2 hover:bg-gray-100"
                               >
                                 Settings
                               </Link>
@@ -439,7 +423,7 @@ export const Header = () => {
                             <MenuItem>
                               <a
                                 href="/sign-out"
-                                className="block px-4 py-2 text-center text-sm hover:bg-gray-100"
+                                className="block px-4 py-2 text-center hover:bg-gray-100"
                               >
                                 Sign Out
                               </a>
@@ -452,24 +436,25 @@ export const Header = () => {
                 ) : (
                   <Link
                     href="/sign-in"
-                    className="inline-flex w-20 cursor-pointer justify-center py-9 text-sm font-medium text-gray-900"
+                    className="inline-flex w-20 cursor-pointer justify-center py-9 font-medium text-gray-900"
                   >
-                    Sign In
+                    SIGN IN
                   </Link>
                 )}
               </div>
-            </div>
-            <div className="flex sm:hidden">
-              <button
-                onClick={() => setMobileMenuOpen(true)}
-                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-              >
-                <span className="sr-only">Open main menu</span>
-                <MenuIcon
-                  aria-hidden="true"
-                  className="h-6 w-6 text-mf-gray-600"
-                />
-              </button>
+
+              <div className="flex sm:hidden">
+                <button
+                  onClick={() => setMobileMenuOpen(true)}
+                  className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+                >
+                  <span className="sr-only">Open main menu</span>
+                  <MenuIcon
+                    aria-hidden="true"
+                    className="h-6 w-6 text-mf-gray-600"
+                  />
+                </button>
+              </div>
             </div>
           </>
         )}
@@ -480,7 +465,7 @@ export const Header = () => {
           className="xl:hidden"
         >
           <div className="fixed inset-0 z-20" />
-          <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-mf-milk-300 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex h-16 items-center justify-between px-4">
               <Link href="/" className="flex items-center justify-start gap-2">
                 <div className="flex items-center">

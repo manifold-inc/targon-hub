@@ -119,11 +119,10 @@
 .dot-pattern {
   background-image: radial-gradient(
     circle at center,
-    #9ca3af 1px,
+    #fff 1px,
     transparent 1px
   );
   background-size: 24px 24px;
-  background-color: #fafafa;
 }
 
 @layer utilities {

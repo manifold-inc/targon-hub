@@ -144,11 +144,11 @@ export function ParameterControls({
       {/* Mobile Drawer */}
       <div
         className={clsx(
-          "fixed inset-y-0 right-0 z-50 w-[90%] max-w-[320px] transform bg-white transition-transform duration-300 lg:hidden",
+          "fixed inset-y-0 right-0 z-50 w-[90%] max-w-[320px] transform bg-mf-milk-500 transition-transform duration-300 lg:hidden",
           isOpen ? "translate-x-0" : "translate-x-full",
         )}
       >
-        <div className="border-b border-gray-200 p-3">
+        <div className="border-b border-mf-silver-700 p-3">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-900">Parameters</h2>
             <button
@@ -249,7 +249,7 @@ export function ParameterControls({
       <aside
         className={clsx(
           "relative hidden overflow-hidden transition-[width] duration-300 ease-in-out lg:block",
-          "border-r border-gray-200 bg-white",
+          "border-r border-mf-silver-700 bg-mf-milk-500",
           isOpen ? "lg:w-80" : "lg:w-20",
         )}
       >

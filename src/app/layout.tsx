@@ -3,19 +3,19 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 
 import { Suspense } from "react";
-import { Inter } from "next/font/google";
+import { Blinker } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
-import clsx from "clsx";
 import { Toaster } from "sonner";
 
 import { Footer } from "./_components/footer";
 import { Header } from "./_components/header";
 import { WithGlobalProvider } from "./_components/providers";
 
-const inter = Inter({
+const blinker = Blinker({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-blinker",
   display: "swap",
+  weight: ["100", "200", "300", "400", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -31,7 +31,7 @@ export default function RootLayout({
     <html
       suppressHydrationWarning
       lang="en"
-      className={clsx(inter.variable, "h-full")}
+      className={`${blinker.className} bg-mf-milk-300`}
     >
       <head>
         <link rel="manifest" href="/site.webmanifest" />

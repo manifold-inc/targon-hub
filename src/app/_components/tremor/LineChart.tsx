@@ -286,7 +286,7 @@ const Legend = React.forwardRef<HTMLOListElement, LegendProps>((props, ref) => {
               // base
               "absolute bottom-0 right-0 top-0 flex h-full items-center justify-center pr-1",
               // background color
-              "bg-white dark:bg-gray-950",
+              "bg-mf-milk-500 dark:bg-gray-950",
             )}
           >
             <ScrollButton
@@ -395,9 +395,9 @@ const ChartTooltip = ({
           // base
           "rounded-md border text-sm shadow-md",
           // border color
-          "border-gray-200 dark:border-gray-800",
+          "border-mf-silver-700 dark:border-gray-800",
           // background color
-          "bg-white dark:bg-gray-950",
+          "bg-mf-milk-500 dark:bg-gray-950",
         )}
       >
         <div className={clsx("border-b border-inherit px-4 py-2")}>

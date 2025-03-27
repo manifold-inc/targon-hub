@@ -89,7 +89,7 @@ export default function Page() {
             onClick={() => setIsMobileOpen(false)}
           />
           {/* Sidebar */}
-          <div className="absolute bottom-0 right-0 top-0 w-full max-w-sm border-l border-[#f2f4f7] bg-white p-6 shadow-xl">
+          <div className="absolute bottom-0 right-0 top-0 w-full max-w-sm border-l border-[#f2f4f7] bg-mf-milk-500 p-6 shadow-xl">
             <div className="flex items-center justify-between pb-4">
               <h2 className="text-lg font-medium text-[#101828]">Filters</h2>
               <button
@@ -107,7 +107,7 @@ export default function Page() {
       <div className="flex">
         {/* Left sidebar - desktop */}
         <div className="hidden w-80 lg:block">
-          <div className="sticky top-14 min-h-screen overflow-y-auto border-r border-[#f2f4f7] bg-white">
+          <div className="sticky top-14 min-h-screen overflow-y-auto border-r border-[#f2f4f7] bg-mf-milk-500">
             <ModalSidebar />
           </div>
         </div>
@@ -148,7 +148,7 @@ export default function Page() {
               <div className="flex items-center justify-between lg:hidden">
                 <button
                   onClick={() => setIsMobileOpen((s) => !s)}
-                  className="inline-flex items-center gap-2 rounded-lg border border-[#e4e7ec] bg-white px-3 py-2 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50"
+                  className="inline-flex items-center gap-2 rounded-lg border border-mf-silver-700 bg-mf-milk-500 px-3 py-2 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50"
                 >
                   <Filter className="h-4 w-4 text-[#98a1b2]" />
                   <span>Filters</span>
@@ -202,7 +202,7 @@ export default function Page() {
                           </div>
                         </div>
                         <div className="flex items-start">
-                          <div className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-[#142900] px-3 py-1.5 text-sm font-medium text-white shadow-sm transition-all duration-300 group-hover:bg-[#1f3d00] group-hover:shadow-md sm:px-4">
+                          <div className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-[#142900] px-3 py-1.5 text-sm font-medium text-mf-milk-300 shadow-sm transition-all duration-300 group-hover:bg-[#1f3d00] group-hover:shadow-md sm:px-4">
                             Add Model
                             <ArrowUpRight className="h-3.5 w-3.5" />
                           </div>
@@ -218,14 +218,14 @@ export default function Page() {
 
               {/* Pagination */}
               {models.data && models.data.items.length > 0 && (
-                <div className="flex items-center justify-center border-t border-[#e4e7ec] pt-8">
+                <div className="flex items-center justify-center border-t border-mf-silver-700 pt-8">
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() =>
                         handlePageChange(Math.max(1, currentPage - 1))
                       }
                       disabled={currentPage === 1}
-                      className="inline-flex items-center gap-1 rounded-lg border border-[#e4e7ec] bg-white px-3 py-2 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="inline-flex items-center gap-1 rounded-lg border border-mf-silver-700 bg-mf-milk-500 px-3 py-2 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <ChevronLeft className="h-4 w-4" />
                     </button>
@@ -238,8 +238,8 @@ export default function Page() {
                           disabled={currentPage === 1}
                           className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors ${
                             currentPage === 1
-                              ? "bg-[#142900] text-white"
-                              : "border border-[#e4e7ec] bg-white text-[#344054] hover:bg-gray-50"
+                              ? "bg-[#142900] text-mf-milk-300"
+                              : "border border-mf-silver-700 bg-mf-milk-500 text-[#344054] hover:bg-gray-50"
                           }`}
                         >
                           1
@@ -254,7 +254,7 @@ export default function Page() {
                         {currentPage > 2 && (
                           <button
                             onClick={() => handlePageChange(currentPage - 1)}
-                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[#e4e7ec] bg-white text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50"
+                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-mf-silver-700 bg-mf-milk-500 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50"
                           >
                             {currentPage - 1}
                           </button>
@@ -264,7 +264,7 @@ export default function Page() {
                         {currentPage !== 1 && currentPage !== totalPages && (
                           <button
                             disabled
-                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#142900] text-sm font-medium text-white"
+                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#142900] text-sm font-medium text-mf-milk-300"
                           >
                             {currentPage}
                           </button>
@@ -274,7 +274,7 @@ export default function Page() {
                         {currentPage < totalPages - 1 && (
                           <button
                             onClick={() => handlePageChange(currentPage + 1)}
-                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[#e4e7ec] bg-white text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50"
+                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-mf-silver-700 bg-mf-milk-500 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50"
                           >
                             {currentPage + 1}
                           </button>
@@ -291,8 +291,8 @@ export default function Page() {
                           disabled={currentPage === totalPages}
                           className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors ${
                             currentPage === totalPages
-                              ? "bg-[#142900] text-white"
-                              : "border border-[#e4e7ec] bg-white text-[#344054] hover:bg-gray-50"
+                              ? "bg-[#142900] text-mf-milk-300"
+                              : "border border-mf-silver-700 bg-mf-milk-500 text-[#344054] hover:bg-gray-50"
                           }`}
                         >
                           {totalPages}
@@ -305,7 +305,7 @@ export default function Page() {
                         handlePageChange(Math.min(totalPages, currentPage + 1))
                       }
                       disabled={currentPage === totalPages}
-                      className="inline-flex items-center gap-1 rounded-lg border border-[#e4e7ec] bg-white px-3 py-2 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="inline-flex items-center gap-1 rounded-lg border border-mf-silver-700 bg-mf-milk-500 px-3 py-2 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <ChevronRight className="h-4 w-4" />
                     </button>

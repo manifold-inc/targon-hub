@@ -35,7 +35,7 @@ export function StepIndicator({ steps }: StepIndicatorProps) {
                 </div>
                 <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-green-500">
                   <CheckIcon
-                    className="h-5 w-5 text-white"
+                    className="h-5 w-5 text-mf-milk-300"
                     aria-hidden="true"
                   />
                 </div>
@@ -49,7 +49,7 @@ export function StepIndicator({ steps }: StepIndicatorProps) {
                   <div className="h-0.5 w-full bg-gray-200" />
                 </div>
                 <div
-                  className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-green-500 bg-white"
+                  className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-green-500 bg-mf-milk-500"
                   aria-current="step"
                 >
                   <span
@@ -69,7 +69,7 @@ export function StepIndicator({ steps }: StepIndicatorProps) {
                 >
                   <div className="h-0.5 w-full bg-gray-200" />
                 </div>
-                <div className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-white">
+                <div className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-mf-milk-500">
                   <span
                     className="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300"
                     aria-hidden="true"

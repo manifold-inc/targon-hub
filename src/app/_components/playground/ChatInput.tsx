@@ -50,7 +50,7 @@ export function ChatInput({
           rows={1}
           className={clsx(
             "w-full resize-none rounded-xl py-3.5 text-base lg:py-3 lg:text-sm",
-            "border border-gray-200 bg-white",
+            "border border-mf-silver-700 bg-mf-milk-500",
             "focus:border-[#142900]/20 focus:outline-none focus:ring-1 focus:ring-[#142900]/20",
             "disabled:cursor-not-allowed disabled:opacity-50",
             "pl-12 pr-24",

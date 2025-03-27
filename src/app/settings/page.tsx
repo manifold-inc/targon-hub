@@ -91,7 +91,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
   }
 
   return (
-    <div className="rounded-md border border-gray-200 bg-white p-2 text-xs shadow-sm">
+    <div className="rounded-md border border-mf-silver-700 bg-mf-milk-500 p-2 text-xs shadow-sm">
       <p className="mb-1 font-medium text-gray-600">
         {new Date(label).toLocaleDateString("en-US", {
           month: "numeric",
@@ -260,7 +260,7 @@ export default function SettingsPage() {
 
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {/* Account Info Panel */}
-        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6">
+        <div className="col-span-2 rounded-2xl border border-mf-silver-700 bg-mf-milk-500 bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6">
           <h3 className="mb-4 text-lg font-semibold">Account</h3>
           <div className="flex flex-col">
             <div className="mb-4 flex items-center gap-3">
@@ -283,12 +283,12 @@ export default function SettingsPage() {
         </div>
 
         {/* API Key Panel */}
-        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
+        <div className="col-span-2 rounded-2xl border border-mf-silver-700 bg-mf-milk-500 bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
           <h3 className="mb-6 text-lg font-semibold">
             <Link href="/settings/keys">API Key</Link>
           </h3>
           <div
-            className="group relative mb-6 cursor-pointer rounded-xl border border-gray-100 bg-gray-50 p-4 transition-all hover:border-gray-200 hover:bg-gray-100"
+            className="group relative mb-6 cursor-pointer rounded-xl border border-gray-100 bg-gray-50 p-4 transition-all hover:border-mf-silver-700 hover:bg-gray-100"
             onClick={() => {
               void copyToClipboard(keys.data?.[0]?.key ?? "");
               toast.success("Copied API Key to Clipboard");
@@ -329,7 +329,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Credits Panel */}
-        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
+        <div className="col-span-2 rounded-2xl border border-mf-silver-700 bg-mf-milk-500 bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
           <h3 className="pb-8 text-lg font-semibold">
             <Link href="/settings/credits">Credits</Link>
           </h3>
@@ -339,7 +339,7 @@ export default function SettingsPage() {
               {formatLargeNumber((user.data?.credits ?? 0) / CREDIT_PER_DOLLAR)}
             </p>
             <Link
-              className="mt-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-sm text-black hover:bg-gray-50"
+              className="mt-2 rounded-full border border-mf-silver-700 bg-mf-milk-500 px-3 py-2 text-sm text-black hover:bg-gray-50"
               href="/settings/credits"
             >
               Add Credits
@@ -348,7 +348,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Activity Panel */}
-        <div className="col-span-2 row-span-2 h-[400px] rounded-2xl border border-gray-200 bg-white bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent p-6">
+        <div className="col-span-2 row-span-2 h-[400px] rounded-2xl border border-mf-silver-700 bg-mf-milk-500 bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent p-6">
           <div className="mb-4 flex flex-row items-center justify-between">
             <h3 className="text-lg font-semibold">
               <Link href="/settings/activity">Activity</Link>
@@ -356,7 +356,7 @@ export default function SettingsPage() {
 
             <div className="flex items-center gap-2">
               <Menu as="div" className="relative">
-                <MenuButton className="flex items-center gap-2 rounded-full border border-gray-200 px-3 py-1 text-sm text-gray-700 hover:bg-gray-50">
+                <MenuButton className="flex items-center gap-2 rounded-full border border-mf-silver-700 px-3 py-1 text-sm text-gray-700 hover:bg-gray-50">
                   {selectedModels.length === 0 ? (
                     <>
                       Models
@@ -370,7 +370,7 @@ export default function SettingsPage() {
                   )}
                 </MenuButton>
 
-                <MenuItems className="absolute right-0 top-full z-10 mt-1 w-96 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+                <MenuItems className="absolute right-0 top-full z-10 mt-1 w-96 rounded-lg border border-mf-silver-700 bg-mf-milk-500 py-1 shadow-lg">
                   {getUniqueModels().map((model) => (
                     <MenuItem key={model}>
                       {() => (
@@ -474,7 +474,7 @@ export default function SettingsPage() {
           )}
         </div>
         {/* Links Panel */}
-        <div className="col-span-2 flex items-center rounded-2xl border border-gray-200 bg-white bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
+        <div className="col-span-2 flex items-center rounded-2xl border border-mf-silver-700 bg-mf-milk-500 bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
           <div
             className={`grid grid-cols-1 ${!showSS58Input ? "sm:grid-cols-2" : ""} w-full gap-4`}
           >
@@ -524,7 +524,7 @@ export default function SettingsPage() {
                           setShowSS58Input(false);
                           setSS58Address("");
                         }}
-                        className="flex h-8 items-center rounded-md border border-gray-200 bg-white px-3 py-2 shadow-sm hover:bg-gray-50"
+                        className="flex h-8 items-center rounded-md border border-mf-silver-700 bg-mf-milk-500 px-3 py-2 shadow-sm hover:bg-gray-50"
                       >
                         <span className="flex items-center gap-2 text-sm font-semibold leading-tight text-black">
                           Cancel
@@ -535,7 +535,7 @@ export default function SettingsPage() {
                         disabled={isLinking || !ss58Address}
                         className="flex h-8 items-center rounded-md border border-gray-800 bg-[#101828] px-3 py-2 shadow-sm hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <span className="flex items-center gap-2 text-sm font-semibold leading-tight text-white">
+                        <span className="flex items-center gap-2 text-sm font-semibold leading-tight text-mf-milk-300">
                           {isLinking ? (
                             <>
                               <Loader2 className="h-4 w-4 animate-spin" />

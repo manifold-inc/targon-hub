@@ -58,12 +58,12 @@ export function ProviderCostChart() {
   return (
     <div className="mx-auto w-full max-w-5xl">
       <div className="relative flex flex-col items-center px-6 pb-16 pt-5">
-        <div className="pb-4 text-lg font-bold text-mf-green md:text-4xl">
+        <div className="pb-4 text-lg font-bold text-mf-ash-500 md:text-4xl">
           Cost by TPS Per Provider
         </div>
-        <p className="mx-auto max-w-2xl text-center text-base leading-relaxed text-mf-green sm:text-lg">
+        <p className="mx-auto max-w-2xl text-center text-base leading-relaxed text-mf-ash-500 sm:text-lg">
           Experience the power of AI without the limits. As the{" "}
-          <span className="text-mf-blue animate-pulse font-semibold">
+          <span className="animate-pulse font-semibold text-mf-ash-500">
             only place on Bittensor
           </span>{" "}
           offering model leasing, we make decentralized, affordable AI truly
@@ -78,13 +78,12 @@ export function ProviderCostChart() {
           <div className="flex h-full w-full grow">
             {/* Y-axis */}
             <div className="relative flex h-full w-24 flex-col items-end pr-4 font-mono text-sm">
-              <span>$0.00</span>
               <span className="my-auto whitespace-pre-wrap break-words opacity-50">
                 Cost / Million Tokens
               </span>
               <span>$0.30</span>
               <div
-                className="absolute right-0 h-full w-0.5 bg-gradient-to-b from-mf-green from-[0%] via-mf-green via-[40%] to-transparent to-[40%] opacity-30"
+                className="absolute right-0 h-full w-0.5 bg-gradient-to-b from-mf-blue-500 from-[0%] via-mf-blue-500 via-[40%] to-transparent to-[40%] opacity-30"
                 style={{ backgroundSize: "2px 70px" }}
               />
             </div>
@@ -103,8 +102,8 @@ export function ProviderCostChart() {
                   }}
                 >
                   <div className="absolute flex w-px origin-top rotate-45 flex-col items-center">
-                    <div className="h-6 w-px bg-mf-green" />
-                    <div className="size-2 rounded-full bg-mf-green" />
+                    <div className="h-6 w-px bg-mf-blue-500" />
+                    <div className="size-2 rounded-full bg-mf-blue-500" />
                   </div>
 
                   <div className="relative flex items-center gap-x-4">
@@ -120,7 +119,7 @@ export function ProviderCostChart() {
                     <div className="whitespace-nowrap font-mono text-sm">
                       <div>{provider.name}</div>
                       <div>{provider.tokensPerSecond} TPS</div>
-                      <div className="text-neutral-400">
+                      <div className="text-mf-ash-500">
                         ${provider.costPerMillion.toFixed(2)} / M Tokens
                       </div>
                     </div>
@@ -144,13 +143,13 @@ export function ProviderCostChart() {
                     height={60}
                   />
                   <span className="text-2xl">
-                    Manifold<span className="text-mf-green"> Labs</span>
+                    Manifold<span className="text-mf-blue-700"> Labs</span>
                   </span>
                 </div>
                 <div className="animate-pulse">
                   {currentData.currentTokens} TPS
                 </div>
-                <div className="text-neutral-400">
+                <div className="text-mf-ash-500">
                   ${currentData.costPerMillion.toFixed(2)} / M Tokens
                 </div>
               </div>
@@ -164,7 +163,7 @@ export function ProviderCostChart() {
               <span className="mx-auto opacity-50">Tokens Per Second</span>
               <span>400</span>
               <div
-                className="absolute left-24 right-0 top-0 h-0.5 bg-gradient-to-r from-mf-green from-[0%] via-mf-green via-[40%] to-transparent to-[40%] opacity-30"
+                className="absolute left-24 right-0 top-0 h-0.5 bg-gradient-to-r from-mf-blue-500 from-[0%] via-mf-blue-500 via-[40%] to-transparent to-[40%] opacity-30"
                 style={{ backgroundSize: "70px 2px" }}
               />
             </div>
@@ -177,7 +176,7 @@ export function ProviderCostChart() {
         <div className="grid gap-6 px-6">
           <Link
             href="/models"
-            className="flex items-center gap-4 rounded-lg border border-mf-green/20 p-4"
+            className="flex items-center gap-4 rounded-lg border border-mf-blue-500 p-4"
           >
             <Image
               src="/ManifoldMarkTransparentGreenSVG.svg"
@@ -188,12 +187,12 @@ export function ProviderCostChart() {
             />
             <div className="font-mono">
               <div className="font-semibold">
-                Manifold<span className="text-mf-green"> Labs</span>
+                Manifold<span className="text-mf-blue-700"> Labs</span>
               </div>
               <div className="animate-pulse">
                 {currentData.currentTokens} TPS
               </div>
-              <div className="text-neutral-400">
+              <div className="text-mf-ash-500">
                 ${currentData.costPerMillion.toFixed(2)} / M Tokens
               </div>
             </div>
@@ -204,7 +203,7 @@ export function ProviderCostChart() {
             .map((provider) => (
               <div
                 key={provider.name}
-                className="flex items-center gap-4 rounded-lg border border-mf-green/20 p-4"
+                className="flex items-center gap-4 rounded-lg border border-mf-silver-700 p-4"
               >
                 <Image
                   src={provider.logoUrl}
@@ -216,7 +215,7 @@ export function ProviderCostChart() {
                 <div className="font-mono">
                   <div className="font-semibold">{provider.name}</div>
                   <div>{provider.tokensPerSecond} TPS</div>
-                  <div className="text-neutral-400">
+                  <div className="text-mf-ash-500">
                     ${provider.costPerMillion.toFixed(2)} / M Tokens
                   </div>
                 </div>
