@@ -51,19 +51,19 @@ const currentData = {
   currentTokens: "400+",
   costPerMillion: (500 * 1_000_000) / CREDIT_PER_DOLLAR,
   position: { left: "55%", bottom: "60%" },
-  currentPosition: { left: "80%", bottom: "75%" },
+  currentPosition: { left: "73%", bottom: "75%" },
 };
 
 export function ProviderCostChart() {
   return (
     <div className="mx-auto w-full max-w-5xl">
       <div className="relative flex flex-col items-center px-6 pb-16 pt-5">
-        <div className="pb-4 text-lg font-bold text-mf-ash-500 md:text-4xl">
+        <div className="pb-4 text-2xl text-mf-ash-500 md:text-4xl">
           Cost by TPS Per Provider
         </div>
-        <p className="mx-auto max-w-2xl text-center text-base leading-relaxed text-mf-ash-500 sm:text-lg">
+        <p className="mx-auto max-w-2xl text-center text-base leading-relaxed text-mf-ash-300 sm:text-lg">
           Experience the power of AI without the limits. As the{" "}
-          <span className="animate-pulse font-semibold text-mf-ash-500">
+          <span className="animate-pulse font-semibold text-mf-ash-300">
             only place on Bittensor
           </span>{" "}
           offering model leasing, we make decentralized, affordable AI truly
@@ -72,9 +72,9 @@ export function ProviderCostChart() {
       </div>
 
       {/* Chart view for large screens and up */}
-      <div className="hidden lg:block">
+      <div className="hidden rounded-lg border border-mf-silver-700 bg-mf-milk-500 p-4 lg:block">
         {/* Original chart component */}
-        <div className="relative flex aspect-[1280/580] w-full scale-50 flex-col md:scale-75 xl:scale-100">
+        <div className="relative flex aspect-[1280/580] w-full scale-50 flex-col md:scale-100">
           <div className="flex h-full w-full grow">
             {/* Y-axis */}
             <div className="relative flex h-full w-24 flex-col items-end pr-4 font-mono text-sm">
@@ -137,20 +137,20 @@ export function ProviderCostChart() {
                 </div>
                 <div className="flex items-center gap-x-2 py-2">
                   <Image
-                    src="/ManifoldMarkTransparentGreenSVG.svg"
+                    src="/providers/ManifoldChartLogo.svg"
                     alt="Manifold Labs"
-                    width={60}
-                    height={60}
+                    width={80}
+                    height={80}
                   />
-                  <span className="text-2xl">
-                    Manifold<span className="text-mf-blue-700"> Labs</span>
-                  </span>
-                </div>
-                <div className="animate-pulse">
-                  {currentData.currentTokens} TPS
-                </div>
-                <div className="text-mf-ash-500">
-                  ${currentData.costPerMillion.toFixed(2)} / M Tokens
+                  <div className="flex flex-col text-sm">
+                    <span className="text-mf-ash-500">Manifold Labs</span>
+                    <div className="animate-pulse">
+                      {currentData.currentTokens} TPS
+                    </div>
+                    <div className="text-mf-ash-500">
+                      ${currentData.costPerMillion.toFixed(2)} / M Tokens
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -158,7 +158,7 @@ export function ProviderCostChart() {
 
           {/* X-axis */}
           <div className="relative h-14 w-full">
-            <div className="relative flex items-center pl-24 pt-3 font-mono">
+            <div className="relative flex items-center pl-24 pt-3 font-mono text-sm">
               <span>50</span>
               <span className="mx-auto opacity-50">Tokens Per Second</span>
               <span>400</span>
@@ -176,19 +176,16 @@ export function ProviderCostChart() {
         <div className="grid gap-6 px-6">
           <Link
             href="/models"
-            className="flex items-center gap-4 rounded-lg border border-mf-blue-500 p-4"
+            className="flex items-center gap-4 rounded-lg border border-mf-blue-500 bg-mf-milk-500 p-4"
           >
             <Image
-              src="/ManifoldMarkTransparentGreenSVG.svg"
+              src="/manifold.png"
               alt="Manifold Labs"
-              width={50}
-              height={50}
-              className="h-12 w-12"
+              width={48}
+              height={48}
             />
             <div className="font-mono">
-              <div className="font-semibold">
-                Manifold<span className="text-mf-blue-700"> Labs</span>
-              </div>
+              <div className="font-semibold">Manifold Labs</div>
               <div className="animate-pulse">
                 {currentData.currentTokens} TPS
               </div>
@@ -203,7 +200,7 @@ export function ProviderCostChart() {
             .map((provider) => (
               <div
                 key={provider.name}
-                className="flex items-center gap-4 rounded-lg border border-mf-silver-700 p-4"
+                className="flex items-center gap-4 rounded-lg border border-mf-silver-700 bg-mf-milk-500 p-4"
               >
                 <Image
                   src={provider.logoUrl}

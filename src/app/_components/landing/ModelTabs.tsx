@@ -51,14 +51,14 @@ export function ModelTabs() {
   return (
     <div className="flex animate-slide-in-delay flex-col gap-8">
       <TabGroup>
-        <TabList className="relative inline-flex w-full items-center justify-start gap-2 overflow-hidden overflow-x-scroll rounded-xl p-2 px-2">
+        <TabList className="relative inline-flex h-10 w-full items-center justify-start gap-2 overflow-hidden overflow-x-scroll rounded-xl p-2 px-2">
           <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
-          <div className="absolute inset-0 bg-mf-silver-700" />
+          <div className="absolute inset-0 bg-mf-silver-500" />
           <div className="relative z-10 flex w-full items-center gap-2">
             {endpoints.map((endpoint, index) => (
               <Tab
                 key={index}
-                className={`flex h-fit w-32 items-center justify-center whitespace-nowrap rounded-md px-3 text-sm font-semibold leading-tight focus:border-mf-milk-500 focus:outline-none focus:ring-2 focus:ring-mf-milk-500 ${
+                className={`flex h-fit w-32 items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-semibold leading-tight focus:border-mf-milk-500 focus:outline-none focus:ring-2 focus:ring-mf-milk-500 ${
                   selectedIndex === index
                     ? "bg-mf-milk-500 ring-2 ring-mf-milk-500"
                     : "hover:bg-mf-milk-500 hover:ring-2 hover:ring-mf-milk-500"
@@ -69,11 +69,15 @@ export function ModelTabs() {
                   endpoint.slice(1).toLowerCase()}
               </Tab>
             ))}
-            <Link href="/playground" className="ml-auto">
-              <Tab className="flex h-fit w-28 items-center justify-center gap-1 whitespace-nowrap rounded-md bg-mf-ash-300 px-2 text-sm font-semibold leading-tight text-mf-milk-300 ring-2 ring-mf-ash-300 transition-colors hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-[#142900]/20 focus:ring-offset-2">
-                Try Now
-              </Tab>
-            </Link>
+            <div className="ml-auto flex items-center">
+              <Link
+                href="/models/lease"
+                className="inline-flex h-6 w-24 items-center gap-2 whitespace-nowrap rounded-lg bg-mf-blue-500 px-2 text-xs font-semibold text-black shadow-sm transition-all hover:opacity-80"
+              >
+                <PlusIcon className="h-4 w-4" />
+                <span>Add Model</span>
+              </Link>
+            </div>
           </div>
         </TabList>
       </TabGroup>
@@ -101,15 +105,7 @@ export function ModelTabs() {
                 <p className="px-2 text-2xl font-bold">TARGON</p>
               </div>
             </div>
-            <div className="flex w-16 items-center justify-end sm:w-20">
-              <Link
-                href="/models/lease"
-                className="inline-flex h-6 items-center gap-2 whitespace-nowrap rounded-lg bg-mf-blue-500 px-3 text-xs font-semibold text-black shadow-sm transition-all hover:opacity-80 sm:px-4"
-              >
-                <PlusIcon className="h-4 w-4" />
-                <span className="hidden sm:inline">Add Model</span>
-              </Link>
-            </div>
+            <div className="flex w-16 justify-end sm:w-20" />
           </div>
 
           <ModelGrid models={filteredModels} />

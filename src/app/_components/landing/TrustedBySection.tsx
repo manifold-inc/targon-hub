@@ -29,10 +29,10 @@ export function TrustedBySection() {
   return (
     <div className="animate-slide-in-delay">
       <div className="flex flex-col gap-4 py-8 text-center">
-        <p className="text-center text-2xl text-gray-600 sm:text-4xl">
+        <p className="text-center text-2xl text-mf-ash-500 sm:text-4xl">
           Trusted By
         </p>
-        <p className="text-center text-gray-600">
+        <p className="text-center text-mf-ash-300 sm:text-lg">
           Leading companies building on Targon
         </p>
       </div>
@@ -69,7 +69,9 @@ function LogoCard({ src, alt, link }: CompanyLogo) {
             src={src}
             alt={alt}
             fill
-            className="object-contain opacity-60 grayscale transition-opacity duration-300 hover:opacity-100"
+            className={`object-contain opacity-60 grayscale transition-opacity duration-300 hover:opacity-100 ${
+              alt === "Sybil" ? "p-5" : ""
+            } ${alt === "Dippy" ? "p-4" : ""}`}
           />
         </div>
       </Link>

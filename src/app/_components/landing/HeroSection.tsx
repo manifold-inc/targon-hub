@@ -12,7 +12,7 @@ export function HeroSection() {
               Lightning Fast Inference
             </h1>
           </div>
-          <p className="text-lg font-light text-mf-ash-300 sm:text-2xl">
+          <p className="pb-2 text-lg font-light text-mf-ash-300 sm:text-2xl">
             Run Inference on AI Models with high
             <br />
             speeds and low costs on Targon
@@ -20,13 +20,13 @@ export function HeroSection() {
           <div className="flex justify-center gap-4">
             <Link
               href="/playground"
-              className="btn btn-primary w-32 rounded-xl bg-mf-milk-300 py-1 text-mf-ash-500"
+              className="btn btn-primary w-32 rounded-xl bg-mf-milk-300 py-1 text-mf-ash-500 hover:bg-mf-silver-500"
             >
               Playground
             </Link>
             <Link
               href="/browse"
-              className="btn btn-primary w-32 rounded-xl bg-mf-milk-300 py-1 text-mf-ash-500"
+              className="btn btn-primary w-32 rounded-xl bg-mf-milk-300 py-1 text-mf-ash-500 hover:bg-mf-silver-500"
             >
               Models
             </Link>

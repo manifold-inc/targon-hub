@@ -42,7 +42,7 @@ export const AppCard = ({
   return (
     <Link href={`/models/${encodeURIComponent(name)}`}>
       <div
-        className={`relative h-52 w-full overflow-hidden rounded-xl border bg-mf-milk-500 p-5 transition-all duration-200 ${
+        className={`relative h-52 w-full overflow-hidden rounded-xl border bg-mf-milk-500 p-5 transition-all duration-200 hover:bg-mf-milk-300 ${
           isHovered && isHoverSupported
             ? "border-mf-blue-500 shadow-lg"
             : "border-mf-silver-700 shadow-sm"

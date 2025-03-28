@@ -61,7 +61,7 @@ function AnimatedTitle({
       {"Generative AI you can rely on".split("").map((char, index) => (
         <span
           key={index}
-          className={`inline-block pb-8 text-2xl font-light text-mf-blue-700 sm:pb-16 sm:text-3xl md:text-4xl lg:text-5xl ${
+          className={`inline-block pb-8 text-2xl text-mf-ash-500 sm:pb-16 sm:text-4xl ${
             isVisible ? "animate-slide-in" : "opacity-0"
           }`}
           style={{
@@ -101,11 +101,11 @@ function MetricCard({
         <h3 className="pb-4 text-2xl font-light text-gray-900 sm:text-3xl lg:text-4xl">
           {title}
         </h3>
-        <div className="flex items-baseline gap-2 pb-2 text-[#142900] group-hover:animate-pulse group-hover:text-mf-blue-700 sm:gap-4">
-          <span className="text-4xl font-light transition-colors sm:text-5xl lg:text-6xl">
+        <div className="flex items-baseline gap-2 pb-2 text-mf-blue-700 group-hover:animate-pulse sm:gap-4">
+          <span className="text-5xl font-light transition-colors lg:text-6xl">
             {value}
           </span>
-          <span className="text-xl font-light transition-colors sm:text-2xl lg:text-3xl">
+          <span className="text-2xl font-light transition-colors lg:text-3xl">
             {unit}
           </span>
         </div>
