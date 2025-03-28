@@ -25,7 +25,7 @@ export function HeroSection() {
               Playground
             </Link>
             <Link
-              href="/browse"
+              href="/models"
               className="btn btn-primary w-32 rounded-xl bg-mf-milk-300 py-1 text-mf-ash-500 hover:bg-mf-silver-500"
             >
               Models
