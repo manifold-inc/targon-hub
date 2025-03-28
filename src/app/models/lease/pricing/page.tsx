@@ -23,23 +23,23 @@ function CostSummaryCard({
   setSelectedPayment: (type: "onetime" | "subscription") => void;
 }) {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white">
-      <div className="border-b border-gray-200 px-6 py-4">
+    <div className="rounded-xl border border-mf-silver-700 bg-mf-milk-500">
+      <div className="border-b border-mf-silver-700 px-6 py-4">
         <h3 className="text-sm font-medium text-gray-900">
           Model Cost Summary
         </h3>
         <p className="pt-1 text-sm text-gray-500">{model}</p>
       </div>
 
-      <div className="border-b border-gray-200 px-6 py-4">
+      <div className="border-b border-mf-silver-700 px-6 py-4">
         <h4 className="text-sm font-medium text-gray-900">Payment Schedule</h4>
         <div className="mt-3 space-y-3">
           <button
             onClick={() => setSelectedPayment("onetime")}
-            className={`group relative w-full rounded-lg border bg-white p-3 text-left transition-all hover:shadow-sm ${
+            className={`group relative w-full rounded-lg border bg-mf-milk-500 p-3 text-left transition-all hover:shadow-sm ${
               selectedPayment === "onetime"
-                ? "border-mf-green ring-1 ring-mf-green"
-                : "border-gray-200 hover:border-gray-300"
+                ? "border-mf-blue-500 ring-1 ring-mf-blue-500"
+                : "border-mf-silver-700 hover:border-gray-300"
             }`}
           >
             <div className="flex items-center justify-between">
@@ -65,10 +65,10 @@ function CostSummaryCard({
 
           <button
             onClick={() => setSelectedPayment("subscription")}
-            className={`group relative w-full rounded-lg border bg-white p-3 text-left transition-all hover:shadow-sm ${
+            className={`group relative w-full rounded-lg border bg-mf-milk-500 p-3 text-left transition-all hover:shadow-sm ${
               selectedPayment === "subscription"
-                ? "border-mf-green ring-1 ring-mf-green"
-                : "border-gray-200 hover:border-gray-300"
+                ? "border-mf-blue-500 ring-1 ring-mf-blue-500"
+                : "border-mf-silver-700 hover:border-gray-300"
             }`}
           >
             <div className="absolute -top-2 right-2 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
@@ -104,7 +104,7 @@ function CostSummaryCard({
             <div className="group relative">
               <InfoIcon className="h-4 w-4 text-gray-400" />
               <div className="absolute left-full top-full hidden pl-1 pt-1 group-hover:block">
-                <div className="w-64 rounded-md bg-gray-900 px-3 py-2 text-xs text-white">
+                <div className="w-64 rounded-md bg-gray-900 px-3 py-2 text-xs text-mf-milk-300">
                   Required GPUs are calculated based on the model&apos;s maximum
                   memory usage utilizing Accelerate&apos;s estimate
                   functionality.
@@ -118,7 +118,7 @@ function CostSummaryCard({
         </div>
       </div>
 
-      <div className="border-t border-gray-200 px-6 py-4">
+      <div className="border-t border-mf-silver-700 px-6 py-4">
         <div>
           <h4 className="text-sm font-medium text-gray-900">Cost Breakdown</h4>
           <p className="mt-1 text-sm text-gray-600">
@@ -206,14 +206,14 @@ export default function PricingPage() {
       <div className="flex justify-between">
         <Link
           href="/models/lease"
-          className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
+          className="rounded-full border border-gray-300 bg-mf-milk-500 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
         >
           Back
         </Link>
         {user.data ? (
           <Link
             href={`/models/lease/confirm?model=${encodeURIComponent(model)}&payment=${selectedPayment}`}
-            className={`rounded-full bg-mf-green px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-opacity-90 disabled:cursor-not-allowed disabled:opacity-50`}
+            className={`rounded-full bg-mf-blue-500 px-4 py-2 text-sm font-semibold text-mf-milk-300 shadow-sm hover:bg-opacity-90 disabled:cursor-not-allowed disabled:opacity-50`}
           >
             Continue to Payment
           </Link>
@@ -222,7 +222,7 @@ export default function PricingPage() {
             href={`/sign-in?redirect=${encodeURIComponent(
               `/models/lease/pricing?model=${encodeURIComponent(model)}`,
             )}`}
-            className="inline-block rounded-full bg-mf-green px-4 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-opacity-90"
+            className="inline-block rounded-full bg-mf-blue-500 px-4 py-2 text-center text-sm font-semibold text-mf-milk-300 shadow-sm hover:bg-opacity-90"
           >
             Sign in to Continue
           </Link>

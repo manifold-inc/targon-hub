@@ -27,7 +27,7 @@ export const BentoCard = ({
     className={`relative ${className}`}
   >
     <div
-      className={`absolute inset-px rounded-lg bg-white ${roundedCorners}`}
+      className={`absolute inset-px rounded-lg bg-mf-milk-500 ${roundedCorners}`}
     />
     <div
       className={`relative flex h-full flex-col justify-center overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] ${
@@ -35,7 +35,7 @@ export const BentoCard = ({
       }`}
     >
       <div className="p-4 sm:p-6">
-        <h3 className="text-sm/4 font-semibold text-mf-green">{title}</h3>
+        <h3 className="text-sm/4 font-semibold text-mf-blue-700">{title}</h3>
         <p className="pt-1.5 text-lg font-medium tracking-tight text-gray-900">
           {subtitle}
         </p>

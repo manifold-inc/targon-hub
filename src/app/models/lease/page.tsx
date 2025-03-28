@@ -93,7 +93,7 @@ export default function ModelPage() {
         </p>
         <p className="pt-2 text-sm text-gray-600">
           Example:{" "}
-          <span className="rounded border border-gray-200 bg-gray-50 px-1.5 py-0.5 font-mono text-gray-800">
+          <span className="rounded border border-mf-silver-700 bg-gray-50 px-1.5 py-0.5 font-mono text-gray-800">
             Organization/Model-Name
           </span>
         </p>
@@ -108,7 +108,7 @@ export default function ModelPage() {
           HuggingFace Model{" "}
         </label>
         <div className="pt-2">
-          <div className="flex w-full items-center rounded-lg border border-gray-300 bg-white focus-within:border-mf-green focus-within:ring-2 focus-within:ring-mf-green">
+          <div className="flex w-full items-center rounded-lg border border-gray-300 bg-mf-milk-500 focus-within:border-mf-blue-500 focus-within:ring-2 focus-within:ring-mf-blue-500">
             <span
               // flex-shrink-0 to ensure the text doesnt wrap on different browsers, let the prefix always show and the input shrink
               className="flex-shrink-0 cursor-text pl-4 text-sm text-gray-500"
@@ -164,7 +164,7 @@ export default function ModelPage() {
         <button
           onClick={() => addModelMutation.mutate(model)}
           disabled={!model.trim() || addModelMutation.isLoading}
-          className="rounded-full bg-mf-green px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-green disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-full bg-mf-blue-500 px-4 py-2 text-sm font-semibold text-mf-milk-300 shadow-sm hover:bg-opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {addModelMutation.isLoading ? (
             <div className="flex items-center gap-2">

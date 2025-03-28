@@ -202,7 +202,7 @@ export default function LeaseModal({
       <DialogBackdrop className="fixed inset-0 bg-black/30" />
 
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-        <DialogPanel className="w-full max-w-3xl space-y-4 rounded-xl border bg-white p-8">
+        <DialogPanel className="w-full max-w-3xl space-y-4 rounded-xl border bg-mf-milk-500 p-8">
           <div className="flex items-center justify-between">
             <div className="flex-1" /> {/* Spacer */}
             <p className="flex-1 whitespace-nowrap text-center text-xl font-semibold">
@@ -238,7 +238,7 @@ export default function LeaseModal({
                       <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-green-500">
                         <CheckIcon
                           aria-hidden="true"
-                          className="h-5 w-5 text-white"
+                          className="h-5 w-5 text-mf-milk-300"
                         />
                       </div>
                     </>
@@ -252,7 +252,7 @@ export default function LeaseModal({
                       </div>
                       <div
                         aria-current="step"
-                        className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-green-500 bg-white"
+                        className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-green-500 bg-mf-milk-500"
                       >
                         <span
                           aria-hidden="true"
@@ -271,7 +271,7 @@ export default function LeaseModal({
                       >
                         <div className="h-0.5 w-full bg-gray-200" />
                       </div>
-                      <div className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-white">
+                      <div className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-mf-milk-500">
                         <span
                           aria-hidden="true"
                           className="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300"
@@ -393,14 +393,14 @@ export default function LeaseModal({
                   <div className="flex items-center justify-center gap-4">
                     <button
                       onClick={() => handleCurrencyToggle(false)}
-                      className={`rounded-lg px-4 py-2 text-sm ${!useCredits ? "bg-green-500 text-white" : "bg-gray-100"}`}
+                      className={`rounded-lg px-4 py-2 text-sm ${!useCredits ? "bg-green-500 text-mf-milk-300" : "bg-gray-100"}`}
                       disabled={true}
                     >
                       Dollars
                     </button>
                     <button
                       onClick={() => handleCurrencyToggle(true)}
-                      className={`rounded-lg px-4 py-2 text-sm ${useCredits ? "bg-green-500 text-white" : "bg-gray-100"}`}
+                      className={`rounded-lg px-4 py-2 text-sm ${useCredits ? "bg-green-500 text-mf-milk-300" : "bg-gray-100"}`}
                       disabled={true}
                     >
                       Credits
@@ -452,7 +452,7 @@ export default function LeaseModal({
                         });
                       }}
                       disabled={/*checkout.isLoading*/ true}
-                      className="relative inline-flex h-10 items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-2 py-2 text-[11px] font-semibold text-white hover:bg-[#101828]/90 sm:px-4 sm:py-2.5 sm:text-sm"
+                      className="relative inline-flex h-10 items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-2 py-2 text-[11px] font-semibold text-mf-milk-300 hover:bg-[#101828]/90 sm:px-4 sm:py-2.5 sm:text-sm"
                     >
                       {checkout.isLoading ? (
                         <Loader2 className="h-5 w-5 animate-spin" />
@@ -556,7 +556,7 @@ export default function LeaseModal({
                 "relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-gray-100 px-4 py-2.5 text-sm font-semibold sm:w-36",
                 currentStep === 0
                   ? "cursor-not-allowed border-transparent bg-gray-100 text-gray-400"
-                  : "border-[#e4e7ec] bg-white text-[#344054] hover:border-gray-300",
+                  : "border-mf-silver-700 bg-mf-milk-500 text-[#344054] hover:border-gray-300",
               )}
             >
               <ChevronLeftIcon className="h-5 w-5" />
@@ -573,7 +573,7 @@ export default function LeaseModal({
                       )}`,
                     )
                   }
-                  className="relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#101828]/90 sm:w-36"
+                  className="relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-4 py-2.5 text-sm font-semibold text-mf-milk-300 hover:bg-[#101828]/90 sm:w-36"
                 >
                   Sign In
                 </button>
@@ -589,7 +589,7 @@ export default function LeaseModal({
                       })
                     }
                     disabled={/*checkout.isLoading*/ true}
-                    className="relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-2 py-2 text-[11px] font-semibold text-white hover:bg-[#101828]/90 sm:w-auto sm:px-4 sm:py-2.5 sm:text-sm"
+                    className="relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-2 py-2 text-[11px] font-semibold text-mf-milk-300 hover:bg-[#101828]/90 sm:w-auto sm:px-4 sm:py-2.5 sm:text-sm"
                   >
                     {checkout.isLoading ? (
                       <Loader2 className="h-5 w-5 animate-spin" />
@@ -606,7 +606,7 @@ export default function LeaseModal({
                   className={`relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 px-4 py-2.5 text-sm font-semibold sm:w-36 ${
                     requiredGPUS > 8
                       ? "cursor-not-allowed border-transparent bg-gray-100 text-gray-400"
-                      : "border-white bg-[#101828] text-white hover:bg-[#101828]/90"
+                      : "border-white bg-[#101828] text-mf-milk-300 hover:bg-[#101828]/90"
                   }`}
                 >
                   <span>Next</span>
@@ -617,7 +617,7 @@ export default function LeaseModal({
               <button
                 type="button"
                 onClick={handleNext}
-                className="relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#101828]/90 sm:w-36"
+                className="relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-white bg-[#101828] px-4 py-2.5 text-sm font-semibold text-mf-milk-300 hover:bg-[#101828]/90 sm:w-36"
               >
                 <span>Confirm</span>
               </button>
@@ -632,7 +632,7 @@ export default function LeaseModal({
                   "relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 px-4 py-2.5 text-sm font-semibold sm:w-36",
                   currentStep === steps.length - 1
                     ? "cursor-not-allowed border-transparent bg-gray-100 text-gray-400"
-                    : "border-white bg-[#101828] text-white hover:bg-[#101828]/90",
+                    : "border-white bg-[#101828] text-mf-milk-300 hover:bg-[#101828]/90",
                 )}
               >
                 {addModelMutation.isLoading ? (

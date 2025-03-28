@@ -14,10 +14,10 @@ export default function ActivityPage() {
         <div className="flex flex-col items-center justify-start gap-6">
           <div className="max-h-96 w-full">
             {activity.data?.length ? (
-              <div className="relative h-full overflow-x-auto rounded-xl border border-gray-200">
+              <div className="relative h-full overflow-x-auto rounded-xl border border-mf-silver-700">
                 <table className="w-full border-0 text-xs sm:text-sm">
                   <thead>
-                    <tr className="h-8 border-b border-[#e4e7ec] bg-gray-50">
+                    <tr className="h-8 border-b border-mf-silver-700 bg-gray-50">
                       <th className="px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
                         Timestamp
                       </th>
@@ -36,7 +36,7 @@ export default function ActivityPage() {
                     {activity.data?.map((activity) => (
                       <tr
                         key={activity.id}
-                        className="h-8 border-b border-[#e4e7ec] bg-white"
+                        className="h-8 border-b border-mf-silver-700 bg-mf-milk-500"
                       >
                         <td className="px-2 py-1 text-left leading-tight text-[#101828]">
                           {window.innerWidth < 640

@@ -110,7 +110,7 @@ const StatusBadge = ({ status }: { status: RoadmapItem["status"] }) => (
   <span
     className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
       status === "completed"
-        ? "bg-mf-green/10 text-mf-green/60 ring-1 ring-inset ring-mf-green/30"
+        ? "bg-mf-blue-500/10 text-mf-blue-700/60 ring-1 ring-inset ring-mf-blue-500/30"
         : status === "in-progress"
           ? "bg-yellow-50 text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
           : "bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/10"
@@ -134,7 +134,7 @@ const FeatureIcon = ({
   isCommunitySection: boolean;
 }) => {
   if (isCommunitySection)
-    return <MessagesSquare className="h-4 w-4 text-mf-green/80" />;
+    return <MessagesSquare className="h-4 w-4 text-mf-blue-700/80" />;
   if (status === "completed")
     return <Check className="h-4 w-4 text-green-800" />;
   if (status === "in-progress")
@@ -151,12 +151,12 @@ export default function RoadmapPage() {
       {/* Background Effects */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]" />
-        <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-mf-green/20 to-transparent" />
+        <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-mf-blue-500/20 to-transparent" />
       </div>
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[40rem] overflow-hidden">
         {/* using pixels here, because its a gradient which is hard to do with tailwind */}
         <div className="absolute -top-48 left-1/2 h-[1000px] w-[1000px] -translate-x-1/2">
-          <div className="absolute inset-0 rounded-full bg-gradient-to-b from-mf-green/20 via-mf-green/5 to-transparent blur-3xl" />
+          <div className="absolute inset-0 rounded-full bg-gradient-to-b from-mf-blue-500/20 via-mf-blue-500/5 to-transparent blur-3xl" />
         </div>
       </div>
 
@@ -169,7 +169,7 @@ export default function RoadmapPage() {
           className="mx-auto max-w-2xl text-center"
         >
           <motion.div variants={animations.fadeInUp}>
-            <span className="inline-block rounded-full bg-[#142900]/5 px-3 py-1 text-sm font-medium text-mf-green sm:px-4 sm:py-1.5">
+            <span className="inline-block rounded-full bg-[#142900]/5 px-3 py-1 text-sm font-medium text-mf-blue-700 sm:px-4 sm:py-1.5">
               Product Roadmap
             </span>
           </motion.div>
@@ -178,7 +178,7 @@ export default function RoadmapPage() {
             className="font-display pt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-6xl"
           >
             Building the future of{" "}
-            <p className="text-mf-green">AI infrastructure</p>
+            <p className="text-mf-blue-700">AI infrastructure</p>
           </motion.h1>
           <motion.p
             variants={animations.fadeInUp}
@@ -210,12 +210,12 @@ export default function RoadmapPage() {
                 }}
                 className="group relative h-full"
               >
-                <div className="relative flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-all duration-300 hover:shadow-lg sm:p-6 lg:p-8">
+                <div className="relative flex h-full flex-col rounded-2xl border border-mf-silver-700 bg-mf-milk-500 p-4 shadow-sm transition-all duration-300 hover:shadow-lg sm:p-6 lg:p-8">
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white via-white to-gray-50/50" />
 
                   <div className="relative flex h-full flex-col">
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-sm font-medium text-mf-green">
+                      <span className="font-mono text-sm font-medium text-mf-blue-700">
                         {item.quarter}
                       </span>
                       {item.quarter !== "Community" && (

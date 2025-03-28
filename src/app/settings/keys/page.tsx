@@ -56,25 +56,25 @@ export default function KeysPage() {
         <div className="max-h-full overflow-auto whitespace-nowrap py-8">
           <div className="flex flex-col items-center justify-start gap-6">
             <div className="w-full">
-              <div className="relative overflow-x-auto rounded-xl border border-gray-200">
+              <div className="relative overflow-x-auto rounded-xl border border-mf-silver-700">
                 <table className="w-full border-separate border-spacing-0 text-xs sm:text-sm">
                   <thead>
                     <tr className="sticky top-0 h-8 w-full bg-gray-50">
-                      <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
+                      <th className="sticky top-0 border-b border-t border-mf-silver-700 px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
                         Name
                       </th>
-                      <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
+                      <th className="sticky top-0 border-b border-t border-mf-silver-700 px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
                         Key
                       </th>
-                      <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
+                      <th className="sticky top-0 border-b border-t border-mf-silver-700 px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
                         Created
                       </th>
-                      <th className="sticky top-0 border-b border-t border-gray-200 px-2 py-1 text-right font-semibold leading-tight text-[#101828]" />
+                      <th className="sticky top-0 border-b border-t border-mf-silver-700 px-2 py-1 text-right font-semibold leading-tight text-[#101828]" />
                     </tr>
                   </thead>
                   <tbody className="w-full whitespace-nowrap">
                     {keys.data?.map((key, index) => (
-                      <tr key={index} className="h-8 bg-white">
+                      <tr key={index} className="h-8 bg-mf-milk-500">
                         <td className="px-2 py-1 leading-tight text-[#101828]">
                           {key.name ?? "Default"}
                         </td>
@@ -134,7 +134,7 @@ export default function KeysPage() {
               />
             )}
             <button
-              className="hover:bg-gray-10 rounded-full border border-black bg-white px-3 py-2 text-sm font-semibold text-gray-500"
+              className="hover:bg-gray-10 rounded-full border border-black bg-mf-milk-500 px-3 py-2 text-sm font-semibold text-gray-500"
               onClick={handleCreate}
               disabled={createApiKey.isLoading}
             >

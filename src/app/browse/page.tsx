@@ -66,7 +66,7 @@ export default function BrowsePage() {
                 transition={{ delay: 0.2, duration: 0.5 }}
                 className="inline-block"
               >
-                <span className="mb-4 inline-block rounded-full bg-[#142900]/5 px-4 py-1.5 text-sm font-medium text-mf-green">
+                <span className="mb-4 inline-block rounded-full bg-[#142900]/5 px-4 py-1.5 text-sm font-medium text-mf-blue-700">
                   Explore Targon
                 </span>
               </motion.div>
@@ -78,7 +78,7 @@ export default function BrowsePage() {
                 className="mx-auto max-w-2xl text-2xl font-semibold text-gray-900 sm:text-3xl md:text-4xl"
               >
                 An Inside Look at{" "}
-                <span className="italic text-mf-green">Targon</span>
+                <span className="italic text-mf-blue-700">Targon</span>
               </motion.h2>
               <motion.p
                 initial={{ y: 20, opacity: 0 }}
@@ -98,7 +98,7 @@ export default function BrowsePage() {
         <div className="relative w-full animate-slide-in-delay">
           <Link
             href="/playground"
-            className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-all duration-300 hover:shadow-lg 
+            className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-500 p-4 shadow-sm transition-all duration-300 hover:shadow-lg 
             sm:p-6 md:p-8 lg:rounded-tl-xl"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-[#142900]/5 via-transparent to-transparent" />
@@ -156,7 +156,7 @@ export default function BrowsePage() {
             className="absolute inset-0 flex items-center"
             aria-hidden="true"
           >
-            <div className="w-full border-t border-gray-200" />
+            <div className="w-full border-t border-mf-silver-700" />
           </motion.div>
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
@@ -171,9 +171,9 @@ export default function BrowsePage() {
             }}
             className="relative flex justify-center"
           >
-            <span className="bg-white px-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-mf-green/5">
-                <div className="h-3 w-3 rounded-full bg-mf-green" />
+            <span className="bg-mf-milk-500 px-4">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-mf-blue-500/5">
+                <div className="h-3 w-3 rounded-full bg-mf-blue-500" />
               </div>
             </span>
           </motion.div>

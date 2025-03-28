@@ -29,7 +29,7 @@ export const ActionCard = ({
     className="group relative h-1/2"
   >
     <Link href={href} className="block h-full">
-      <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white p-8 shadow ring-1 ring-black/5 transition-all duration-300 hover:shadow-lg">
+      <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-mf-milk-500 p-8 shadow ring-1 ring-black/5 transition-all duration-300 hover:shadow-lg">
         {background}
         <div className="relative z-10 flex h-full flex-col gap-4">
           <div className="flex items-center justify-between">

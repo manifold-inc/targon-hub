@@ -87,7 +87,7 @@ export default function CreditsPage() {
                   setShowPurchaseInput(!showPurchaseInput);
                   setShowCryptoInput(false);
                 }}
-                className="rounded-full border border-black bg-white px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-full border border-black bg-mf-milk-500 px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
                 disabled={true}
               >
                 Add Credits
@@ -102,7 +102,7 @@ export default function CreditsPage() {
                   setShowCryptoInput(!showCryptoInput);
                   setShowPurchaseInput(false);
                 }}
-                className="rounded-full border border-black bg-white px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-full border border-black bg-mf-milk-500 px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
                 disabled={true}
               >
                 Use Crypto
@@ -154,7 +154,7 @@ export default function CreditsPage() {
                       });
                     }}
                     disabled={/*checkout.isLoading || !purchaseAmount*/ true}
-                    className="w-full rounded-full border border-gray-800 bg-[#101828] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="w-full rounded-full border border-gray-800 bg-[#101828] px-4 py-2.5 text-sm font-semibold text-mf-milk-300 shadow-sm transition-colors hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {checkout.isLoading ? (
                       <div className="flex items-center justify-center gap-2">
@@ -207,7 +207,7 @@ export default function CreditsPage() {
                             onClick={() => setShowQR(!showQR)}
                             className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700"
                           />
-                          <span className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white opacity-0 transition before:absolute before:left-1/2 before:top-full before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-gray-800 before:content-[''] group-hover:opacity-100">
+                          <span className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-mf-milk-300 opacity-0 transition before:absolute before:left-1/2 before:top-full before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-gray-800 before:content-[''] group-hover:opacity-100">
                             Show/Hide QR Code
                           </span>
                         </div>
@@ -217,7 +217,7 @@ export default function CreditsPage() {
                             className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700"
                             onClick={handleCopyAddress}
                           />
-                          <span className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white opacity-0 transition before:absolute before:left-1/2 before:top-full before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-gray-800 before:content-[''] group-hover:opacity-100">
+                          <span className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-mf-milk-300 opacity-0 transition before:absolute before:left-1/2 before:top-full before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-gray-800 before:content-[''] group-hover:opacity-100">
                             Copy Address to Clipboard
                           </span>
                         </div>
@@ -311,13 +311,13 @@ export default function CreditsPage() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowAmounts("credits")}
-              className={`rounded-lg px-3 py-1 text-xs ${showAmounts === "credits" ? "bg-black text-white" : "bg-gray-100"}`}
+              className={`rounded-lg px-3 py-1 text-xs ${showAmounts === "credits" ? "bg-black text-mf-milk-300" : "bg-gray-100"}`}
             >
               Credits
             </button>
             <button
               onClick={() => setShowAmounts("amounts")}
-              className={`rounded-lg px-3 py-1 text-xs ${showAmounts === "amounts" ? "bg-black text-white" : "bg-gray-100"}`}
+              className={`rounded-lg px-3 py-1 text-xs ${showAmounts === "amounts" ? "bg-black text-mf-milk-300" : "bg-gray-100"}`}
             >
               USD/TAO
             </button>
@@ -350,7 +350,7 @@ export default function CreditsPage() {
                     </div>
                   </td>
                   <td className="px-4 text-center">
-                    <div className="relative mx-auto flex h-5 w-8 items-center justify-center rounded border border-[#e4e7ec] bg-white p-1 sm:h-6 sm:w-10">
+                    <div className="relative mx-auto flex h-5 w-8 items-center justify-center rounded border border-mf-silver-700 bg-mf-milk-500 p-1 sm:h-6 sm:w-10">
                       {payment.type === "stripe" ? (
                         <>
                           {payment.cardBrand?.toLowerCase() === "amex" && (

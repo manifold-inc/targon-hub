@@ -228,7 +228,7 @@ function SectionContent({ children }: SectionContentProps) {
   return (
     <div className="pt-2">
       <div className="inline-flex flex-col items-start justify-start gap-2 px-2">
-        <div className="flex flex-col items-start justify-start gap-2 border-l border-[#e4e7ec] px-4">
+        <div className="flex flex-col items-start justify-start gap-2 border-l border-mf-silver-700 px-4">
           {children}
         </div>
       </div>
@@ -489,7 +489,7 @@ export default function ModalSidebar() {
               setMinWeeklyPrice(250);
               setMaxWeeklyPrice(2000);
             }}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#e4e7ec] bg-white px-4 py-2.5 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50"
+            className="flex w-full items-center justify-center gap-2 rounded-lg border border-mf-silver-700 bg-mf-milk-500 px-4 py-2.5 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50"
           >
             <X className="h-4 w-4" />
             Clear Filters
@@ -498,7 +498,7 @@ export default function ModalSidebar() {
 
         {/* Add Model CTA */}
         <div className="px-3 py-3">
-          <div className="relative flex flex-col items-center overflow-hidden rounded-xl border border-[#e4e7ec]/60 bg-white/30 px-4 py-5 text-center backdrop-blur-sm">
+          <div className="relative flex flex-col items-center overflow-hidden rounded-xl border border-mf-silver-700/60 bg-mf-milk-500/30 px-4 py-5 text-center backdrop-blur-sm">
             <div className="absolute inset-0 -z-10">
               <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-[#142900]/10 via-[#142900]/5 to-transparent" />
               <div className="absolute inset-0 animate-[shine_3s_ease-in-out_infinite] bg-[linear-gradient(110deg,transparent_25%,rgba(68,255,109,0.05)_50%,transparent_75%)]" />
@@ -508,7 +508,7 @@ export default function ModalSidebar() {
             </p>
             <a
               href="/models/lease"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#142900] px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-[1px] hover:bg-[#142900]/90 hover:shadow-md"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#142900] px-5 py-2.5 text-sm font-medium text-mf-milk-300 shadow-sm transition-all hover:-translate-y-[1px] hover:bg-[#142900]/90 hover:shadow-md"
             >
               <Plus className="h-4 w-4" />
               Add New Model
