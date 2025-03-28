@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 import { CREDIT_PER_DOLLAR } from "@/constants";
 
@@ -78,19 +77,19 @@ export function ProviderCostChart() {
           <div className="flex h-full w-full grow">
             {/* Y-axis */}
             <div className="relative flex h-full w-24 flex-col items-end pr-4 font-mono text-sm">
-              <span className="my-auto whitespace-pre-wrap break-words opacity-50">
+              <span className="my-auto whitespace-pre-wrap break-words">
                 Cost / Million Tokens
               </span>
               <span>$0.30</span>
               <div
-                className="absolute right-0 h-full w-0.5 bg-gradient-to-b from-mf-blue-500 from-[0%] via-mf-blue-500 via-[40%] to-transparent to-[40%] opacity-30"
+                className="absolute right-0 h-full w-0.5 bg-gradient-to-b from-mf-ash-300 from-[0%] via-mf-ash-300 via-[40%] to-transparent to-[40%] opacity-10"
                 style={{ backgroundSize: "2px 70px" }}
               />
             </div>
 
             {/* Main chart area */}
             <div className="relative grow">
-              <div className="dot-pattern absolute inset-0 opacity-50" />
+              <div className="dot-pattern-dark absolute inset-0 opacity-50" />
               {/* Provider points */}
               {providers.map((provider) => (
                 <div
@@ -117,8 +116,10 @@ export function ProviderCostChart() {
                       />
                     </div>
                     <div className="whitespace-nowrap font-mono text-sm">
-                      <div>{provider.name}</div>
-                      <div>{provider.tokensPerSecond} TPS</div>
+                      <div className="font-semibold">{provider.name}</div>
+                      <div className="text-mf-ash-500">
+                        {provider.tokensPerSecond} TPS
+                      </div>
                       <div className="text-mf-ash-500">
                         ${provider.costPerMillion.toFixed(2)} / M Tokens
                       </div>
@@ -132,7 +133,7 @@ export function ProviderCostChart() {
                 className="absolute whitespace-nowrap font-mono"
                 style={currentData.currentPosition}
               >
-                <div className="text-xs text-neutral-500">
+                <div className="text-xs text-mf-ash-500">
                   Now (As of Dec 2024)
                 </div>
                 <div className="flex items-center gap-x-2 py-2">
@@ -143,8 +144,10 @@ export function ProviderCostChart() {
                     height={80}
                   />
                   <div className="flex flex-col text-sm">
-                    <span className="text-mf-ash-500">Manifold Labs</span>
-                    <div className="animate-pulse">
+                    <span className="font-semibold text-mf-ash-500">
+                      Manifold Labs
+                    </span>
+                    <div className="animate-pulse text-mf-ash-500">
                       {currentData.currentTokens} TPS
                     </div>
                     <div className="text-mf-ash-500">
@@ -160,10 +163,10 @@ export function ProviderCostChart() {
           <div className="relative h-14 w-full">
             <div className="relative flex items-center pl-24 pt-3 font-mono text-sm">
               <span>50</span>
-              <span className="mx-auto opacity-50">Tokens Per Second</span>
+              <span className="mx-auto">Tokens Per Second</span>
               <span>400</span>
               <div
-                className="absolute left-24 right-0 top-0 h-0.5 bg-gradient-to-r from-mf-blue-500 from-[0%] via-mf-blue-500 via-[40%] to-transparent to-[40%] opacity-30"
+                className="absolute left-24 right-0 top-0 h-0.5 bg-gradient-to-r from-mf-ash-300 from-[0%] via-mf-ash-300 via-[40%] to-transparent to-[40%] opacity-10"
                 style={{ backgroundSize: "70px 2px" }}
               />
             </div>
@@ -174,10 +177,7 @@ export function ProviderCostChart() {
       {/* List view for medium and smaller screens */}
       <div className="block lg:hidden">
         <div className="grid gap-6 px-6">
-          <Link
-            href="/models"
-            className="flex items-center gap-4 rounded-lg border border-mf-blue-500 bg-mf-milk-500 p-4"
-          >
+          <div className="flex items-center gap-4 rounded-lg border border-mf-blue-500 bg-mf-milk-500 p-4">
             <Image
               src="/manifold.png"
               alt="Manifold Labs"
@@ -193,7 +193,7 @@ export function ProviderCostChart() {
                 ${currentData.costPerMillion.toFixed(2)} / M Tokens
               </div>
             </div>
-          </Link>
+          </div>
 
           {providers
             .sort((a, b) => b.tokensPerSecond - a.tokensPerSecond) // Sort providers by TPS in descending order

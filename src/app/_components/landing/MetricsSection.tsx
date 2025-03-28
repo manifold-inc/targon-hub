@@ -101,7 +101,7 @@ function MetricCard({
         <h3 className="pb-4 text-2xl font-light text-gray-900 sm:text-3xl lg:text-4xl">
           {title}
         </h3>
-        <div className="flex items-baseline gap-2 pb-2 text-mf-blue-700 group-hover:animate-pulse sm:gap-4">
+        <div className="flex items-baseline gap-1 pb-2 text-mf-blue-700 group-hover:animate-pulse">
           <span className="text-5xl font-light transition-colors lg:text-6xl">
             {value}
           </span>

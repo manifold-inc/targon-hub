@@ -125,6 +125,15 @@
   background-size: 24px 24px;
 }
 
+.dot-pattern-dark {
+  background-image: radial-gradient(
+    circle at center,
+    #666 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
 @layer utilities {
   .pause {
     animation-play-state: paused;
