@@ -104,7 +104,7 @@ export const Footer = () => {
                   <a
                     key={item.name}
                     href={item.href}
-                    className="text-gray-600 transition-colors hover:text-gray-900"
+                    className="text-mf-ash-300 transition-colors hover:text-mf-night-300"
                   >
                     <span className="sr-only">{item.name}</span>
                     <item.icon aria-hidden="true" className="size-6" />

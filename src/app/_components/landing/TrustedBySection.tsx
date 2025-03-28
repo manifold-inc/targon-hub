@@ -14,7 +14,7 @@ const COMPANY_LOGOS: CompanyLogo[] = [
     link: "https://www.dippy.ai/",
   },
   {
-    src: "/companies/sybil.png",
+    src: "/companies/sybil.svg",
     alt: "Sybil",
     link: "https://sybil.com/",
   },
@@ -69,7 +69,7 @@ function LogoCard({ src, alt, link }: CompanyLogo) {
             src={src}
             alt={alt}
             fill
-            className="object-contain opacity-60 transition-opacity duration-300 hover:opacity-100"
+            className="object-contain opacity-60 grayscale transition-opacity duration-300 hover:opacity-100"
           />
         </div>
       </Link>

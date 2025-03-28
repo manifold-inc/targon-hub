@@ -51,14 +51,14 @@ export function ModelTabs() {
   return (
     <div className="flex animate-slide-in-delay flex-col gap-8">
       <TabGroup>
-        <TabList className="relative inline-flex w-full items-center justify-start gap-1 overflow-hidden overflow-x-scroll rounded-xl px-1 sm:gap-2 sm:p-2">
+        <TabList className="relative inline-flex w-full items-center justify-start gap-2 overflow-hidden overflow-x-scroll rounded-xl p-2 px-2">
           <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
           <div className="absolute inset-0 bg-mf-silver-700" />
-          <div className="relative z-10 flex w-full items-center gap-1 sm:gap-2">
+          <div className="relative z-10 flex w-full items-center gap-2">
             {endpoints.map((endpoint, index) => (
               <Tab
                 key={index}
-                className={`gap- flex h-fit w-24 items-center justify-center whitespace-nowrap rounded-md px-2 text-xs font-semibold leading-tight focus:border-mf-milk-500 focus:outline-none focus:ring-2 focus:ring-mf-milk-500 sm:w-32 sm:px-3 sm:text-sm ${
+                className={`flex h-fit w-32 items-center justify-center whitespace-nowrap rounded-md px-3 text-sm font-semibold leading-tight focus:border-mf-milk-500 focus:outline-none focus:ring-2 focus:ring-mf-milk-500 ${
                   selectedIndex === index
                     ? "bg-mf-milk-500 ring-2 ring-mf-milk-500"
                     : "hover:bg-mf-milk-500 hover:ring-2 hover:ring-mf-milk-500"
@@ -70,7 +70,7 @@ export function ModelTabs() {
               </Tab>
             ))}
             <Link href="/playground" className="ml-auto">
-              <Tab className="flex h-fit w-24 items-center justify-center gap-1 whitespace-nowrap rounded-md bg-mf-ash-300 px-2 text-xs font-semibold leading-tight text-mf-milk-300 ring-2 ring-mf-ash-300 transition-colors hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-[#142900]/20 focus:ring-offset-2 sm:w-32 sm:px-3 sm:text-sm">
+              <Tab className="flex h-fit w-28 items-center justify-center gap-1 whitespace-nowrap rounded-md bg-mf-ash-300 px-2 text-sm font-semibold leading-tight text-mf-milk-300 ring-2 ring-mf-ash-300 transition-colors hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-[#142900]/20 focus:ring-offset-2">
                 Try Now
               </Tab>
             </Link>

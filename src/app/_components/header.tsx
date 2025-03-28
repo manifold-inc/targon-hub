@@ -156,14 +156,14 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-gray-50"
+                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
                                 }
                                 href="/browse"
                               >
                                 <BrainCircuit className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
-                                  <p className="text-xs">Explore</p>
-                                  <p className="text-xs text-gray-500">
+                                  <p className="text-sm">Explore</p>
+                                  <p className="text-sm text-gray-500">
                                     Explore our platform
                                   </p>
                                 </div>
@@ -172,14 +172,14 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-gray-50"
+                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
                                 }
                                 href="/models"
                               >
                                 <FileBox className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
-                                  <p className="text-xs">Models</p>
-                                  <p className="text-xs text-gray-500">
+                                  <p className="text-sm">Models</p>
+                                  <p className="text-sm text-gray-500">
                                     Search and deploy models
                                   </p>
                                 </div>
@@ -188,14 +188,14 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-gray-50"
+                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
                                 }
                                 href="/models/lease"
                               >
                                 <Wallet className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
-                                  <p className="text-xs">Lease</p>
-                                  <p className="text-xs text-gray-500">
+                                  <p className="text-sm">Lease</p>
+                                  <p className="text-sm text-gray-500">
                                     Add any model
                                   </p>
                                 </div>
@@ -204,15 +204,15 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group block px-4 py-4 text-gray-700 hover:bg-gray-50 hover:text-gray-900 2xl:hidden"
+                                  "group block px-4 py-4 text-gray-700 hover:bg-mf-milk-500  hover:text-gray-900 2xl:hidden"
                                 }
                                 href="/infrastructure"
                               >
                                 <div className="flex items-center gap-2">
                                   <Server className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                   <div className="flex flex-col gap-0 pl-2 text-left">
-                                    <p className="text-xs">Infrastructure</p>
-                                    <p className="text-xs text-gray-500">
+                                    <p className="text-sm">Infrastructure</p>
+                                    <p className="text-sm text-gray-500">
                                       Explore our platform
                                     </p>
                                   </div>
@@ -222,15 +222,15 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group block px-4 py-4 text-gray-700 hover:bg-gray-50 hover:text-gray-900 2xl:hidden"
+                                  "group block px-4 py-4 text-gray-700 hover:bg-mf-milk-500  hover:text-gray-900 2xl:hidden"
                                 }
                                 href="/roadmap"
                               >
                                 <div className="flex items-center gap-2">
                                   <Map className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                   <div className="flex flex-col gap-0 pl-2 text-left">
-                                    <p className="text-xs">Roadmap</p>
-                                    <p className="text-xs text-gray-500">
+                                    <p className="text-sm">Roadmap</p>
+                                    <p className="text-sm text-gray-500">
                                       Our vision
                                     </p>
                                   </div>
@@ -239,13 +239,13 @@ export const Header = () => {
                             </MenuItem>
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-gray-50 2xl:hidden"
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500  2xl:hidden"
                                 href="/models/immunity"
                               >
                                 <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
-                                  <p className="text-xs">Timeline</p>
-                                  <p className="text-xs text-gray-500">
+                                  <p className="text-sm">Timeline</p>
+                                  <p className="text-sm text-gray-500">
                                     Model immunity
                                   </p>
                                 </div>
@@ -284,13 +284,13 @@ export const Header = () => {
                           >
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-gray-50"
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
                                 href="/infrastructure"
                               >
                                 <Server className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
-                                  <p className="text-xs">Infrastructure</p>
-                                  <p className="text-xs text-gray-500">
+                                  <p className="text-sm">Infrastructure</p>
+                                  <p className="text-sm text-gray-500">
                                     Explore our platform
                                   </p>
                                 </div>
@@ -298,13 +298,13 @@ export const Header = () => {
                             </MenuItem>
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-gray-50"
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
                                 href="/roadmap"
                               >
                                 <Map className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
-                                  <p className="text-xs">Roadmap</p>
-                                  <p className="text-xs text-gray-500">
+                                  <p className="text-sm">Roadmap</p>
+                                  <p className="text-sm text-gray-500">
                                     Our vision
                                   </p>
                                 </div>
@@ -312,13 +312,13 @@ export const Header = () => {
                             </MenuItem>
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-gray-50"
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
                                 href="/models/immunity"
                               >
                                 <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
-                                  <p className="text-xs">Timeline</p>
-                                  <p className="text-xs text-gray-500">
+                                  <p className="text-sm">Timeline</p>
+                                  <p className="text-sm text-gray-500">
                                     Model immunity
                                   </p>
                                 </div>
@@ -340,7 +340,7 @@ export const Header = () => {
                 </div>
               </div>
               <div className="flex flex-grow justify-end">
-                <div className="hidden max-w-[400px] flex-grow translate-y-[30px] px-2 sm:block">
+                <div className="hidden max-w-[400px] flex-grow px-2 sm:block">
                   <SearchBar />
                 </div>
 
@@ -353,8 +353,10 @@ export const Header = () => {
                   >
                     <Link href="/settings">
                       <MenuButton
-                        className={`inline-flex h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-gray-50 py-2 font-semibold ring-1 ring-inset ring-gray-200 ${
-                          isUserMenuOpen ? "rounded-b-none ring-white" : ""
+                        className={`inline-flex h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-mf-milk-500 py-2 font-semibold ring-1 ring-inset ring-mf-silver-700 ${
+                          isUserMenuOpen
+                            ? "rounded-b-none ring-mf-milk-300"
+                            : ""
                         }`}
                       >
                         {isUserMenuOpen ? (
@@ -372,7 +374,7 @@ export const Header = () => {
                           aria-hidden="true"
                           className="h-4 w-4 rounded-full bg-black text-mf-milk-300"
                         />
-                        <span className="text-xs font-medium text-gray-900">
+                        <span className="text-sm font-medium text-gray-900">
                           $
                           {formatLargeNumber(
                             (auth.user?.credits ?? 0) / CREDIT_PER_DOLLAR,
@@ -392,12 +394,12 @@ export const Header = () => {
                             y: -10,
                             transition: { duration: 0.15 },
                           }}
-                          className="focus:outline-hidden absolute right-0 top-6 z-20 mt-2 w-28 origin-top rounded-md rounded-t-none bg-gray-50 text-center shadow-lg"
+                          className="focus:outline-hidden absolute right-0 top-6 z-20 mt-2 w-28 origin-top rounded-md rounded-t-none bg-mf-milk-500 text-center shadow-lg"
                         >
                           <div>
                             <MenuItem>
                               <div className="block w-full px-4 py-2 text-center">
-                                <div className="tracking-wider text-gray-500">
+                                <div className="text-sm tracking-wider text-gray-500">
                                   Balance
                                 </div>
                                 <div className="font-medium text-gray-900">
@@ -415,7 +417,7 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 href="/settings"
-                                className="block w-full px-4 py-2 hover:bg-gray-100"
+                                className="block w-full px-4 py-2 text-sm hover:bg-mf-silver-500 "
                               >
                                 Settings
                               </Link>
@@ -423,7 +425,7 @@ export const Header = () => {
                             <MenuItem>
                               <a
                                 href="/sign-out"
-                                className="block px-4 py-2 text-center hover:bg-gray-100"
+                                className="block rounded-b-md px-4 py-2 text-center text-sm hover:bg-mf-silver-500"
                               >
                                 Sign Out
                               </a>
@@ -436,7 +438,7 @@ export const Header = () => {
                 ) : (
                   <Link
                     href="/sign-in"
-                    className="inline-flex w-20 cursor-pointer justify-center py-9 font-medium text-gray-900"
+                    className="inline-flex w-20 cursor-pointer items-center justify-center font-medium text-gray-900"
                   >
                     SIGN IN
                   </Link>

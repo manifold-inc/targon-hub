@@ -53,7 +53,7 @@ export default function SearchBar() {
         <div className="pointer-events-none absolute inset-y-0 left-5 flex items-center"></div>
         <ComboboxInput
           name="search_input"
-          className="text-md placeholder:text-mf-silver flex h-9 w-full items-center rounded-lg border-mf-milk-700 bg-mf-milk-500 pb-3 pl-4 pr-8 pt-3 text-sm leading-tight ring-0 focus:border-black focus:ring-0"
+          className="text-md placeholder:text-mf-silver flex h-9 w-full items-center rounded-lg border-mf-milk-700 bg-mf-milk-500 pb-3 pl-4 pr-8 pt-3 text-sm leading-tight ring-0 focus:border-mf-night-300 focus:ring-0"
           placeholder="Search models"
           displayValue={(model: { name: string } | null) => model?.name ?? ""}
           onChange={(event) => setQuery(event.target.value)}
@@ -66,7 +66,7 @@ export default function SearchBar() {
           </div>
         </div>
       </div>
-      <ComboboxOptions className="absolute z-40 mt-1 max-h-48 w-full overflow-auto rounded-md bg-mf-milk-300 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm md:max-h-40 lg:max-h-60">
+      <ComboboxOptions className="absolute z-40 mt-1 max-h-48 w-64 overflow-auto rounded-md bg-mf-milk-300 shadow-lg ring-1 ring-mf-blue-700 ring-opacity-5 focus:outline-none sm:text-sm md:max-h-40 md:w-96 lg:max-h-60">
         {!models.data?.length ? (
           <div className="relative cursor-default select-none px-4 py-2">
             {models.isLoading ? "Loading..." : "No models found."}
