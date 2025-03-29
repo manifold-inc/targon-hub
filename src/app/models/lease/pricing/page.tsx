@@ -28,7 +28,7 @@ function CostSummaryCard({
         <h3 className="text-sm font-medium text-gray-900">
           Model Cost Summary
         </h3>
-        <p className="pt-1 text-sm text-gray-500">{model}</p>
+        <p className="pt-1 text-sm text-mf-ash-500">{model}</p>
       </div>
 
       <div className="border-b border-mf-silver-700 px-6 py-4">
@@ -47,7 +47,7 @@ function CostSummaryCard({
                 <p className="text-sm font-medium text-gray-900">
                   One-time Payment
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-mf-ash-500">
                   Pay once for a week-long lease
                 </p>
               </div>
@@ -58,7 +58,7 @@ function CostSummaryCard({
                     ? Math.floor(totalCostUSD)
                     : totalCostUSD.toFixed(2)}
                 </div>
-                <div className="text-xs text-gray-500">total</div>
+                <div className="text-xs text-mf-ash-500">total</div>
               </div>
             </div>
           </button>
@@ -79,7 +79,7 @@ function CostSummaryCard({
                 <p className="text-sm font-medium text-gray-900">
                   Weekly Subscription
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-mf-ash-500">
                   Auto-renew weekly and save 10%
                 </p>
               </div>
@@ -90,7 +90,7 @@ function CostSummaryCard({
                     ? Math.floor(totalCostUSD * 0.9)
                     : (totalCostUSD * 0.9).toFixed(2)}
                 </div>
-                <div className="text-xs text-gray-500">per week</div>
+                <div className="text-xs text-mf-ash-500">per week</div>
               </div>
             </div>
           </button>
@@ -99,7 +99,7 @@ function CostSummaryCard({
 
       <div className="space-y-1 px-6 py-4">
         <div className="mf-milk-300 flex items-center justify-between rounded-lg px-4 py-2">
-          <dt className="flex items-center gap-1 text-sm text-gray-500">
+          <dt className="flex items-center gap-1 text-sm text-mf-ash-500">
             Required GPUs
             <div className="group relative">
               <InfoIcon className="h-4 w-4 text-gray-400" />
@@ -206,7 +206,7 @@ export default function PricingPage() {
       <div className="flex justify-between">
         <Link
           href="/models/lease"
-          className="hover:mf-milk-300 rounded-full border border-gray-300 bg-mf-milk-300 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm"
+          className="hover:mf-milk-300 rounded-full border border-gray-300 bg-mf-milk-300 px-4 py-2 text-sm font-semibold text-mf-ash-500 shadow-sm"
         >
           Back
         </Link>

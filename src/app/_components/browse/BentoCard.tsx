@@ -26,17 +26,15 @@ export const BentoCard = ({
     transition={{ delay, duration: 0.5 }}
     className={`relative ${className}`}
   >
+    <div className={`absolute inset-px rounded-2xl bg-mf-milk-300`} />
     <div
-      className={`absolute inset-px rounded-2xl bg-mf-milk-300`}
-    />
-    <div
-      className={`relative flex rounded-2xl h-full flex-col justify-center overflow-hidden border border-mf-silver-700 ${
+      className={`relative flex h-full flex-col justify-center overflow-hidden rounded-2xl border border-mf-silver-700 ${
         roundedCorners ? roundedCorners.replace(/\[/g, "[calc(") + "+1px)]" : ""
       }`}
     >
       <div className="p-4 sm:p-6">
         <h3 className="text-sm/4 font-semibold text-mf-blue-700">{title}</h3>
-        <p className="pt-1.5 text-lg font-medium tracking-tight text-gray-900">
+        <p className="pt-1.5 text-lg font-semibold tracking-tight text-gray-900">
           {subtitle}
         </p>
         {description && (

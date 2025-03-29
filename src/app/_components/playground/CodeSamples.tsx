@@ -162,7 +162,7 @@ void chat();`,
             <h3 className="text-lg font-semibold text-gray-900 lg:text-xl">
               Select a Model
             </h3>
-            <p className="mt-1 text-sm text-gray-500 lg:text-base">
+            <p className="mt-1 text-sm text-mf-ash-500 lg:text-base">
               Choose a model from the dropdown above to see code examples
             </p>
           </div>

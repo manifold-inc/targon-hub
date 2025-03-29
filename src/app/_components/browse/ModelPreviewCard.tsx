@@ -24,10 +24,10 @@ export const ModelPreviewCard = ({
           {/* Header */}
           <div className="flex items-start justify-between">
             <div className="flex flex-col">
-              <h3 className="text-sm font-medium text-gray-900 transition-colors group-hover:text-gray-700">
+              <h3 className="text-sm font-medium text-gray-900 transition-colors group-hover:text-mf-ash-500">
                 {name?.split("/")[1]}
               </h3>
-              <p className="text-xs text-gray-500">{name?.split("/")[0]}</p>
+              <p className="text-xs text-mf-ash-500">{name?.split("/")[0]}</p>
             </div>
             <span className="whitespace-nowrap rounded-full bg-mf-milk-100 px-2 py-0.5 text-xs font-medium text-gray-600">
               {modality === "text-generation" ? "Text Generation" : modality}
@@ -39,7 +39,7 @@ export const ModelPreviewCard = ({
 
           {/* Footer */}
           <div className="flex items-center justify-between pt-1">
-            <div className="flex items-center gap-2 text-xs text-gray-500">
+            <div className="flex items-center gap-2 text-xs text-mf-ash-500">
               <span className="rounded-full bg-mf-milk-100 px-2 py-0.5">
                 {cpt === 0
                   ? "Free"

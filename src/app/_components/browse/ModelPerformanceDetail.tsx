@@ -72,7 +72,9 @@ export const ModelPerformanceDetail = ({
           <h3 className="text-lg font-semibold text-gray-900">
             {formatModelName(modelName)}
           </h3>
-          <p className="text-sm text-gray-500">by {modelName.split("/")[0]}</p>
+          <p className="text-sm text-mf-ash-500">
+            by {modelName.split("/")[0]}
+          </p>
         </div>
       </div>
 
@@ -170,7 +172,7 @@ export const ModelPerformanceDetail = ({
                   )}
                 </div>
               </div>
-              <div className="pt-2 text-center text-xs text-gray-500">
+              <div className="pt-2 text-center text-xs text-mf-ash-500">
                 {formatDate(stat.createdAt.toISOString())}
               </div>
             </div>

@@ -85,7 +85,7 @@ export default function KeysPage() {
                               className="cursor-pointer"
                               onClick={() => handleCopyClipboard(key.key)}
                             >
-                              <Copy className="h-4 w-4 text-gray-300 hover:text-gray-500" />
+                              <Copy className="h-4 w-4 text-gray-300 hover:text-mf-ash-500" />
                             </button>
                           </span>
                         </td>
@@ -134,7 +134,7 @@ export default function KeysPage() {
               />
             )}
             <button
-              className="hover:bg-gray-10 rounded-full border border-black bg-mf-milk-300 px-3 py-2 text-sm font-semibold text-gray-500"
+              className="hover:bg-gray-10 rounded-full border border-black bg-mf-milk-300 px-3 py-2 text-sm font-semibold text-mf-ash-500"
               onClick={handleCreate}
               disabled={createApiKey.isLoading}
             >

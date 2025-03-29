@@ -288,7 +288,7 @@ export default function SettingsPage() {
             <Link href="/settings/keys">API Key</Link>
           </h3>
           <div
-            className="mf-milk-300 group relative mb-6 cursor-pointer rounded-xl border border-gray-100 p-4 transition-all hover:border-mf-silver-700 hover:bg-mf-milk-100"
+            className="mf-milk-300 group relative mb-6 cursor-pointer rounded-xl border border-mf-silver-700 p-4 transition-all hover:border-mf-silver-700 hover:bg-mf-milk-100"
             onClick={() => {
               void copyToClipboard(keys.data?.[0]?.key ?? "");
               toast.success("Copied API Key to Clipboard");
@@ -301,7 +301,7 @@ export default function SettingsPage() {
               <Copy className="h-4 w-4 flex-shrink-0 text-gray-400 transition-colors group-hover:text-gray-600" />
             </div>
           </div>
-          <div className="border-t border-gray-100 pt-4">
+          <div className="border-t border-mf-silver-700 pt-4">
             <div className="flex flex-col items-center justify-center gap-2">
               <Link
                 href="/settings/keys"
@@ -312,7 +312,7 @@ export default function SettingsPage() {
               </Link>
 
               <button
-                className="hover:mf-milk-300 hidden w-fit items-center gap-2 rounded-full px-2.5 py-1 text-sm text-gray-500 transition-colors xl:flex"
+                className="hover:mf-milk-300 hidden w-fit items-center gap-2 rounded-full px-2.5 py-1 text-sm text-mf-ash-500 transition-colors xl:flex"
                 onClick={() => {
                   void copyToClipboard(
                     `${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1`,
@@ -356,7 +356,7 @@ export default function SettingsPage() {
 
             <div className="flex items-center gap-2">
               <Menu as="div" className="relative">
-                <MenuButton className="hover:mf-milk-300 flex items-center gap-2 rounded-full border border-mf-silver-700 px-3 py-1 text-sm text-gray-700">
+                <MenuButton className="hover:mf-milk-300 flex items-center gap-2 rounded-full border border-mf-silver-700 px-3 py-1 text-sm text-mf-ash-500">
                   {selectedModels.length === 0 ? (
                     <>
                       Models
@@ -385,7 +385,7 @@ export default function SettingsPage() {
                               }
                             });
                           }}
-                          className={`flex w-full items-center px-4 py-2 text-sm text-gray-700`}
+                          className={`flex w-full items-center px-4 py-2 text-sm text-mf-ash-500`}
                         >
                           <div className="flex items-center gap-2">
                             <div
@@ -408,7 +408,7 @@ export default function SettingsPage() {
                           onClick={() => {
                             setSelectedModels([]);
                           }}
-                          className={`w-full border-t border-gray-100 px-4 py-2 text-sm text-gray-500`}
+                          className={`w-full border-t border-mf-silver-700 px-4 py-2 text-sm text-mf-ash-500`}
                         >
                           Clear all
                         </button>
@@ -468,7 +468,7 @@ export default function SettingsPage() {
               </ResponsiveContainer>
             </div>
           ) : (
-            <div className="flex h-72 items-center justify-center text-gray-500">
+            <div className="flex h-72 items-center justify-center text-mf-ash-500">
               No activity yet
             </div>
           )}

@@ -92,7 +92,7 @@ export function PlaygroundNav({
                 "bg-mf-blue-900/5 hover:bg-mf-blue-900/10 focus:outline-none",
                 current_model &&
                   "text-mf-green-700 ring-2 ring-mf-green-700/20 ring-offset-2",
-                !current_model && "text-gray-500",
+                !current_model && "text-mf-ash-500",
               )}
             >
               {({ open }) => (
@@ -152,7 +152,7 @@ export function PlaygroundNav({
                         </span>
                       </div>
                       {selected && (
-                        <CheckIcon className="ml-2 h-4 w-4 shrink-0 text-mf-green-700" />
+                        <CheckIcon className="ml-2 h-4 w-4 shrink-0 text-mf-blue-700" />
                       )}
                     </div>
                   )}

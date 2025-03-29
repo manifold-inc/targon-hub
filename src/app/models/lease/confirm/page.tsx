@@ -63,7 +63,7 @@ function SummaryCard({
     <div className="rounded-xl border border-mf-silver-700 bg-mf-milk-300">
       <div className="border-b border-mf-silver-700 px-6 py-4">
         <h3 className="text-sm font-medium text-gray-900">Payment Summary</h3>
-        <p className="pt-1 text-sm text-gray-500">{model}</p>
+        <p className="pt-1 text-sm text-mf-ash-500">{model}</p>
       </div>
 
       <div className="space-y-4 px-6 py-4">
@@ -105,11 +105,11 @@ function SummaryCard({
         </div>
 
         {paymentType === "subscription" ? (
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-mf-ash-500">
             Your card will be charged weekly. Cancel anytime with no penalties.
           </p>
         ) : (
-          <div className="space-y-2 border-t border-gray-100 pt-4">
+          <div className="space-y-2 border-t border-mf-silver-700 pt-4">
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Available Balance</span>
               <span className="font-medium text-gray-900">
@@ -245,7 +245,7 @@ export default function ConfirmPage() {
               <div className="w-full border-t border-mf-silver-700" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-mf-milk-300 px-2 text-sm text-gray-500">
+              <span className="bg-mf-milk-300 px-2 text-sm text-mf-ash-500">
                 or enter custom amount
               </span>
             </div>
@@ -259,7 +259,7 @@ export default function ConfirmPage() {
               Purchase Amount
             </label>
             <div className="group relative">
-              <InfoIcon className="h-4 w-4 text-gray-400 hover:text-gray-500" />
+              <InfoIcon className="h-4 w-4 text-gray-400 hover:text-mf-ash-500" />
               <div className="absolute right-0 top-6 z-10 hidden whitespace-nowrap rounded-md bg-gray-900 px-2 py-1 text-xs text-mf-milk-300 group-hover:block">
                 Minimum purchase amount is $5
               </div>
@@ -268,7 +268,7 @@ export default function ConfirmPage() {
 
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <span className="text-gray-500 sm:text-sm">$</span>
+              <span className="text-mf-ash-500 sm:text-sm">$</span>
             </div>
             <input
               id="purchaseAmount"
@@ -280,7 +280,7 @@ export default function ConfirmPage() {
               placeholder="0.00"
             />
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-              <span className="text-gray-500 sm:text-sm">USD</span>
+              <span className="text-mf-ash-500 sm:text-sm">USD</span>
             </div>
           </div>
 
@@ -296,7 +296,7 @@ export default function ConfirmPage() {
       <div className="flex justify-between">
         <Link
           href={`/models/lease/pricing?model=${encodeURIComponent(model)}`}
-          className="hover:mf-milk-300 rounded-full border border-gray-300 bg-mf-milk-300 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm"
+          className="hover:mf-milk-300 rounded-full border border-gray-300 bg-mf-milk-300 px-4 py-2 text-sm font-semibold text-mf-ash-500 shadow-sm"
         >
           Back
         </Link>

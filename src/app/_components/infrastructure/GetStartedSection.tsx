@@ -39,7 +39,7 @@ export const GetStartedSection = () => {
                 ${
                   primary
                     ? "bg-mf-blue-900 text-mf-milk-300 hover:bg-[#1e3b00]"
-                    : "border border-mf-green-700 text-mf-green-700 hover:bg-mf-blue-900/5"
+                    : "border border-mf-blue-700 text-mf-blue-700 hover:bg-mf-blue-900/5"
                 }`}
             >
               {text}

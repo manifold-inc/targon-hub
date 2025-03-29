@@ -36,7 +36,7 @@ export function KeyboardShortcuts({ isOpen, onClose }: KeyboardShortcutsProps) {
           </h3>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-mf-ash-500 hover:text-mf-ash-500"
           >
             <span className="sr-only">Close</span>×
           </button>
@@ -44,7 +44,7 @@ export function KeyboardShortcuts({ isOpen, onClose }: KeyboardShortcutsProps) {
 
         <div className="space-y-4">
           <div className="space-y-3">
-            <h4 className="text-sm font-medium text-gray-700">Navigation</h4>
+            <h4 className="text-sm font-medium text-mf-ash-500">Navigation</h4>
             <div className="space-y-2">
               {shortcuts.map((shortcut, i) => (
                 <div

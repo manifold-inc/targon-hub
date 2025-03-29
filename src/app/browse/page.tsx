@@ -125,8 +125,7 @@ export default function BrowsePage() {
               damping: 20,
             }}
             className="relative flex justify-center"
-          >
-          </motion.div>
+          ></motion.div>
         </motion.div>
 
         {/* Bento Grid */}

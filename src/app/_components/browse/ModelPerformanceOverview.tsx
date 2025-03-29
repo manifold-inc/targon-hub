@@ -103,7 +103,7 @@ export const ModelPerformanceOverview = ({
           onClick={() => onModelSelect(model.modelName)}
         >
           <div className="flex items-center justify-between whitespace-nowrap pb-1.5 text-xs sm:text-sm">
-            <span className="inline-block w-1/2 truncate font-medium text-gray-900 group-hover:text-gray-700">
+            <span className="inline-block w-1/2 truncate font-medium text-gray-900 group-hover:text-mf-ash-500">
               {formatModelName(model.modelName)}
             </span>
             <span className={`${getColorTheme(index).text} font-medium`}>

@@ -16,9 +16,9 @@ interface ChatInputProps {
 }
 
 const buttonBaseClass =
-  "rounded-lg p-2.5 text-gray-500 hover:bg-mf-blue-900/5 hover:text-mf-green-700 lg:p-2";
+  "rounded-lg p-2.5 text-mf-ash-500 hover:bg-mf-blue-900/5 hover:text-mf-green-700 lg:p-2";
 const buttonDisabledClass =
-  "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-gray-500";
+  "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-mf-ash-500";
 
 export function ChatInput({
   text,

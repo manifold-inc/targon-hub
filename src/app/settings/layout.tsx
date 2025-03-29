@@ -74,7 +74,7 @@ export default function SettingsLayout({
                 <Link
                   href={tab.href}
                   className={clsx(
-                    "relative z-10 mb-2 block rounded-lg border border-gray-100 p-4 transition-all duration-200",
+                    "relative z-10 mb-2 block rounded-lg border border-mf-silver-700 p-4 transition-all duration-200",
                     isActive
                       ? "mf-milk-300"
                       : "hover:border-mf-green-700/20 hover:bg-mf-milk-300/80",

@@ -111,7 +111,7 @@ export default function Page() {
                       e.preventDefault();
                       setVisable((s) => !s);
                     }}
-                    className="absolute bottom-0 right-3 top-0 text-gray-500"
+                    className="absolute bottom-0 right-3 top-0 text-mf-ash-500"
                   >
                     {visable ? (
                       <Eye className="h-5 w-5" />
@@ -158,7 +158,7 @@ export default function Page() {
                       e.preventDefault();
                       setVisable((s) => !s);
                     }}
-                    className="absolute bottom-0 right-3 top-0 text-gray-500"
+                    className="absolute bottom-0 right-3 top-0 text-mf-ash-500"
                   >
                     {visable ? (
                       <Eye className="h-5 w-5" />

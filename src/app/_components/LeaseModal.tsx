@@ -211,7 +211,7 @@ export default function LeaseModal({
             <div className="flex flex-1 justify-end">
               <button
                 onClick={handleClose}
-                className="p-2 text-gray-500 hover:text-gray-700 sm:hidden"
+                className="p-2 text-mf-ash-500 hover:text-mf-ash-500 sm:hidden"
               >
                 <XIcon className="h-5 w-5" />
               </button>
@@ -297,23 +297,23 @@ export default function LeaseModal({
                 <div className="flex flex-col space-y-2">
                   <label
                     htmlFor="modelUrl"
-                    className="text-center text-sm font-medium text-gray-700 sm:text-left"
+                    className="text-center text-sm font-medium text-mf-ash-500 sm:text-left"
                   >
                     HuggingFace Model{" "}
                     <span className="text-red-500">Required</span>
                   </label>
-                  <p className="text-center text-sm text-gray-500 sm:text-left">
+                  <p className="text-center text-sm text-mf-ash-500 sm:text-left">
                     HuggingFace Model Repository (e.g.,
                     NousResearch/Hermes-3-Llama-3.1-8B).
                   </p>
                   <div className="flex w-full items-center rounded-lg border border-gray-300 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500">
-                    <span className="hidden whitespace-nowrap pl-4 text-sm text-gray-500/80 sm:block sm:text-base">
+                    <span className="hidden whitespace-nowrap pl-4 text-sm text-mf-ash-500/80 sm:block sm:text-base">
                       https://huggingface.co/
                     </span>
                     <div className="relative sm:hidden">
                       <button
                         type="button"
-                        className="p-2 text-gray-500 hover:text-gray-700"
+                        className="p-2 text-mf-ash-500 hover:text-mf-ash-500"
                         onClick={() => {
                           toast.info("https://huggingface.co/", {
                             position: "bottom-center",
@@ -343,23 +343,23 @@ export default function LeaseModal({
               <div className="mf-milk-300 w-full rounded-lg border px-6 pt-6 shadow-md">
                 <div className="flex flex-col items-center justify-center gap-2 border-b pb-4">
                   <h4 className="font-semibold">Model Cost Summary</h4>
-                  <p className="text-sm text-gray-500">{model}</p>
+                  <p className="text-sm text-mf-ash-500">{model}</p>
                 </div>
 
                 <div className="flex flex-col gap-3 border-b py-4 text-sm">
                   <p className="flex justify-between">
-                    <span className="text-gray-500">Required GPUs:</span>
+                    <span className="text-mf-ash-500">Required GPUs:</span>
                     <span>{formatLargeNumber(requiredGPUS)}</span>
                   </p>
                   <p className="flex justify-between">
-                    <span className="text-gray-500">Cost per GPU:</span>
+                    <span className="text-mf-ash-500">Cost per GPU:</span>
                     <span>
                       {formatLargeNumber(COST_PER_GPU)} credits / $
                       {(COST_PER_GPU / BigInt(CREDIT_PER_DOLLAR)).toString()}
                     </span>
                   </p>
                   <p className="flex justify-between">
-                    <span className="font-medium text-gray-500">
+                    <span className="font-medium text-mf-ash-500">
                       Total Cost:
                     </span>
                     <span>
@@ -371,7 +371,7 @@ export default function LeaseModal({
 
                 <div className="flex flex-col gap-2 py-4 text-sm">
                   <div className="flex flex-row justify-between">
-                    <span className="whitespace-nowrap text-gray-500">
+                    <span className="whitespace-nowrap text-mf-ash-500">
                       Your Balance:
                     </span>
                     <span className="whitespace-nowrap">
@@ -409,13 +409,13 @@ export default function LeaseModal({
                   <div className="flex items-center gap-2">
                     <label
                       htmlFor="purchaseAmount"
-                      className="text-sm text-gray-500"
+                      className="text-sm text-mf-ash-500"
                     >
                       Purchase Amount ({useCredits ? "Credits" : "USD"}):
                     </label>
                     <div className="relative rounded-md shadow-sm">
                       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                        <span className="text-gray-500 sm:text-sm">
+                        <span className="text-mf-ash-500 sm:text-sm">
                           {useCredits ? "C" : "$"}
                         </span>
                       </div>
@@ -433,7 +433,7 @@ export default function LeaseModal({
                         disabled={true}
                       />
                       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                        <span className="text-gray-500 sm:text-sm">
+                        <span className="text-mf-ash-500 sm:text-sm">
                           {useCredits ? "Credits" : "USD"}
                         </span>
                       </div>
@@ -461,7 +461,7 @@ export default function LeaseModal({
                       )}
                     </button>
                     <InfoIcon
-                      className="h-4 w-4 text-gray-500"
+                      className="h-4 w-4 text-mf-ash-500"
                       onMouseEnter={() =>
                         toast.info(
                           `1 USD = ${formatLargeNumber(CREDIT_PER_DOLLAR)} Credits`,
@@ -488,23 +488,23 @@ export default function LeaseModal({
               <div className="mf-milk-300 w-full rounded-lg border px-6 pt-6 shadow-md">
                 <div className="flex flex-col items-center justify-center gap-2 border-b pb-4">
                   <h4 className="font-semibold">Model Lease Summary</h4>
-                  <p className="text-sm text-gray-500">{model}</p>
+                  <p className="text-sm text-mf-ash-500">{model}</p>
                 </div>
 
                 <div className="flex flex-col gap-3 border-b py-4 text-sm">
                   <p className="flex justify-between">
-                    <span className="text-gray-500">Required GPUs:</span>
+                    <span className="text-mf-ash-500">Required GPUs:</span>
                     <span>{formatLargeNumber(requiredGPUS)}</span>
                   </p>
                   <p className="flex justify-between">
-                    <span className="text-gray-500">Cost per GPU:</span>
+                    <span className="text-mf-ash-500">Cost per GPU:</span>
                     <span>
                       {formatLargeNumber(COST_PER_GPU)} credits / $
                       {(COST_PER_GPU / BigInt(CREDIT_PER_DOLLAR)).toString()}
                     </span>
                   </p>
                   <p className="flex justify-between">
-                    <span className="font-medium text-gray-500">
+                    <span className="font-medium text-mf-ash-500">
                       Total Cost:
                     </span>
                     <span>
@@ -516,7 +516,7 @@ export default function LeaseModal({
 
                 <div className="flex flex-col gap-2 py-4 text-sm">
                   <div className="flex flex-row justify-between">
-                    <span className="whitespace-nowrap text-gray-500">
+                    <span className="whitespace-nowrap text-mf-ash-500">
                       Your Balance:
                     </span>
                     <span className="whitespace-nowrap">
@@ -524,7 +524,7 @@ export default function LeaseModal({
                     </span>
                   </div>
                   <p className="flex justify-between font-medium">
-                    <span className="whitespace-nowrap text-gray-500">
+                    <span className="whitespace-nowrap text-mf-ash-500">
                       Remaining Balance:
                     </span>
                     <span className="whitespace-nowrap">
@@ -553,7 +553,7 @@ export default function LeaseModal({
               onClick={handlePrevious}
               disabled={currentStep === 0}
               className={classNames(
-                "relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-gray-100 px-4 py-2.5 text-sm font-semibold sm:w-36",
+                "relative inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-mf-silver-700 px-4 py-2.5 text-sm font-semibold sm:w-36",
                 currentStep === 0
                   ? "cursor-not-allowed border-transparent bg-mf-milk-100 text-gray-400"
                   : "border-mf-silver-700 bg-mf-milk-300 text-mf-ash-300 hover:border-gray-300",

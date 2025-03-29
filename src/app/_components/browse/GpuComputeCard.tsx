@@ -109,7 +109,7 @@ export const GpuComputeCard = () => (
       </div>
 
       {/* Description */}
-      <p className="mt-auto text-sm leading-relaxed text-gray-500">
+      <p className="mt-auto text-sm leading-relaxed text-mf-ash-500">
         Access high-performance GPU compute with flexible pricing and instant
         scalability through our distributed network.
       </p>

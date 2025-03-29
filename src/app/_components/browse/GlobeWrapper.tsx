@@ -86,7 +86,7 @@ export function GlobeComponent({ arcsData }: GlobeProps) {
         arcDashGap={() => Math.random() * 0.4 + 0.1}
         arcDashAnimateTime={() => Math.random() * 3000 + 1000}
         arcStroke={1}
-        atmosphereColor="#98A1B2"
+        atmosphereColor="#AAD6FF"
         atmosphereAltitude={0.1}
         width={400}
         height={400}

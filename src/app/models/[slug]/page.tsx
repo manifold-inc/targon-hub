@@ -188,7 +188,7 @@ export default async function Page({ params }: Props) {
               </ol>
             </section>
             <section id="code-samples" data-section>
-              <div className="mt-10 border-t border-gray-100 py-4">
+              <div className="mt-10 border-t border-mf-silver-700 py-4">
                 <div className="flex flex-1 flex-col overflow-hidden">
                   <CodeSamples
                     model={data.name}

@@ -16,7 +16,7 @@ export function EmptyState({ startChat }: EmptyStateProps) {
               TARGON
             </span>
           </div>
-          <p className="text-xs text-gray-500 sm:text-sm lg:text-base">
+          <p className="text-xs text-mf-ash-500 sm:text-sm lg:text-base">
             Experience the power of AI models through natural conversation
           </p>
         </div>
@@ -75,7 +75,7 @@ export function EmptyState({ startChat }: EmptyStateProps) {
         </div>
 
         <div className="flex-col items-center gap-2">
-          <p className="text-xs text-gray-500 lg:text-sm">
+          <p className="text-xs text-mf-ash-500 lg:text-sm">
             Press{" "}
             <kbd className="rounded-md border border-mf-silver-700 bg-mf-milk-100 px-1.5 py-0.5 text-xs font-medium text-gray-400">
               ?

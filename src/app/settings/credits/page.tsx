@@ -114,7 +114,7 @@ export default function CreditsPage() {
                 <div className="flex items-center gap-2">
                   <div className="relative rounded-md shadow-sm">
                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                      <span className="text-gray-500 sm:text-sm">{"$"}</span>
+                      <span className="text-mf-ash-500 sm:text-sm">{"$"}</span>
                     </div>
                     <input
                       type="text"
@@ -130,7 +130,9 @@ export default function CreditsPage() {
                       placeholder="0"
                     />
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                      <span className="text-gray-500 sm:text-sm">{"USD"}</span>
+                      <span className="text-mf-ash-500 sm:text-sm">
+                        {"USD"}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -172,7 +174,7 @@ export default function CreditsPage() {
                     <span className="pointer-events-none absolute left-1/2 m-4 mx-auto hidden w-max max-w-sm -translate-x-1/2 translate-y-1/4 text-wrap rounded-md bg-gray-800 p-1.5 text-center text-sm text-gray-100 opacity-0 transition-opacity group-hover:opacity-100 sm:block">
                       {`$1 USD is ${formatLargeNumber(CREDIT_PER_DOLLAR)} Credits`}
                     </span>
-                    <InfoIcon className="h-4 w-4 text-gray-500" />
+                    <InfoIcon className="h-4 w-4 text-mf-ash-500" />
                   </div>
                 </div>
               </div>
@@ -181,7 +183,7 @@ export default function CreditsPage() {
             {showCryptoInput && (
               <>
                 <div className="flex flex-col gap-4 rounded-lg bg-mf-milk-100 p-4">
-                  <p className="text-sm text-gray-700">
+                  <p className="text-sm text-mf-ash-500">
                     Please send your payment to the following address:
                   </p>
                   <div className="flex flex-col items-center gap-4">
@@ -196,7 +198,7 @@ export default function CreditsPage() {
                           className="mx-auto"
                         />
                       ) : (
-                        <p className="font-mono text-sm text-gray-700">
+                        <p className="font-mono text-sm text-mf-ash-500">
                           {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(0, 6)}...
                           {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(-6)}
                         </p>
@@ -205,7 +207,7 @@ export default function CreditsPage() {
                         <div className="group relative">
                           <QrCode
                             onClick={() => setShowQR(!showQR)}
-                            className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700"
+                            className="h-4 w-4 cursor-pointer text-mf-ash-500 hover:text-mf-ash-500"
                           />
                           <span className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-mf-milk-300 opacity-0 transition before:absolute before:left-1/2 before:top-full before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-gray-800 before:content-[''] group-hover:opacity-100">
                             Show/Hide QR Code
@@ -214,7 +216,7 @@ export default function CreditsPage() {
 
                         <div className="group relative">
                           <CopyIcon
-                            className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700"
+                            className="h-4 w-4 cursor-pointer text-mf-ash-500 hover:text-mf-ash-500"
                             onClick={handleCopyAddress}
                           />
                           <span className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-mf-milk-300 opacity-0 transition before:absolute before:left-1/2 before:top-full before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-gray-800 before:content-[''] group-hover:opacity-100">
@@ -225,8 +227,8 @@ export default function CreditsPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <InfoIcon className="h-4 w-4 text-gray-500" />
-                    <p className="text-sm text-gray-700">
+                    <InfoIcon className="h-4 w-4 text-mf-ash-500" />
+                    <p className="text-sm text-mf-ash-500">
                       The funds will be credited to your account once they are
                       confirmed on the blockchain.
                     </p>
@@ -260,7 +262,7 @@ export default function CreditsPage() {
                           placeholder="Enter TAO amount"
                           className="block w-full rounded-md border-0 px-4 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 [appearance:textfield] placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                         />
-                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-medium text-gray-500">
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-medium text-mf-ash-500">
                           TAO
                         </span>
                       </div>
@@ -269,7 +271,7 @@ export default function CreditsPage() {
                     <div className="rounded bg-gray-200 p-3">
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-700">
+                          <span className="text-sm text-mf-ash-500">
                             USD Value
                           </span>
                           <span className="text-lg font-semibold text-black">
@@ -281,7 +283,9 @@ export default function CreditsPage() {
                           </span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-700">Credits</span>
+                          <span className="text-sm text-mf-ash-500">
+                            Credits
+                          </span>
                           <span className="text-lg font-semibold text-black">
                             {Math.floor(
                               taoConversion.creditAmount,
@@ -292,7 +296,7 @@ export default function CreditsPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 text-xs text-gray-700">
+                  <div className="flex items-center gap-2 text-xs text-mf-ash-500">
                     <InfoIcon className="h-4 w-4" />
                     <span>
                       Price updates on each calculation. Actual conversion rate

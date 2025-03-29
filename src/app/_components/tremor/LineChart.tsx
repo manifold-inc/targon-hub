@@ -73,7 +73,7 @@ const LegendItem = ({
           // base
           "truncate whitespace-nowrap text-xs",
           // text color
-          "text-gray-700 dark:text-gray-300",
+          "text-mf-ash-500 dark:text-gray-300",
           hasOnValueChange &&
             "group-hover:text-gray-900 dark:group-hover:text-gray-50",
           activeLegend && activeLegend !== name ? "opacity-40" : "opacity-100",
@@ -122,7 +122,7 @@ const ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
         "group inline-flex size-5 items-center truncate rounded transition",
         disabled
           ? "cursor-not-allowed text-gray-400 dark:text-gray-600"
-          : "cursor-pointer text-gray-700 hover:bg-mf-milk-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-50",
+          : "cursor-pointer text-mf-ash-500 hover:bg-mf-milk-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-50",
       )}
       disabled={disabled}
       onClick={(e) => {
@@ -431,7 +431,7 @@ const ChartTooltip = ({
                     // base
                     "whitespace-nowrap text-right",
                     // text color
-                    "text-gray-700 dark:text-gray-300",
+                    "text-mf-ash-500 dark:text-gray-300",
                   )}
                 >
                   {category}

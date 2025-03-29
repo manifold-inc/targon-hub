@@ -40,11 +40,11 @@ export const ModelSupportSection = () => {
     >
       {/* Code Example Column */}
       <div className="relative order-2 lg:order-1 lg:pt-12">
-        <div className="absolute -inset-x-4 -bottom-16 top-0 hidden rounded-3xl bg-gradient-to-bl from-mf-green-700/5 via-transparent to-transparent sm:block" />
-        <div className="overflow-hidden rounded-2xl border border-gray-100 bg-mf-milk-300/50 shadow-xl">
-          <div className="border-b border-gray-100 bg-mf-milk-300/80 px-4 py-3 sm:px-6">
+        <div className="absolute -inset-x-4 -bottom-16 top-0 hidden rounded-3xl sm:block" />
+        <div className="overflow-hidden rounded-2xl border border-mf-silver-700 bg-mf-milk-300/50 shadow-xl">
+          <div className="border-b border-mf-silver-700 bg-mf-milk-300/80 px-4 py-3 sm:px-6">
             <div className="flex items-center gap-2">
-              <div className="h-3 w-3 rounded-full bg-green-500" />
+              <div className="h-3 w-3 rounded-full bg-blue-300" />
               <span className="text-sm font-medium text-gray-600">
                 OpenAI Compatibility
               </span>
@@ -64,7 +64,7 @@ export const ModelSupportSection = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        <Code className="mx-auto h-12 w-12 rounded-full bg-mf-blue-900/10 p-3 text-mf-green-700 sm:h-14 sm:w-14 lg:mx-0" />
+        <Code className="mx-auto h-12 w-12 p-3 text-mf-blue-700 sm:h-14 sm:w-14 lg:mx-0" />
 
         <div>
           <h2 className="text-center text-2xl font-semibold leading-tight text-gray-900 sm:text-3xl lg:text-left">
@@ -81,7 +81,7 @@ export const ModelSupportSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="rounded-2xl border border-gray-100 bg-mf-milk-300/50 p-4 backdrop-blur-sm sm:p-6"
+          className="rounded-2xl border border-mf-silver-700 bg-mf-milk-300/50 p-4 backdrop-blur-sm sm:p-6"
         >
           <h3 className="text-center font-medium text-gray-900 lg:text-left">
             Supported Models
@@ -89,7 +89,7 @@ export const ModelSupportSection = () => {
           <ul className="space-y-2 pt-4 text-sm leading-6 text-gray-600 sm:space-y-3">
             {supportedModels.map((model, index) => (
               <li key={index} className="flex gap-x-3">
-                <span className="shrink-0 text-mf-green-700">•</span>
+                <span className="shrink-0 text-mf-blue-700">•</span>
                 <span className="break-words">{model}</span>
               </li>
             ))}

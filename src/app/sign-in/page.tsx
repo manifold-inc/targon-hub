@@ -104,7 +104,7 @@ export default function Page() {
                       e.preventDefault();
                       setVisable((s) => !s);
                     }}
-                    className="absolute bottom-0 right-3 top-0 text-gray-500"
+                    className="absolute bottom-0 right-3 top-0 text-mf-ash-500"
                   >
                     {visable ? (
                       <Eye className="h-5 w-5" />
@@ -127,7 +127,7 @@ export default function Page() {
                     "Sign in"
                   )}
                 </button>
-                <div className="pt-1 text-center text-sm text-gray-500">
+                <div className="pt-1 text-center text-sm text-mf-ash-500">
                   <Link className="underline" href="/create-account">
                     Create an account
                   </Link>

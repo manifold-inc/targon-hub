@@ -111,7 +111,7 @@ export default function ModelPage() {
           <div className="flex w-full items-center rounded-lg border border-gray-300 bg-mf-milk-300 focus-within:border-mf-blue-500 focus-within:ring-2 focus-within:ring-mf-blue-500">
             <span
               // flex-shrink-0 to ensure the text doesnt wrap on different browsers, let the prefix always show and the input shrink
-              className="flex-shrink-0 cursor-text pl-4 text-sm text-gray-500"
+              className="flex-shrink-0 cursor-text pl-4 text-sm text-mf-ash-500"
               onClick={() => document.getElementById("modelUrl")?.focus()}
             >
               https://huggingface.co/
@@ -121,7 +121,7 @@ export default function ModelPage() {
               id="modelUrl"
               value={model}
               onChange={(e) => setModel(e.target.value.trim())}
-              className="w-full border-0 bg-transparent py-2 pl-0 pr-4 text-sm text-gray-900 placeholder:text-gray-700 focus:ring-0"
+              className="w-full border-0 bg-transparent py-2 pl-0 pr-4 text-sm text-gray-900 placeholder:text-mf-ash-500 focus:ring-0"
             />
           </div>
         </div>

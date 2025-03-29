@@ -153,7 +153,7 @@ export function ParameterControls({
             <h2 className="text-lg font-semibold text-gray-900">Parameters</h2>
             <button
               onClick={() => setIsOpen(false)}
-              className="rounded-lg p-1.5 text-gray-500 hover:bg-mf-milk-100"
+              className="rounded-lg p-1.5 text-mf-ash-500 hover:bg-mf-milk-100"
             >
               <X className="h-5 w-5" />
             </button>
@@ -208,10 +208,10 @@ export function ParameterControls({
           </div>
 
           {/* Help Section */}
-          <div className="mt-4 border-t border-gray-100 pt-3">
+          <div className="mt-4 border-t border-mf-silver-700 pt-3">
             <button
               onClick={() => setIsHelpOpen(!isHelpOpen)}
-              className="mb-2 flex w-full items-center justify-between text-xs font-semibold uppercase text-gray-500 hover:text-gray-700"
+              className="mb-2 flex w-full items-center justify-between text-xs font-semibold uppercase text-mf-ash-500 hover:text-mf-ash-500"
             >
               <div className="flex items-center space-x-2">
                 <HelpCircle className="h-3.5 w-3.5" />
@@ -228,7 +228,7 @@ export function ParameterControls({
                 {parameters.map((param) => (
                   <div
                     key={`help-${param.key}`}
-                    className="flex items-start space-x-2 rounded-lg py-1 text-xs text-gray-500"
+                    className="flex items-start space-x-2 rounded-lg py-1 text-xs text-mf-ash-500"
                   >
                     <param.icon className="mt-0.5 h-3 w-3 shrink-0" />
                     <div>
@@ -321,11 +321,11 @@ export function ParameterControls({
           </div>
 
           {/* Help Section */}
-          <div className="border-t border-gray-100">
+          <div className="border-t border-mf-silver-700">
             <div className="p-4">
               <button
                 onClick={() => setIsHelpOpen(!isHelpOpen)}
-                className="mb-3 flex w-full items-center justify-between text-xs font-semibold uppercase text-gray-500 hover:text-gray-700"
+                className="mb-3 flex w-full items-center justify-between text-xs font-semibold uppercase text-mf-ash-500 hover:text-mf-ash-500"
               >
                 <div className="flex items-center space-x-2">
                   <HelpCircle className="h-3.5 w-3.5" />
@@ -342,7 +342,7 @@ export function ParameterControls({
                   {parameters.map((param) => (
                     <div
                       key={`help-${param.key}`}
-                      className="flex items-start space-x-2.5 rounded-lg p-2 text-xs text-gray-500 transition-colors"
+                      className="flex items-start space-x-2.5 rounded-lg p-2 text-xs text-mf-ash-500 transition-colors"
                     >
                       <param.icon className="mt-0.5 h-3.5 w-3.5 shrink-0 transition-colors" />
                       <div>

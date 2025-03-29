@@ -142,7 +142,7 @@ const FeatureIcon = ({
       //custom animation speed
       <CircleDashed className="h-4 w-4 animate-spin text-yellow-500 [animation-duration:3000ms]" />
     );
-  return <Hourglass className="h-4 w-4 text-gray-500" />;
+  return <Hourglass className="h-4 w-4 text-mf-ash-500" />;
 };
 
 export default function RoadmapPage() {
