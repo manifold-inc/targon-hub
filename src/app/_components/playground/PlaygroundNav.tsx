@@ -30,9 +30,9 @@ interface PlaygroundNavProps {
 const baseButtonStyles =
   "flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold leading-tight focus:outline-none";
 const selectedButtonStyles =
-  "bg-mf-blue-900/10 text-mf-green-700 ring-2 ring-mf-green-700/20 ring-offset-2";
+  "bg-mf-blue-900/10 text-mf-blue-700 border border-mf-blue-700 hover:bg-mf-milk-100";
 const unselectedButtonStyles =
-  "text-[#475467] opacity-80 hover:bg-mf-blue-900/5";
+  "text-mf-ash-500 opacity-80 hover:bg-mf-blue-900/5";
 
 export function PlaygroundNav({
   nav,
@@ -64,7 +64,7 @@ export function PlaygroundNav({
   );
 
   return (
-    <nav className="flex flex-col border-b border-mf-silver-700 bg-mf-milk-300 py-4 lg:h-14 lg:flex-row lg:items-center">
+    <nav className="flex flex-col border-b border-mf-silver-700 bg-mf-milk-100 py-10 lg:h-14 lg:flex-row lg:items-center">
       {/* Navigation Buttons */}
       <div className="flex items-center gap-2 p-4 lg:p-0 lg:px-4">
         <NavButton type="ui" icon={MessageSquareIcon} />
@@ -89,9 +89,8 @@ export function PlaygroundNav({
             <ListboxButton
               className={clsx(
                 "flex w-full items-center justify-between rounded-full px-4 py-2.5 text-sm font-semibold lg:px-3 lg:py-2",
-                "bg-mf-blue-900/5 hover:bg-mf-blue-900/10 focus:outline-none",
-                current_model &&
-                  "text-mf-green-700 ring-2 ring-mf-green-700/20 ring-offset-2",
+                "bg-mf-blue-900/5 hover:bg-mf-milk-100 focus:outline-none",
+                current_model && "border border-mf-blue-700 text-mf-blue-700",
                 !current_model && "text-mf-ash-500",
               )}
             >
@@ -101,7 +100,7 @@ export function PlaygroundNav({
                     <div
                       className={clsx(
                         "h-2 w-2 shrink-0 rounded-full",
-                        current_model ? "bg-green-500" : "bg-gray-300",
+                        current_model ? "bg-mf-blue-700" : "bg-mf-ash-500",
                       )}
                     />
                     <span className="truncate">
@@ -137,15 +136,15 @@ export function PlaygroundNav({
                         <div
                           className={clsx(
                             "h-2 w-2 shrink-0 rounded-full",
-                            selected ? "bg-green-500" : "bg-gray-300",
+                            selected ? "bg-mf-blue-700" : "bg-mf-ash-500",
                           )}
                         />
                         <span
                           className={clsx(
                             "block truncate text-sm",
                             selected
-                              ? "font-semibold text-mf-green-700"
-                              : "text-gray-600",
+                              ? "font-semibold text-mf-blue-700"
+                              : "text-mf-ash-500",
                           )}
                         >
                           {model.name}

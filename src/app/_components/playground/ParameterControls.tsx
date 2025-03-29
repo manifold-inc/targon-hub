@@ -251,7 +251,7 @@ export function ParameterControls({
       <aside
         className={clsx(
           "relative hidden overflow-hidden transition-[width] duration-300 ease-in-out lg:block",
-          "border-r border-mf-silver-700 bg-mf-milk-300",
+          "border-r border-mf-silver-700 bg-mf-milk-100",
           isOpen ? "lg:w-80" : "lg:w-20",
         )}
       >
