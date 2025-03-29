@@ -47,7 +47,7 @@ const FeatureCard = ({
     transition={{ delay, duration: 0.5 }}
     className={cardClasses}
   >
-    <h3 className="text-center font-medium text-gray-900 lg:text-left">
+    <h3 className="text-center font-medium text-mf-ash-700 lg:text-left">
       {title}
     </h3>
     <ul className="mt-4 list-inside list-disc space-y-3 text-sm leading-6 text-gray-600 marker:text-mf-blue-700">
@@ -81,7 +81,7 @@ export const NetworkArchitectureSection = () => {
               <Network className="h-6 w-6 text-mf-blue-700 sm:h-7 sm:w-7" />
             </div>
             <div>
-              <h2 className="text-center text-2xl font-semibold leading-tight text-gray-900 sm:text-3xl lg:text-left">
+              <h2 className="text-center text-2xl font-semibold leading-tight text-mf-ash-700 sm:text-3xl lg:text-left">
                 Network Architecture
               </h2>
               <p className="pt-4 text-sm leading-7 text-gray-600 sm:pt-6 sm:text-base md:text-lg">

@@ -62,21 +62,21 @@ function SummaryCard({
   return (
     <div className="rounded-xl border border-mf-silver-700 bg-mf-milk-300">
       <div className="border-b border-mf-silver-700 px-6 py-4">
-        <h3 className="text-sm font-medium text-gray-900">Payment Summary</h3>
+        <h3 className="text-sm font-medium text-mf-ash-700">Payment Summary</h3>
         <p className="pt-1 text-sm text-mf-ash-500">{model}</p>
       </div>
 
       <div className="space-y-4 px-6 py-4">
         <div className="flex justify-between text-sm">
           <span className="text-gray-600">Required GPUs</span>
-          <span className="font-medium text-gray-900">
+          <span className="font-medium text-mf-ash-700">
             {requiredGPUS.toString()}
           </span>
         </div>
 
         <div className="flex justify-between text-sm">
           <span className="text-gray-600">Payment Type</span>
-          <span className="font-medium text-gray-900">
+          <span className="font-medium text-mf-ash-700">
             {paymentType === "subscription"
               ? "Weekly Subscription"
               : "One-time Payment"}
@@ -86,7 +86,7 @@ function SummaryCard({
         {paymentType === "onetime" && (
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Lease End Date</span>
-            <span className="font-medium text-gray-900">
+            <span className="font-medium text-mf-ash-700">
               {immunityEndDate.toLocaleDateString()}
             </span>
           </div>
@@ -96,7 +96,7 @@ function SummaryCard({
           <span className="text-gray-600">
             {paymentType === "subscription" ? "Weekly Cost" : "Total Cost"}
           </span>
-          <span className="font-medium text-gray-900">
+          <span className="font-medium text-mf-ash-700">
             $
             {paymentType === "subscription"
               ? (totalCostUSD * 0.9).toFixed(2)
@@ -112,14 +112,14 @@ function SummaryCard({
           <div className="space-y-2 border-t border-mf-silver-700 pt-4">
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Available Balance</span>
-              <span className="font-medium text-gray-900">
+              <span className="font-medium text-mf-ash-700">
                 ${userBalanceUSD.toFixed(2)}
               </span>
             </div>
             {hasEnoughCredits ? (
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Remaining Balance</span>
-                <span className="font-medium text-gray-900">
+                <span className="font-medium text-mf-ash-700">
                   ${remainingBalanceUSD.toFixed(2)}
                 </span>
               </div>
@@ -207,7 +207,7 @@ export default function ConfirmPage() {
   return (
     <div className="flex flex-col gap-6 pt-2">
       <div>
-        <h2 className="text-lg font-semibold text-gray-900">
+        <h2 className="text-lg font-semibold text-mf-ash-700">
           Step 3: Complete Payment
         </h2>
         <p className="mt-1 text-sm text-gray-600">
@@ -254,7 +254,7 @@ export default function ConfirmPage() {
           <div className="flex items-center justify-between">
             <label
               htmlFor="purchaseAmount"
-              className="text-sm font-medium text-gray-900"
+              className="text-sm font-medium text-mf-ash-700"
             >
               Purchase Amount
             </label>
@@ -276,7 +276,7 @@ export default function ConfirmPage() {
               value={purchaseAmount}
               onChange={(e) => setPurchaseAmount(e.target.value)}
               min="0"
-              className="block w-full rounded-lg border border-gray-300 py-2.5 pl-7 pr-12 text-gray-900 shadow-sm focus:border-mf-blue-500 focus:outline-none focus:ring-1 focus:ring-mf-blue-500 sm:text-sm"
+              className="block w-full rounded-lg border border-gray-300 py-2.5 pl-7 pr-12 text-mf-ash-700 shadow-sm focus:border-mf-blue-500 focus:outline-none focus:ring-1 focus:ring-mf-blue-500 sm:text-sm"
               placeholder="0.00"
             />
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">

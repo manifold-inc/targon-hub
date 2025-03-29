@@ -26,7 +26,7 @@ export const ModelLeasingSection = () => {
       >
         <Shield className="mx-auto h-12 w-12 rounded-full p-3 text-mf-blue-700 sm:h-14 sm:w-14 lg:mx-0" />
 
-        <h2 className="text-center text-2xl font-semibold text-gray-900 sm:text-3xl lg:text-left">
+        <h2 className="text-center text-2xl font-semibold text-mf-ash-700 sm:text-3xl lg:text-left">
           Model Hosting
         </h2>
         <p className="text-sm text-gray-600 sm:text-base md:text-lg">
@@ -40,7 +40,7 @@ export const ModelLeasingSection = () => {
           {...fadeInAnimation}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <h3 className="text-center font-medium text-gray-900 sm:text-left">
+          <h3 className="text-center font-medium text-mf-ash-700 sm:text-left">
             Leasing Options
           </h3>
           <ul className="space-y-3 pt-4 text-sm text-gray-600">
@@ -65,7 +65,7 @@ export const ModelLeasingSection = () => {
       <div className="relative lg:pt-12">
         <div className="absolute -inset-x-4 -bottom-16 top-0 rounded-3xl" />
         <div className="rounded-2xl border border-mf-silver-700 bg-mf-milk-300/50 p-6 shadow-xl">
-          <h3 className="text-center text-base font-semibold text-gray-900 sm:text-left sm:text-lg">
+          <h3 className="text-center text-base font-semibold text-mf-ash-700 sm:text-left sm:text-lg">
             Current Model Timeline
           </h3>
           <div className="space-y-3 pt-6">
@@ -83,7 +83,7 @@ export const ModelLeasingSection = () => {
                 >
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center justify-between gap-2">
-                      <div className="text-sm font-medium text-gray-900">
+                      <div className="text-sm font-medium text-mf-ash-700">
                         {model.name}
                       </div>
                       <div className="flex h-6 items-center gap-1 rounded-full py-0.5 pl-1.5 pr-2 text-[#16a34a]">

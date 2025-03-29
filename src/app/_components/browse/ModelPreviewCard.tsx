@@ -24,7 +24,7 @@ export const ModelPreviewCard = ({
           {/* Header */}
           <div className="flex items-start justify-between">
             <div className="flex flex-col">
-              <h3 className="text-sm font-medium text-gray-900 transition-colors group-hover:text-mf-ash-500">
+              <h3 className="text-sm font-medium text-mf-ash-700 transition-colors group-hover:text-mf-ash-500">
                 {name?.split("/")[1]}
               </h3>
               <p className="text-xs text-mf-ash-500">{name?.split("/")[0]}</p>

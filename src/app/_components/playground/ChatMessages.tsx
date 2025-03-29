@@ -105,7 +105,7 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
                 "relative w-[95%] overflow-hidden rounded-2xl px-4 py-3 lg:w-[85%] lg:px-6 lg:py-4",
                 message.role === "user"
                   ? "bg-mf-blue-900/80 text-mf-milk-300 shadow-sm backdrop-blur-sm"
-                  : "bg-mf-milk-100 text-gray-900",
+                  : "bg-mf-milk-100 text-mf-ash-700",
               )}
             >
               <div>

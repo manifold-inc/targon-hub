@@ -18,7 +18,7 @@ export const CardContent = ({
   <div className="relative flex h-full flex-col">
     <div className="flex-1">
       <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <h3 className="text-lg font-semibold text-gray-900 sm:text-xl">
+        <h3 className="text-lg font-semibold text-mf-ash-700 sm:text-xl">
           {title}
         </h3>
         {isComingSoon && (

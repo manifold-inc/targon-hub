@@ -85,7 +85,7 @@ export default function ModelPage() {
     <div className="flex flex-col gap-4 pt-2">
       {/* Header */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-900">
+        <h2 className="text-lg font-semibold text-mf-ash-700">
           Step 1: Enter Model Name
         </h2>
         <p className="pt-2 text-sm text-gray-600">
@@ -103,7 +103,7 @@ export default function ModelPage() {
       <div>
         <label
           htmlFor="modelUrl"
-          className="flex items-center gap-2 text-sm/6 font-semibold text-gray-900"
+          className="flex items-center gap-2 text-sm/6 font-semibold text-mf-ash-700"
         >
           HuggingFace Model{" "}
         </label>
@@ -121,7 +121,7 @@ export default function ModelPage() {
               id="modelUrl"
               value={model}
               onChange={(e) => setModel(e.target.value.trim())}
-              className="w-full border-0 bg-transparent py-2 pl-0 pr-4 text-sm text-gray-900 placeholder:text-mf-ash-500 focus:ring-0"
+              className="w-full border-0 bg-transparent py-2 pl-0 pr-4 text-sm text-mf-ash-700 placeholder:text-mf-ash-500 focus:ring-0"
             />
           </div>
         </div>
@@ -137,12 +137,12 @@ export default function ModelPage() {
                 {href ? (
                   <a
                     href={href}
-                    className="font-medium text-gray-900 hover:underline"
+                    className="font-medium text-mf-ash-700 hover:underline"
                   >
-                    <h3 className="font-medium text-gray-900">{title}</h3>
+                    <h3 className="font-medium text-mf-ash-700">{title}</h3>
                   </a>
                 ) : (
-                  <h3 className="font-medium text-gray-900">{title}</h3>
+                  <h3 className="font-medium text-mf-ash-700">{title}</h3>
                 )}
                 {items ? (
                   <ul className="space-y-1 pt-2 text-sm text-gray-600">

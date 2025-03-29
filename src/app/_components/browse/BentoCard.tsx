@@ -34,7 +34,7 @@ export const BentoCard = ({
     >
       <div className="p-4 sm:p-6">
         <h3 className="text-sm/4 font-semibold text-mf-blue-700">{title}</h3>
-        <p className="pt-1.5 text-lg font-semibold tracking-tight text-gray-900">
+        <p className="pt-1.5 text-lg font-semibold tracking-tight text-mf-ash-700">
           {subtitle}
         </p>
         {description && (

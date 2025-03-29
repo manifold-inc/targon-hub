@@ -150,7 +150,9 @@ export function ParameterControls({
       >
         <div className="border-b border-mf-silver-700 p-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">Parameters</h2>
+            <h2 className="text-lg font-semibold text-mf-ash-700">
+              Parameters
+            </h2>
             <button
               onClick={() => setIsOpen(false)}
               className="rounded-lg p-1.5 text-mf-ash-500 hover:bg-mf-milk-100"

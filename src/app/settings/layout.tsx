@@ -44,8 +44,8 @@ export default function SettingsLayout({
                 href={tab.href}
                 className={`flex h-10 items-center gap-2.5 rounded-full px-4 py-2 ${
                   isActive
-                    ? "mf-milk-300 text-gray-900 shadow-sm"
-                    : "hover:mf-milk-300/50 text-gray-600 hover:text-gray-900"
+                    ? "mf-milk-300 text-mf-ash-700 shadow-sm"
+                    : "hover:mf-milk-300/50 text-gray-600 hover:text-mf-ash-700"
                 }`}
               >
                 <tab.icon className="h-4.5 w-4.5" />
@@ -82,7 +82,7 @@ export default function SettingsLayout({
                 >
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-2 text-sm font-medium text-gray-900">
+                      <div className="flex items-center gap-2 text-sm font-medium text-mf-ash-700">
                         <tab.icon className="h-5 w-5" />
                         {tab.label}
                       </div>

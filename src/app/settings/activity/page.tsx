@@ -18,16 +18,16 @@ export default function ActivityPage() {
                 <table className="w-full border-0 text-xs sm:text-sm">
                   <thead>
                     <tr className="mf-milk-300 h-8 border-b border-mf-silver-700">
-                      <th className="px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
+                      <th className="px-2 py-1 text-left font-semibold leading-tight text-mf-ash-700">
                         Timestamp
                       </th>
-                      <th className="px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
+                      <th className="px-2 py-1 text-left font-semibold leading-tight text-mf-ash-700">
                         Model
                       </th>
-                      <th className="px-2 py-1 text-right font-semibold leading-tight text-[#101828]">
+                      <th className="px-2 py-1 text-right font-semibold leading-tight text-mf-ash-700">
                         Response Tokens
                       </th>
-                      <th className="px-2 py-1 text-right font-semibold leading-tight text-[#101828]">
+                      <th className="px-2 py-1 text-right font-semibold leading-tight text-mf-ash-700">
                         Cost
                       </th>
                     </tr>
@@ -38,18 +38,18 @@ export default function ActivityPage() {
                         key={activity.id}
                         className="h-8 border-b border-mf-silver-700 bg-mf-milk-300"
                       >
-                        <td className="px-2 py-1 text-left leading-tight text-[#101828]">
+                        <td className="px-2 py-1 text-left leading-tight text-mf-ash-700">
                           {window.innerWidth < 640
                             ? activity.createdAt.toLocaleDateString()
                             : formatDate(activity.createdAt)}
                         </td>
-                        <td className="max-w-40 truncate px-2 py-1 text-left leading-tight text-[#101828]">
+                        <td className="max-w-40 truncate px-2 py-1 text-left leading-tight text-mf-ash-700">
                           {activity.model}
                         </td>
-                        <td className="px-2 py-1 text-right leading-tight text-[#101828]">
+                        <td className="px-2 py-1 text-right leading-tight text-mf-ash-700">
                           {activity.responseTokens}
                         </td>
-                        <td className="whitespace-nowrap px-2 py-1 text-right leading-tight text-[#101828]">
+                        <td className="whitespace-nowrap px-2 py-1 text-right leading-tight text-mf-ash-700">
                           {activity.creditsUsed >= 1_000_000
                             ? `${(activity.creditsUsed / 1_000_000).toFixed(1)}M`
                             : formatLargeNumber(activity.creditsUsed)}{" "}

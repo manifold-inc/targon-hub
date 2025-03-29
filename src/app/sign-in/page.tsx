@@ -39,7 +39,7 @@ export default function Page() {
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-2xl font-light leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-6 text-center text-2xl font-light leading-9 tracking-tight text-mf-ash-700">
             Sign in to your account
           </h2>
         </div>
@@ -55,7 +55,7 @@ export default function Page() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 text-mf-ash-700"
                 >
                   Email address
                 </label>
@@ -66,7 +66,7 @@ export default function Page() {
                     autoComplete="email"
                     required
                     placeholder="Email Address"
-                    className="block w-full rounded-md border-0 bg-mf-milk-300 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-mf-milk-300 py-1.5 pl-4 text-mf-ash-700 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     disabled={signIn.isLoading}
                     {...register("email", {
                       required: "Email address is required",
@@ -79,7 +79,7 @@ export default function Page() {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 text-mf-ash-700"
                 >
                   Password
                 </label>
@@ -88,7 +88,7 @@ export default function Page() {
                     id="password"
                     autoComplete="current-password"
                     required
-                    className="block w-full rounded-md border-0 bg-mf-milk-300 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-mf-milk-300 py-1.5 pl-4 text-mf-ash-700 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     disabled={signIn.isLoading}
                     placeholder="Password"
                     type={visable ? "text" : "password"}
@@ -144,7 +144,7 @@ export default function Page() {
                   <div className="w-full border-t border-mf-silver-700" />
                 </div>
                 <div className="relative flex justify-center text-sm font-medium leading-6">
-                  <span className="bg-mf-milk-300 px-6 text-gray-900">
+                  <span className="bg-mf-milk-300 px-6 text-mf-ash-700">
                     Or continue with
                   </span>
                 </div>
@@ -183,7 +183,7 @@ export default function Page() {
                       fill="#34A853"
                     />
                   </svg>
-                  <span className="text-sm font-semibold leading-6 text-gray-900">
+                  <span className="text-sm font-semibold leading-6 text-mf-ash-700">
                     Google
                   </span>
                 </Link>

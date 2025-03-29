@@ -159,7 +159,7 @@ void chat();`,
       <div className="h-full overflow-y-auto">
         <div className="mx-auto max-w-4xl space-y-6 p-4 lg:p-6">
           <div className="text-center">
-            <h3 className="text-lg font-semibold text-gray-900 lg:text-xl">
+            <h3 className="text-lg font-semibold text-mf-ash-700 lg:text-xl">
               Select a Model
             </h3>
             <p className="mt-1 text-sm text-mf-ash-500 lg:text-base">
@@ -175,7 +175,9 @@ void chat();`,
     <div className="h-full overflow-y-auto">
       <div className="mx-auto max-w-4xl p-4">
         <div className="pb-6 text-center">
-          <h3 className="text-lg font-semibold text-gray-900">Code Examples</h3>
+          <h3 className="text-lg font-semibold text-mf-ash-700">
+            Code Examples
+          </h3>
           <p className="pt-1 text-sm text-gray-600">
             Get started with code samples in your preferred language
           </p>
@@ -202,7 +204,7 @@ void chat();`,
 
         <div>
           <div className="pb-4 text-center">
-            <h4 className="text-sm font-medium text-gray-900">
+            <h4 className="text-sm font-medium text-mf-ash-700">
               Chat Completion Example
             </h4>
             <p className="pt-1 text-sm leading-relaxed text-gray-600">

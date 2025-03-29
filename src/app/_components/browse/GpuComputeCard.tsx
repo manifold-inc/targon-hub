@@ -86,7 +86,7 @@ export const GpuComputeCard = () => (
       {/* Header and Button */}
       <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
         <div>
-          <h4 className="text-base font-medium text-gray-900">
+          <h4 className="text-base font-medium text-mf-ash-700">
             High-Performance Computing
           </h4>
         </div>

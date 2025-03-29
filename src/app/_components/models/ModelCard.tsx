@@ -32,7 +32,7 @@ export default function ModelCard({
       <div className="flex min-w-0 flex-1 flex-col gap-2 sm:gap-3 md:gap-4">
         <div className="flex items-start justify-between gap-2 sm:gap-3">
           <div className="min-w-0 flex-1">
-            <h3 className="truncate pr-8 text-sm font-semibold text-[#101828] sm:pr-24 sm:text-base md:pr-32">
+            <h3 className="truncate pr-8 text-sm font-semibold text-mf-ash-700 sm:pr-24 sm:text-base md:pr-32">
               {name}
             </h3>
             <div className="flex flex-wrap items-center gap-1.5 pt-1 text-[0.8125rem] text-[#475467] sm:gap-x-2 sm:text-xs">
@@ -74,7 +74,7 @@ export default function ModelCard({
               </div>
             )}
             <ArrowUpRight
-              className={`h-3.5 w-3.5 flex-shrink-0 text-mf-silver-700 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 sm:h-4 sm:w-4 ${
+              className={`h-3.5 w-3.5 flex-shrink-0 text-mf-ash-500 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 sm:h-4 sm:w-4 ${
                 enabled
                   ? "group-hover:text-mf-green"
                   : "group-hover:text-mf-blue-700"

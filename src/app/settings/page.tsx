@@ -254,7 +254,7 @@ export default function SettingsPage() {
 
   return (
     <div>
-      <h2 className="text-center text-2xl font-semibold text-gray-900 sm:text-3xl lg:text-left">
+      <h2 className="text-center text-2xl font-semibold text-mf-ash-700 sm:text-3xl lg:text-left">
         Dashboard
       </h2>
 
@@ -514,7 +514,7 @@ export default function SettingsPage() {
                         type="text"
                         value={ss58Address}
                         onChange={(e) => setSS58Address(e.target.value)}
-                        className="block h-8 w-full rounded-md border-0 px-3 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-xs placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+                        className="block h-8 w-full rounded-md border-0 px-3 py-1.5 text-mf-ash-700 ring-1 ring-inset ring-gray-300 placeholder:text-xs placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
                         placeholder="Enter SS58 address"
                       />
                     </div>

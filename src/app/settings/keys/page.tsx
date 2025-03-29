@@ -60,25 +60,25 @@ export default function KeysPage() {
                 <table className="w-full border-separate border-spacing-0 text-xs sm:text-sm">
                   <thead>
                     <tr className="mf-milk-300 sticky top-0 h-8 w-full">
-                      <th className="sticky top-0 border-b border-t border-mf-silver-700 px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
+                      <th className="sticky top-0 border-b border-t border-mf-silver-700 px-2 py-1 text-left font-semibold leading-tight text-mf-ash-700">
                         Name
                       </th>
-                      <th className="sticky top-0 border-b border-t border-mf-silver-700 px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
+                      <th className="sticky top-0 border-b border-t border-mf-silver-700 px-2 py-1 text-left font-semibold leading-tight text-mf-ash-700">
                         Key
                       </th>
-                      <th className="sticky top-0 border-b border-t border-mf-silver-700 px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
+                      <th className="sticky top-0 border-b border-t border-mf-silver-700 px-2 py-1 text-left font-semibold leading-tight text-mf-ash-700">
                         Created
                       </th>
-                      <th className="sticky top-0 border-b border-t border-mf-silver-700 px-2 py-1 text-right font-semibold leading-tight text-[#101828]" />
+                      <th className="sticky top-0 border-b border-t border-mf-silver-700 px-2 py-1 text-right font-semibold leading-tight text-mf-ash-700" />
                     </tr>
                   </thead>
                   <tbody className="w-full whitespace-nowrap">
                     {keys.data?.map((key, index) => (
                       <tr key={index} className="h-8 bg-mf-milk-300">
-                        <td className="px-2 py-1 leading-tight text-[#101828]">
+                        <td className="px-2 py-1 leading-tight text-mf-ash-700">
                           {key.name ?? "Default"}
                         </td>
-                        <td className="px-2 py-1 text-left leading-tight text-[#101828]">
+                        <td className="px-2 py-1 text-left leading-tight text-mf-ash-700">
                           <span className="inline-flex items-center gap-2 font-mono">
                             {key.key.slice(0, 9) + "***"}
                             <button
@@ -89,10 +89,10 @@ export default function KeysPage() {
                             </button>
                           </span>
                         </td>
-                        <td className="px-2 py-1 text-left leading-tight text-[#101828]">
+                        <td className="px-2 py-1 text-left leading-tight text-mf-ash-700">
                           {key.createdAt ? formatDate(key.createdAt) : "-"}
                         </td>
-                        <td className="px-2 py-1 text-right leading-tight text-[#101828]">
+                        <td className="px-2 py-1 text-right leading-tight text-mf-ash-700">
                           <button
                             type="button"
                             disabled={deleteApiKey.isLoading}
@@ -129,7 +129,7 @@ export default function KeysPage() {
                 type="text"
                 value={apiKeyName}
                 onChange={(e) => setApiKeyName(e.target.value)}
-                className="block w-48 rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+                className="block w-48 rounded-md border-0 py-1.5 pl-7 pr-12 text-mf-ash-700 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
                 placeholder="Enter key name"
               />
             )}
