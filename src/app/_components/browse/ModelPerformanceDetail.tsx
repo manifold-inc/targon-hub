@@ -153,7 +153,7 @@ export const ModelPerformanceDetail = ({
                     <div className="absolute bottom-20 w-full">
                       <div className="relative left-1/2 flex -translate-x-1/2 items-center justify-center">
                         <div
-                          className={`relative flex flex-col gap-1 whitespace-nowrap rounded-md bg-mf-milk-500 px-2.5 py-1.5 text-xs font-medium shadow-lg ring-1 ring-gray-100`}
+                          className={`relative flex flex-col gap-1 whitespace-nowrap rounded-md bg-mf-milk-300 px-2.5 py-1.5 text-xs font-medium shadow-lg ring-1 ring-gray-100`}
                         >
                           <span className={getColorTheme(colorIndex).text}>
                             {formatTokenCount(hoverData.value)} tokens

@@ -60,7 +60,7 @@ function SummaryCard({
   const hasEnoughCredits = remainingBalanceUSD >= 0;
 
   return (
-    <div className="rounded-xl border border-mf-silver-700 bg-mf-milk-500">
+    <div className="rounded-xl border border-mf-silver-700 bg-mf-milk-300">
       <div className="border-b border-mf-silver-700 px-6 py-4">
         <h3 className="text-sm font-medium text-gray-900">Payment Summary</h3>
         <p className="pt-1 text-sm text-gray-500">{model}</p>
@@ -226,7 +226,7 @@ export default function ConfirmPage() {
       />
 
       {paymentType === "onetime" && userBalanceUSD < totalCostUSD && (
-        <div className="space-y-4 rounded-xl border border-mf-silver-700 bg-mf-milk-500 p-6">
+        <div className="space-y-4 rounded-xl border border-mf-silver-700 bg-mf-milk-300 p-6">
           <PurchaseButton
             isLoading={checkout.isLoading}
             onClick={() => {
@@ -245,7 +245,7 @@ export default function ConfirmPage() {
               <div className="w-full border-t border-mf-silver-700" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-mf-milk-500 px-2 text-sm text-gray-500">
+              <span className="bg-mf-milk-300 px-2 text-sm text-gray-500">
                 or enter custom amount
               </span>
             </div>
@@ -296,7 +296,7 @@ export default function ConfirmPage() {
       <div className="flex justify-between">
         <Link
           href={`/models/lease/pricing?model=${encodeURIComponent(model)}`}
-          className="hover:mf-milk-300 rounded-full border border-gray-300 bg-mf-milk-500 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm"
+          className="hover:mf-milk-300 rounded-full border border-gray-300 bg-mf-milk-300 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm"
         >
           Back
         </Link>

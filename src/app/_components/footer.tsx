@@ -78,7 +78,7 @@ export const Footer = () => {
   }
 
   return (
-    <footer className="bg-mf-milk-500">
+    <footer className="bg-mf-milk-300">
       <div className="mx-auto max-w-7xl px-6 py-8 lg:px-16 lg:py-16">
         <div className="space-y-8 lg:grid lg:grid-cols-3 lg:gap-8 lg:space-y-0">
           <div className="flex flex-col gap-y-2">

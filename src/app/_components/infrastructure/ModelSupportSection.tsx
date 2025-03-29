@@ -41,8 +41,8 @@ export const ModelSupportSection = () => {
       {/* Code Example Column */}
       <div className="relative order-2 lg:order-1 lg:pt-12">
         <div className="absolute -inset-x-4 -bottom-16 top-0 hidden rounded-3xl bg-gradient-to-bl from-mf-green-700/5 via-transparent to-transparent sm:block" />
-        <div className="overflow-hidden rounded-2xl border border-gray-100 bg-mf-milk-500/50 shadow-xl">
-          <div className="border-b border-gray-100 bg-mf-milk-500/80 px-4 py-3 sm:px-6">
+        <div className="overflow-hidden rounded-2xl border border-gray-100 bg-mf-milk-300/50 shadow-xl">
+          <div className="border-b border-gray-100 bg-mf-milk-300/80 px-4 py-3 sm:px-6">
             <div className="flex items-center gap-2">
               <div className="h-3 w-3 rounded-full bg-green-500" />
               <span className="text-sm font-medium text-gray-600">
@@ -81,7 +81,7 @@ export const ModelSupportSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="rounded-2xl border border-gray-100 bg-mf-milk-500/50 p-4 backdrop-blur-sm sm:p-6"
+          className="rounded-2xl border border-gray-100 bg-mf-milk-300/50 p-4 backdrop-blur-sm sm:p-6"
         >
           <h3 className="text-center font-medium text-gray-900 lg:text-left">
             Supported Models

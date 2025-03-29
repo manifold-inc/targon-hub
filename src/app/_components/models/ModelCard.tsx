@@ -27,7 +27,7 @@ export default function ModelCard({
   return (
     <Link
       href={`/models/${encodeURIComponent(name)}`}
-      className="group relative flex items-start overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-500 p-3 transition-all duration-300 hover:shadow-lg sm:p-4 md:p-5"
+      className="group relative flex items-start overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-300 p-3 transition-all duration-300 hover:shadow-lg sm:p-4 md:p-5"
     >
       <div className="flex min-w-0 flex-1 flex-col gap-2 sm:gap-3 md:gap-4">
         <div className="flex items-start justify-between gap-2 sm:gap-3">

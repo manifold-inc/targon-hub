@@ -20,7 +20,7 @@ export const CardContent = ({
       <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="text-lg font-light text-gray-900 sm:text-xl">{title}</h3>
         {isComingSoon && (
-          <span className="self-start rounded-full border border-mf-blue-700 bg-mf-milk-500 px-3 py-1 text-xs font-medium text-mf-blue-700 sm:self-auto">
+          <span className="self-start rounded-full border border-mf-blue-700 bg-mf-milk-300 px-3 py-1 text-xs font-medium text-mf-blue-700 sm:self-auto">
             Coming Soon
           </span>
         )}
@@ -54,18 +54,18 @@ export function CTACard({
     <div className="relative">
       <Link
         href={href}
-        className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-silver-500 p-6 shadow-sm transition-all 
+        className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-300 p-6 shadow-sm transition-all 
         duration-300 hover:shadow-lg sm:p-8"
       >
         {variant === "left" ? (
           <>
-            <div className="absolute inset-0 bg-gradient-to-tr from-[##D7E5FF] via-transparent to-transparent" />
-            <div className="absolute inset-0 bg-mf-silver-500" />
+            <div className="absolute inset-0" />
+            <div className="absolute inset-0 bg-mf-milk-300" />
           </>
         ) : (
           <>
-            <div className="absolute inset-0 bg-gradient-to-br from-[#D7E5FF] via-transparent to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-tl from-[#D7E5FF] via-transparent to-transparent" />
+            <div className="absolute inset-0" />
+            <div className="absolute inset-0" />
           </>
         )}
         <CardContent

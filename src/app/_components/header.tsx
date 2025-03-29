@@ -198,7 +198,7 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
+                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-300 "
                                 }
                                 href="/browse"
                               >
@@ -214,7 +214,7 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
+                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-300 "
                                 }
                                 href="/models"
                               >
@@ -230,7 +230,7 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
+                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-300 "
                                 }
                                 href="/models/lease"
                               >
@@ -246,7 +246,7 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group block px-4 py-4 text-gray-700 hover:bg-mf-milk-500  hover:text-gray-900 2xl:hidden"
+                                  "group block px-4 py-4 text-gray-700 hover:bg-mf-milk-300  hover:text-gray-900 2xl:hidden"
                                 }
                                 href="/infrastructure"
                               >
@@ -264,7 +264,7 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group block px-4 py-4 text-gray-700 hover:bg-mf-milk-500  hover:text-gray-900 2xl:hidden"
+                                  "group block px-4 py-4 text-gray-700 hover:bg-mf-milk-300  hover:text-gray-900 2xl:hidden"
                                 }
                                 href="/roadmap"
                               >
@@ -281,7 +281,7 @@ export const Header = () => {
                             </MenuItem>
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500  2xl:hidden"
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-300  2xl:hidden"
                                 href="/models/immunity"
                               >
                                 <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
@@ -324,7 +324,7 @@ export const Header = () => {
                           >
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-300 "
                                 href="/infrastructure"
                               >
                                 <Server className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
@@ -338,7 +338,7 @@ export const Header = () => {
                             </MenuItem>
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-300 "
                                 href="/roadmap"
                               >
                                 <Map className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
@@ -352,7 +352,7 @@ export const Header = () => {
                             </MenuItem>
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-300 "
                                 href="/models/immunity"
                               >
                                 <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
@@ -393,7 +393,7 @@ export const Header = () => {
                   >
                     <Link href="/settings">
                       <MenuButton
-                        className={`hidden h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-mf-milk-500 py-2 font-semibold sm:inline-flex  ${
+                        className={`hidden h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-mf-milk-300 py-2 font-semibold sm:inline-flex  ${
                           isUserMenuOpen
                             ? "rounded-b-none ring-mf-milk-300"
                             : "ring-1 ring-inset ring-mf-silver-700"
@@ -434,7 +434,7 @@ export const Header = () => {
                             y: -10,
                             transition: { duration: 0.15 },
                           }}
-                          className="focus:outline-hidden absolute right-0 top-6 z-20 mt-2 w-28 origin-top rounded-md rounded-t-none bg-mf-milk-500 text-center shadow-lg"
+                          className="focus:outline-hidden absolute right-0 top-6 z-20 mt-2 w-28 origin-top rounded-md rounded-t-none bg-mf-milk-300 text-center shadow-lg"
                         >
                           <div>
                             <MenuItem>

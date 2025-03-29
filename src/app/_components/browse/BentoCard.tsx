@@ -27,10 +27,10 @@ export const BentoCard = ({
     className={`relative ${className}`}
   >
     <div
-      className={`absolute inset-px rounded-lg bg-mf-milk-500 ${roundedCorners}`}
+      className={`absolute inset-px rounded-2xl bg-mf-milk-300`}
     />
     <div
-      className={`relative flex h-full flex-col justify-center overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] border border-mf-silver-700 ${
+      className={`relative flex rounded-2xl h-full flex-col justify-center overflow-hidden border border-mf-silver-700 ${
         roundedCorners ? roundedCorners.replace(/\[/g, "[calc(") + "+1px)]" : ""
       }`}
     >
@@ -46,7 +46,7 @@ export const BentoCard = ({
       </div>
     </div>
     <div
-      className={`pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 ${roundedCorners}`}
+      className={`pointer-events-none absolute inset-px rounded-xl shadow ring-1 ring-black/5`}
     />
   </motion.div>
 );

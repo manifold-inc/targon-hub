@@ -36,7 +36,7 @@ export const ModelLeasingSection = () => {
         </p>
 
         <motion.div
-          className="rounded-2xl border border-gray-100 bg-mf-milk-500/50 p-6 backdrop-blur-sm"
+          className="rounded-2xl border border-gray-100 bg-mf-milk-300/50 p-6 backdrop-blur-sm"
           {...fadeInAnimation}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
@@ -64,7 +64,7 @@ export const ModelLeasingSection = () => {
       {/* Right Column */}
       <div className="relative lg:pt-12">
         <div className="absolute -inset-x-4 -bottom-16 top-0 rounded-3xl bg-gradient-to-br from-mf-green-700/5 via-transparent to-transparent" />
-        <div className="rounded-2xl border border-gray-100 bg-mf-milk-500/50 p-6 shadow-xl">
+        <div className="rounded-2xl border border-gray-100 bg-mf-milk-300/50 p-6 shadow-xl">
           <h3 className="text-center text-base font-semibold text-gray-900 sm:text-left sm:text-lg">
             Current Model Timeline
           </h3>
@@ -79,7 +79,7 @@ export const ModelLeasingSection = () => {
               >
                 <Link
                   href={`/models/${encodeURIComponent(model.name!)}`}
-                  className="relative z-10 block rounded-lg border border-gray-100 p-4 transition-all duration-200 hover:border-mf-green-700/20 hover:bg-mf-milk-500/80"
+                  className="relative z-10 block rounded-lg border border-gray-100 p-4 transition-all duration-200 hover:border-mf-green-700/20 hover:bg-mf-milk-300/80"
                 >
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center justify-between gap-2">

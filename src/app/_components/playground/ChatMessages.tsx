@@ -50,7 +50,7 @@ const CodeBlock: Components["code"] = ({
         <div className="text-xs text-gray-400">{language}</div>
         <button
           onClick={handleCopy}
-          className="rounded px-1.5 py-0.5 text-gray-400 hover:bg-mf-milk-500/5 lg:px-2 lg:py-1"
+          className="rounded px-1.5 py-0.5 text-gray-400 hover:bg-mf-milk-300/5 lg:px-2 lg:py-1"
         >
           {copied ? (
             <Check className="h-3.5 w-3.5 text-green-500 lg:h-4 lg:w-4" />
@@ -105,7 +105,7 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
                 "relative w-[95%] overflow-hidden rounded-2xl px-4 py-3 lg:w-[85%] lg:px-6 lg:py-4",
                 message.role === "user"
                   ? "bg-mf-blue-900/80 text-mf-milk-300 shadow-sm backdrop-blur-sm"
-                  : "bg-gray-100 text-gray-900",
+                  : "bg-mf-milk-100 text-gray-900",
               )}
             >
               <div>

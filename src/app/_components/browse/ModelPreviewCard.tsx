@@ -13,32 +13,13 @@ interface ModelPreviewCardProps {
 
 export const ModelPreviewCard = ({
   name,
-  endpoints,
   modality,
   description,
   cpt,
 }: ModelPreviewCardProps) => {
-  // Get gradient based on modality
-  const getGradient = () => {
-    if (endpoints.includes("CHAT")) {
-      return "from-[#DADFF7] to-[#A8AFEF]";
-    } else if (endpoints.includes("COMPLETION")) {
-      return "from-[#F896D8] to-[#CA7DF9]";
-    } else if (endpoints.includes("GENERATION")) {
-      return "from-[#2DD4BF] to-[#0EA5E9]";
-    }
-  };
-
   return (
     <Link href={`/models/${encodeURIComponent(name)}`}>
-      <div className="group relative overflow-hidden p-4 transition-all">
-        {/* Background gradient bar - rounded by default, straight on hover */}
-        <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b opacity-50 transition-all group-hover:opacity-100">
-          <div
-            className={`h-full w-full rounded-2xl bg-gradient-to-b transition-all group-hover:rounded-none ${getGradient()}`}
-          />
-        </div>
-
+      <div className="group relative overflow-hidden p-4 pl-0 transition-all">
         <div className="ml-3 flex flex-col gap-2">
           {/* Header */}
           <div className="flex items-start justify-between">
@@ -48,7 +29,7 @@ export const ModelPreviewCard = ({
               </h3>
               <p className="text-xs text-gray-500">{name?.split("/")[0]}</p>
             </div>
-            <span className="whitespace-nowrap rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">
+            <span className="whitespace-nowrap rounded-full bg-mf-milk-100 px-2 py-0.5 text-xs font-medium text-gray-600">
               {modality === "text-generation" ? "Text Generation" : modality}
             </span>
           </div>
@@ -59,7 +40,7 @@ export const ModelPreviewCard = ({
           {/* Footer */}
           <div className="flex items-center justify-between pt-1">
             <div className="flex items-center gap-2 text-xs text-gray-500">
-              <span className="rounded-full bg-gray-100 px-2 py-0.5">
+              <span className="rounded-full bg-mf-milk-100 px-2 py-0.5">
                 {cpt === 0
                   ? "Free"
                   : `$${((cpt * 1_000_000) / CREDIT_PER_DOLLAR).toLocaleString(

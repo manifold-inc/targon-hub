@@ -66,7 +66,7 @@ export default async function Page({ params }: Props) {
                   }
                   className="group relative flex h-9 w-full items-center justify-center self-center sm:w-32 sm:self-auto"
                 >
-                  <span className="inline-flex w-full items-center justify-center gap-1 whitespace-nowrap rounded-full border border-mf-silver-700 bg-mf-milk-500 px-3 py-2 text-mf-ash-300 group-hover:bg-mf-milk-300 sm:w-auto">
+                  <span className="inline-flex w-full items-center justify-center gap-1 whitespace-nowrap rounded-full border border-mf-silver-700 bg-mf-milk-300 px-3 py-2 text-mf-ash-300 group-hover:bg-mf-milk-300 sm:w-auto">
                     <span className="w-full text-center text-sm leading-tight sm:w-24">
                       {user?.id
                         ? data.enabled

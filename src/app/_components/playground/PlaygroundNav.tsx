@@ -64,7 +64,7 @@ export function PlaygroundNav({
   );
 
   return (
-    <nav className="flex flex-col border-b border-mf-silver-700 bg-mf-milk-500 py-4 lg:h-14 lg:flex-row lg:items-center">
+    <nav className="flex flex-col border-b border-mf-silver-700 bg-mf-milk-300 py-4 lg:h-14 lg:flex-row lg:items-center">
       {/* Navigation Buttons */}
       <div className="flex items-center gap-2 p-4 lg:p-0 lg:px-4">
         <NavButton type="ui" icon={MessageSquareIcon} />
@@ -119,7 +119,7 @@ export function PlaygroundNav({
               )}
             </ListboxButton>
 
-            <ListboxOptions className="scrollbar-thin scrollbar-thumb-gray-200 hover:scrollbar-thumb-gray-300 absolute right-0 z-10 mt-2 max-h-64 w-full overflow-y-auto rounded-xl bg-mf-milk-500 py-2 shadow-lg ring-1 ring-black/5 focus:outline-none">
+            <ListboxOptions className="scrollbar-thin scrollbar-thumb-gray-200 hover:scrollbar-thumb-gray-300 absolute right-0 z-10 mt-2 max-h-64 w-full overflow-y-auto rounded-xl bg-mf-milk-300 py-2 shadow-lg ring-1 ring-black/5 focus:outline-none">
               {models.data?.map((model) => (
                 <ListboxOption
                   key={model.name}

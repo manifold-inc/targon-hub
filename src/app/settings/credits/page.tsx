@@ -87,7 +87,7 @@ export default function CreditsPage() {
                   setShowPurchaseInput(!showPurchaseInput);
                   setShowCryptoInput(false);
                 }}
-                className="rounded-full border border-black bg-mf-milk-500 px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-full border border-black bg-mf-milk-300 px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
                 disabled={true}
               >
                 Add Credits
@@ -102,7 +102,7 @@ export default function CreditsPage() {
                   setShowCryptoInput(!showCryptoInput);
                   setShowPurchaseInput(false);
                 }}
-                className="rounded-full border border-black bg-mf-milk-500 px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-full border border-black bg-mf-milk-300 px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
                 disabled={true}
               >
                 Use Crypto
@@ -180,7 +180,7 @@ export default function CreditsPage() {
 
             {showCryptoInput && (
               <>
-                <div className="flex flex-col gap-4 rounded-lg bg-gray-100 p-4">
+                <div className="flex flex-col gap-4 rounded-lg bg-mf-milk-100 p-4">
                   <p className="text-sm text-gray-700">
                     Please send your payment to the following address:
                   </p>
@@ -233,7 +233,7 @@ export default function CreditsPage() {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-4 rounded-lg bg-gray-100 p-4">
+                <div className="flex flex-col gap-4 rounded-lg bg-mf-milk-100 p-4">
                   <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center sm:gap-0">
                     <h3 className="text-sm font-medium text-gray-900">
                       TAO Payment Calculator
@@ -311,13 +311,13 @@ export default function CreditsPage() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowAmounts("credits")}
-              className={`rounded-lg px-3 py-1 text-xs ${showAmounts === "credits" ? "bg-black text-mf-milk-300" : "bg-gray-100"}`}
+              className={`rounded-lg px-3 py-1 text-xs ${showAmounts === "credits" ? "bg-black text-mf-milk-300" : "bg-mf-milk-100"}`}
             >
               Credits
             </button>
             <button
               onClick={() => setShowAmounts("amounts")}
-              className={`rounded-lg px-3 py-1 text-xs ${showAmounts === "amounts" ? "bg-black text-mf-milk-300" : "bg-gray-100"}`}
+              className={`rounded-lg px-3 py-1 text-xs ${showAmounts === "amounts" ? "bg-black text-mf-milk-300" : "bg-mf-milk-100"}`}
             >
               USD/TAO
             </button>
@@ -350,7 +350,7 @@ export default function CreditsPage() {
                     </div>
                   </td>
                   <td className="px-4 text-center">
-                    <div className="relative mx-auto flex h-5 w-8 items-center justify-center rounded border border-mf-silver-700 bg-mf-milk-500 p-1 sm:h-6 sm:w-10">
+                    <div className="relative mx-auto flex h-5 w-8 items-center justify-center rounded border border-mf-silver-700 bg-mf-milk-300 p-1 sm:h-6 sm:w-10">
                       {payment.type === "stripe" ? (
                         <>
                           {payment.cardBrand?.toLowerCase() === "amex" && (

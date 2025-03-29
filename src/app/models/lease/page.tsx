@@ -108,7 +108,7 @@ export default function ModelPage() {
           HuggingFace Model{" "}
         </label>
         <div className="pt-2">
-          <div className="flex w-full items-center rounded-lg border border-gray-300 bg-mf-milk-500 focus-within:border-mf-blue-500 focus-within:ring-2 focus-within:ring-mf-blue-500">
+          <div className="flex w-full items-center rounded-lg border border-gray-300 bg-mf-milk-300 focus-within:border-mf-blue-500 focus-within:ring-2 focus-within:ring-mf-blue-500">
             <span
               // flex-shrink-0 to ensure the text doesnt wrap on different browsers, let the prefix always show and the input shrink
               className="flex-shrink-0 cursor-text pl-4 text-sm text-gray-500"

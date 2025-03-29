@@ -74,7 +74,7 @@ export default function KeysPage() {
                   </thead>
                   <tbody className="w-full whitespace-nowrap">
                     {keys.data?.map((key, index) => (
-                      <tr key={index} className="h-8 bg-mf-milk-500">
+                      <tr key={index} className="h-8 bg-mf-milk-300">
                         <td className="px-2 py-1 leading-tight text-[#101828]">
                           {key.name ?? "Default"}
                         </td>
@@ -101,8 +101,8 @@ export default function KeysPage() {
                             }
                             className={`group rounded-full p-1.5 transition-colors ${
                               deleteApiKey.isLoading
-                                ? "cursor-not-allowed bg-gray-100"
-                                : "hover:bg-gray-100"
+                                ? "cursor-not-allowed bg-mf-milk-100"
+                                : "hover:bg-mf-milk-100"
                             }`}
                           >
                             <XCircle
@@ -134,7 +134,7 @@ export default function KeysPage() {
               />
             )}
             <button
-              className="hover:bg-gray-10 rounded-full border border-black bg-mf-milk-500 px-3 py-2 text-sm font-semibold text-gray-500"
+              className="hover:bg-gray-10 rounded-full border border-black bg-mf-milk-300 px-3 py-2 text-sm font-semibold text-gray-500"
               onClick={handleCreate}
               disabled={createApiKey.isLoading}
             >

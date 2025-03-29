@@ -67,6 +67,7 @@ export default {
             700: "#A3B5D6",
           },
           milk: {
+            100: "#e6f0ff",
             300: "#E0EBFF",
             500: "#D7E5FF",
             700: "#AEC0D6",
@@ -86,6 +87,7 @@ export default {
           red: "#FF5A5A",
           grey: "#8997ad",
           gray: "#98A1B2",
+          white: "#f2f7ff",
           "gray-600": "#475467",
         },
         "dark-tremor": {

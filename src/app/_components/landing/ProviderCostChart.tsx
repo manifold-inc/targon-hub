@@ -71,7 +71,7 @@ export function ProviderCostChart() {
       </div>
 
       {/* Chart view for large screens and up */}
-      <div className="hidden rounded-lg border border-mf-silver-700 bg-mf-milk-500 p-4 lg:block">
+      <div className="hidden rounded-lg border border-mf-silver-700 bg-mf-milk-300 p-4 lg:block">
         {/* Original chart component */}
         <div className="relative flex aspect-[1280/580] w-full scale-50 flex-col md:scale-100">
           <div className="flex h-full w-full grow">
@@ -177,7 +177,7 @@ export function ProviderCostChart() {
       {/* List view for medium and smaller screens */}
       <div className="block lg:hidden">
         <div className="grid gap-6 px-6">
-          <div className="flex items-center gap-4 rounded-lg border border-mf-blue-500 bg-mf-milk-500 p-4">
+          <div className="flex items-center gap-4 rounded-lg border border-mf-blue-500 bg-mf-milk-300 p-4">
             <Image
               src="/manifold.png"
               alt="Manifold Labs"
@@ -200,7 +200,7 @@ export function ProviderCostChart() {
             .map((provider) => (
               <div
                 key={provider.name}
-                className="flex items-center gap-4 rounded-lg border border-mf-silver-700 bg-mf-milk-500 p-4"
+                className="flex items-center gap-4 rounded-lg border border-mf-silver-700 bg-mf-milk-300 p-4"
               >
                 <Image
                   src={provider.logoUrl}

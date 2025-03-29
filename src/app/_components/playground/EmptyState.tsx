@@ -59,7 +59,7 @@ export function EmptyState({ startChat }: EmptyStateProps) {
           <div className="group cursor-not-allowed rounded-lg bg-mf-blue-900/5 p-2.5 backdrop-blur-[1px] sm:p-4 lg:p-6">
             <div className="flex items-center justify-between pb-2 sm:pb-3 lg:pb-4">
               <ImageIcon className="h-4 w-4 text-mf-green-700/60 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
-              <span className="inline-flex items-center rounded-full bg-mf-milk-500/80 px-1.5 py-0.5 text-[10px] font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 backdrop-blur-[1px] sm:text-xs">
+              <span className="inline-flex items-center rounded-full bg-mf-milk-300/80 px-1.5 py-0.5 text-[10px] font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 backdrop-blur-[1px] sm:text-xs">
                 Coming Soon
               </span>
             </div>
@@ -77,7 +77,7 @@ export function EmptyState({ startChat }: EmptyStateProps) {
         <div className="flex-col items-center gap-2">
           <p className="text-xs text-gray-500 lg:text-sm">
             Press{" "}
-            <kbd className="rounded-md border border-mf-silver-700 bg-gray-100 px-1.5 py-0.5 text-xs font-medium text-gray-400">
+            <kbd className="rounded-md border border-mf-silver-700 bg-mf-milk-100 px-1.5 py-0.5 text-xs font-medium text-gray-400">
               ?
             </kbd>{" "}
             to view keyboard shortcuts

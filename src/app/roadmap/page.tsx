@@ -210,7 +210,7 @@ export default function RoadmapPage() {
                 }}
                 className="group relative h-full"
               >
-                <div className="relative flex h-full flex-col rounded-2xl border border-mf-silver-700 bg-mf-milk-500 p-4 shadow-sm transition-all duration-300 hover:shadow-lg sm:p-6 lg:p-8">
+                <div className="relative flex h-full flex-col rounded-2xl border border-mf-silver-700 bg-mf-milk-300 p-4 shadow-sm transition-all duration-300 hover:shadow-lg sm:p-6 lg:p-8">
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white via-white to-gray-50/50" />
 
                   <div className="relative flex h-full flex-col">

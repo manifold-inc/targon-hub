@@ -59,7 +59,7 @@ export default function SettingsLayout({
       </div>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden w-64 border-mf-silver-700 bg-mf-milk-500 lg:block">
+      <aside className="hidden w-64 border-mf-silver-700 bg-mf-milk-300 lg:block">
         <nav className="p-4">
           {tabs.map((tab, index) => {
             const isActive = pathname === tab.href;
@@ -77,7 +77,7 @@ export default function SettingsLayout({
                     "relative z-10 mb-2 block rounded-lg border border-gray-100 p-4 transition-all duration-200",
                     isActive
                       ? "mf-milk-300"
-                      : "hover:border-mf-green-700/20 hover:bg-mf-milk-500/80",
+                      : "hover:border-mf-green-700/20 hover:bg-mf-milk-300/80",
                   )}
                 >
                   <div className="flex flex-col gap-1">
@@ -97,7 +97,7 @@ export default function SettingsLayout({
 
       {/* Main Content */}
       <main className="flex-1 p-4">
-        <div className="rounded-xl border bg-mf-milk-500 p-6">{children}</div>
+        <div className="rounded-xl border bg-mf-milk-300 p-6">{children}</div>
       </main>
     </div>
   );

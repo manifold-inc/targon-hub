@@ -60,7 +60,7 @@ function LogoCard({ src, alt, link }: CompanyLogo) {
     <div className="slide flex w-[250px] items-center justify-center px-8">
       <Link
         className="flex h-24 w-full items-center justify-center rounded-lg 
-                 border border-mf-silver-700 bg-mf-milk-500 p-2 shadow-sm transition-all duration-300 
+                 border border-mf-silver-700 bg-mf-milk-300 p-2 shadow-sm transition-all duration-300 
                  hover:shadow-md"
         href={link}
       >

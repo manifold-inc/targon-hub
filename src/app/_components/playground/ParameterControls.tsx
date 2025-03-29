@@ -144,7 +144,7 @@ export function ParameterControls({
       {/* Mobile Drawer */}
       <div
         className={clsx(
-          "fixed inset-y-0 right-0 z-50 w-[90%] max-w-[320px] transform bg-mf-milk-500 transition-transform duration-300 lg:hidden",
+          "fixed inset-y-0 right-0 z-50 w-[90%] max-w-[320px] transform bg-mf-milk-300 transition-transform duration-300 lg:hidden",
           isOpen ? "translate-x-0" : "translate-x-full",
         )}
       >
@@ -153,7 +153,7 @@ export function ParameterControls({
             <h2 className="text-lg font-semibold text-gray-900">Parameters</h2>
             <button
               onClick={() => setIsOpen(false)}
-              className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100"
+              className="rounded-lg p-1.5 text-gray-500 hover:bg-mf-milk-100"
             >
               <X className="h-5 w-5" />
             </button>
@@ -249,7 +249,7 @@ export function ParameterControls({
       <aside
         className={clsx(
           "relative hidden overflow-hidden transition-[width] duration-300 ease-in-out lg:block",
-          "border-r border-mf-silver-700 bg-mf-milk-500",
+          "border-r border-mf-silver-700 bg-mf-milk-300",
           isOpen ? "lg:w-80" : "lg:w-20",
         )}
       >

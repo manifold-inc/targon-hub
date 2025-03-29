@@ -23,7 +23,7 @@ function CostSummaryCard({
   setSelectedPayment: (type: "onetime" | "subscription") => void;
 }) {
   return (
-    <div className="rounded-xl border border-mf-silver-700 bg-mf-milk-500">
+    <div className="rounded-xl border border-mf-silver-700 bg-mf-milk-300">
       <div className="border-b border-mf-silver-700 px-6 py-4">
         <h3 className="text-sm font-medium text-gray-900">
           Model Cost Summary
@@ -36,7 +36,7 @@ function CostSummaryCard({
         <div className="mt-3 space-y-3">
           <button
             onClick={() => setSelectedPayment("onetime")}
-            className={`group relative w-full rounded-lg border bg-mf-milk-500 p-3 text-left transition-all hover:shadow-sm ${
+            className={`group relative w-full rounded-lg border bg-mf-milk-300 p-3 text-left transition-all hover:shadow-sm ${
               selectedPayment === "onetime"
                 ? "border-mf-blue-500 ring-1 ring-mf-blue-500"
                 : "border-mf-silver-700 hover:border-gray-300"
@@ -65,7 +65,7 @@ function CostSummaryCard({
 
           <button
             onClick={() => setSelectedPayment("subscription")}
-            className={`group relative w-full rounded-lg border bg-mf-milk-500 p-3 text-left transition-all hover:shadow-sm ${
+            className={`group relative w-full rounded-lg border bg-mf-milk-300 p-3 text-left transition-all hover:shadow-sm ${
               selectedPayment === "subscription"
                 ? "border-mf-blue-500 ring-1 ring-mf-blue-500"
                 : "border-mf-silver-700 hover:border-gray-300"
@@ -206,7 +206,7 @@ export default function PricingPage() {
       <div className="flex justify-between">
         <Link
           href="/models/lease"
-          className="hover:mf-milk-300 rounded-full border border-gray-300 bg-mf-milk-500 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm"
+          className="hover:mf-milk-300 rounded-full border border-gray-300 bg-mf-milk-300 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm"
         >
           Back
         </Link>

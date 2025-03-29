@@ -489,7 +489,7 @@ export default function ModalSidebar() {
               setMinWeeklyPrice(250);
               setMaxWeeklyPrice(2000);
             }}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border border-mf-silver-700 bg-mf-milk-300 px-4 py-2.5 text-sm font-medium text-mf-ash-300 transition-colors hover:bg-mf-milk-500"
+            className="flex w-full items-center justify-center gap-2 rounded-lg border border-mf-silver-700 bg-mf-milk-300 px-4 py-2.5 text-sm font-medium text-mf-ash-300 transition-colors hover:bg-mf-milk-300"
           >
             <X className="h-4 w-4" />
             Clear Filters
@@ -498,7 +498,7 @@ export default function ModalSidebar() {
 
         {/* Add Model CTA */}
         <div className="px-3 py-3">
-          <div className="relative flex flex-col items-center overflow-hidden rounded-xl border border-mf-silver-700/60 bg-mf-milk-500/30 px-4 py-5 text-center backdrop-blur-sm">
+          <div className="relative flex flex-col items-center overflow-hidden rounded-xl border border-mf-silver-700/60 bg-mf-milk-300/30 px-4 py-5 text-center backdrop-blur-sm">
             <div className="absolute inset-0 -z-10">
               <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-mf-blue-700/10 via-mf-blue-700/5 to-transparent" />
             </div>

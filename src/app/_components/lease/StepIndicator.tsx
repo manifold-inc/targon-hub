@@ -49,7 +49,7 @@ export function StepIndicator({ steps }: StepIndicatorProps) {
                   <div className="h-0.5 w-full bg-gray-200" />
                 </div>
                 <div
-                  className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-green-500 bg-mf-milk-500"
+                  className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-green-500 bg-mf-milk-300"
                   aria-current="step"
                 >
                   <span
@@ -69,7 +69,7 @@ export function StepIndicator({ steps }: StepIndicatorProps) {
                 >
                   <div className="h-0.5 w-full bg-gray-200" />
                 </div>
-                <div className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-mf-milk-500">
+                <div className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-mf-milk-300">
                   <span
                     className="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300"
                     aria-hidden="true"

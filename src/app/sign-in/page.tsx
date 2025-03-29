@@ -45,7 +45,7 @@ export default function Page() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-          <div className="bg-mf-milk-500 px-6 py-12 sm:rounded-lg sm:px-12 sm:shadow">
+          <div className="bg-mf-milk-300 px-6 py-12 sm:rounded-lg sm:px-12 sm:shadow">
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="space-y-6"
@@ -66,7 +66,7 @@ export default function Page() {
                     autoComplete="email"
                     required
                     placeholder="Email Address"
-                    className="block w-full rounded-md border-0 bg-mf-milk-500 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-mf-milk-300 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     disabled={signIn.isLoading}
                     {...register("email", {
                       required: "Email address is required",
@@ -88,7 +88,7 @@ export default function Page() {
                     id="password"
                     autoComplete="current-password"
                     required
-                    className="block w-full rounded-md border-0 bg-mf-milk-500 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-mf-milk-300 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     disabled={signIn.isLoading}
                     placeholder="Password"
                     type={visable ? "text" : "password"}
@@ -144,7 +144,7 @@ export default function Page() {
                   <div className="w-full border-t border-mf-silver-700" />
                 </div>
                 <div className="relative flex justify-center text-sm font-medium leading-6">
-                  <span className="bg-mf-milk-500 px-6 text-gray-900">
+                  <span className="bg-mf-milk-300 px-6 text-gray-900">
                     Or continue with
                   </span>
                 </div>

@@ -27,7 +27,7 @@ export function KeyboardShortcuts({ isOpen, onClose }: KeyboardShortcutsProps) {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-md space-y-4 rounded-xl bg-mf-milk-500 p-6"
+        className="w-full max-w-md space-y-4 rounded-xl bg-mf-milk-300 p-6"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
@@ -58,7 +58,7 @@ export function KeyboardShortcuts({ isOpen, onClose }: KeyboardShortcutsProps) {
                         {key === "+" ? (
                           <span className="px-1 text-gray-400">{key}</span>
                         ) : (
-                          <kbd className="inline-flex min-w-[1.5rem] items-center justify-center rounded-md border border-mf-silver-700 bg-gray-100 px-1.5 py-0.5 text-xs font-medium text-gray-400">
+                          <kbd className="inline-flex min-w-[1.5rem] items-center justify-center rounded-md border border-mf-silver-700 bg-mf-milk-100 px-1.5 py-0.5 text-xs font-medium text-gray-400">
                             {key}
                           </kbd>
                         )}

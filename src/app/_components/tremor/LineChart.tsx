@@ -52,7 +52,7 @@ const LegendItem = ({
         // base
         "group inline-flex flex-nowrap items-center gap-1.5 whitespace-nowrap rounded px-2 py-1 transition",
         hasOnValueChange
-          ? "cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
+          ? "cursor-pointer hover:bg-mf-milk-100 dark:hover:bg-gray-800"
           : "cursor-default",
       )}
       onClick={(e) => {
@@ -122,7 +122,7 @@ const ScrollButton = ({ icon, onClick, disabled }: ScrollButtonProps) => {
         "group inline-flex size-5 items-center truncate rounded transition",
         disabled
           ? "cursor-not-allowed text-gray-400 dark:text-gray-600"
-          : "cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-50",
+          : "cursor-pointer text-gray-700 hover:bg-mf-milk-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-50",
       )}
       disabled={disabled}
       onClick={(e) => {
@@ -286,7 +286,7 @@ const Legend = React.forwardRef<HTMLOListElement, LegendProps>((props, ref) => {
               // base
               "absolute bottom-0 right-0 top-0 flex h-full items-center justify-center pr-1",
               // background color
-              "bg-mf-milk-500 dark:bg-gray-950",
+              "bg-mf-milk-300 dark:bg-gray-950",
             )}
           >
             <ScrollButton
@@ -397,7 +397,7 @@ const ChartTooltip = ({
           // border color
           "border-mf-silver-700 dark:border-gray-800",
           // background color
-          "bg-mf-milk-500 dark:bg-gray-950",
+          "bg-mf-milk-300 dark:bg-gray-950",
         )}
       >
         <div className={clsx("border-b border-inherit px-4 py-2")}>
