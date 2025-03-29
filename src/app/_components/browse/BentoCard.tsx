@@ -30,7 +30,7 @@ export const BentoCard = ({
       className={`absolute inset-px rounded-lg bg-mf-milk-500 ${roundedCorners}`}
     />
     <div
-      className={`relative flex h-full flex-col justify-center overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] ${
+      className={`relative flex h-full flex-col justify-center overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] border border-mf-silver-700 ${
         roundedCorners ? roundedCorners.replace(/\[/g, "[calc(") + "+1px)]" : ""
       }`}
     >

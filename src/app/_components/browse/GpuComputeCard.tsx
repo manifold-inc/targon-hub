@@ -65,7 +65,7 @@ export const GpuComputeCard = () => (
 
           {/* Core dot with glow - smaller on mobile */}
           <motion.div
-            className="absolute -inset-1 rounded-full bg-[#DADFF7] shadow-[0_0_15px_rgba(218,223,247,0.9)] sm:-inset-1.5"
+            className="absolute -inset-1 rounded-full bg-mf-blue-700 shadow-[0_0_15px_rgba(218,223,247,0.9)] sm:-inset-1.5"
             animate={{
               opacity: [0.5, 0.9, 0.5],
             }}
@@ -82,7 +82,7 @@ export const GpuComputeCard = () => (
     </div>
 
     {/* CTA Section - Fixed spacing */}
-    <div className="min-h-1/2 flex flex-col gap-3 rounded-lg bg-gradient-to-r from-gray-50 to-white p-3 sm:p-4">
+    <div className="min-h-1/2 flex flex-col gap-3 rounded-lg p-3 sm:p-4">
       {/* Header and Button */}
       <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
         <div>
@@ -95,15 +95,15 @@ export const GpuComputeCard = () => (
       {/* Stats row */}
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded-sm bg-[#DADFF7]" />
+          <div className="h-3 w-3 rounded-sm bg-mf-blue-700" />
           <span className="text-sm text-gray-600">87+ GPUs</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded-sm bg-[#DADFF7]" />
+          <div className="h-3 w-3 rounded-sm bg-mf-blue-700" />
           <span className="text-sm text-gray-600">100% Uptime</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded-sm bg-[#DADFF7]" />
+          <div className="h-3 w-3 rounded-sm bg-mf-blue-700" />
           <span className="text-sm text-gray-600">Instant Access</span>
         </div>
       </div>

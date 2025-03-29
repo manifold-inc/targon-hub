@@ -54,18 +54,18 @@ export function CTACard({
     <div className="relative">
       <Link
         href={href}
-        className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-ash-300 p-6 shadow-sm transition-all 
+        className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-silver-500 p-6 shadow-sm transition-all 
         duration-300 hover:shadow-lg sm:p-8"
       >
         {variant === "left" ? (
           <>
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
-            <div className="absolute inset-0 bg-mf-milk-500" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-[##D7E5FF] via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-mf-silver-500" />
           </>
         ) : (
           <>
-            <div className="absolute inset-0 bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-tl from-[#142900]/5 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#D7E5FF] via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-tl from-[#D7E5FF] via-transparent to-transparent" />
           </>
         )}
         <CardContent
