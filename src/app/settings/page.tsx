@@ -260,7 +260,7 @@ export default function SettingsPage() {
 
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {/* Account Info Panel */}
-        <div className="col-span-2 rounded-2xl border border-mf-silver-700 bg-mf-milk-500 bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6">
+        <div className="col-span-2 rounded-2xl border border-mf-silver-700 bg-mf-milk-500 bg-gradient-to-br from-mf-green-700/5 via-transparent to-transparent p-6">
           <h3 className="mb-4 text-lg font-semibold">Account</h3>
           <div className="flex flex-col">
             <div className="mb-4 flex items-center gap-3">
@@ -283,12 +283,12 @@ export default function SettingsPage() {
         </div>
 
         {/* API Key Panel */}
-        <div className="col-span-2 rounded-2xl border border-mf-silver-700 bg-mf-milk-500 bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
+        <div className="col-span-2 rounded-2xl border border-mf-silver-700 bg-mf-milk-500 bg-gradient-to-bl from-mf-green-700/5 via-transparent to-transparent p-6 lg:col-span-1">
           <h3 className="mb-6 text-lg font-semibold">
             <Link href="/settings/keys">API Key</Link>
           </h3>
           <div
-            className="group relative mb-6 cursor-pointer rounded-xl border border-gray-100 bg-gray-50 p-4 transition-all hover:border-mf-silver-700 hover:bg-gray-100"
+            className="mf-milk-300 group relative mb-6 cursor-pointer rounded-xl border border-gray-100 p-4 transition-all hover:border-mf-silver-700 hover:bg-gray-100"
             onClick={() => {
               void copyToClipboard(keys.data?.[0]?.key ?? "");
               toast.success("Copied API Key to Clipboard");
@@ -312,7 +312,7 @@ export default function SettingsPage() {
               </Link>
 
               <button
-                className="hidden w-fit items-center gap-2 rounded-full px-2.5 py-1 text-sm text-gray-500 transition-colors hover:bg-gray-50 xl:flex"
+                className="hover:mf-milk-300 hidden w-fit items-center gap-2 rounded-full px-2.5 py-1 text-sm text-gray-500 transition-colors xl:flex"
                 onClick={() => {
                   void copyToClipboard(
                     `${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1`,
@@ -329,7 +329,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Credits Panel */}
-        <div className="col-span-2 rounded-2xl border border-mf-silver-700 bg-mf-milk-500 bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
+        <div className="col-span-2 rounded-2xl border border-mf-silver-700 bg-mf-milk-500 bg-gradient-to-br from-mf-green-700/5 via-transparent to-transparent p-6 lg:col-span-1">
           <h3 className="pb-8 text-lg font-semibold">
             <Link href="/settings/credits">Credits</Link>
           </h3>
@@ -339,7 +339,7 @@ export default function SettingsPage() {
               {formatLargeNumber((user.data?.credits ?? 0) / CREDIT_PER_DOLLAR)}
             </p>
             <Link
-              className="mt-2 rounded-full border border-mf-silver-700 bg-mf-milk-500 px-3 py-2 text-sm text-black hover:bg-gray-50"
+              className="hover:mf-milk-300 mt-2 rounded-full border border-mf-silver-700 bg-mf-milk-500 px-3 py-2 text-sm text-black"
               href="/settings/credits"
             >
               Add Credits
@@ -348,7 +348,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Activity Panel */}
-        <div className="col-span-2 row-span-2 h-[400px] rounded-2xl border border-mf-silver-700 bg-mf-milk-500 bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent p-6">
+        <div className="col-span-2 row-span-2 h-[400px] rounded-2xl border border-mf-silver-700 bg-mf-milk-500 bg-gradient-to-bl from-mf-green-700/5 via-transparent to-transparent p-6">
           <div className="mb-4 flex flex-row items-center justify-between">
             <h3 className="text-lg font-semibold">
               <Link href="/settings/activity">Activity</Link>
@@ -356,7 +356,7 @@ export default function SettingsPage() {
 
             <div className="flex items-center gap-2">
               <Menu as="div" className="relative">
-                <MenuButton className="flex items-center gap-2 rounded-full border border-mf-silver-700 px-3 py-1 text-sm text-gray-700 hover:bg-gray-50">
+                <MenuButton className="hover:mf-milk-300 flex items-center gap-2 rounded-full border border-mf-silver-700 px-3 py-1 text-sm text-gray-700">
                   {selectedModels.length === 0 ? (
                     <>
                       Models
@@ -474,7 +474,7 @@ export default function SettingsPage() {
           )}
         </div>
         {/* Links Panel */}
-        <div className="col-span-2 flex items-center rounded-2xl border border-mf-silver-700 bg-mf-milk-500 bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
+        <div className="col-span-2 flex items-center rounded-2xl border border-mf-silver-700 bg-mf-milk-500 bg-gradient-to-br from-mf-green-700/5 via-transparent to-transparent p-6 lg:col-span-1">
           <div
             className={`grid grid-cols-1 ${!showSS58Input ? "sm:grid-cols-2" : ""} w-full gap-4`}
           >
@@ -524,7 +524,7 @@ export default function SettingsPage() {
                           setShowSS58Input(false);
                           setSS58Address("");
                         }}
-                        className="flex h-8 items-center rounded-md border border-mf-silver-700 bg-mf-milk-500 px-3 py-2 shadow-sm hover:bg-gray-50"
+                        className="hover:mf-milk-300 flex h-8 items-center rounded-md border border-mf-silver-700 bg-mf-milk-500 px-3 py-2 shadow-sm"
                       >
                         <span className="flex items-center gap-2 text-sm font-semibold leading-tight text-black">
                           Cancel

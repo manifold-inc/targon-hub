@@ -20,7 +20,7 @@ export const CardContent = ({
       <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="text-lg font-light text-gray-900 sm:text-xl">{title}</h3>
         {isComingSoon && (
-          <span className="self-start rounded-full border border-[#142900] bg-mf-milk-500 px-3 py-1 text-xs font-medium text-[#142900] sm:self-auto">
+          <span className="self-start rounded-full border border-mf-blue-700 bg-mf-milk-500 px-3 py-1 text-xs font-medium text-mf-blue-700 sm:self-auto">
             Coming Soon
           </span>
         )}
@@ -29,7 +29,7 @@ export const CardContent = ({
         {description}
       </p>
     </div>
-    <div className="mt-4 flex items-center text-sm text-[#142900] transition-colors group-hover:text-mf-blue-700">
+    <div className="mt-4 flex items-center text-sm text-mf-blue-700 transition-colors">
       <span className="font-medium">{ctaText}</span>
       <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
     </div>

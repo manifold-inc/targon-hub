@@ -113,7 +113,7 @@ const StatusBadge = ({ status }: { status: RoadmapItem["status"] }) => (
         ? "bg-mf-blue-500/10 text-mf-blue-700/60 ring-1 ring-inset ring-mf-blue-500/30"
         : status === "in-progress"
           ? "bg-yellow-50 text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
-          : "bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/10"
+          : "mf-milk-300 text-gray-600 ring-1 ring-inset ring-gray-500/10"
     }`}
   >
     {status === "in-progress" && (
@@ -169,7 +169,7 @@ export default function RoadmapPage() {
           className="mx-auto max-w-2xl text-center"
         >
           <motion.div variants={animations.fadeInUp}>
-            <span className="inline-block rounded-full bg-[#142900]/5 px-3 py-1 text-sm font-medium text-mf-blue-700 sm:px-4 sm:py-1.5">
+            <span className="inline-block rounded-full bg-mf-blue-900/5 px-3 py-1 text-sm font-medium text-mf-blue-700 sm:px-4 sm:py-1.5">
               Product Roadmap
             </span>
           </motion.div>
@@ -236,7 +236,7 @@ export default function RoadmapPage() {
                       {item.features.map((feature, featureIdx) => (
                         <div
                           key={featureIdx}
-                          className="flex h-10 items-center gap-3 rounded-xl bg-gray-50/80 px-4 text-sm text-gray-900 ring-1 ring-inset ring-gray-100"
+                          className="mf-milk-300/80 flex h-10 items-center gap-3 rounded-xl px-4 text-sm text-gray-900 ring-1 ring-inset ring-gray-100"
                         >
                           <div className="flex h-5 w-5 flex-none items-center justify-center">
                             <FeatureIcon

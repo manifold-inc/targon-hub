@@ -38,8 +38,8 @@ export const GetStartedSection = () => {
               className={`group inline-flex w-full items-center justify-center rounded-full px-6 py-2.5 text-sm font-medium transition sm:w-auto
                 ${
                   primary
-                    ? "bg-[#142900] text-mf-milk-300 hover:bg-[#1e3b00]"
-                    : "border border-[#142900] text-[#142900] hover:bg-[#142900]/5"
+                    ? "bg-mf-blue-900 text-mf-milk-300 hover:bg-[#1e3b00]"
+                    : "border border-mf-green-700 text-mf-green-700 hover:bg-mf-blue-900/5"
                 }`}
             >
               {text}

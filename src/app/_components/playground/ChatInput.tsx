@@ -16,7 +16,7 @@ interface ChatInputProps {
 }
 
 const buttonBaseClass =
-  "rounded-lg p-2.5 text-gray-500 hover:bg-[#142900]/5 hover:text-[#142900] lg:p-2";
+  "rounded-lg p-2.5 text-gray-500 hover:bg-mf-blue-900/5 hover:text-mf-green-700 lg:p-2";
 const buttonDisabledClass =
   "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-gray-500";
 
@@ -51,7 +51,7 @@ export function ChatInput({
           className={clsx(
             "w-full resize-none rounded-xl py-3.5 text-base lg:py-3 lg:text-sm",
             "border border-mf-silver-700 bg-mf-milk-500",
-            "focus:border-[#142900]/20 focus:outline-none focus:ring-1 focus:ring-[#142900]/20",
+            "focus:border-mf-green-700/20 focus:outline-none focus:ring-1 focus:ring-mf-green-700/20",
             "disabled:cursor-not-allowed disabled:opacity-50",
             "pl-12 pr-24",
             "max-h-36 min-h-[3.25rem] overflow-y-auto lg:min-h-12",

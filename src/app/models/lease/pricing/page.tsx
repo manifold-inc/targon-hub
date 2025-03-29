@@ -98,7 +98,7 @@ function CostSummaryCard({
       </div>
 
       <div className="space-y-1 px-6 py-4">
-        <div className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-2">
+        <div className="mf-milk-300 flex items-center justify-between rounded-lg px-4 py-2">
           <dt className="flex items-center gap-1 text-sm text-gray-500">
             Required GPUs
             <div className="group relative">
@@ -206,7 +206,7 @@ export default function PricingPage() {
       <div className="flex justify-between">
         <Link
           href="/models/lease"
-          className="rounded-full border border-gray-300 bg-mf-milk-500 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
+          className="hover:mf-milk-300 rounded-full border border-gray-300 bg-mf-milk-500 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm"
         >
           Back
         </Link>

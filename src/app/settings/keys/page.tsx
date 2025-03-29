@@ -59,7 +59,7 @@ export default function KeysPage() {
               <div className="relative overflow-x-auto rounded-xl border border-mf-silver-700">
                 <table className="w-full border-separate border-spacing-0 text-xs sm:text-sm">
                   <thead>
-                    <tr className="sticky top-0 h-8 w-full bg-gray-50">
+                    <tr className="mf-milk-300 sticky top-0 h-8 w-full">
                       <th className="sticky top-0 border-b border-t border-mf-silver-700 px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
                         Name
                       </th>

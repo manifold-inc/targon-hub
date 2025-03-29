@@ -44,8 +44,8 @@ export default function SettingsLayout({
                 href={tab.href}
                 className={`flex h-10 items-center gap-2.5 rounded-full px-4 py-2 ${
                   isActive
-                    ? "bg-gray-50 text-gray-900 shadow-sm"
-                    : "text-gray-600 hover:bg-gray-50/50 hover:text-gray-900"
+                    ? "mf-milk-300 text-gray-900 shadow-sm"
+                    : "hover:mf-milk-300/50 text-gray-600 hover:text-gray-900"
                 }`}
               >
                 <tab.icon className="h-4.5 w-4.5" />
@@ -76,8 +76,8 @@ export default function SettingsLayout({
                   className={clsx(
                     "relative z-10 mb-2 block rounded-lg border border-gray-100 p-4 transition-all duration-200",
                     isActive
-                      ? "bg-gray-50"
-                      : "hover:border-[#142900]/20 hover:bg-mf-milk-500/80",
+                      ? "mf-milk-300"
+                      : "hover:border-mf-green-700/20 hover:bg-mf-milk-500/80",
                   )}
                 >
                   <div className="flex flex-col gap-1">

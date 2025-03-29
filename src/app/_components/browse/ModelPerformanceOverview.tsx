@@ -112,7 +112,7 @@ export const ModelPerformanceOverview = ({
           </div>
           <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-mf-milk-300">
             {model.avgTPS === null || model.avgTPS === 0 ? (
-              <div className="absolute inset-0 flex items-center justify-center bg-gray-50 text-xs text-gray-400">
+              <div className="mf-milk-300 absolute inset-0 flex items-center justify-center text-xs text-gray-400">
                 No data
               </div>
             ) : (

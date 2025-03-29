@@ -93,7 +93,7 @@ export default function ModelPage() {
         </p>
         <p className="pt-2 text-sm text-gray-600">
           Example:{" "}
-          <span className="rounded border border-mf-silver-700 bg-gray-50 px-1.5 py-0.5 font-mono text-gray-800">
+          <span className="mf-milk-300 rounded border border-mf-silver-700 px-1.5 py-0.5 font-mono text-gray-800">
             Organization/Model-Name
           </span>
         </p>

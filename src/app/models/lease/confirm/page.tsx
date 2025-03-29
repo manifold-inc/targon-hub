@@ -296,7 +296,7 @@ export default function ConfirmPage() {
       <div className="flex justify-between">
         <Link
           href={`/models/lease/pricing?model=${encodeURIComponent(model)}`}
-          className="rounded-full border border-gray-300 bg-mf-milk-500 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
+          className="hover:mf-milk-300 rounded-full border border-gray-300 bg-mf-milk-500 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm"
         >
           Back
         </Link>

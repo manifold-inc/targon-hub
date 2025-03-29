@@ -29,7 +29,7 @@ const Badge = ({ children }: { children: React.ReactNode }) => (
     transition={{ delay: 0.2, duration: 0.5 }}
     className="inline-block"
   >
-    <span className="mb-4 inline-block rounded-full bg-[#142900]/5 px-4 py-1.5 text-sm font-medium text-mf-blue-700">
+    <span className="mb-4 inline-block rounded-full bg-mf-blue-900/5 px-4 py-1.5 text-sm font-medium text-mf-blue-700">
       {children}
     </span>
   </motion.div>

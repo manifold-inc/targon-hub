@@ -52,7 +52,7 @@ export default function ImmunityTimeline() {
                 <Search aria-hidden="true" className="h-5 w-5 text-[#98a1b2]" />
               </div>
               <ComboboxInput
-                className="text-md flex h-11 w-full items-center rounded-full border-0 bg-gray-50 pb-2.5 pl-11 pr-8 pt-3 placeholder:text-[#98a1b2] focus:ring-gray-200"
+                className="text-md mf-milk-300 flex h-11 w-full items-center rounded-full border-0 pb-2.5 pl-11 pr-8 pt-3 placeholder:text-[#98a1b2] focus:ring-gray-200"
                 placeholder="Search models"
                 onChange={(event) => setSearchQuery(event.target.value)}
               />

@@ -52,7 +52,7 @@ export function ModelTabs() {
     <div className="flex animate-slide-in-delay flex-col gap-8">
       <TabGroup>
         <TabList className="relative inline-flex h-10 w-full items-center justify-start gap-2 overflow-hidden overflow-x-scroll rounded-xl p-2 px-2">
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-mf-green-700/5 via-transparent to-transparent" />
           <div className="absolute inset-0 bg-mf-silver-500" />
           <div className="relative z-10 flex w-full items-center gap-2">
             {endpoints.map((endpoint, index) => (
@@ -83,7 +83,7 @@ export function ModelTabs() {
       </TabGroup>
 
       <div className="relative mx-auto w-full overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-500">
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-mf-green-700/5 via-transparent to-transparent" />
         <div className="absolute inset-0 bg-mf-milk-500" />
 
         <div className="relative h-96 overflow-auto sm:h-auto sm:overflow-visible">

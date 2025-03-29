@@ -30,8 +30,9 @@ interface PlaygroundNavProps {
 const baseButtonStyles =
   "flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold leading-tight focus:outline-none";
 const selectedButtonStyles =
-  "bg-[#142900]/10 text-[#142900] ring-2 ring-[#142900]/20 ring-offset-2";
-const unselectedButtonStyles = "text-[#475467] opacity-80 hover:bg-[#142900]/5";
+  "bg-mf-blue-900/10 text-mf-green-700 ring-2 ring-mf-green-700/20 ring-offset-2";
+const unselectedButtonStyles =
+  "text-[#475467] opacity-80 hover:bg-mf-blue-900/5";
 
 export function PlaygroundNav({
   nav,
@@ -88,9 +89,9 @@ export function PlaygroundNav({
             <ListboxButton
               className={clsx(
                 "flex w-full items-center justify-between rounded-full px-4 py-2.5 text-sm font-semibold lg:px-3 lg:py-2",
-                "bg-[#142900]/5 hover:bg-[#142900]/10 focus:outline-none",
+                "bg-mf-blue-900/5 hover:bg-mf-blue-900/10 focus:outline-none",
                 current_model &&
-                  "text-[#142900] ring-2 ring-[#142900]/20 ring-offset-2",
+                  "text-mf-green-700 ring-2 ring-mf-green-700/20 ring-offset-2",
                 !current_model && "text-gray-500",
               )}
             >
@@ -125,8 +126,8 @@ export function PlaygroundNav({
                   value={model.name}
                   className={({ selected }) =>
                     clsx(
-                      "relative cursor-pointer select-none px-4 py-3 hover:bg-[#142900]/5 lg:py-2.5",
-                      selected && "bg-[#142900]/10",
+                      "relative cursor-pointer select-none px-4 py-3 hover:bg-mf-blue-900/5 lg:py-2.5",
+                      selected && "bg-mf-blue-900/10",
                     )
                   }
                 >
@@ -143,7 +144,7 @@ export function PlaygroundNav({
                           className={clsx(
                             "block truncate text-sm",
                             selected
-                              ? "font-semibold text-[#142900]"
+                              ? "font-semibold text-mf-green-700"
                               : "text-gray-600",
                           )}
                         >
@@ -151,7 +152,7 @@ export function PlaygroundNav({
                         </span>
                       </div>
                       {selected && (
-                        <CheckIcon className="ml-2 h-4 w-4 shrink-0 text-[#142900]" />
+                        <CheckIcon className="ml-2 h-4 w-4 shrink-0 text-mf-green-700" />
                       )}
                     </div>
                   )}

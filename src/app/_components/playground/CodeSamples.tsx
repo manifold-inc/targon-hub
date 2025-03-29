@@ -182,7 +182,7 @@ void chat();`,
         </div>
 
         <div className="mx-auto max-w-lg pb-4">
-          <div className="flex space-x-1 rounded-xl bg-[#142900]/5 p-1">
+          <div className="flex space-x-1 rounded-xl bg-mf-blue-900/5 p-1">
             {languages.map((lang) => (
               <button
                 key={lang.id}
@@ -190,8 +190,8 @@ void chat();`,
                 className={clsx(
                   "w-full rounded-lg py-2 text-sm font-medium leading-5",
                   selectedLang === lang.id
-                    ? "bg-mf-milk-500 text-[#142900] shadow-sm"
-                    : "text-gray-600 hover:bg-mf-milk-500/50 hover:text-[#142900]",
+                    ? "bg-mf-milk-500 text-mf-blue-700 shadow-sm"
+                    : "text-gray-600 hover:bg-mf-milk-500/50 hover:text-mf-blue-700",
                 )}
               >
                 {lang.name}

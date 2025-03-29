@@ -24,7 +24,7 @@ export const ModelLeasingSection = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        <Shield className="mx-auto h-12 w-12 rounded-full bg-[#142900]/10 p-3 text-[#142900] sm:h-14 sm:w-14 lg:mx-0" />
+        <Shield className="mx-auto h-12 w-12 rounded-full bg-mf-blue-900/10 p-3 text-mf-green-700 sm:h-14 sm:w-14 lg:mx-0" />
 
         <h2 className="text-center text-2xl font-semibold text-gray-900 sm:text-3xl lg:text-left">
           Model Hosting
@@ -45,16 +45,16 @@ export const ModelLeasingSection = () => {
           </h3>
           <ul className="space-y-3 pt-4 text-sm text-gray-600">
             <li className="flex gap-x-3">
-              <span className="text-[#142900]">•</span>
+              <span className="text-mf-green-700">•</span>
               Choose between one-time 7-day leases or automatic weekly renewals
             </li>
             <li className="flex gap-x-3">
-              <span className="text-[#142900]">•</span>
+              <span className="text-mf-green-700">•</span>
               Your model is protected during the lease period and cannot be
               replaced
             </li>
             <li className="flex gap-x-3">
-              <span className="text-[#142900]">•</span>
+              <span className="text-mf-green-700">•</span>
               Keep your model running smoothly with hassle-free lease renewals
             </li>
           </ul>
@@ -63,7 +63,7 @@ export const ModelLeasingSection = () => {
 
       {/* Right Column */}
       <div className="relative lg:pt-12">
-        <div className="absolute -inset-x-4 -bottom-16 top-0 rounded-3xl bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent" />
+        <div className="absolute -inset-x-4 -bottom-16 top-0 rounded-3xl bg-gradient-to-br from-mf-green-700/5 via-transparent to-transparent" />
         <div className="rounded-2xl border border-gray-100 bg-mf-milk-500/50 p-6 shadow-xl">
           <h3 className="text-center text-base font-semibold text-gray-900 sm:text-left sm:text-lg">
             Current Model Timeline
@@ -79,7 +79,7 @@ export const ModelLeasingSection = () => {
               >
                 <Link
                   href={`/models/${encodeURIComponent(model.name!)}`}
-                  className="relative z-10 block rounded-lg border border-gray-100 p-4 transition-all duration-200 hover:border-[#142900]/20 hover:bg-mf-milk-500/80"
+                  className="relative z-10 block rounded-lg border border-gray-100 p-4 transition-all duration-200 hover:border-mf-green-700/20 hover:bg-mf-milk-500/80"
                 >
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center justify-between gap-2">
@@ -124,7 +124,7 @@ export const ModelLeasingSection = () => {
           <div className="pt-6 text-center sm:text-left">
             <Link
               href="/models/immunity"
-              className="group relative z-10 inline-flex items-center text-sm font-medium text-[#142900] hover:text-[#1e3b00]"
+              className="group relative z-10 inline-flex items-center text-sm font-medium text-mf-green-700 hover:text-[#1e3b00]"
             >
               View full timeline
               <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />

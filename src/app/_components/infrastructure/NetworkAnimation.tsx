@@ -57,7 +57,7 @@ export const NetworkAnimation = ({
               className="z-10"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#e2e4df]">
-                <User className="h-6 w-6 text-[#142900]" />
+                <User className="h-6 w-6 text-mf-green-700" />
               </div>
             </motion.div>
           ))}
@@ -71,7 +71,7 @@ export const NetworkAnimation = ({
           className="z-10"
         >
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#e2e4df]">
-            <ServerCog className="h-8 w-8 text-[#142900]" />
+            <ServerCog className="h-8 w-8 text-mf-green-700" />
           </div>
         </motion.div>
 
@@ -87,7 +87,7 @@ export const NetworkAnimation = ({
               transition={{ duration: 0.5, delay: 0.3 + _i * 0.1 }}
             >
               <div className="z-10 flex h-12 w-12 items-center justify-center rounded-full  bg-[#e2e4df]">
-                <Cpu className="h-6 w-6 text-[#142900]" />
+                <Cpu className="h-6 w-6 text-mf-green-700" />
               </div>
             </motion.div>
           ))}

@@ -66,8 +66,8 @@ export default async function Page({ params }: Props) {
                   }
                   className="group relative flex h-9 w-full items-center justify-center self-center sm:w-32 sm:self-auto"
                 >
-                  <span className="inline-flex w-full items-center justify-center gap-1 whitespace-nowrap rounded-full border border-black bg-mf-milk-500 px-3 py-2 text-black group-hover:bg-gray-100 sm:w-auto">
-                    <span className="w-full text-center text-sm font-semibold leading-tight sm:w-24">
+                  <span className="inline-flex w-full items-center justify-center gap-1 whitespace-nowrap rounded-full border border-mf-silver-700 bg-mf-milk-500 px-3 py-2 text-mf-ash-300 group-hover:bg-mf-milk-300 sm:w-auto">
+                    <span className="w-full text-center text-sm leading-tight sm:w-24">
                       {user?.id
                         ? data.enabled
                           ? "Use Now"
@@ -106,9 +106,9 @@ export default async function Page({ params }: Props) {
 
               <div className="flex gap-4 pb-4">
                 {data?.modality && (
-                  <div className="inline-flex h-6 items-center justify-start gap-1.5 rounded-full border border-[#155dee] py-0.5 pl-2 pr-2.5">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#155dee]" />
-                    <span className="text-center text-sm font-medium leading-tight text-[#004eea]">
+                  <div className="inline-flex h-6 items-center justify-start gap-1.5 rounded-full border border-mf-blue-700 py-0.5 pl-2 pr-2.5">
+                    <div className="h-1.5 w-1.5 rounded-full bg-mf-blue-700" />
+                    <span className="text-center text-sm font-medium leading-tight text-mf-blue-700">
                       {data.modality === "text-generation"
                         ? "Text Generation"
                         : "Text to Image"}
@@ -120,7 +120,7 @@ export default async function Page({ params }: Props) {
             {!!usage?.length && (
               <section id="usage">
                 <div className="py-10">
-                  <div className="h-px w-full bg-[#e4e7ec]" />
+                  <div className="h-px w-full bg-mf-silver-700" />
                 </div>
                 <p className="text-2xl leading-loose text-[#101828]">
                   Model Usage
@@ -132,7 +132,7 @@ export default async function Page({ params }: Props) {
             )}
             <section className="hidden" id="apps-using-this" data-section>
               <div className="py-10">
-                <div className="h-px w-full bg-[#e4e7ec]" />
+                <div className="h-px w-full bg-mf-silver-700" />
               </div>
               <p className="text-2xl leading-loose text-[#101828]">
                 Apps Using This
@@ -160,7 +160,7 @@ export default async function Page({ params }: Props) {
                 ].map((app) => (
                   <li key={app.name}>
                     <div className="flex w-full flex-wrap items-center gap-3 rounded-xl py-3 sm:gap-6 sm:p-3">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gray-50 p-1.5">
+                      <div className="mf-milk-300 flex h-11 w-11 items-center justify-center rounded-lg p-1.5">
                         <Image
                           src={app.image}
                           alt={app.name}

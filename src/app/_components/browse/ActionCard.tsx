@@ -33,11 +33,11 @@ export const ActionCard = ({
         {background}
         <div className="relative z-10 flex h-full flex-col gap-4">
           <div className="flex items-center justify-between">
-            <span className="inline-flex items-center rounded-full bg-[#1C3836]/10 px-3 py-1 text-sm font-medium text-[#1C3836]">
+            <span className="inline-flex items-center rounded-full bg-mf-milk-300 px-3 py-1 text-sm font-medium text-mf-ash-300">
               {label}
             </span>
             {isComingSoon && (
-              <span className="inline-flex animate-pulse items-center rounded-full bg-[#1C3836]/10 px-3 py-1 text-xs font-medium text-[#1C3836]">
+              <span className="inline-flex animate-pulse items-center rounded-full bg-mf-milk-300 px-3 py-1 text-xs font-medium text-mf-ash-300">
                 Coming Soon
               </span>
             )}

@@ -17,7 +17,7 @@ export default function ActivityPage() {
               <div className="relative h-full overflow-x-auto rounded-xl border border-mf-silver-700">
                 <table className="w-full border-0 text-xs sm:text-sm">
                   <thead>
-                    <tr className="h-8 border-b border-mf-silver-700 bg-gray-50">
+                    <tr className="mf-milk-300 h-8 border-b border-mf-silver-700">
                       <th className="px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
                         Timestamp
                       </th>
