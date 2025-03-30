@@ -31,7 +31,7 @@ export default function RootLayout({
     <html
       suppressHydrationWarning
       lang="en"
-      className={`${blinker.className} bg-mf-milk-300`}
+      className={`${blinker.className} bg-mf-milk-100`}
     >
       <head>
         <link rel="manifest" href="/site.webmanifest" />

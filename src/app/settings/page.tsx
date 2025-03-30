@@ -295,7 +295,7 @@ export default function SettingsPage() {
             }}
           >
             <div className="flex items-center justify-between gap-3">
-              <p className="truncate font-mono text-sm text-gray-600">
+              <p className="truncate  text-sm text-gray-600">
                 {keys.data?.[0]?.key || "No API key"}
               </p>
               <Copy className="h-4 w-4 flex-shrink-0 text-gray-400 transition-colors group-hover:text-gray-600" />
@@ -320,7 +320,7 @@ export default function SettingsPage() {
                   toast.success("Copied URL to Clipboard");
                 }}
               >
-                <span className="font-mono">
+                <span className="">
                   Endpoint: {env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1
                 </span>
               </button>

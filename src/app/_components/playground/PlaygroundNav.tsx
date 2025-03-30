@@ -88,8 +88,8 @@ export function PlaygroundNav({
             <ListboxButton
               className={clsx(
                 "flex w-full items-center justify-between rounded-full px-4 py-2.5 text-sm font-semibold lg:px-3 lg:py-2",
-                "bg-mf-blue-500 focus:outline-none",
-                current_model && "text-mf-ash",
+                "bg-mf-blue-700/20 focus:outline-none",
+                current_model && "text-mf-ash-700",
                 !current_model && "text-mf-ash-500",
               )}
             >

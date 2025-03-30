@@ -78,7 +78,7 @@ const roadmapItems: RoadmapItem[] = [
     ],
   },
   {
-    quarter: "Community",
+    quarter: "COMMUNITY",
     title: "Connect with Us",
     description: "Join our community to help shape the future of Targon.",
     status: "completed",
@@ -107,15 +107,7 @@ const animations = {
 };
 
 const StatusBadge = ({ status }: { status: RoadmapItem["status"] }) => (
-  <span
-    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-      status === "completed"
-        ? "bg-mf-blue-500/10 text-mf-blue-700/60 ring-1 ring-inset ring-mf-blue-500/30"
-        : status === "in-progress"
-          ? "bg-mf-milk-300 text-mf-ash-300 ring-1 ring-inset ring-mf-blue-500/30"
-          : "mf-milk-300 text-gray-600 ring-1 ring-inset ring-gray-500/10"
-    }`}
-  >
+  <span className="inline-flex items-center rounded-full bg-mf-blue-500/20 px-2.5 py-0.5 text-xs font-semibold text-mf-blue-700">
     {status === "in-progress" && (
       <span className="relative mr-1 flex h-1 w-1">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mf-blue-700 opacity-75" />
@@ -134,15 +126,15 @@ const FeatureIcon = ({
   isCommunitySection: boolean;
 }) => {
   if (isCommunitySection)
-    return <MessagesSquare className="h-4 w-4 text-mf-blue-700/80" />;
+    return <MessagesSquare className="h-4 w-4 text-mf-blue-700" />;
   if (status === "completed")
-    return <Check className="h-4 w-4 text-green-800" />;
+    return <Check className="h-4 w-4 text-mf-blue-700" />;
   if (status === "in-progress")
     return (
       //custom animation speed
-      <CircleDashed className="h-4 w-4 animate-spin text-yellow-500 [animation-duration:3000ms]" />
+      <CircleDashed className="h-4 w-4 animate-spin text-mf-blue-700 [animation-duration:3000ms]" />
     );
-  return <Hourglass className="h-4 w-4 text-mf-ash-500" />;
+  return <Hourglass className="h-4 w-4 text-mf-blue-700" />;
 };
 
 export default function RoadmapPage() {
@@ -160,7 +152,7 @@ export default function RoadmapPage() {
           className="mx-auto max-w-2xl text-center"
         >
           <motion.div variants={animations.fadeInUp}>
-            <span className="inline-block rounded-full bg-mf-blue-700 px-3 py-1 text-sm font-semibold text-mf-ash-500 sm:px-4 sm:py-1.5">
+            <span className="inline-block rounded-full bg-mf-blue-700/20 px-3 py-1 text-sm font-semibold text-mf-blue-700 sm:px-4 sm:py-1.5">
               Product Roadmap
             </span>
           </motion.div>
@@ -169,7 +161,7 @@ export default function RoadmapPage() {
             className="font-display pt-4 text-3xl font-semibold tracking-tight text-mf-ash-700 sm:text-4xl lg:text-6xl"
           >
             Building the future of{" "}
-            <p className="text-mf-blue-700">AI infrastructure</p>
+            <p className="text-mf-blue-700">AI Infrastructure</p>
           </motion.h1>
           <motion.p
             variants={animations.fadeInUp}
@@ -202,11 +194,11 @@ export default function RoadmapPage() {
                 className="group relative h-full"
               >
                 <div className="relative flex h-full flex-col rounded-2xl border border-mf-silver-700 bg-mf-milk-300 p-4 shadow-sm transition-all duration-300 hover:shadow-lg sm:p-6 lg:p-8">
-                  <div className="absolute inset-0 rounded-2xl bg-mf-milk-300" />
+                  <div className="absolute inset-0 rounded-2xl bg-mf-milk-300 group-hover:bg-mf-milk-100" />
 
                   <div className="relative flex h-full flex-col">
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-sm font-semibold text-mf-blue-700">
+                      <span className=" text-sm font-semibold text-mf-ash-300">
                         {item.quarter}
                       </span>
                       {item.quarter !== "Community" && (
@@ -227,7 +219,7 @@ export default function RoadmapPage() {
                       {item.features.map((feature, featureIdx) => (
                         <div
                           key={featureIdx}
-                          className="mf-milk-300/80 flex h-10 items-center gap-3 rounded-xl px-4 text-sm text-mf-ash-700 ring-1 ring-inset ring-mf-silver-700/30"
+                          className="mf-milk-300/80 flex h-10 items-center gap-3 rounded-xl bg-mf-milk-300 px-4 text-sm text-mf-ash-700 ring-1 ring-inset ring-mf-silver-700/30"
                         >
                           <div className="flex h-5 w-5 flex-none items-center justify-center">
                             <FeatureIcon

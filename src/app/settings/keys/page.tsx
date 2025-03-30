@@ -79,7 +79,7 @@ export default function KeysPage() {
                           {key.name ?? "Default"}
                         </td>
                         <td className="px-2 py-1 text-left leading-tight text-mf-ash-700">
-                          <span className="inline-flex items-center gap-2 font-mono">
+                          <span className="inline-flex items-center gap-2 ">
                             {key.key.slice(0, 9) + "***"}
                             <button
                               className="cursor-pointer"

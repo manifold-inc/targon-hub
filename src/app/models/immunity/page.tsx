@@ -84,12 +84,12 @@ export default function ImmunityTimeline() {
                 }`}
               >
                 {/* Timeline dot */}
-                <div className="absolute left-6 h-4 w-4 rounded-full border-2 border-blue-300 bg-mf-milk-300 sm:left-1/2 sm:-translate-x-1/2" />
+                <div className="absolute left-6 h-4 w-4 rounded-full border-2 border-mf-blue-500 bg-mf-blue-500 sm:left-1/2 sm:-translate-x-1/2" />
 
                 {/* Content card */}
                 <Link
                   href={`/models/${encodeURIComponent(model.name ?? "")}`}
-                  className="block rounded-lg border border-mf-silver-700 bg-mf-milk-300 p-3 shadow transition-shadow hover:shadow-md sm:p-4"
+                  className="block rounded-lg border border-mf-silver-700 bg-mf-milk-300 p-3 shadow transition-shadow hover:bg-mf-milk-100 hover:shadow-md sm:p-4"
                 >
                   <div className="flex flex-col gap-2">
                     <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">

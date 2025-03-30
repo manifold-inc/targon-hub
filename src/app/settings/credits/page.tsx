@@ -198,7 +198,7 @@ export default function CreditsPage() {
                           className="mx-auto"
                         />
                       ) : (
-                        <p className="font-mono text-sm text-mf-ash-500">
+                        <p className=" text-sm text-mf-ash-500">
                           {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(0, 6)}...
                           {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(-6)}
                         </p>

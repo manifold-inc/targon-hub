@@ -22,16 +22,16 @@ export const CardContent = ({
           {title}
         </h3>
         {isComingSoon && (
-          <span className="self-start rounded-full border bg-mf-blue-500 px-3 py-1 text-xs font-semibold text-mf-ash-500 sm:self-auto">
+          <span className="self-start rounded-full border bg-mf-blue-700/20 px-3 py-1 text-xs font-semibold text-mf-blue-700 sm:self-auto">
             Coming Soon
           </span>
         )}
       </div>
-      <p className="w-full text-sm text-gray-600 sm:w-4/5 sm:text-base/relaxed">
+      <p className="w-full text-sm text-mf-ash-300 sm:w-4/5 sm:text-base/relaxed">
         {description}
       </p>
     </div>
-    <div className="mt-4 flex items-center text-sm text-mf-blue-700 transition-colors">
+    <div className="mt-4 flex items-center text-sm text-mf-ash-700 transition-colors">
       <span className="font-medium">{ctaText}</span>
       <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
     </div>
@@ -56,18 +56,18 @@ export function CTACard({
     <div className="relative">
       <Link
         href={href}
-        className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-300 p-6 shadow-sm transition-all 
+        className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-mf-silver-700 p-6 shadow-sm transition-all 
         duration-300 hover:shadow-lg sm:p-8"
       >
         {variant === "left" ? (
           <>
-            <div className="absolute inset-0" />
-            <div className="absolute inset-0 bg-mf-milk-300" />
+            <div className="absolute inset-0 bg-mf-milk-300 group-hover:bg-mf-milk-100" />
+            <div className="absolute inset-0 bg-mf-milk-300 group-hover:bg-mf-milk-100" />
           </>
         ) : (
           <>
-            <div className="absolute inset-0" />
-            <div className="absolute inset-0" />
+            <div className="absolute inset-0 bg-mf-milk-300 group-hover:bg-mf-milk-100" />
+            <div className="absolute inset-0 bg-mf-milk-300 group-hover:bg-mf-milk-100" />
           </>
         )}
         <CardContent

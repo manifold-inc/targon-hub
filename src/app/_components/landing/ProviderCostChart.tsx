@@ -116,7 +116,7 @@ export function ProviderCostChart() {
                         className="h-full w-full"
                       />
                     </div>
-                    <div className="whitespace-nowrap font-mono text-sm">
+                    <div className="whitespace-nowrap  text-sm">
                       <div className="font-semibold">{provider.name}</div>
                       <div className="text-mf-ash-500">
                         {provider.tokensPerSecond} TPS
@@ -131,7 +131,7 @@ export function ProviderCostChart() {
 
               {/* Current state */}
               <div
-                className="absolute whitespace-nowrap font-mono"
+                className="absolute whitespace-nowrap "
                 style={currentData.currentPosition}
               >
                 <div className="text-xs text-mf-ash-500">
@@ -189,7 +189,7 @@ export function ProviderCostChart() {
                 height={48}
               />
             </Link>
-            <div className="font-mono">
+            <div className="">
               <div className="font-semibold">Manifold Labs</div>
               <div className="animate-pulse">
                 {currentData.currentTokens} TPS
@@ -214,7 +214,7 @@ export function ProviderCostChart() {
                   height={50}
                   className="h-12 w-12"
                 />
-                <div className="font-mono">
+                <div className="">
                   <div className="font-semibold">{provider.name}</div>
                   <div>{provider.tokensPerSecond} TPS</div>
                   <div className="text-mf-ash-500">
