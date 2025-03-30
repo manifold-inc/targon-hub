@@ -264,7 +264,7 @@ export default function SettingsPage() {
           <h3 className="mb-4 text-lg font-semibold">Account</h3>
           <div className="flex flex-col">
             <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-white shadow">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 bg-mf-blue-500">
                 <User className="w-13 h-13" />
               </div>
               <div className="text-sm text-black">{user.data?.email}</div>
@@ -272,10 +272,10 @@ export default function SettingsPage() {
             <div className="flex flex-wrap gap-2">
               <a
                 href="/sign-out"
-                className="inline-flex h-8 items-center justify-center gap-1 rounded-full px-3 py-2 hover:bg-blue-50"
+                className="inline-flex h-8 items-center justify-center gap-1 rounded-full bg-mf-white px-3 py-2 text-mf-ash-700"
               >
-                <span className="text-sm font-semibold leading-tight text-[#1d4ed8]">
-                  Logout
+                <span className="text-sm font-semibold leading-tight">
+                  Sign Out
                 </span>
               </a>
             </div>
@@ -288,7 +288,7 @@ export default function SettingsPage() {
             <Link href="/settings/keys">API Key</Link>
           </h3>
           <div
-            className="mf-milk-300 group relative mb-6 cursor-pointer rounded-xl border border-mf-silver-700 p-4 transition-all hover:border-mf-silver-700 hover:bg-mf-milk-100"
+            className="group relative mb-6 cursor-pointer rounded-xl border border-mf-silver-700 bg-mf-milk-100 p-4 transition-all hover:border-mf-silver-700"
             onClick={() => {
               void copyToClipboard(keys.data?.[0]?.key ?? "");
               toast.success("Copied API Key to Clipboard");
@@ -305,7 +305,7 @@ export default function SettingsPage() {
             <div className="flex flex-col items-center justify-center gap-2">
               <Link
                 href="/settings/keys"
-                className="flex w-fit items-center gap-1 rounded-full px-2.5 py-1 text-sm font-medium text-[#1d4ed8] transition-colors hover:bg-blue-50"
+                className="flex w-fit items-center gap-1 rounded-full px-2.5 py-1 text-sm font-medium text-mf-blue-700 transition-colors hover:bg-blue-50"
                 prefetch={false}
               >
                 View All Keys
@@ -339,7 +339,7 @@ export default function SettingsPage() {
               {formatLargeNumber((user.data?.credits ?? 0) / CREDIT_PER_DOLLAR)}
             </p>
             <Link
-              className="hover:mf-milk-300 mt-2 rounded-full border border-mf-silver-700 bg-mf-milk-300 px-3 py-2 text-sm text-black"
+              className="inline-flex h-8 items-center justify-center gap-1 rounded-full bg-mf-white px-3 py-2 text-sm font-semibold text-mf-ash-700"
               href="/settings/credits"
             >
               Add Credits

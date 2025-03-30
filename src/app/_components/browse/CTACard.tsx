@@ -22,7 +22,7 @@ export const CardContent = ({
           {title}
         </h3>
         {isComingSoon && (
-          <span className="self-start rounded-full border border-mf-blue-700 bg-mf-milk-300 px-3 py-1 text-xs font-medium text-mf-blue-700 sm:self-auto">
+          <span className="self-start rounded-full border bg-mf-blue-500 px-3 py-1 text-xs font-semibold text-mf-ash-500 sm:self-auto">
             Coming Soon
           </span>
         )}

@@ -113,12 +113,12 @@ export default function Page() {
               <div className="flex gap-4 pt-4">
                 <Link
                   href="/create-account"
-                  className="flex h-9 w-full items-center justify-center px-3 font-semibold leading-6 text-mf-ash-500 hover:bg-mf-blue-700/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-blue-500"
+                  className="flex h-9 w-full  items-center justify-center rounded-md px-3 font-semibold leading-6 text-mf-ash-500 hover:bg-mf-blue-700/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-blue-500"
                 >
                   Create an account
                 </Link>
                 <button
-                  className="flex h-9 w-full items-center justify-center rounded-md bg-mf-blue-500 px-3 font-semibold leading-6 text-mf-ash-500 shadow-sm hover:bg-mf-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-blue-500"
+                  className="flex h-9 w-full items-center justify-center rounded-md bg-mf-blue-500 px-3 font-semibold leading-6 text-mf-ash-500 shadow-sm hover:bg-mf-blue-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-blue-500"
                   type="submit"
                   disabled={signIn.isLoading}
                 >
@@ -134,7 +134,7 @@ export default function Page() {
             <div>
               <div className="relative mt-10">
                 <div className="relative flex justify-center text-sm font-medium leading-6">
-                  <span className="px-6 text-mf-ash-700 font-semibold">
+                  <span className="px-6 font-semibold text-mf-ash-700">
                     Or Continue with
                   </span>
                 </div>
@@ -149,7 +149,7 @@ export default function Page() {
                         )}`
                       : ""
                   }`}
-                  className="w-32 h-36 rounded-md bg-white flex items-center justify-center gap-3 whitespace-nowrap py-2"
+                  className="flex h-9 w-32 items-center justify-center gap-3 whitespace-nowrap rounded-md bg-white py-2"
                 >
                   <svg
                     className="h-5 w-5"

@@ -160,7 +160,7 @@ export default function RoadmapPage() {
           className="mx-auto max-w-2xl text-center"
         >
           <motion.div variants={animations.fadeInUp}>
-            <span className="inline-block rounded-full bg-mf-blue-300 px-3 py-1 text-sm font-medium text-mf-ash-300 sm:px-4 sm:py-1.5">
+            <span className="inline-block rounded-full bg-mf-blue-700 px-3 py-1 text-sm font-semibold text-mf-ash-500 sm:px-4 sm:py-1.5">
               Product Roadmap
             </span>
           </motion.div>
@@ -206,7 +206,7 @@ export default function RoadmapPage() {
 
                   <div className="relative flex h-full flex-col">
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-sm font-medium text-mf-blue-700">
+                      <span className="font-mono text-sm font-semibold text-mf-blue-700">
                         {item.quarter}
                       </span>
                       {item.quarter !== "Community" && (

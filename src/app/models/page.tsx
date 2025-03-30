@@ -118,10 +118,10 @@ export default function Page() {
             {/* Header */}
             <div className="px-4 pt-10 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between">
-                <h1 className="text-xl font-medium text-mf-ash-300 sm:text-2xl">
+                <h1 className="text-xl font-semibold text-mf-ash-500 sm:text-2xl">
                   Models
                 </h1>
-                <div className="hidden whitespace-nowrap text-2xl font-normal text-mf-ash-300 lg:block">
+                <div className="hidden whitespace-nowrap text-2xl font-semibold text-mf-ash-500 lg:block">
                   {models.data?.total ?? 0} Models
                 </div>
               </div>

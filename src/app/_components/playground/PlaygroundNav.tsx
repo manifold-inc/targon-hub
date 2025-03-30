@@ -29,8 +29,7 @@ interface PlaygroundNavProps {
 
 const baseButtonStyles =
   "flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold leading-tight focus:outline-none";
-const selectedButtonStyles =
-  "bg-mf-blue-900/10 text-mf-blue-700 border border-mf-blue-700 hover:bg-mf-milk-100";
+const selectedButtonStyles = "text-mf-ash-500 bg-mf-blue-500";
 const unselectedButtonStyles =
   "text-mf-ash-500 opacity-80 hover:bg-mf-blue-900/5";
 
@@ -89,8 +88,8 @@ export function PlaygroundNav({
             <ListboxButton
               className={clsx(
                 "flex w-full items-center justify-between rounded-full px-4 py-2.5 text-sm font-semibold lg:px-3 lg:py-2",
-                "bg-mf-blue-900/5 hover:bg-mf-milk-100 focus:outline-none",
-                current_model && "border border-mf-blue-700 text-mf-blue-700",
+                "bg-mf-blue-500 focus:outline-none",
+                current_model && "text-mf-ash",
                 !current_model && "text-mf-ash-500",
               )}
             >

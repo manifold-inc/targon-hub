@@ -1,7 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { CREDIT_PER_DOLLAR } from "@/constants";
-import Link from "next/link";
 
 interface Provider {
   name: string;
@@ -138,7 +138,7 @@ export function ProviderCostChart() {
                   Now (As of Dec 2024)
                 </div>
                 <div className="flex items-center gap-x-2 py-2">
-                <Link href="https://www.manifold.inc/">
+                  <Link href="https://www.manifold.inc/">
                     <Image
                       src="/providers/ManifoldChartLogo.svg"
                       alt="Manifold Labs"

@@ -31,9 +31,9 @@ export function StepIndicator({ steps }: StepIndicatorProps) {
                   className="absolute inset-0 flex items-center"
                   aria-hidden="true"
                 >
-                  <div className="h-0.5 w-full bg-green-500" />
+                  <div className="h-0.5 w-full bg-mf-blue-700" />
                 </div>
-                <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-green-500">
+                <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-mf-blue-700">
                   <CheckIcon
                     className="h-5 w-5 text-mf-milk-300"
                     aria-hidden="true"
@@ -46,14 +46,14 @@ export function StepIndicator({ steps }: StepIndicatorProps) {
                   className="absolute inset-0 flex items-center"
                   aria-hidden="true"
                 >
-                  <div className="h-0.5 w-full bg-gray-200" />
+                  <div className="h-0.5 w-full bg-mf-ash-300" />
                 </div>
                 <div
-                  className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-green-500 bg-mf-milk-300"
+                  className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-mf-blue-700 bg-mf-milk-300"
                   aria-current="step"
                 >
                   <span
-                    className="h-2.5 w-2.5 rounded-full bg-green-500"
+                    className="h-2.5 w-2.5 rounded-full bg-mf-blue-700"
                     aria-hidden="true"
                   />
                   <span className="whitespace-nowrap pt-16 text-sm font-semibold">
@@ -67,9 +67,9 @@ export function StepIndicator({ steps }: StepIndicatorProps) {
                   className="absolute inset-0 flex items-center"
                   aria-hidden="true"
                 >
-                  <div className="h-0.5 w-full bg-gray-200" />
+                  <div className="h-0.5 w-full bg-mf-ash-300" />
                 </div>
-                <div className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-mf-milk-300">
+                <div className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-mf-ash-300 bg-mf-milk-300">
                   <span
                     className="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300"
                     aria-hidden="true"
