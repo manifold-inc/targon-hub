@@ -160,13 +160,13 @@ export default function RoadmapPage() {
           className="mx-auto max-w-2xl text-center"
         >
           <motion.div variants={animations.fadeInUp}>
-            <span className="inline-block rounded-full bg-mf-blue-900/5 px-3 py-1 text-sm font-medium text-mf-blue-700 sm:px-4 sm:py-1.5">
+            <span className="inline-block rounded-full bg-mf-blue-300 px-3 py-1 text-sm font-medium text-mf-ash-300 sm:px-4 sm:py-1.5">
               Product Roadmap
             </span>
           </motion.div>
           <motion.h1
             variants={animations.fadeInUp}
-            className="font-display pt-4 text-3xl font-bold tracking-tight text-mf-ash-700 sm:text-4xl lg:text-6xl"
+            className="font-display pt-4 text-3xl font-semibold tracking-tight text-mf-ash-700 sm:text-4xl lg:text-6xl"
           >
             Building the future of{" "}
             <p className="text-mf-blue-700">AI infrastructure</p>

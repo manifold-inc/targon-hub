@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { CREDIT_PER_DOLLAR } from "@/constants";
+import Link from "next/link";
 
 interface Provider {
   name: string;
@@ -76,7 +77,7 @@ export function ProviderCostChart() {
         <div className="relative flex aspect-[1280/580] w-full scale-50 flex-col md:scale-100">
           <div className="flex h-full w-full grow">
             {/* Y-axis */}
-            <div className="relative flex h-full w-24 flex-col items-end pr-4 font-mono text-sm">
+            <div className="relative flex h-full w-24 flex-col items-end pr-4 font-semibold">
               <span className="my-auto whitespace-pre-wrap break-words">
                 Cost / Million Tokens
               </span>
@@ -137,12 +138,14 @@ export function ProviderCostChart() {
                   Now (As of Dec 2024)
                 </div>
                 <div className="flex items-center gap-x-2 py-2">
-                  <Image
-                    src="/providers/ManifoldChartLogo.svg"
-                    alt="Manifold Labs"
-                    width={80}
-                    height={80}
-                  />
+                <Link href="https://www.manifold.inc/">
+                    <Image
+                      src="/providers/ManifoldChartLogo.svg"
+                      alt="Manifold Labs"
+                      width={80}
+                      height={80}
+                    />
+                  </Link>
                   <div className="flex flex-col text-sm">
                     <span className="font-semibold text-mf-ash-500">
                       Manifold Labs
@@ -161,7 +164,7 @@ export function ProviderCostChart() {
 
           {/* X-axis */}
           <div className="relative h-14 w-full">
-            <div className="relative flex items-center pl-24 pt-3 font-mono text-sm">
+            <div className="relative flex items-center pl-24 pt-3 font-semibold">
               <span>50</span>
               <span className="mx-auto">Tokens Per Second</span>
               <span>400</span>
@@ -178,12 +181,14 @@ export function ProviderCostChart() {
       <div className="block lg:hidden">
         <div className="grid gap-6 px-6">
           <div className="flex items-center gap-4 rounded-lg border border-mf-blue-500 bg-mf-milk-300 p-4">
-            <Image
-              src="/manifold.png"
-              alt="Manifold Labs"
-              width={48}
-              height={48}
-            />
+            <Link href="https://www.manifold.inc/">
+              <Image
+                src="/providers/ManifoldChartLogo.svg"
+                alt="Manifold Labs"
+                width={48}
+                height={48}
+              />
+            </Link>
             <div className="font-mono">
               <div className="font-semibold">Manifold Labs</div>
               <div className="animate-pulse">

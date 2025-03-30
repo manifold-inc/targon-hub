@@ -28,7 +28,7 @@ const COMPANY_LOGOS: CompanyLogo[] = [
 export function TrustedBySection() {
   return (
     <div className="animate-slide-in-delay">
-      <div className="flex flex-col gap-4 py-8 text-center">
+      <div className="flex flex-col gap-4 py-8 pt-24 text-center">
         <p className="text-center text-2xl text-mf-ash-500 sm:text-4xl">
           Trusted By
         </p>

@@ -60,12 +60,6 @@ export default function Page() {
               method="POST"
             >
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-mf-ash-700"
-                >
-                  Email address
-                </label>
                 <div className="mt-2">
                   <input
                     id="email"
@@ -73,7 +67,7 @@ export default function Page() {
                     autoComplete="email"
                     required
                     placeholder="Email Address"
-                    className="block w-full rounded-md border-0 bg-mf-milk-700 py-1.5 pl-4 text-mf-ash-700 shadow-sm ring-1 ring-inset ring-mf-silver-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-mf-blue-700 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-mf-milk-300 py-1.5 pl-4 text-mf-ash-700 shadow-sm ring-1 ring-inset ring-mf-silver-700 placeholder:text-mf-ash-500 focus:ring-2 focus:ring-inset focus:ring-mf-blue-700 sm:text-sm sm:leading-6"
                     disabled={signIn.isLoading}
                     {...register("email", {
                       required: "Email address is required",
@@ -84,18 +78,12 @@ export default function Page() {
               </div>
 
               <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-mf-ash-700"
-                >
-                  Password
-                </label>
-                <div className="relative mt-2">
+                <div className="relative mt-10">
                   <input
                     id="password"
                     autoComplete="current-password"
                     required
-                    className="block w-full rounded-md border-0 bg-mf-milk-700 py-1.5 pl-4 text-mf-ash-700 shadow-sm ring-1 ring-inset ring-mf-silver-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-mf-blue-700 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-mf-milk-300 py-1.5 pl-4 text-mf-ash-700 shadow-sm ring-1 ring-inset ring-mf-silver-700 placeholder:text-mf-ash-500 focus:ring-2 focus:ring-inset focus:ring-mf-blue-700 sm:text-sm sm:leading-6"
                     disabled={signIn.isLoading}
                     placeholder="Password"
                     type={visable ? "text" : "password"}
@@ -125,12 +113,12 @@ export default function Page() {
               <div className="flex gap-4 pt-4">
                 <Link
                   href="/create-account"
-                  className="flex h-9 w-full items-center justify-center rounded-md border border-mf-blue-700 px-3 text-sm font-semibold leading-6 text-mf-blue-700 hover:bg-mf-blue-700/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-blue-700"
+                  className="flex h-9 w-full items-center justify-center px-3 font-semibold leading-6 text-mf-ash-500 hover:bg-mf-blue-700/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-blue-500"
                 >
                   Create an account
                 </Link>
                 <button
-                  className="flex h-9 w-full items-center justify-center rounded-md bg-mf-blue-700 px-3 text-sm font-semibold leading-6 text-mf-milk-300 shadow-sm hover:bg-mf-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-blue-700"
+                  className="flex h-9 w-full items-center justify-center rounded-md bg-mf-blue-500 px-3 font-semibold leading-6 text-mf-ash-500 shadow-sm hover:bg-mf-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-blue-500"
                   type="submit"
                   disabled={signIn.isLoading}
                 >
@@ -146,11 +134,13 @@ export default function Page() {
             <div>
               <div className="relative mt-10">
                 <div className="relative flex justify-center text-sm font-medium leading-6">
-                  <span className="px-6 text-mf-ash-700">Or Continue with</span>
+                  <span className="px-6 text-mf-ash-700 font-semibold">
+                    Or Continue with
+                  </span>
                 </div>
               </div>
 
-              <div className="mt-6">
+              <div className="mt-6 flex justify-center">
                 <Link
                   href={`/sign-in/google${
                     searchParams.get("redirect")
@@ -159,7 +149,7 @@ export default function Page() {
                         )}`
                       : ""
                   }`}
-                  className="border-1 flex w-full items-center justify-center gap-3 whitespace-nowrap rounded-md border border-gray-400 py-2"
+                  className="w-32 h-36 rounded-md bg-white flex items-center justify-center gap-3 whitespace-nowrap py-2"
                 >
                   <svg
                     className="h-5 w-5"
