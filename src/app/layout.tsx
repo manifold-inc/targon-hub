@@ -8,8 +8,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "sonner";
 
 import Countdown from "./_components/Countdown";
-import { FakeFooter } from "./_components/FakeFooter";
-import { FakeHeader } from "./_components/FakeHeader";
+import FakeFooter from "./_components/FakeFooter";
+import FakeHeader from "./_components/FakeHeader";
 import { Footer } from "./_components/footer";
 import { Header } from "./_components/header";
 import { WithGlobalProvider } from "./_components/providers";
@@ -52,14 +52,12 @@ export default function RootLayout({
             ) : (
               <>
                 <FakeHeader />
-                <div className="flex h-[calc(100vh-160px)] flex-col items-center justify-center lg:h-[calc(100vh-160px)]">
-                  <h1 className="py-16 text-xl font-bold text-mf-blue-700">
-                    THINK BIGGER
-                  </h1>
+                <div className="flex h-screen flex-col items-center justify-center">
+                  <h1 className="text-xl font-bold pb-16 text-mf-blue-700">THINK BIGGER</h1>
                   <Countdown />
-                  <div className="pb-16" />
+                  <div className="pb-16" /> 
                 </div>
-                <FakeFooter />
+                <FakeFooter /> 
               </>
             )}
           </WithGlobalProvider>
