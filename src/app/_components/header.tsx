@@ -198,7 +198,7 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-300 "
+                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100 "
                                 }
                                 href="/browse"
                               >
@@ -214,7 +214,7 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-300 "
+                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100 "
                                 }
                                 href="/models"
                               >
@@ -230,7 +230,7 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-300 "
+                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100 "
                                 }
                                 href="/models/lease"
                               >
@@ -246,7 +246,7 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group block px-4 py-4 text-mf-ash-500 hover:bg-mf-milk-300  hover:text-gray-900 lg:hidden"
+                                  "group block px-4 py-4 text-mf-ash-500 hover:bg-mf-milk-100  hover:text-mf-ash-700 lg:hidden"
                                 }
                                 href="/infrastructure"
                               >
@@ -264,7 +264,7 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group block px-4 py-4 text-mf-ash-500 hover:bg-mf-milk-300  hover:text-gray-900 lg:hidden"
+                                  "group block px-4 py-4 text-mf-ash-500 hover:bg-mf-milk-100  hover:text-mf-ash-700 lg:hidden"
                                 }
                                 href="/roadmap"
                               >
@@ -281,7 +281,7 @@ export const Header = () => {
                             </MenuItem>
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-300  lg:hidden"
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100  lg:hidden"
                                 href="/models/immunity"
                               >
                                 <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
@@ -324,7 +324,7 @@ export const Header = () => {
                           >
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-300 "
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100 "
                                 href="/infrastructure"
                               >
                                 <Server className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
@@ -338,7 +338,7 @@ export const Header = () => {
                             </MenuItem>
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-300 "
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100 "
                                 href="/roadmap"
                               >
                                 <Map className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
@@ -352,7 +352,7 @@ export const Header = () => {
                             </MenuItem>
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-300 "
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100 "
                                 href="/models/immunity"
                               >
                                 <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
@@ -414,7 +414,7 @@ export const Header = () => {
                           aria-hidden="true"
                           className="h-4 w-4 rounded-full bg-black text-mf-milk-300"
                         />
-                        <span className="text-sm font-medium text-gray-900">
+                        <span className="text-sm font-medium text-mf-ash-700">
                           $
                           {formatLargeNumber(
                             (auth.user?.credits ?? 0) / CREDIT_PER_DOLLAR,
@@ -442,7 +442,7 @@ export const Header = () => {
                                 <div className="text-sm tracking-wider text-mf-ash-500">
                                   Balance
                                 </div>
-                                <div className="font-medium text-gray-900">
+                                <div className="font-medium text-mf-ash-700">
                                   $
                                   {Number(
                                     (auth.user?.credits ?? 0) /
@@ -478,7 +478,7 @@ export const Header = () => {
                 ) : (
                   <Link
                     href="/sign-in"
-                    className="inline-flex w-20 cursor-pointer items-center justify-center font-medium text-gray-900"
+                    className="inline-flex w-20 cursor-pointer items-center justify-center font-medium text-mf-ash-700"
                   >
                     SIGN IN
                   </Link>
@@ -544,7 +544,7 @@ export const Header = () => {
                       <Link
                         href={item.slug}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="-mx-3 block px-3 py-2 text-base/7 font-semibold text-gray-900"
+                        className="-mx-3 block px-3 py-2 text-base/7 font-semibold text-mf-ash-700"
                       >
                         {item.title}
                       </Link>
@@ -564,7 +564,7 @@ export const Header = () => {
                     href="/settings"
                     prefetch={false}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-mf-ash-700"
                   >
                     SETTINGS
                   </Link>
@@ -572,7 +572,7 @@ export const Header = () => {
                     <a
                       href="/sign-out"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-mf-ash-700"
                     >
                       SIGN OUT
                     </a>
@@ -580,7 +580,7 @@ export const Header = () => {
                     <Link
                       href="/sign-in"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-mf-ash-700"
                     >
                       SIGN IN
                     </Link>

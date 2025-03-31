@@ -31,7 +31,7 @@ export function KeyboardShortcuts({ isOpen, onClose }: KeyboardShortcutsProps) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="text-lg font-semibold text-mf-ash-700">
             Keyboard Shortcuts
           </h3>
           <button
@@ -56,9 +56,9 @@ export function KeyboardShortcuts({ isOpen, onClose }: KeyboardShortcutsProps) {
                     {shortcut.keys.map((key, j) => (
                       <span key={j}>
                         {key === "+" ? (
-                          <span className="px-1 text-gray-400">{key}</span>
+                          <span className="px-1 text-mf-ash-700">{key}</span>
                         ) : (
-                          <kbd className="inline-flex min-w-[1.5rem] items-center justify-center rounded-md border border-mf-silver-700 bg-mf-milk-100 px-1.5 py-0.5 text-xs font-medium text-gray-400">
+                          <kbd className="inline-flex min-w-[1.5rem] items-center justify-center rounded-md bg-mf-blue-700/20 px-1.5 py-0.5 text-xs font-semibold text-mf-ash-700">
                             {key}
                           </kbd>
                         )}

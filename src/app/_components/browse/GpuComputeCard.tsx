@@ -33,7 +33,7 @@ export const GpuComputeCard = () => (
     {/* Map Section - Now visible on all screens */}
     <div className="xs:h-36 relative h-32 sm:h-48 lg:h-56 xl:h-64">
       <Image
-        src="/Black_on_white_dotted_world_map_vector.jpg"
+        src="/map.png"
         alt="World Map"
         className="aspect-square object-cover opacity-20"
         fill
@@ -86,7 +86,7 @@ export const GpuComputeCard = () => (
       {/* Header and Button */}
       <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
         <div>
-          <h4 className="text-base font-medium text-gray-900">
+          <h4 className="text-base font-medium text-mf-ash-700">
             High-Performance Computing
           </h4>
         </div>

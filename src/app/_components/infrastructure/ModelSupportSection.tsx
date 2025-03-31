@@ -67,7 +67,7 @@ export const ModelSupportSection = () => {
         <Code className="mx-auto h-12 w-12 p-3 text-mf-blue-700 sm:h-14 sm:w-14 lg:mx-0" />
 
         <div>
-          <h2 className="text-center text-2xl font-semibold leading-tight text-gray-900 sm:text-3xl lg:text-left">
+          <h2 className="text-center text-2xl font-semibold leading-tight text-mf-ash-700 sm:text-3xl lg:text-left">
             Model Support
           </h2>
           <p className="pt-4 text-sm leading-7 text-gray-600 sm:pt-6 sm:text-base md:text-lg">
@@ -83,7 +83,7 @@ export const ModelSupportSection = () => {
           transition={{ delay: 0.2, duration: 0.5 }}
           className="rounded-2xl border border-mf-silver-700 bg-mf-milk-300/50 p-4 backdrop-blur-sm sm:p-6"
         >
-          <h3 className="text-center font-medium text-gray-900 lg:text-left">
+          <h3 className="text-center font-medium text-mf-ash-700 lg:text-left">
             Supported Models
           </h3>
           <ul className="space-y-2 pt-4 text-sm leading-6 text-gray-600 sm:space-y-3">

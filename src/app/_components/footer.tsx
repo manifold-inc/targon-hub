@@ -116,7 +116,7 @@ export const Footer = () => {
           <div className="lg:col-span-2">
             <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
               <div>
-                <h3 className="text-sm/6 font-semibold text-gray-900">
+                <h3 className="text-sm/6 font-semibold text-mf-ash-700">
                   Browse
                 </h3>
                 <ul role="list" className="mt-4 space-y-2">
@@ -124,7 +124,7 @@ export const Footer = () => {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm/6 text-gray-600 hover:text-gray-900"
+                        className="text-sm/6 text-gray-600 hover:text-mf-ash-700"
                       >
                         {item.name}
                       </Link>
@@ -133,7 +133,7 @@ export const Footer = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="text-sm/6 font-semibold text-gray-900">
+                <h3 className="text-sm/6 font-semibold text-mf-ash-700">
                   Infrastructure
                 </h3>
                 <ul role="list" className="mt-4 space-y-2">
@@ -141,7 +141,7 @@ export const Footer = () => {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm/6 text-gray-600 hover:text-gray-900"
+                        className="text-sm/6 text-gray-600 hover:text-mf-ash-700"
                       >
                         {item.name}
                       </Link>
@@ -150,7 +150,7 @@ export const Footer = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="text-sm/6 font-semibold text-gray-900">
+                <h3 className="text-sm/6 font-semibold text-mf-ash-700">
                   Account
                 </h3>
                 <ul role="list" className="mt-4 space-y-2">
@@ -158,7 +158,7 @@ export const Footer = () => {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm/6 text-gray-600 hover:text-gray-900"
+                        className="text-sm/6 text-gray-600 hover:text-mf-ash-700"
                       >
                         {item.name}
                       </Link>
@@ -167,13 +167,15 @@ export const Footer = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="text-sm/6 font-semibold text-gray-900">Legal</h3>
+                <h3 className="text-sm/6 font-semibold text-mf-ash-700">
+                  Legal
+                </h3>
                 <ul role="list" className="mt-4 space-y-2">
                   {navigation.legal.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm/6 text-gray-600 hover:text-gray-900"
+                        className="text-sm/6 text-gray-600 hover:text-mf-ash-700"
                       >
                         {item.name}
                       </Link>

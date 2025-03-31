@@ -25,14 +25,16 @@ function CostSummaryCard({
   return (
     <div className="rounded-xl border border-mf-silver-700 bg-mf-milk-300">
       <div className="border-b border-mf-silver-700 px-6 py-4">
-        <h3 className="text-sm font-medium text-gray-900">
+        <h3 className="text-sm font-medium text-mf-ash-700">
           Model Cost Summary
         </h3>
         <p className="pt-1 text-sm text-mf-ash-500">{model}</p>
       </div>
 
       <div className="border-b border-mf-silver-700 px-6 py-4">
-        <h4 className="text-sm font-medium text-gray-900">Payment Schedule</h4>
+        <h4 className="text-sm font-medium text-mf-ash-700">
+          Payment Schedule
+        </h4>
         <div className="mt-3 space-y-3">
           <button
             onClick={() => setSelectedPayment("onetime")}
@@ -44,7 +46,7 @@ function CostSummaryCard({
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-900">
+                <p className="text-sm font-medium text-mf-ash-700">
                   One-time Payment
                 </p>
                 <p className="text-xs text-mf-ash-500">
@@ -52,7 +54,7 @@ function CostSummaryCard({
                 </p>
               </div>
               <div className="text-right">
-                <div className="text-sm font-semibold text-gray-900">
+                <div className="text-sm font-semibold text-mf-ash-700">
                   $
                   {totalCostUSD % 1 === 0
                     ? Math.floor(totalCostUSD)
@@ -76,7 +78,7 @@ function CostSummaryCard({
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-900">
+                <p className="text-sm font-medium text-mf-ash-700">
                   Weekly Subscription
                 </p>
                 <p className="text-xs text-mf-ash-500">
@@ -84,7 +86,7 @@ function CostSummaryCard({
                 </p>
               </div>
               <div className="text-right">
-                <div className="text-sm font-semibold text-gray-900">
+                <div className="text-sm font-semibold text-mf-ash-700">
                   $
                   {totalCostUSD % 1 === 0
                     ? Math.floor(totalCostUSD * 0.9)
@@ -112,7 +114,7 @@ function CostSummaryCard({
               </div>
             </div>
           </dt>
-          <dd className="text-sm font-medium text-gray-900">
+          <dd className="text-sm font-medium text-mf-ash-700">
             {requiredGPUS.toString()}
           </dd>
         </div>
@@ -120,19 +122,21 @@ function CostSummaryCard({
 
       <div className="border-t border-mf-silver-700 px-6 py-4">
         <div>
-          <h4 className="text-sm font-medium text-gray-900">Cost Breakdown</h4>
+          <h4 className="text-sm font-medium text-mf-ash-700">
+            Cost Breakdown
+          </h4>
           <p className="mt-1 text-sm text-gray-600">
             {selectedPayment === "subscription"
               ? `$${COST_PER_GPU_PER_WEEK * 0.9} per GPU per week`
               : `$${COST_PER_GPU_PER_WEEK} per GPU`}
           </p>
           <div className="mt-2 flex items-center justify-between">
-            <dt className="text-base font-medium text-gray-900">
+            <dt className="text-base font-medium text-mf-ash-700">
               {selectedPayment === "subscription"
                 ? "Weekly Cost"
                 : "Total Cost"}
             </dt>
-            <dd className="text-base font-medium text-gray-900">
+            <dd className="text-base font-medium text-mf-ash-700">
               $
               {selectedPayment === "subscription"
                 ? (totalCostUSD * 0.9) % 1 === 0
@@ -179,7 +183,7 @@ export default function PricingPage() {
   return (
     <div className="flex flex-col gap-6 pt-2">
       <div>
-        <h2 className="text-lg font-semibold text-gray-900">
+        <h2 className="text-lg font-semibold text-mf-ash-700">
           Step 2: Review Pricing
         </h2>
         <p className="mt-1 text-sm text-gray-600">

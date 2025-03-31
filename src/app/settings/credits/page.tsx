@@ -126,7 +126,7 @@ export default function CreditsPage() {
                             : Number(e.target.value.replace(/[^0-9]/g, "")),
                         )
                       }
-                      className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-mf-ash-700 ring-1 ring-inset ring-mf-silver-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                       placeholder="0"
                     />
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
@@ -198,7 +198,7 @@ export default function CreditsPage() {
                           className="mx-auto"
                         />
                       ) : (
-                        <p className="font-mono text-sm text-mf-ash-500">
+                        <p className=" text-sm text-mf-ash-500">
                           {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(0, 6)}...
                           {env.NEXT_PUBLIC_DEPOSIT_ADDRESS.slice(-6)}
                         </p>
@@ -237,7 +237,7 @@ export default function CreditsPage() {
 
                 <div className="flex flex-col gap-4 rounded-lg bg-mf-milk-100 p-4">
                   <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center sm:gap-0">
-                    <h3 className="text-sm font-medium text-gray-900">
+                    <h3 className="text-sm font-medium text-mf-ash-700">
                       TAO Payment Calculator
                     </h3>
                     <div className="flex items-center gap-2 self-start rounded-full bg-gray-200 px-3 py-1 sm:self-auto">
@@ -260,7 +260,7 @@ export default function CreditsPage() {
                             handleTaoAmountChange(e.target.value)
                           }
                           placeholder="Enter TAO amount"
-                          className="block w-full rounded-md border-0 px-4 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 [appearance:textfield] placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                          className="block w-full rounded-md border-0 px-4 py-2.5 text-mf-ash-700 ring-1 ring-inset ring-mf-silver-700 [appearance:textfield] placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                         />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-medium text-mf-ash-500">
                           TAO
@@ -309,7 +309,7 @@ export default function CreditsPage() {
           </div>
         </div>
         <div className="flex items-center justify-between py-4">
-          <div className="text-sm font-semibold leading-tight text-[#101828]">
+          <div className="text-sm font-semibold leading-tight text-mf-ash-700">
             Payment History
           </div>
           <div className="flex items-center gap-2">
@@ -333,7 +333,7 @@ export default function CreditsPage() {
             <tbody>
               {paymentHistory.data?.map((payment) => (
                 <tr key={payment.createdAt?.getTime()} className="h-12">
-                  <td className="pr-4 text-xs text-[#101828] sm:text-sm">
+                  <td className="pr-4 text-xs text-mf-ash-700 sm:text-sm">
                     <span className="hidden sm:inline">
                       {formatDate(payment.createdAt!)}
                     </span>
@@ -341,14 +341,14 @@ export default function CreditsPage() {
                       {payment.createdAt?.toLocaleDateString()}
                     </span>
                   </td>
-                  <td className="px-4 text-right text-xs text-[#101828] sm:text-sm">
+                  <td className="px-4 text-right text-xs text-mf-ash-700 sm:text-sm">
                     {showAmounts === "credits"
                       ? formatLargeNumber(payment.credits ?? 0)
                       : payment.type === "tao"
                         ? `${formatLargeNumber(payment.rao / 1e-9)} T`
                         : `$${formatLargeNumber(Math.ceil(Number(payment.credits ?? 0) / CREDIT_PER_DOLLAR))}`}
                   </td>
-                  <td className="px-4 text-right text-xs text-[#101828] sm:text-sm">
+                  <td className="px-4 text-right text-xs text-mf-ash-700 sm:text-sm">
                     <div>
                       via {payment.type === "stripe" ? "Stripe" : "TAO"}
                     </div>
