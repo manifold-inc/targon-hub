@@ -69,7 +69,7 @@ function NumberInput({
       step={step}
       value={localValue}
       onChange={handleChange}
-      className="h-9 w-16 rounded-lg border-0 px-3 text-right text-sm font-semibold text-mf-green-700 [appearance:textfield] hover:bg-mf-blue-900/10 focus:border-2 focus:border-black focus:outline-none focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+      className="h-9 w-16 rounded-lg border-0 px-3 text-right text-sm font-semibold text-mf-blue-700 [appearance:textfield] hover:bg-mf-blue-900/10 focus:border-2 focus:border-black focus:outline-none focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
     />
   );
 }
@@ -251,7 +251,7 @@ export function ParameterControls({
       <aside
         className={clsx(
           "relative hidden overflow-hidden transition-[width] duration-300 ease-in-out lg:block",
-          "border-r border-mf-silver-700 bg-mf-milk-300",
+          "border-r border-mf-silver-700 bg-mf-milk-100",
           isOpen ? "lg:w-80" : "lg:w-20",
         )}
       >
@@ -263,7 +263,7 @@ export function ParameterControls({
               : "opacity-0 lg:pointer-events-none",
           )}
         >
-          <div className="flex w-full items-center justify-between p-4 text-sm font-medium text-gray-600 hover:text-mf-green-700">
+          <div className="flex w-full items-center justify-between p-4 text-sm font-medium text-gray-600 hover:text-mf-blue-700">
             <span className="whitespace-nowrap">Model Parameters</span>
             <button
               onClick={() => {
@@ -306,12 +306,12 @@ export function ParameterControls({
                       [param.key]: parseFloat(e.target.value),
                     })
                   }
-                  className="relative h-1.5 w-full cursor-pointer appearance-none rounded-full bg-mf-blue-900/10
+                  className="relative h-1.5 w-full cursor-pointer appearance-none rounded-full bg-mf-ash-300/10
                   before:absolute before:h-1.5 before:w-[var(--range-percent)] before:rounded-l-full
-                  before:bg-mf-blue-900 before:content-[''] [&::-moz-range-progress]:h-1.5
-                  [&::-moz-range-progress]:rounded-l-full [&::-moz-range-progress]:bg-mf-blue-900 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none
-                  [&::-moz-range-thumb]:bg-mf-blue-900 [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-mf-blue-900/10 [&::-webkit-slider-thumb]:h-4
-                  [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-mf-blue-900 [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
+                  before:bg-mf-ash-300 before:content-[''] [&::-moz-range-progress]:h-1.5
+                  [&::-moz-range-progress]:rounded-l-full [&::-moz-range-progress]:bg-mf-blue-700 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none
+                  [&::-moz-range-thumb]:bg-mf-ash-300 [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-mf-blue-700/10 [&::-webkit-slider-thumb]:h-4
+                  [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-mf-ash-300 [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
                   style={
                     {
                       "--range-percent": `${((params[param.key] - param.min) / (param.max - param.min)) * 100}%`,
@@ -374,7 +374,7 @@ export function ParameterControls({
           <div className="flex h-full flex-row items-center justify-start space-x-6 overflow-x-auto p-4 text-gray-600 lg:flex-col lg:items-start lg:space-x-0 lg:space-y-6">
             <button
               onClick={() => setIsOpen(true)}
-              className="flex h-9 w-9 shrink-0 items-center justify-center transition-colors duration-200 hover:text-mf-green-700"
+              className="flex h-9 w-9 shrink-0 items-center justify-center transition-colors duration-200 hover:text-mf-blue-700"
             >
               <ChevronUp className="h-5 w-5 shrink-0" />
             </button>
@@ -382,14 +382,14 @@ export function ParameterControls({
               <button
                 key={param.key}
                 onClick={() => setIsOpen(true)}
-                className="flex h-9 w-9 shrink-0 items-center justify-center transition-colors duration-200 hover:text-mf-green-700"
+                className="flex h-9 w-9 shrink-0 items-center justify-center transition-colors duration-200 hover:text-mf-blue-700"
               >
                 <param.icon className="h-5 w-5 shrink-0" />
               </button>
             ))}
             <button
               onClick={() => setIsOpen(true)}
-              className="flex h-9 w-9 shrink-0 items-center justify-center transition-colors duration-200 hover:text-mf-green-700"
+              className="flex h-9 w-9 shrink-0 items-center justify-center transition-colors duration-200 hover:text-mf-blue-700"
             >
               <HelpCircle className="h-5 w-5 shrink-0" />
             </button>

@@ -30,10 +30,12 @@ export const env = createEnv({
     INFULX_BUCKET: z.string(),
 
     HUB_API_ESTIMATE_GPU_ENDPOINT: z.string(),
+    RELEASE_FLAG: z.string(),
   },
   client: {
     NEXT_PUBLIC_HUB_API_ENDPOINT: z.string(),
     NEXT_PUBLIC_DEPOSIT_ADDRESS: z.string(),
+    NEXT_PUBLIC_RELEASE_FLAG: z.string(),
   },
 
   runtimeEnv: {
@@ -58,6 +60,8 @@ export const env = createEnv({
     INFLUX_ORG: process.env.INFLUX_ORG,
     INFULX_BUCKET: process.env.INFLUX_BUCKET,
     HUB_API_ESTIMATE_GPU_ENDPOINT: process.env.HUB_API_ESTIMATE_GPU_ENDPOINT,
+    RELEASE_FLAG: process.env.RELEASE_FLAG,
+    NEXT_PUBLIC_RELEASE_FLAG: process.env.NEXT_PUBLIC_RELEASE_FLAG,
   },
 
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,

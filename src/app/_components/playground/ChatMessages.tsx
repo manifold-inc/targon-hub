@@ -50,7 +50,7 @@ const CodeBlock: Components["code"] = ({
         <div className="text-xs text-gray-400">{language}</div>
         <button
           onClick={handleCopy}
-          className="rounded px-1.5 py-0.5 text-gray-400 hover:bg-mf-milk-300/5 lg:px-2 lg:py-1"
+          className="rounded px-1.5 py-0.5 text-gray-400 hover:bg-mf-milk-100/5 lg:px-2 lg:py-1"
         >
           {copied ? (
             <Check className="h-3.5 w-3.5 text-green-500 lg:h-4 lg:w-4" />

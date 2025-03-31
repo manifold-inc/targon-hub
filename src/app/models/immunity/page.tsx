@@ -31,7 +31,7 @@ export default function ImmunityTimeline() {
           <div className="text-xl font-semibold leading-loose text-mf-ash-700 sm:text-2xl">
             Model Immunity Timeline
           </div>
-          <div className="whitespace-nowrap text-xl leading-loose text-mf-ash-300 sm:text-2xl">
+          <div className="whitespace-nowrap text-xl font-semibold leading-loose text-mf-ash-300 sm:text-2xl">
             {models?.length} Live Models
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function ImmunityTimeline() {
         {/* Timeline */}
         <div className="relative animate-slide-in-delay pt-12">
           {/* Line - left on mobile, center on desktop */}
-          <div className="absolute bottom-0 left-8 top-12 w-0.5 bg-mf-silver-700/30 sm:left-1/2 sm:-translate-x-1/2" />
+          <div className="absolute bottom-0 left-8 top-12 w-0.5 bg-mf-blue-300 sm:left-1/2 sm:-translate-x-1/2" />
 
           {filteredModels?.map((model, index) => (
             <div
@@ -84,12 +84,12 @@ export default function ImmunityTimeline() {
                 }`}
               >
                 {/* Timeline dot */}
-                <div className="absolute left-6 h-4 w-4 rounded-full border-2 border-blue-300 bg-mf-milk-300 sm:left-1/2 sm:-translate-x-1/2" />
+                <div className="absolute left-6 h-4 w-4 rounded-full border-2 border-mf-blue-500 bg-mf-blue-500 sm:left-1/2 sm:-translate-x-1/2" />
 
                 {/* Content card */}
                 <Link
                   href={`/models/${encodeURIComponent(model.name ?? "")}`}
-                  className="block rounded-lg border border-mf-silver-700 bg-mf-milk-300 p-3 shadow transition-shadow hover:shadow-md sm:p-4"
+                  className="block rounded-lg border border-mf-silver-700 bg-mf-milk-300 p-3 shadow transition-shadow hover:bg-mf-milk-100 hover:shadow-md sm:p-4"
                 >
                   <div className="flex flex-col gap-2">
                     <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">

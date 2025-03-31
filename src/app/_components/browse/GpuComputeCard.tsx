@@ -33,7 +33,7 @@ export const GpuComputeCard = () => (
     {/* Map Section - Now visible on all screens */}
     <div className="xs:h-36 relative h-32 sm:h-48 lg:h-56 xl:h-64">
       <Image
-        src="/Black_on_white_dotted_world_map_vector.jpg"
+        src="/map.png"
         alt="World Map"
         className="aspect-square object-cover opacity-20"
         fill

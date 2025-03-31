@@ -79,7 +79,7 @@ export const ModelLeasingSection = () => {
               >
                 <Link
                   href={`/models/${encodeURIComponent(model.name!)}`}
-                  className="relative z-10 block rounded-lg border border-mf-silver-700 p-4 transition-all duration-200 hover:border-mf-green-700/20 hover:bg-mf-milk-300/80"
+                  className="relative z-10 block rounded-lg border border-mf-silver-700 p-4 transition-all duration-200 hover:border-mf-green-700/20 hover:bg-mf-milk-100/80"
                 >
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center justify-between gap-2">

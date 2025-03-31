@@ -24,7 +24,6 @@ export default function Example() {
   const keys = reactClient.core.getApiKeys.useQuery();
   const first_key = keys.data?.[0]?.key ?? "";
   const [selected, setSelected] = useState<string | null>(null);
-  const [isTemporarilyUnavailable] = useState(true);
   const [isLoading, setIsloading] = useState(false);
   const [text, setText] = useState("");
   const [chats, setChats] = useState<Array<ChatCompletionMessageParam>>([]);
@@ -183,7 +182,7 @@ export default function Example() {
 
   return (
     <>
-      <div className="flex min-h-[calc(100vh-3rem)] flex-col pt-4 lg:flex-row">
+      <div className="flex min-h-[calc(100vh-3rem)] flex-col bg-mf-milk-100 pt-4 lg:flex-row">
         {/* Parameter Controls - Move before main content for desktop */}
         <ParameterControls
           params={params}
@@ -208,18 +207,7 @@ export default function Example() {
           {/* Content Area */}
           {nav === "ui" ? (
             <div className="relative flex flex-1 flex-col">
-              {isTemporarilyUnavailable ? (
-                <div className="absolute inset-0 bottom-16 flex items-center justify-center">
-                  <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-6 text-center">
-                    <h2 className="mb-2 text-xl font-semibold text-yellow-800">
-                      Temporarily Unavailable
-                    </h2>
-                    <p className="text-yellow-700">
-                      We&apos;ll be back March 31st. Thanks for your patience!
-                    </p>
-                  </div>
-                </div>
-              ) : chats.length === 0 ? (
+              {chats.length === 0 ? (
                 <div className="absolute inset-0 bottom-16">
                   <EmptyState startChat={startChat} />
                 </div>
@@ -240,7 +228,6 @@ export default function Example() {
                   onKeyDown={handleKeyDown}
                   onShowShortcuts={() => setShowShortcuts(true)}
                   hasChat={chats.length > 0}
-                  disabled={isTemporarilyUnavailable}
                 />
               </div>
             </div>
