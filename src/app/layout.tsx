@@ -23,7 +23,7 @@ const blinker = Blinker({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://targon.con"),
+  metadataBase: new URL("https://targon.com"),
   title: "Targon",
   description: "Run inference on AI Models lightning fast at low cost",
   icons: [{ rel: "icon", url: "/TargonLogo.svg" }],
