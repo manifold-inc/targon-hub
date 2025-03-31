@@ -53,11 +53,13 @@ export default function RootLayout({
               <>
                 <FakeHeader />
                 <div className="flex h-screen flex-col items-center justify-center">
-                  <h1 className="text-xl font-bold pb-16 text-mf-blue-700">THINK BIGGER</h1>
+                  <h1 className="pb-16 text-xl font-bold text-mf-blue-700">
+                    THINK BIGGER
+                  </h1>
                   <Countdown />
-                  <div className="pb-16" /> 
+                  <div className="pb-16" />
                 </div>
-                <FakeFooter /> 
+                <FakeFooter />
               </>
             )}
           </WithGlobalProvider>
