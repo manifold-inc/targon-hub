@@ -33,7 +33,7 @@ export function GlobeAnimation() {
       startLng: (Math.random() - 0.5) * 360,
       endLat: (Math.random() - 0.5) * 180,
       endLng: (Math.random() - 0.5) * 360,
-      color: "#1C3836",
+      color: "#52ABFF",
     }));
     setArcsData(newArcs);
   }, []);

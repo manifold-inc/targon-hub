@@ -13,14 +13,14 @@ export const slideLeftVariants = {
 
 //  Reusable card styles
 const cardClasses =
-  "rounded-2xl border border-gray-100 bg-mf-milk-500/50 p-6 backdrop-blur-sm";
+  "rounded-2xl border border-mf-silver-700 bg-mf-milk-300/50 p-6 backdrop-blur-sm";
 const statCardClasses =
-  "rounded-2xl border border-gray-100 bg-mf-milk-500/50 p-4 sm:p-6";
+  "rounded-2xl border border-mf-silver-700 bg-mf-milk-300/50 p-4 sm:p-6";
 
 //  Reusable stat card component
 const StatCard = ({ value, label }: { value: string; label: string }) => (
   <div className={statCardClasses}>
-    <div className="text-2xl font-semibold text-[#142900] sm:text-3xl">
+    <div className="text-2xl font-semibold text-mf-blue-700 sm:text-3xl">
       {value}
     </div>
     <div className="pt-1 text-[10px] text-gray-600 sm:pt-2 sm:text-xs md:text-sm">
@@ -47,10 +47,10 @@ const FeatureCard = ({
     transition={{ delay, duration: 0.5 }}
     className={cardClasses}
   >
-    <h3 className="text-center font-medium text-gray-900 lg:text-left">
+    <h3 className="text-center font-medium text-mf-ash-700 lg:text-left">
       {title}
     </h3>
-    <ul className="mt-4 list-inside list-disc space-y-3 text-sm leading-6 text-gray-600 marker:text-[#142900]">
+    <ul className="mt-4 list-inside list-disc space-y-3 text-sm leading-6 text-gray-600 marker:text-mf-blue-700">
       {items.map((item, index) => (
         <li key={index}>{item}</li>
       ))}
@@ -77,11 +77,11 @@ export const NetworkArchitectureSection = () => {
             transition={{ duration: 0.5 }}
             className="space-y-6 sm:space-y-8"
           >
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#142900]/10 sm:h-14 sm:w-14 lg:mx-0">
-              <Network className="h-6 w-6 text-[#142900] sm:h-7 sm:w-7" />
+            <div className="mx-auto flex h-12 w-12 items-center justify-center sm:h-14 sm:w-14 lg:mx-0">
+              <Network className="h-6 w-6 text-mf-blue-700 sm:h-7 sm:w-7" />
             </div>
             <div>
-              <h2 className="text-center text-2xl font-semibold leading-tight text-gray-900 sm:text-3xl lg:text-left">
+              <h2 className="text-center text-2xl font-semibold leading-tight text-mf-ash-700 sm:text-3xl lg:text-left">
                 Network Architecture
               </h2>
               <p className="pt-4 text-sm leading-7 text-gray-600 sm:pt-6 sm:text-base md:text-lg">
@@ -111,14 +111,14 @@ export const NetworkArchitectureSection = () => {
           </motion.div>
         </div>
         <div className="relative lg:pt-12">
-          <div className="absolute -inset-x-4 -bottom-16 top-0 rounded-3xl bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent" />
+          <div className="absolute -inset-x-4 -bottom-16 top-0 rounded-3xl" />
           <div className="relative space-y-6 sm:space-y-8">
             {/* Large screens */}
-            <div className="hidden aspect-[3/2] overflow-hidden rounded-2xl border border-gray-100 bg-mf-milk-500/50 shadow-xl sm:aspect-[4/3] lg:block xl:hidden">
+            <div className="hidden aspect-[3/2] overflow-hidden rounded-2xl border border-mf-silver-700 bg-mf-milk-300/50 shadow-xl sm:aspect-[4/3] lg:block xl:hidden">
               <NetworkAnimation variant="compact" />
             </div>
             {/* Larger screens -- not the biggest fan of doing it like this */}
-            <div className="hidden aspect-[3/2] overflow-hidden rounded-2xl border border-gray-100 bg-mf-milk-500/50 shadow-xl sm:aspect-[4/3] xl:block">
+            <div className="hidden aspect-[3/2] overflow-hidden rounded-2xl border border-mf-silver-700 bg-mf-milk-300/50 shadow-xl sm:aspect-[4/3] xl:block">
               <NetworkAnimation variant="default" />
             </div>
             <motion.div

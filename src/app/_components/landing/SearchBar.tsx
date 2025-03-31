@@ -53,7 +53,7 @@ export default function SearchBar() {
         <div className="pointer-events-none absolute inset-y-0 left-5 flex items-center"></div>
         <ComboboxInput
           name="search_input"
-          className="text-md placeholder:text-mf-silver flex h-9 w-full items-center rounded-lg border-mf-milk-700 bg-mf-milk-500 pb-3 pl-4 pr-8 pt-3 text-sm leading-tight ring-0 focus:border-mf-night-300 focus:ring-0"
+          className="text-md placeholder:text-mf-silver flex h-9 w-full items-center rounded-lg border-mf-milk-700 bg-mf-milk-300 pb-3 pl-4 pr-8 pt-3 text-sm leading-tight ring-0 focus:border-mf-blue-700 focus:ring-0"
           placeholder="Search models"
           displayValue={(model: { name: string } | null) => model?.name ?? ""}
           onChange={(event) => setQuery(event.target.value)}
@@ -81,7 +81,7 @@ export default function SearchBar() {
                 <ComboboxOption
                   key={model.name}
                   value={model.name}
-                  className="group flex cursor-pointer select-none items-center gap-2 bg-mf-milk-500 px-4 py-2 hover:bg-mf-silver-500"
+                  className="group flex cursor-pointer select-none items-center gap-2 bg-mf-milk-300 px-4 py-2 hover:bg-mf-silver-500"
                 >
                   <span>{model.name}</span>
                 </ComboboxOption>

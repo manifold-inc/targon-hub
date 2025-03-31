@@ -52,7 +52,7 @@ export function ModelTabs() {
     <div className="flex animate-slide-in-delay flex-col gap-8">
       <TabGroup>
         <TabList className="relative inline-flex h-10 w-full items-center justify-start gap-2 overflow-hidden overflow-x-scroll rounded-xl p-2 px-2">
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-mf-green-700/5 via-transparent to-transparent" />
           <div className="absolute inset-0 bg-mf-silver-500" />
           <div className="relative z-10 flex w-full items-center gap-2">
             {endpoints.map((endpoint, index) => (
@@ -60,8 +60,8 @@ export function ModelTabs() {
                 key={index}
                 className={`flex h-fit w-32 items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-semibold leading-tight focus:border-mf-milk-500 focus:outline-none focus:ring-2 focus:ring-mf-milk-500 ${
                   selectedIndex === index
-                    ? "bg-mf-milk-500 ring-2 ring-mf-milk-500"
-                    : "hover:bg-mf-milk-500 hover:ring-2 hover:ring-mf-milk-500"
+                    ? "bg-mf-milk-300 ring-2 ring-mf-milk-500"
+                    : "hover:bg-mf-milk-100 hover:ring-2 hover:ring-mf-milk-500"
                 }`}
                 onClick={() => setSelectedIndex(index)}
               >
@@ -82,9 +82,9 @@ export function ModelTabs() {
         </TabList>
       </TabGroup>
 
-      <div className="relative mx-auto w-full overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-500">
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-mf-milk-500" />
+      <div className="relative mx-auto w-full overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-300">
+        <div className="absolute inset-0 bg-gradient-to-tr from-mf-green-700/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-mf-milk-300" />
 
         <div className="relative h-96 overflow-auto sm:h-auto sm:overflow-visible">
           <div className="sticky top-0 z-10 flex items-center justify-between p-2 backdrop-blur-md sm:p-3">
