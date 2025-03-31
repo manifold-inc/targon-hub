@@ -94,7 +94,7 @@ export default function Page() {
               <h2 className="text-lg font-medium text-mf-ash-300">Filters</h2>
               <button
                 onClick={() => setIsMobileOpen(false)}
-                className="rounded-lg p-2 text-mf-ash-300 hover:bg-mf-milk-300"
+                className="rounded-lg p-2 text-mf-ash-300 hover:bg-mf-milk-100"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -118,10 +118,10 @@ export default function Page() {
             {/* Header */}
             <div className="px-4 pt-10 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between">
-                <h1 className="text-xl font-medium text-mf-ash-300 sm:text-2xl">
+                <h1 className="text-xl font-semibold text-mf-ash-500 sm:text-2xl">
                   Models
                 </h1>
-                <div className="hidden whitespace-nowrap text-2xl font-normal text-mf-ash-300 lg:block">
+                <div className="hidden whitespace-nowrap text-2xl font-semibold text-mf-ash-500 lg:block">
                   {models.data?.total ?? 0} Models
                 </div>
               </div>
@@ -148,7 +148,7 @@ export default function Page() {
               <div className="flex items-center justify-between lg:hidden">
                 <button
                   onClick={() => setIsMobileOpen((s) => !s)}
-                  className="inline-flex items-center gap-2 rounded-lg border border-mf-silver-700 bg-mf-milk-300 px-3 py-2 text-sm font-medium text-mf-ash-300 transition-colors hover:bg-mf-milk-300"
+                  className="inline-flex items-center gap-2 rounded-lg border border-mf-silver-700 bg-mf-milk-300 px-3 py-2 text-sm font-medium text-mf-ash-300 transition-colors hover:bg-mf-milk-100"
                 >
                   <Filter className="h-4 w-4 text-mf-ash-300" />
                   <span>Filters</span>

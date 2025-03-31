@@ -23,7 +23,7 @@ export const GetStartedSection = () => {
   return (
     <motion.section {...fadeInAnimation} className="pb-12 sm:pb-24 lg:pb-32">
       <div className="flex flex-col items-center text-center">
-        <h2 className="text-2xl font-semibold leading-tight text-gray-900 sm:text-3xl">
+        <h2 className="text-2xl font-semibold leading-tight text-mf-ash-700 sm:text-3xl">
           Ready to Get Started?
         </h2>
         <p className="pt-4 text-sm leading-7 text-gray-600 sm:pt-6 sm:text-base md:text-lg">
@@ -39,7 +39,7 @@ export const GetStartedSection = () => {
                 ${
                   primary
                     ? "bg-mf-blue-900 text-mf-milk-300 hover:bg-[#1e3b00]"
-                    : "border border-mf-green-700 text-mf-green-700 hover:bg-mf-blue-900/5"
+                    : "border border-mf-blue-700 text-mf-blue-700 hover:bg-mf-blue-900/5"
                 }`}
             >
               {text}

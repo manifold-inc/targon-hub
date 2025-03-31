@@ -98,7 +98,7 @@ function MetricCard({
       <div className="absolute inset-0 bg-gradient-to-tr from-mf-green-700/5 via-transparent to-transparent" />
       <div className="absolute inset-0 bg-mf-milk-300" />
       <div className="relative z-10 p-2 sm:p-4">
-        <h3 className="pb-4 text-2xl font-light text-gray-900 sm:text-3xl lg:text-4xl">
+        <h3 className="pb-4 text-2xl font-light text-mf-ash-700 sm:text-3xl lg:text-4xl">
           {title}
         </h3>
         <div className="flex items-baseline gap-1 pb-2 text-mf-blue-700 group-hover:animate-pulse">

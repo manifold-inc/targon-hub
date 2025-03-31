@@ -32,7 +32,7 @@ export default function SettingsLayout({
   const pathname = usePathname();
 
   return (
-    <div className="flex min-h-[calc(100vh-4rem)] flex-col pt-7 lg:flex-row">
+    <div className="flex min-h-[calc(100vh-4rem)] flex-col bg-mf-milk-100 pt-7 lg:flex-row">
       {/* Mobile Navigation */}
       <div className="border-b border-mf-silver-700 lg:hidden">
         <nav className="flex flex-wrap items-center justify-center gap-2 p-4">
@@ -44,8 +44,8 @@ export default function SettingsLayout({
                 href={tab.href}
                 className={`flex h-10 items-center gap-2.5 rounded-full px-4 py-2 ${
                   isActive
-                    ? "mf-milk-300 text-gray-900 shadow-sm"
-                    : "hover:mf-milk-300/50 text-gray-600 hover:text-gray-900"
+                    ? "mf-milk-300 text-mf-ash-700 shadow-sm"
+                    : "hover:mf-milk-300/50 text-gray-600 hover:text-mf-ash-700"
                 }`}
               >
                 <tab.icon className="h-4.5 w-4.5" />
@@ -59,7 +59,7 @@ export default function SettingsLayout({
       </div>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden w-64 border-mf-silver-700 bg-mf-milk-300 lg:block">
+      <aside className="hidden w-64 border-mf-silver-700 lg:block">
         <nav className="p-4">
           {tabs.map((tab, index) => {
             const isActive = pathname === tab.href;
@@ -74,15 +74,15 @@ export default function SettingsLayout({
                 <Link
                   href={tab.href}
                   className={clsx(
-                    "relative z-10 mb-2 block rounded-lg border border-gray-100 p-4 transition-all duration-200",
+                    "relative z-10 mb-2 block rounded-lg p-4 transition-all duration-200",
                     isActive
-                      ? "mf-milk-300"
-                      : "hover:border-mf-green-700/20 hover:bg-mf-milk-300/80",
+                      ? "border border-mf-silver-700 bg-mf-milk-300"
+                      : "hover:border-mf-green-700/20 hover:bg-mf-milk-100/80",
                   )}
                 >
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-2 text-sm font-medium text-gray-900">
+                      <div className="flex items-center gap-2 text-sm font-medium text-mf-ash-700">
                         <tab.icon className="h-5 w-5" />
                         {tab.label}
                       </div>
@@ -97,7 +97,7 @@ export default function SettingsLayout({
 
       {/* Main Content */}
       <main className="flex-1 p-4">
-        <div className="rounded-xl border bg-mf-milk-300 p-6">{children}</div>
+        <div className="p-6">{children}</div>
       </main>
     </div>
   );

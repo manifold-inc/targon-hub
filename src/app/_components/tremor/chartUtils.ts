@@ -32,7 +32,7 @@ export const chartColors = {
     bg: "mf-milk-3000",
     stroke: "stroke-gray-500",
     fill: "fill-gray-500",
-    text: "text-gray-500",
+    text: "text-mf-ash-500",
   },
   cyan: {
     bg: "bg-cyan-500",
@@ -90,7 +90,7 @@ export const getColorClassName = (
     bg: "mf-milk-3000",
     stroke: "stroke-gray-500",
     fill: "fill-gray-500",
-    text: "text-gray-500",
+    text: "text-mf-ash-500",
   };
   return chartColors[color]?.[type] ?? fallbackColor[type];
 };
