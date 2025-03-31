@@ -91,7 +91,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
   }
 
   return (
-    <div className="rounded-md border border-gray-200 bg-white p-2 text-xs shadow-sm">
+    <div className="rounded-md border border-mf-silver-700 bg-mf-milk-300 p-2 text-xs shadow-sm">
       <p className="mb-1 font-medium text-gray-600">
         {new Date(label).toLocaleDateString("en-US", {
           month: "numeric",
@@ -254,17 +254,17 @@ export default function SettingsPage() {
 
   return (
     <div>
-      <h2 className="text-center text-2xl font-semibold text-gray-900 sm:text-3xl lg:text-left">
+      <h2 className="text-center text-2xl font-semibold text-mf-ash-700 sm:text-3xl lg:text-left">
         Dashboard
       </h2>
 
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {/* Account Info Panel */}
-        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6">
+        <div className="col-span-2 rounded-2xl border border-mf-silver-700 bg-mf-milk-300 p-6">
           <h3 className="mb-4 text-lg font-semibold">Account</h3>
           <div className="flex flex-col">
             <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-white shadow">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 bg-mf-blue-500">
                 <User className="w-13 h-13" />
               </div>
               <div className="text-sm text-black">{user.data?.email}</div>
@@ -272,10 +272,10 @@ export default function SettingsPage() {
             <div className="flex flex-wrap gap-2">
               <a
                 href="/sign-out"
-                className="inline-flex h-8 items-center justify-center gap-1 rounded-full px-3 py-2 hover:bg-blue-50"
+                className="inline-flex h-8 items-center justify-center gap-1 rounded-full bg-mf-white px-3 py-2 text-mf-ash-700"
               >
-                <span className="text-sm font-semibold leading-tight text-[#1d4ed8]">
-                  Logout
+                <span className="text-sm font-semibold leading-tight">
+                  Sign Out
                 </span>
               </a>
             </div>
@@ -283,36 +283,36 @@ export default function SettingsPage() {
         </div>
 
         {/* API Key Panel */}
-        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
+        <div className="col-span-2 rounded-2xl border border-mf-silver-700 bg-mf-milk-300 p-6 lg:col-span-1">
           <h3 className="mb-6 text-lg font-semibold">
             <Link href="/settings/keys">API Key</Link>
           </h3>
           <div
-            className="group relative mb-6 cursor-pointer rounded-xl border border-gray-100 bg-gray-50 p-4 transition-all hover:border-gray-200 hover:bg-gray-100"
+            className="group relative mb-6 cursor-pointer rounded-xl border border-mf-silver-700 bg-mf-milk-100 p-4 transition-all hover:border-mf-silver-700"
             onClick={() => {
               void copyToClipboard(keys.data?.[0]?.key ?? "");
               toast.success("Copied API Key to Clipboard");
             }}
           >
             <div className="flex items-center justify-between gap-3">
-              <p className="truncate font-mono text-sm text-gray-600">
+              <p className="truncate  text-sm text-gray-600">
                 {keys.data?.[0]?.key || "No API key"}
               </p>
               <Copy className="h-4 w-4 flex-shrink-0 text-gray-400 transition-colors group-hover:text-gray-600" />
             </div>
           </div>
-          <div className="border-t border-gray-100 pt-4">
+          <div className="border-t border-mf-silver-700 pt-4">
             <div className="flex flex-col items-center justify-center gap-2">
               <Link
                 href="/settings/keys"
-                className="flex w-fit items-center gap-1 rounded-full px-2.5 py-1 text-sm font-medium text-[#1d4ed8] transition-colors hover:bg-blue-50"
+                className="flex w-fit items-center gap-1 rounded-full px-2.5 py-1 text-sm font-medium text-mf-blue-700 transition-colors hover:bg-blue-50"
                 prefetch={false}
               >
                 View All Keys
               </Link>
 
               <button
-                className="hidden w-fit items-center gap-2 rounded-full px-2.5 py-1 text-sm text-gray-500 transition-colors hover:bg-gray-50 xl:flex"
+                className="hover:mf-milk-300 hidden w-fit items-center gap-2 rounded-full px-2.5 py-1 text-sm text-mf-ash-500 transition-colors xl:flex"
                 onClick={() => {
                   void copyToClipboard(
                     `${env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1`,
@@ -320,7 +320,7 @@ export default function SettingsPage() {
                   toast.success("Copied URL to Clipboard");
                 }}
               >
-                <span className="font-mono">
+                <span className="">
                   Endpoint: {env.NEXT_PUBLIC_HUB_API_ENDPOINT}/v1
                 </span>
               </button>
@@ -329,7 +329,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Credits Panel */}
-        <div className="col-span-2 rounded-2xl border border-gray-200 bg-white bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
+        <div className="col-span-2 rounded-2xl border border-mf-silver-700 bg-mf-milk-300 p-6 lg:col-span-1">
           <h3 className="pb-8 text-lg font-semibold">
             <Link href="/settings/credits">Credits</Link>
           </h3>
@@ -339,7 +339,7 @@ export default function SettingsPage() {
               {formatLargeNumber((user.data?.credits ?? 0) / CREDIT_PER_DOLLAR)}
             </p>
             <Link
-              className="mt-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-sm text-black hover:bg-gray-50"
+              className="inline-flex h-8 items-center justify-center gap-1 rounded-full bg-mf-white px-3 py-2 text-sm font-semibold text-mf-ash-700"
               href="/settings/credits"
             >
               Add Credits
@@ -348,7 +348,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Activity Panel */}
-        <div className="col-span-2 row-span-2 h-[400px] rounded-2xl border border-gray-200 bg-white bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent p-6">
+        <div className="col-span-2 row-span-2 h-[400px] rounded-2xl border border-mf-silver-700 bg-mf-milk-300 p-6">
           <div className="mb-4 flex flex-row items-center justify-between">
             <h3 className="text-lg font-semibold">
               <Link href="/settings/activity">Activity</Link>
@@ -356,7 +356,7 @@ export default function SettingsPage() {
 
             <div className="flex items-center gap-2">
               <Menu as="div" className="relative">
-                <MenuButton className="flex items-center gap-2 rounded-full border border-gray-200 px-3 py-1 text-sm text-gray-700 hover:bg-gray-50">
+                <MenuButton className="hover:mf-milk-300 flex items-center gap-2 rounded-full border border-mf-silver-700 px-3 py-1 text-sm text-mf-ash-500">
                   {selectedModels.length === 0 ? (
                     <>
                       Models
@@ -370,7 +370,7 @@ export default function SettingsPage() {
                   )}
                 </MenuButton>
 
-                <MenuItems className="absolute right-0 top-full z-10 mt-1 w-96 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+                <MenuItems className="absolute right-0 top-full z-10 mt-1 w-96 rounded-lg border border-mf-silver-700 bg-mf-milk-300 py-1 shadow-lg">
                   {getUniqueModels().map((model) => (
                     <MenuItem key={model}>
                       {() => (
@@ -385,7 +385,7 @@ export default function SettingsPage() {
                               }
                             });
                           }}
-                          className={`flex w-full items-center px-4 py-2 text-sm text-gray-700`}
+                          className={`flex w-full items-center px-4 py-2 text-sm text-mf-ash-500`}
                         >
                           <div className="flex items-center gap-2">
                             <div
@@ -408,7 +408,7 @@ export default function SettingsPage() {
                           onClick={() => {
                             setSelectedModels([]);
                           }}
-                          className={`w-full border-t border-gray-100 px-4 py-2 text-sm text-gray-500`}
+                          className={`w-full border-t border-mf-silver-700 px-4 py-2 text-sm text-mf-ash-500`}
                         >
                           Clear all
                         </button>
@@ -468,13 +468,13 @@ export default function SettingsPage() {
               </ResponsiveContainer>
             </div>
           ) : (
-            <div className="flex h-72 items-center justify-center text-gray-500">
+            <div className="flex h-72 items-center justify-center text-mf-ash-500">
               No activity yet
             </div>
           )}
         </div>
         {/* Links Panel */}
-        <div className="col-span-2 flex items-center rounded-2xl border border-gray-200 bg-white bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent p-6 lg:col-span-1">
+        <div className="col-span-2 flex items-center rounded-2xl border border-mf-silver-700 bg-mf-milk-300 p-6 lg:col-span-1">
           <div
             className={`grid grid-cols-1 ${!showSS58Input ? "sm:grid-cols-2" : ""} w-full gap-4`}
           >
@@ -514,7 +514,7 @@ export default function SettingsPage() {
                         type="text"
                         value={ss58Address}
                         onChange={(e) => setSS58Address(e.target.value)}
-                        className="block h-8 w-full rounded-md border-0 px-3 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-xs placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+                        className="block h-8 w-full rounded-md border-0 px-3 py-1.5 text-mf-ash-700 ring-1 ring-inset ring-mf-silver-700 placeholder:text-xs placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
                         placeholder="Enter SS58 address"
                       />
                     </div>
@@ -524,7 +524,7 @@ export default function SettingsPage() {
                           setShowSS58Input(false);
                           setSS58Address("");
                         }}
-                        className="flex h-8 items-center rounded-md border border-gray-200 bg-white px-3 py-2 shadow-sm hover:bg-gray-50"
+                        className="hover:mf-milk-300 flex h-8 items-center rounded-md border border-mf-silver-700 bg-mf-milk-300 px-3 py-2 shadow-sm"
                       >
                         <span className="flex items-center gap-2 text-sm font-semibold leading-tight text-black">
                           Cancel
@@ -535,7 +535,7 @@ export default function SettingsPage() {
                         disabled={isLinking || !ss58Address}
                         className="flex h-8 items-center rounded-md border border-gray-800 bg-[#101828] px-3 py-2 shadow-sm hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <span className="flex items-center gap-2 text-sm font-semibold leading-tight text-white">
+                        <span className="flex items-center gap-2 text-sm font-semibold leading-tight text-mf-milk-300">
                           {isLinking ? (
                             <>
                               <Loader2 className="h-4 w-4 animate-spin" />

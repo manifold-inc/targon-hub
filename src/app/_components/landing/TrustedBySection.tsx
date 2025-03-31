@@ -14,7 +14,7 @@ const COMPANY_LOGOS: CompanyLogo[] = [
     link: "https://www.dippy.ai/",
   },
   {
-    src: "/companies/sybil.png",
+    src: "/companies/sybil.svg",
     alt: "Sybil",
     link: "https://sybil.com/",
   },
@@ -28,18 +28,18 @@ const COMPANY_LOGOS: CompanyLogo[] = [
 export function TrustedBySection() {
   return (
     <div className="animate-slide-in-delay">
-      <div className="flex flex-col gap-4 py-8 text-center">
-        <p className="text-center text-2xl text-gray-600 sm:text-4xl">
+      <div className="flex flex-col gap-4 py-8 pt-24 text-center">
+        <p className="text-center text-2xl text-mf-ash-500 sm:text-4xl">
           Trusted By
         </p>
-        <p className="text-center text-gray-600">
+        <p className="text-center text-mf-ash-300 sm:text-lg">
           Leading companies building on Targon
         </p>
       </div>
 
       <div className="relative m-auto w-full overflow-hidden py-4">
-        <div className="absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-[#fafafa] to-transparent" />
-        <div className="absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-[#fafafa] to-transparent" />
+        <div className="absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-mf-milk-300 to-transparent" />
+        <div className="absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-mf-milk-300 to-transparent" />
 
         <div className="flex w-[calc(250px*9)] animate-scroll-horizontal hover:animation-play-state-paused">
           {[1, 2, 3].map((setNum) => (
@@ -60,7 +60,7 @@ function LogoCard({ src, alt, link }: CompanyLogo) {
     <div className="slide flex w-[250px] items-center justify-center px-8">
       <Link
         className="flex h-24 w-full items-center justify-center rounded-lg 
-                 border border-gray-200 bg-white p-2 shadow-sm transition-all duration-300 
+                 border border-mf-silver-700 bg-mf-milk-300 p-2 shadow-sm transition-all duration-300 
                  hover:shadow-md"
         href={link}
       >
@@ -69,7 +69,9 @@ function LogoCard({ src, alt, link }: CompanyLogo) {
             src={src}
             alt={alt}
             fill
-            className="object-contain opacity-60 transition-opacity duration-300 hover:opacity-100"
+            className={`object-contain opacity-60 grayscale transition-opacity duration-300 hover:opacity-100 ${
+              alt === "Sybil" ? "p-5" : ""
+            } ${alt === "Dippy" ? "p-4" : ""}`}
           />
         </div>
       </Link>

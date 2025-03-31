@@ -29,7 +29,7 @@ const Badge = ({ children }: { children: React.ReactNode }) => (
     transition={{ delay: 0.2, duration: 0.5 }}
     className="inline-block"
   >
-    <span className="mb-4 inline-block rounded-full bg-[#142900]/5 px-4 py-1.5 text-sm font-medium text-mf-green">
+    <span className="mb-4 inline-block rounded-full bg-mf-blue-900/5 px-4 py-1.5 text-sm font-medium text-mf-blue-700">
       {children}
     </span>
   </motion.div>
@@ -42,7 +42,7 @@ const Title = ({ children }: { children: React.ReactNode }) => (
     whileInView="visible"
     viewport={{ once: true }}
     transition={{ delay: 0.3, duration: 0.5 }}
-    className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:text-6xl"
+    className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-mf-ash-700 sm:text-4xl md:text-5xl lg:text-6xl"
   >
     {children}
   </motion.h2>
@@ -83,7 +83,7 @@ export const HeroSection = () => {
           >
             <Badge>Understand Targon</Badge>
             <Title>
-              AI <span className="italic text-mf-green">Evolved</span>
+              AI <span className="italic text-mf-blue-700">Evolved</span>
             </Title>
             <Description>
               Operating on Bittensor&apos;s Subnet 4, Targon provides seamless

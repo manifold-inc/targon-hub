@@ -18,18 +18,20 @@ export const CardContent = ({
   <div className="relative flex h-full flex-col">
     <div className="flex-1">
       <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <h3 className="text-lg font-light text-gray-900 sm:text-xl">{title}</h3>
+        <h3 className="text-lg font-semibold text-mf-ash-700 sm:text-xl">
+          {title}
+        </h3>
         {isComingSoon && (
-          <span className="self-start rounded-full border border-[#142900] bg-white px-3 py-1 text-xs font-medium text-[#142900] sm:self-auto">
+          <span className="self-start rounded-full border bg-mf-blue-700/20 px-3 py-1 text-xs font-semibold text-mf-blue-700 sm:self-auto">
             Coming Soon
           </span>
         )}
       </div>
-      <p className="w-full text-sm text-gray-600 sm:w-4/5 sm:text-base/relaxed">
+      <p className="w-full text-sm text-mf-ash-300 sm:w-4/5 sm:text-base/relaxed">
         {description}
       </p>
     </div>
-    <div className="mt-4 flex items-center text-sm text-[#142900] transition-colors group-hover:text-mf-green">
+    <div className="mt-4 flex items-center text-sm text-mf-ash-700 transition-colors">
       <span className="font-medium">{ctaText}</span>
       <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
     </div>
@@ -54,18 +56,18 @@ export function CTACard({
     <div className="relative">
       <Link
         href={href}
-        className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all 
+        className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-mf-silver-700 p-6 shadow-sm transition-all 
         duration-300 hover:shadow-lg sm:p-8"
       >
         {variant === "left" ? (
           <>
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-mf-milk-300 group-hover:bg-mf-milk-100" />
+            <div className="absolute inset-0 bg-mf-milk-300 group-hover:bg-mf-milk-100" />
           </>
         ) : (
           <>
-            <div className="absolute inset-0 bg-gradient-to-br from-[#142900]/5 via-transparent to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-tl from-[#142900]/5 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-mf-milk-300 group-hover:bg-mf-milk-100" />
+            <div className="absolute inset-0 bg-mf-milk-300 group-hover:bg-mf-milk-100" />
           </>
         )}
         <CardContent

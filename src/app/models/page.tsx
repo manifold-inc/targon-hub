@@ -89,12 +89,12 @@ export default function Page() {
             onClick={() => setIsMobileOpen(false)}
           />
           {/* Sidebar */}
-          <div className="absolute bottom-0 right-0 top-0 w-full max-w-sm border-l border-[#f2f4f7] bg-white p-6 shadow-xl">
+          <div className="absolute bottom-0 right-0 top-0 w-full max-w-sm border-l border-mf-silver-700 bg-mf-milk-300 p-6 shadow-xl">
             <div className="flex items-center justify-between pb-4">
-              <h2 className="text-lg font-medium text-[#101828]">Filters</h2>
+              <h2 className="text-lg font-medium text-mf-ash-300">Filters</h2>
               <button
                 onClick={() => setIsMobileOpen(false)}
-                className="rounded-lg p-2 text-[#98a1b2] hover:bg-gray-50"
+                className="rounded-lg p-2 text-mf-ash-300 hover:bg-mf-milk-100"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -107,21 +107,21 @@ export default function Page() {
       <div className="flex">
         {/* Left sidebar - desktop */}
         <div className="hidden w-80 lg:block">
-          <div className="sticky top-14 min-h-screen overflow-y-auto border-r border-[#f2f4f7] bg-white">
+          <div className="sticky top-14 min-h-screen overflow-y-auto  bg-mf-milk-300">
             <ModalSidebar />
           </div>
         </div>
 
         {/* Main content area */}
-        <div className="min-w-0 flex-1">
+        <div className="min-w-0 flex-1 bg-mf-milk-100">
           <div className="flex animate-slide-in flex-col">
             {/* Header */}
             <div className="px-4 pt-10 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between">
-                <h1 className="text-xl font-medium text-[#101828] sm:text-2xl">
+                <h1 className="text-xl font-semibold text-mf-ash-500 sm:text-2xl">
                   Models
                 </h1>
-                <div className="hidden whitespace-nowrap text-2xl font-normal text-[#d0d5dd] lg:block">
+                <div className="hidden whitespace-nowrap text-2xl font-semibold text-mf-ash-500 lg:block">
                   {models.data?.total ?? 0} Models
                 </div>
               </div>
@@ -132,10 +132,10 @@ export default function Page() {
               {/* Search Bar */}
               <div className="relative w-full">
                 <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center">
-                  <Search className="h-5 w-5 text-[#98a1b2]" />
+                  <Search className="h-4 w-4 text-mf-grey" />
                 </div>
                 <input
-                  className="h-11 w-full rounded-lg border-0 bg-gray-50 pl-10 pr-4 text-sm text-[#101828] placeholder:text-[#98a1b2] focus:outline-none focus:ring-1 focus:ring-[#e4e7ec] sm:text-base"
+                  className="text-md placeholder:text-mf-silver flex h-9 w-full items-center rounded-lg border-mf-milk-700 bg-mf-milk-300 pb-3 pl-8 pr-8 pt-3 text-sm leading-tight ring-0 focus:border-mf-night-300 focus:ring-0"
                   placeholder="Filter models..."
                   onChange={(event) => {
                     setQuery(event.target.value);
@@ -148,12 +148,12 @@ export default function Page() {
               <div className="flex items-center justify-between lg:hidden">
                 <button
                   onClick={() => setIsMobileOpen((s) => !s)}
-                  className="inline-flex items-center gap-2 rounded-lg border border-[#e4e7ec] bg-white px-3 py-2 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50"
+                  className="inline-flex items-center gap-2 rounded-lg border border-mf-silver-700 bg-mf-milk-300 px-3 py-2 text-sm font-medium text-mf-ash-300 transition-colors hover:bg-mf-milk-100"
                 >
-                  <Filter className="h-4 w-4 text-[#98a1b2]" />
+                  <Filter className="h-4 w-4 text-mf-ash-300" />
                   <span>Filters</span>
                 </button>
-                <div className="text-sm text-[#475467] lg:hidden">
+                <div className="text-sm text-mf-ash-300 lg:hidden">
                   {models.data?.total ?? 0} Models
                 </div>
               </div>
@@ -180,21 +180,12 @@ export default function Page() {
                 currentPage === totalPages && (
                   <Link
                     href="/models/add"
-                    className="group relative flex items-start overflow-hidden rounded-xl border border-[#142900]/10 bg-gradient-to-br from-[#142900]/[0.02] via-white/40 to-[#142900]/[0.02] p-3 backdrop-blur-md transition-all duration-500 hover:from-[#142900]/[0.05] hover:to-[#142900]/[0.05] sm:p-4 md:p-5"
+                    className="group relative flex items-start overflow-hidden rounded-xl border border-mf-blue-700 bg-mf-milk-300 p-3 backdrop-blur-md transition-all duration-500 hover:from-mf-blue-700 hover:to-mf-blue-500 sm:p-4 md:p-5"
                   >
-                    {/* Base gradient layer */}
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(20,41,0,0.03),transparent_50%),radial-gradient(circle_at_100%_100%,rgba(20,41,0,0.03),transparent_50%)]" />
-
-                    {/* Animated gradient layers */}
-                    <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(20,41,0,0.03)_25%,transparent_25%,transparent_50%,rgba(20,41,0,0.03)_50%,rgba(20,41,0,0.03)_75%,transparent_75%,transparent)] bg-[length:250px_250px] opacity-0 transition-all duration-700 ease-in-out group-hover:bg-[length:200px_200px] group-hover:opacity-100" />
-
-                    {/* Moving gradient shine effect */}
-                    <div className="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-[#9fff00]/10 to-transparent opacity-0 transition-all duration-700 ease-in-out group-hover:translate-x-[100%] group-hover:opacity-100" />
-
                     <div className="relative flex min-w-0 flex-1 flex-col gap-2">
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0 flex-1">
-                          <h3 className="text-base font-semibold text-[#142900] sm:text-lg">
+                          <h3 className="text-base font-semibold text-mf-blue-700 sm:text-lg">
                             Add Any Model
                           </h3>
                           <div className="flex flex-wrap items-center gap-2 pt-1 text-sm text-[#475467]">
@@ -202,7 +193,7 @@ export default function Page() {
                           </div>
                         </div>
                         <div className="flex items-start">
-                          <div className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-[#142900] px-3 py-1.5 text-sm font-medium text-white shadow-sm transition-all duration-300 group-hover:bg-[#1f3d00] group-hover:shadow-md sm:px-4">
+                          <div className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-mf-blue-900 px-3 py-1.5 text-sm font-medium text-mf-milk-300 shadow-sm transition-all duration-300 group-hover:bg-mf-blue-700 group-hover:shadow-md sm:px-4">
                             Add Model
                             <ArrowUpRight className="h-3.5 w-3.5" />
                           </div>
@@ -218,14 +209,14 @@ export default function Page() {
 
               {/* Pagination */}
               {models.data && models.data.items.length > 0 && (
-                <div className="flex items-center justify-center border-t border-[#e4e7ec] pt-8">
+                <div className="flex items-center justify-center border-t border-mf-silver-700 pt-8">
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() =>
                         handlePageChange(Math.max(1, currentPage - 1))
                       }
                       disabled={currentPage === 1}
-                      className="inline-flex items-center gap-1 rounded-lg border border-[#e4e7ec] bg-white px-3 py-2 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="hover:mf-milk-300 inline-flex items-center gap-1 rounded-lg border border-mf-silver-700 bg-mf-milk-300 px-3 py-2 text-sm font-medium text-mf-ash-300 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <ChevronLeft className="h-4 w-4" />
                     </button>
@@ -238,8 +229,8 @@ export default function Page() {
                           disabled={currentPage === 1}
                           className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors ${
                             currentPage === 1
-                              ? "bg-[#142900] text-white"
-                              : "border border-[#e4e7ec] bg-white text-[#344054] hover:bg-gray-50"
+                              ? "bg-mf-blue-900 text-mf-milk-300"
+                              : "hover:mf-milk-300 border border-mf-silver-700 bg-mf-milk-300 text-mf-ash-300"
                           }`}
                         >
                           1
@@ -247,14 +238,14 @@ export default function Page() {
 
                         {/* Show ellipsis if current page is far from start */}
                         {currentPage > 3 && (
-                          <span className="px-1 text-[#344054]">...</span>
+                          <span className="px-1 text-mf-ash-300">...</span>
                         )}
 
                         {/* Previous Page */}
                         {currentPage > 2 && (
                           <button
                             onClick={() => handlePageChange(currentPage - 1)}
-                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[#e4e7ec] bg-white text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50"
+                            className="hover:mf-milk-300 inline-flex h-9 w-9 items-center justify-center rounded-lg border border-mf-silver-700 bg-mf-milk-300 text-sm font-medium text-mf-ash-300 transition-colors"
                           >
                             {currentPage - 1}
                           </button>
@@ -264,7 +255,7 @@ export default function Page() {
                         {currentPage !== 1 && currentPage !== totalPages && (
                           <button
                             disabled
-                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#142900] text-sm font-medium text-white"
+                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-mf-blue-900 text-sm font-medium text-mf-milk-300"
                           >
                             {currentPage}
                           </button>
@@ -274,7 +265,7 @@ export default function Page() {
                         {currentPage < totalPages - 1 && (
                           <button
                             onClick={() => handlePageChange(currentPage + 1)}
-                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[#e4e7ec] bg-white text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50"
+                            className="hover:mf-milk-300 inline-flex h-9 w-9 items-center justify-center rounded-lg border border-mf-silver-700 bg-mf-milk-300 text-sm font-medium text-mf-ash-300 transition-colors"
                           >
                             {currentPage + 1}
                           </button>
@@ -282,7 +273,7 @@ export default function Page() {
 
                         {/* Show ellipsis if current page is far from end */}
                         {currentPage < totalPages - 2 && (
-                          <span className="px-1 text-[#344054]">...</span>
+                          <span className="px-1 text-mf-ash-300">...</span>
                         )}
 
                         {/* Last Page */}
@@ -291,8 +282,8 @@ export default function Page() {
                           disabled={currentPage === totalPages}
                           className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors ${
                             currentPage === totalPages
-                              ? "bg-[#142900] text-white"
-                              : "border border-[#e4e7ec] bg-white text-[#344054] hover:bg-gray-50"
+                              ? "bg-mf-blue-900 text-mf-milk-300"
+                              : "hover:mf-milk-300 border border-mf-silver-700 bg-mf-milk-300 text-mf-ash-300"
                           }`}
                         >
                           {totalPages}
@@ -305,7 +296,7 @@ export default function Page() {
                         handlePageChange(Math.min(totalPages, currentPage + 1))
                       }
                       disabled={currentPage === totalPages}
-                      className="inline-flex items-center gap-1 rounded-lg border border-[#e4e7ec] bg-white px-3 py-2 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="hover:mf-milk-300 inline-flex items-center gap-1 rounded-lg border border-mf-silver-700 bg-mf-milk-300 px-3 py-2 text-sm font-medium text-mf-ash-300 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <ChevronRight className="h-4 w-4" />
                     </button>

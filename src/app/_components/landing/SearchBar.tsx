@@ -53,20 +53,20 @@ export default function SearchBar() {
         <div className="pointer-events-none absolute inset-y-0 left-5 flex items-center"></div>
         <ComboboxInput
           name="search_input"
-          className="text-md flex h-9 w-full items-center rounded-lg border-gray-200 bg-gray-50 pb-3 pl-4 pr-8 pt-3 text-sm leading-tight placeholder:text-[#98a1b2] focus:ring-gray-200"
+          className="text-md placeholder:text-mf-silver flex h-9 w-full items-center rounded-lg border-mf-milk-700 bg-mf-milk-300 pb-3 pl-4 pr-8 pt-3 text-sm leading-tight ring-0 focus:border-mf-blue-700 focus:ring-0"
           placeholder="Search models"
           displayValue={(model: { name: string } | null) => model?.name ?? ""}
           onChange={(event) => setQuery(event.target.value)}
         />
-        <div className="absolute right-2 top-1/2 hidden -translate-y-1/2 md:block">
-          <div className="flex h-6 items-center rounded border border-[#D0D5DD] px-1.5 py-0.5">
-            <kbd className="kbd kbd-sm text-sm leading-tight text-[#98a1b2]">
+        <div className="absolute right-2 top-1/2 -translate-y-1/2">
+          <div className="flex h-6 items-center rounded border border-mf-milk-700 px-1.5 py-0.5">
+            <kbd className="kbd kbd-sm text-sm leading-tight text-mf-grey">
               /
             </kbd>
           </div>
         </div>
       </div>
-      <ComboboxOptions className="absolute z-40 mt-1 max-h-48 w-full overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm md:max-h-40 lg:max-h-60">
+      <ComboboxOptions className="absolute z-40 mt-1 max-h-48 w-64 overflow-auto rounded-md bg-mf-milk-300 shadow-lg ring-1 ring-mf-blue-700 ring-opacity-5 focus:outline-none sm:text-sm md:max-h-40 md:w-96 lg:max-h-60">
         {!models.data?.length ? (
           <div className="relative cursor-default select-none px-4 py-2">
             {models.isLoading ? "Loading..." : "No models found."}
@@ -74,14 +74,14 @@ export default function SearchBar() {
         ) : (
           sortedMonthYears.map((monthYear) => (
             <div key={monthYear}>
-              <div className="sticky top-0 bg-gray-100 px-4 py-2 font-semibold">
+              <div className="sticky top-0 bg-mf-milk-300 px-4 py-2 font-semibold">
                 {monthYear}
               </div>
               {groupedModels[monthYear]?.map((model) => (
                 <ComboboxOption
                   key={model.name}
                   value={model.name}
-                  className="group flex cursor-pointer select-none items-center gap-2 bg-white px-4 py-2 hover:bg-blue-100"
+                  className="group flex cursor-pointer select-none items-center gap-2 bg-mf-milk-300 px-4 py-2 hover:bg-mf-silver-500"
                 >
                   <span>{model.name}</span>
                 </ComboboxOption>

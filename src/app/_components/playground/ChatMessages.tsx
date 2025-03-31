@@ -50,7 +50,7 @@ const CodeBlock: Components["code"] = ({
         <div className="text-xs text-gray-400">{language}</div>
         <button
           onClick={handleCopy}
-          className="rounded px-1.5 py-0.5 text-gray-400 hover:bg-white/5 lg:px-2 lg:py-1"
+          className="rounded px-1.5 py-0.5 text-gray-400 hover:bg-mf-milk-100/5 lg:px-2 lg:py-1"
         >
           {copied ? (
             <Check className="h-3.5 w-3.5 text-green-500 lg:h-4 lg:w-4" />
@@ -104,8 +104,8 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
               className={clsx(
                 "relative w-[95%] overflow-hidden rounded-2xl px-4 py-3 lg:w-[85%] lg:px-6 lg:py-4",
                 message.role === "user"
-                  ? "bg-[#142900]/80 text-white shadow-sm backdrop-blur-sm"
-                  : "bg-gray-100 text-gray-900",
+                  ? "bg-mf-blue-900/80 text-mf-milk-300 shadow-sm backdrop-blur-sm"
+                  : "bg-mf-milk-100 text-mf-ash-700",
               )}
             >
               <div>
@@ -124,11 +124,11 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
                     "prose-pre:my-2 prose-pre:bg-transparent prose-pre:p-0 lg:prose-pre:my-3",
                     message.role === "user" && [
                       "prose-invert",
-                      "prose-p:text-white/90",
-                      "prose-headings:text-white",
-                      "prose-strong:text-white",
-                      "prose-a:text-white hover:prose-a:text-white/90",
-                      "prose-li:text-white/90",
+                      "prose-p:text-mf-milk-300/90",
+                      "prose-headings:text-mf-milk-300",
+                      "prose-strong:text-mf-milk-300",
+                      "prose-a:text-mf-milk-300 hover:prose-a:text-mf-milk-300/90",
+                      "prose-li:text-mf-milk-300/90",
                     ],
                   )}
                 >

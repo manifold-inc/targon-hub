@@ -61,7 +61,7 @@ function AnimatedTitle({
       {"Generative AI you can rely on".split("").map((char, index) => (
         <span
           key={index}
-          className={`inline-block pb-8 text-2xl font-light text-mf-green sm:pb-16 sm:text-3xl md:text-4xl lg:text-5xl ${
+          className={`inline-block pb-8 text-2xl text-mf-ash-500 sm:pb-16 sm:text-4xl ${
             isVisible ? "animate-slide-in" : "opacity-0"
           }`}
           style={{
@@ -92,20 +92,20 @@ function MetricCard({
 }: MetricCardProps) {
   return (
     <div
-      className={`group relative overflow-hidden rounded-lg border border-gray-200 bg-white p-4 shadow-sm 
+      className={`group relative overflow-hidden rounded-lg border border-mf-silver-700 bg-mf-ash-300 p-4 shadow-sm 
       transition-all duration-300 hover:shadow-lg sm:p-6 md:p-8 ${className}`}
     >
-      <div className="absolute inset-0 bg-gradient-to-tr from-[#142900]/5 via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-bl from-[#142900]/5 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-mf-green-700/5 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-mf-milk-300" />
       <div className="relative z-10 p-2 sm:p-4">
-        <h3 className="pb-4 text-2xl font-light text-gray-900 sm:text-3xl lg:text-4xl">
+        <h3 className="pb-4 text-2xl font-light text-mf-ash-700 sm:text-3xl lg:text-4xl">
           {title}
         </h3>
-        <div className="flex items-baseline gap-2 pb-2 text-[#142900] group-hover:animate-pulse group-hover:text-mf-green sm:gap-4">
-          <span className="text-4xl font-light transition-colors sm:text-5xl lg:text-6xl">
+        <div className="flex items-baseline gap-1 pb-2 text-mf-blue-700 group-hover:animate-pulse">
+          <span className="text-5xl font-light transition-colors lg:text-6xl">
             {value}
           </span>
-          <span className="text-xl font-light transition-colors sm:text-2xl lg:text-3xl">
+          <span className="text-2xl font-light transition-colors lg:text-3xl">
             {unit}
           </span>
         </div>

@@ -14,20 +14,20 @@ export default function ActivityPage() {
         <div className="flex flex-col items-center justify-start gap-6">
           <div className="max-h-96 w-full">
             {activity.data?.length ? (
-              <div className="relative h-full overflow-x-auto rounded-xl border border-gray-200">
+              <div className="relative h-full overflow-x-auto rounded-xl border border-mf-silver-700">
                 <table className="w-full border-0 text-xs sm:text-sm">
                   <thead>
-                    <tr className="h-8 border-b border-[#e4e7ec] bg-gray-50">
-                      <th className="px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
+                    <tr className="mf-milk-300 h-8 border-b border-mf-silver-700">
+                      <th className="px-2 py-1 text-left font-semibold leading-tight text-mf-ash-700">
                         Timestamp
                       </th>
-                      <th className="px-2 py-1 text-left font-semibold leading-tight text-[#101828]">
+                      <th className="px-2 py-1 text-left font-semibold leading-tight text-mf-ash-700">
                         Model
                       </th>
-                      <th className="px-2 py-1 text-right font-semibold leading-tight text-[#101828]">
+                      <th className="px-2 py-1 text-right font-semibold leading-tight text-mf-ash-700">
                         Response Tokens
                       </th>
-                      <th className="px-2 py-1 text-right font-semibold leading-tight text-[#101828]">
+                      <th className="px-2 py-1 text-right font-semibold leading-tight text-mf-ash-700">
                         Cost
                       </th>
                     </tr>
@@ -36,20 +36,20 @@ export default function ActivityPage() {
                     {activity.data?.map((activity) => (
                       <tr
                         key={activity.id}
-                        className="h-8 border-b border-[#e4e7ec] bg-white"
+                        className="h-8 border-b border-mf-silver-700 bg-mf-milk-300"
                       >
-                        <td className="px-2 py-1 text-left leading-tight text-[#101828]">
+                        <td className="px-2 py-1 text-left leading-tight text-mf-ash-700">
                           {window.innerWidth < 640
                             ? activity.createdAt.toLocaleDateString()
                             : formatDate(activity.createdAt)}
                         </td>
-                        <td className="max-w-40 truncate px-2 py-1 text-left leading-tight text-[#101828]">
+                        <td className="max-w-40 truncate px-2 py-1 text-left leading-tight text-mf-ash-700">
                           {activity.model}
                         </td>
-                        <td className="px-2 py-1 text-right leading-tight text-[#101828]">
+                        <td className="px-2 py-1 text-right leading-tight text-mf-ash-700">
                           {activity.responseTokens}
                         </td>
-                        <td className="whitespace-nowrap px-2 py-1 text-right leading-tight text-[#101828]">
+                        <td className="whitespace-nowrap px-2 py-1 text-right leading-tight text-mf-ash-700">
                           {activity.creditsUsed >= 1_000_000
                             ? `${(activity.creditsUsed / 1_000_000).toFixed(1)}M`
                             : formatLargeNumber(activity.creditsUsed)}{" "}
@@ -64,7 +64,7 @@ export default function ActivityPage() {
                 </table>
               </div>
             ) : (
-              <div className="flex h-full items-center justify-center text-gray-500">
+              <div className="flex h-full items-center justify-center text-mf-ash-500">
                 No activity yet
               </div>
             )}

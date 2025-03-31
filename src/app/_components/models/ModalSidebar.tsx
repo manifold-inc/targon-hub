@@ -44,8 +44,10 @@ function SectionHeader({
       onClick={onToggle}
     >
       <div className="flex items-center gap-5">
-        <Icon width={20} height={20} className="text-[#98a1b2]" />
-        <div className="font-medium leading-normal text-[#101828]">{title}</div>
+        <Icon width={20} height={20} className="text-mf-ash-300" />
+        <div className="font-medium leading-normal text-mf-ash-300">
+          {title}
+        </div>
       </div>
       {isOpen ? (
         <ChevronDown width={20} height={20} className="text-black" />
@@ -67,11 +69,11 @@ function ToggleButton({ label, isActive, onClick }: ToggleButtonProps) {
     <button
       onClick={onClick}
       className={`inline-flex h-9 w-full items-center justify-between rounded-full px-3 py-2 ${
-        isActive ? "bg-[#f2f4f7]" : ""
+        isActive ? "bg-mf-milk-300" : ""
       }`}
     >
       <span
-        className={`text-sm ${isActive ? "text-[#344054]" : "text-[#475467]"}`}
+        className={`text-sm ${isActive ? "text-mf-ash-300" : "text-mf-grey"}`}
       >
         {label}
       </span>
@@ -121,13 +123,13 @@ function Slider({
         step={step}
         value={currentValue}
         onChange={handleChange}
-        className="relative h-1.5 w-full cursor-pointer appearance-none rounded-full bg-[#142900]/10
-        [&::-moz-range-progress]:h-1.5 [&::-moz-range-progress]:rounded-l-full [&::-moz-range-progress]:bg-[#142900] [&::-moz-range-thumb]:h-4
+        className="relative h-1.5 w-full cursor-pointer appearance-none rounded-full bg-mf-blue-900/10
+        [&::-moz-range-progress]:h-1.5 [&::-moz-range-progress]:rounded-l-full [&::-moz-range-progress]:bg-mf-blue-900 [&::-moz-range-thumb]:h-4
         [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full
-        [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-[#142900]/10
-        [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#142900] [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
+        [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:bg-mf-blue-900 [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-mf-blue-900/10
+        [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-mf-blue-900 [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
         style={{
-          background: `linear-gradient(to right, #142900 0%, #142900 ${percent}%, #e5e7eb ${percent}%, #e5e7eb 100%)`,
+          background: `linear-gradient(to right, #3A3C46 0%, #3A3C46 ${percent}%, #E0EBFF ${percent}%, #E0EBFF 100%)`,
         }}
       />
     </div>
@@ -177,7 +179,7 @@ function PriceRangeSlider({
         </span>
       </div>
       <div className="relative h-1.5">
-        <div className="absolute h-1.5 w-full rounded-full bg-[#142900]/10" />
+        <div className="absolute h-1.5 w-full rounded-full bg-mf-blue-900/10" />
         <input
           type="range"
           min={min}
@@ -187,8 +189,8 @@ function PriceRangeSlider({
           onChange={handleMinChange}
           className="pointer-events-none absolute h-1.5 w-full cursor-pointer appearance-none rounded-full bg-transparent
           [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none
-          [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-[#142900]/10
-          [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#142900] [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
+          [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:bg-mf-blue-900 [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-mf-blue-900/10
+          [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-mf-blue-900 [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
           style={{
             zIndex: 2,
           }}
@@ -202,14 +204,14 @@ function PriceRangeSlider({
           onChange={handleMaxChange}
           className="pointer-events-none absolute h-1.5 w-full cursor-pointer appearance-none rounded-full bg-transparent
           [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none
-          [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-[#142900]/10
-          [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#142900] [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
+          [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:bg-mf-blue-900 [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-mf-blue-900/10
+          [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-mf-blue-900 [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
           style={{
             zIndex: 1,
           }}
         />
         <div
-          className="absolute h-1.5 rounded-full bg-[#142900]"
+          className="absolute h-1.5 rounded-full bg-mf-blue-900"
           style={{
             left: `${((currentMin - min) / (max - min)) * 100}%`,
             right: `${100 - ((currentMax - min) / (max - min)) * 100}%`,
@@ -228,7 +230,7 @@ function SectionContent({ children }: SectionContentProps) {
   return (
     <div className="pt-2">
       <div className="inline-flex flex-col items-start justify-start gap-2 px-2">
-        <div className="flex flex-col items-start justify-start gap-2 border-l border-[#e4e7ec] px-4">
+        <div className="flex flex-col items-start justify-start gap-2 border-l border-mf-silver-700 px-4">
           {children}
         </div>
       </div>
@@ -329,24 +331,22 @@ export default function ModalSidebar() {
       title: "Organization",
       content: (
         <SectionContent>
-          <div>
-            {orgs
-              .slice(0, showAllOrganization ? orgs.length : 3)
-              .map((organization) => (
-                <ToggleButton
-                  key={organization}
-                  label={organization}
-                  isActive={activeOrganization.includes(organization)}
-                  onClick={() => {
-                    setActiveOrganization((prev) =>
-                      prev.includes(organization)
-                        ? prev.filter((s) => s !== organization)
-                        : [...prev, organization],
-                    );
-                  }}
-                />
-              ))}
-          </div>
+          {orgs
+            .slice(0, showAllOrganization ? orgs.length : 3)
+            .map((organization) => (
+              <ToggleButton
+                key={organization}
+                label={organization}
+                isActive={activeOrganization.includes(organization)}
+                onClick={() => {
+                  setActiveOrganization((prev) =>
+                    prev.includes(organization)
+                      ? prev.filter((s) => s !== organization)
+                      : [...prev, organization],
+                  );
+                }}
+              />
+            ))}
           {orgs.length > 3 && (
             <ToggleButton
               label={showAllOrganization ? "Show less" : "Show more"}
@@ -422,14 +422,14 @@ export default function ModalSidebar() {
           </div>
         ))}
 
-        <div className="mx-3 h-px bg-gray-200" />
+        <div className="mx-3 h-px bg-mf-silver-700" />
 
         {/* Advanced Filters */}
         <div className="p-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-5">
-              <Settings2 width={20} height={20} className="text-[#98a1b2]" />
-              <div className="font-medium leading-normal text-[#101828]">
+              <Settings2 width={20} height={20} className="text-mf-ash-300" />
+              <div className="font-medium leading-normal text-mf-ash-300">
                 Advanced Filters
               </div>
             </div>
@@ -457,16 +457,16 @@ export default function ModalSidebar() {
             </div>
             <div className="space-y-2.5">
               <div className="flex items-start gap-2">
-                <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#98a1b2]" />
-                <p className="text-[11px] leading-[14px] text-[#475467]">
+                <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-mf-ash-300" />
+                <p className="text-[11px] leading-[14px] text-mf-ash-300">
                   TPS (Tokens Per Second) shows the model&apos;s average
                   throughput over the past 7 days and is only available for live
                   models
                 </p>
               </div>
               <div className="flex items-start gap-2">
-                <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#98a1b2]" />
-                <p className="text-[11px] leading-[14px] text-[#475467]">
+                <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-mf-ash-300" />
+                <p className="text-[11px] leading-[14px] text-mf-ash-300">
                   Weekly price filter helps you find models within your leasing
                   budget
                 </p>
@@ -489,7 +489,7 @@ export default function ModalSidebar() {
               setMinWeeklyPrice(250);
               setMaxWeeklyPrice(2000);
             }}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#e4e7ec] bg-white px-4 py-2.5 text-sm font-medium text-[#344054] transition-colors hover:bg-gray-50"
+            className="flex w-full items-center justify-center gap-2 rounded-lg border border-mf-silver-700 bg-mf-milk-300 px-4 py-2.5 text-sm font-medium text-mf-ash-300 transition-colors hover:bg-mf-milk-100"
           >
             <X className="h-4 w-4" />
             Clear Filters
@@ -498,17 +498,16 @@ export default function ModalSidebar() {
 
         {/* Add Model CTA */}
         <div className="px-3 py-3">
-          <div className="relative flex flex-col items-center overflow-hidden rounded-xl border border-[#e4e7ec]/60 bg-white/30 px-4 py-5 text-center backdrop-blur-sm">
+          <div className="relative flex flex-col items-center overflow-hidden rounded-xl border border-mf-silver-700/60 bg-mf-milk-300/30 px-4 py-5 text-center backdrop-blur-sm">
             <div className="absolute inset-0 -z-10">
-              <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-[#142900]/10 via-[#142900]/5 to-transparent" />
-              <div className="absolute inset-0 animate-[shine_3s_ease-in-out_infinite] bg-[linear-gradient(110deg,transparent_25%,rgba(68,255,109,0.05)_50%,transparent_75%)]" />
+              <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-mf-blue-700/10 via-mf-blue-700/5 to-transparent" />
             </div>
-            <p className="pb-3 text-xs font-medium text-[#344054]">
+            <p className="pb-3 text-xs font-medium text-mf-ash-300">
               Don&apos;t see the model you want?
             </p>
             <a
               href="/models/lease"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#142900] px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-[1px] hover:bg-[#142900]/90 hover:shadow-md"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-mf-blue-700 px-5 py-2.5 text-sm font-medium text-mf-milk-300 shadow-sm transition-all hover:-translate-y-[1px] hover:bg-mf-blue-700/90 hover:shadow-md"
             >
               <Plus className="h-4 w-4" />
               Add New Model

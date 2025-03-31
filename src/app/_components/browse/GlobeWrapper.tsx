@@ -78,15 +78,15 @@ export function GlobeComponent({ arcsData }: GlobeProps) {
     <div className="relative h-full w-full">
       <Globe
         ref={globeEl}
-        globeImageUrl="https://unpkg.com/three-globe@2.30.0/example/img/earth-water.png"
+        globeImageUrl="globe.png"
         backgroundColor="rgba(0,0,0,0)"
         arcsData={arcsData}
         arcColor={"color"}
         arcDashLength={() => Math.random() * 0.6 + 0.3}
         arcDashGap={() => Math.random() * 0.4 + 0.1}
         arcDashAnimateTime={() => Math.random() * 3000 + 1000}
-        arcStroke={0.5}
-        atmosphereColor="#98A1B2"
+        arcStroke={1}
+        atmosphereColor="#AAD6FF"
         atmosphereAltitude={0.1}
         width={400}
         height={400}

@@ -69,7 +69,7 @@ function NumberInput({
       step={step}
       value={localValue}
       onChange={handleChange}
-      className="h-9 w-16 rounded-lg border-0 px-3 text-right text-sm font-semibold text-[#142900] [appearance:textfield] hover:bg-[#142900]/10 focus:border-2 focus:border-black focus:outline-none focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+      className="h-9 w-16 rounded-lg border-0 px-3 text-right text-sm font-semibold text-mf-blue-700 [appearance:textfield] hover:bg-mf-blue-900/10 focus:border-2 focus:border-black focus:outline-none focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
     />
   );
 }
@@ -144,16 +144,18 @@ export function ParameterControls({
       {/* Mobile Drawer */}
       <div
         className={clsx(
-          "fixed inset-y-0 right-0 z-50 w-[90%] max-w-[320px] transform bg-white transition-transform duration-300 lg:hidden",
+          "fixed inset-y-0 right-0 z-50 w-[90%] max-w-[320px] transform bg-mf-milk-300 transition-transform duration-300 lg:hidden",
           isOpen ? "translate-x-0" : "translate-x-full",
         )}
       >
-        <div className="border-b border-gray-200 p-3">
+        <div className="border-b border-mf-silver-700 p-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">Parameters</h2>
+            <h2 className="text-lg font-semibold text-mf-ash-700">
+              Parameters
+            </h2>
             <button
               onClick={() => setIsOpen(false)}
-              className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100"
+              className="rounded-lg p-1.5 text-mf-ash-500 hover:bg-mf-milk-100"
             >
               <X className="h-5 w-5" />
             </button>
@@ -191,12 +193,12 @@ export function ParameterControls({
                       [param.key]: parseFloat(e.target.value),
                     })
                   }
-                  className="relative h-1.5 w-full cursor-pointer appearance-none rounded-full bg-[#142900]/10
+                  className="relative h-1.5 w-full cursor-pointer appearance-none rounded-full bg-mf-blue-900/10
                   before:absolute before:h-1.5 before:w-[var(--range-percent)] before:rounded-l-full
-                  before:bg-[#142900] before:content-[''] [&::-moz-range-progress]:h-1.5
-                  [&::-moz-range-progress]:rounded-l-full [&::-moz-range-progress]:bg-[#142900] [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none
-                  [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-[#142900]/10 [&::-webkit-slider-thumb]:h-4
-                  [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#142900] [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
+                  before:bg-mf-blue-900 before:content-[''] [&::-moz-range-progress]:h-1.5
+                  [&::-moz-range-progress]:rounded-l-full [&::-moz-range-progress]:bg-mf-blue-900 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none
+                  [&::-moz-range-thumb]:bg-mf-blue-900 [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-mf-blue-900/10 [&::-webkit-slider-thumb]:h-4
+                  [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-mf-blue-900 [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
                   style={
                     {
                       "--range-percent": `${((params[param.key] - param.min) / (param.max - param.min)) * 100}%`,
@@ -208,10 +210,10 @@ export function ParameterControls({
           </div>
 
           {/* Help Section */}
-          <div className="mt-4 border-t border-gray-100 pt-3">
+          <div className="mt-4 border-t border-mf-silver-700 pt-3">
             <button
               onClick={() => setIsHelpOpen(!isHelpOpen)}
-              className="mb-2 flex w-full items-center justify-between text-xs font-semibold uppercase text-gray-500 hover:text-gray-700"
+              className="mb-2 flex w-full items-center justify-between text-xs font-semibold uppercase text-mf-ash-500 hover:text-mf-ash-500"
             >
               <div className="flex items-center space-x-2">
                 <HelpCircle className="h-3.5 w-3.5" />
@@ -228,7 +230,7 @@ export function ParameterControls({
                 {parameters.map((param) => (
                   <div
                     key={`help-${param.key}`}
-                    className="flex items-start space-x-2 rounded-lg py-1 text-xs text-gray-500"
+                    className="flex items-start space-x-2 rounded-lg py-1 text-xs text-mf-ash-500"
                   >
                     <param.icon className="mt-0.5 h-3 w-3 shrink-0" />
                     <div>
@@ -249,7 +251,7 @@ export function ParameterControls({
       <aside
         className={clsx(
           "relative hidden overflow-hidden transition-[width] duration-300 ease-in-out lg:block",
-          "border-r border-gray-200 bg-white",
+          "border-r border-mf-silver-700 bg-mf-milk-100",
           isOpen ? "lg:w-80" : "lg:w-20",
         )}
       >
@@ -261,7 +263,7 @@ export function ParameterControls({
               : "opacity-0 lg:pointer-events-none",
           )}
         >
-          <div className="flex w-full items-center justify-between p-4 text-sm font-medium text-gray-600 hover:text-[#142900]">
+          <div className="flex w-full items-center justify-between p-4 text-sm font-medium text-gray-600 hover:text-mf-blue-700">
             <span className="whitespace-nowrap">Model Parameters</span>
             <button
               onClick={() => {
@@ -304,12 +306,12 @@ export function ParameterControls({
                       [param.key]: parseFloat(e.target.value),
                     })
                   }
-                  className="relative h-1.5 w-full cursor-pointer appearance-none rounded-full bg-[#142900]/10
+                  className="relative h-1.5 w-full cursor-pointer appearance-none rounded-full bg-mf-ash-300/10
                   before:absolute before:h-1.5 before:w-[var(--range-percent)] before:rounded-l-full
-                  before:bg-[#142900] before:content-[''] [&::-moz-range-progress]:h-1.5
-                  [&::-moz-range-progress]:rounded-l-full [&::-moz-range-progress]:bg-[#142900] [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none
-                  [&::-moz-range-thumb]:bg-[#142900] [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-[#142900]/10 [&::-webkit-slider-thumb]:h-4
-                  [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#142900] [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
+                  before:bg-mf-ash-300 before:content-[''] [&::-moz-range-progress]:h-1.5
+                  [&::-moz-range-progress]:rounded-l-full [&::-moz-range-progress]:bg-mf-blue-700 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none
+                  [&::-moz-range-thumb]:bg-mf-ash-300 [&::-moz-range-thumb]:outline-none [&::-moz-range-thumb]:transition-all hover:[&::-moz-range-thumb]:scale-110 [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:w-full [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-mf-blue-700/10 [&::-webkit-slider-thumb]:h-4
+                  [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-mf-ash-300 [&::-webkit-slider-thumb]:transition-all hover:[&::-webkit-slider-thumb]:scale-110"
                   style={
                     {
                       "--range-percent": `${((params[param.key] - param.min) / (param.max - param.min)) * 100}%`,
@@ -321,11 +323,11 @@ export function ParameterControls({
           </div>
 
           {/* Help Section */}
-          <div className="border-t border-gray-100">
+          <div className="border-t border-mf-silver-700">
             <div className="p-4">
               <button
                 onClick={() => setIsHelpOpen(!isHelpOpen)}
-                className="mb-3 flex w-full items-center justify-between text-xs font-semibold uppercase text-gray-500 hover:text-gray-700"
+                className="mb-3 flex w-full items-center justify-between text-xs font-semibold uppercase text-mf-ash-500 hover:text-mf-ash-500"
               >
                 <div className="flex items-center space-x-2">
                   <HelpCircle className="h-3.5 w-3.5" />
@@ -342,7 +344,7 @@ export function ParameterControls({
                   {parameters.map((param) => (
                     <div
                       key={`help-${param.key}`}
-                      className="flex items-start space-x-2.5 rounded-lg p-2 text-xs text-gray-500 transition-colors"
+                      className="flex items-start space-x-2.5 rounded-lg p-2 text-xs text-mf-ash-500 transition-colors"
                     >
                       <param.icon className="mt-0.5 h-3.5 w-3.5 shrink-0 transition-colors" />
                       <div>
@@ -372,7 +374,7 @@ export function ParameterControls({
           <div className="flex h-full flex-row items-center justify-start space-x-6 overflow-x-auto p-4 text-gray-600 lg:flex-col lg:items-start lg:space-x-0 lg:space-y-6">
             <button
               onClick={() => setIsOpen(true)}
-              className="flex h-9 w-9 shrink-0 items-center justify-center transition-colors duration-200 hover:text-[#142900]"
+              className="flex h-9 w-9 shrink-0 items-center justify-center transition-colors duration-200 hover:text-mf-blue-700"
             >
               <ChevronUp className="h-5 w-5 shrink-0" />
             </button>
@@ -380,14 +382,14 @@ export function ParameterControls({
               <button
                 key={param.key}
                 onClick={() => setIsOpen(true)}
-                className="flex h-9 w-9 shrink-0 items-center justify-center transition-colors duration-200 hover:text-[#142900]"
+                className="flex h-9 w-9 shrink-0 items-center justify-center transition-colors duration-200 hover:text-mf-blue-700"
               >
                 <param.icon className="h-5 w-5 shrink-0" />
               </button>
             ))}
             <button
               onClick={() => setIsOpen(true)}
-              className="flex h-9 w-9 shrink-0 items-center justify-center transition-colors duration-200 hover:text-[#142900]"
+              className="flex h-9 w-9 shrink-0 items-center justify-center transition-colors duration-200 hover:text-mf-blue-700"
             >
               <HelpCircle className="h-5 w-5 shrink-0" />
             </button>

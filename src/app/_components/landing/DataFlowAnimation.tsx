@@ -117,10 +117,10 @@ export const DataFlowAnimation = () => {
             end.x,
             end.y,
           );
-          gradient.addColorStop(0, "rgba(28, 56, 54, 0)");
-          gradient.addColorStop(0.3, `rgba(28, 56, 54, ${alpha})`);
-          gradient.addColorStop(0.7, `rgba(28, 56, 54, ${alpha})`);
-          gradient.addColorStop(1, "rgba(28, 56, 54, 0)");
+          gradient.addColorStop(0, "rgba(255, 255, 255, 0)");
+          gradient.addColorStop(0.3, `rgba(255, 255, 255, ${alpha})`);
+          gradient.addColorStop(0.7, `rgba(255, 255, 255, ${alpha})`);
+          gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
 
           ctx.strokeStyle = gradient;
           ctx.lineWidth = 2;
@@ -170,5 +170,7 @@ export const DataFlowAnimation = () => {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 h-3/5 w-full" />;
+  return (
+    <canvas ref={canvasRef} className="absolute inset-0 h-[500px] w-full" />
+  );
 };
