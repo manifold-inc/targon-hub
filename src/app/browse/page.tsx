@@ -12,6 +12,8 @@ import { ModelPerformanceChart } from "@/app/_components/browse/ModelPerformance
 import { ModelPreviewCard } from "@/app/_components/browse/ModelPreviewCard";
 import { RadialRings } from "@/app/_components/browse/RadialRings";
 import { reactClient } from "@/trpc/react";
+import { HeroSection } from "../_components/browse/HeroSection";
+import { DataFlowAnimation } from "../_components/landing/DataFlowAnimation";
 
 export default function BrowsePage() {
   const models = reactClient.model.getModelPreview.useQuery();
@@ -38,71 +40,24 @@ export default function BrowsePage() {
   ];
 
   return (
-    <div className="relative">
-      <div className="mx-auto px-6 lg:px-8">
-        {/* Header Section */}
-        <div className="relative space-y-4 sm:space-y-6">
-          <div className="relative overflow-hidden">
-            {/* Static gradients that are present immediately */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#142900]/10 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white" />
-            {/* Animated content */}
-            <motion.div
-              initial={{ y: 100, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.8,
-                type: "spring",
-                stiffness: 50,
-                damping: 20,
-              }}
-              className="relative pb-8 pt-16 text-center"
-            >
-              <motion.div
-                initial={{ scale: 0.95, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2, duration: 0.5 }}
-                className="inline-block"
-              >
-                <span className="mb-4 inline-block rounded-full bg-[#142900]/5 px-4 py-1.5 text-sm font-medium text-mf-blue-700">
-                  Explore Targon
-                </span>
-              </motion.div>
-              <motion.h2
-                initial={{ y: 20, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                className="mx-auto max-w-2xl text-2xl font-semibold text-gray-900 sm:text-3xl md:text-4xl"
-              >
-                An Inside Look at{" "}
-                <span className="italic text-mf-blue-700">Targon</span>
-              </motion.h2>
-              <motion.p
-                initial={{ y: 20, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-                className="mx-auto max-w-xl pt-4 text-base text-gray-600 sm:text-lg"
-              >
-                Discover our comprehensive suite of AI tools and services
-                designed to power the next generation of applications
-              </motion.p>
-            </motion.div>
-          </div>
+    <div className="relative bg-mf-milk-100">
+      {/* Dot pattern container */}
+      <div className="absolute -top-20 left-0 right-0 h-[550px] animate-fade-in bg-gradient-to-b from-[#ABD7FF] to-[#84C4FF]">
+        <div className="dot-pattern h-full w-full animate-slide-in">
+          <DataFlowAnimation />
         </div>
+      </div>
+
+      <div className="relative px-16 py-14">
+        <HeroSection />
 
         {/* Main Playground CTA */}
         <div className="relative w-full animate-slide-in-delay">
           <Link
             href="/playground"
-            className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-500 p-4 shadow-sm transition-all duration-300 hover:shadow-lg 
+            className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-300 p-4 shadow-sm transition-all duration-300 hover:bg-mf-milk-100 hover:shadow-lg 
             sm:p-6 md:p-8 lg:rounded-tl-xl"
           >
-            <div className="absolute inset-0 bg-gradient-to-t from-[#142900]/5 via-transparent to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#142900]/5 via-transparent to-transparent" />
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-[1fr,200px] sm:gap-8">
               <div className="relative">
                 <CardContent
@@ -112,7 +67,7 @@ export default function BrowsePage() {
                 />
               </div>
               <div className="pointer-events-none relative hidden h-full w-full items-center justify-end overflow-visible sm:flex">
-                <div className="absolute -right-2/3 -top-10 aspect-square h-full ">
+                <div className="absolute -right-2/3 -top-10 aspect-square h-full">
                   <GlobeAnimation />
                 </div>
               </div>
@@ -170,17 +125,11 @@ export default function BrowsePage() {
               damping: 20,
             }}
             className="relative flex justify-center"
-          >
-            <span className="bg-mf-milk-500 px-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-mf-blue-500/5">
-                <div className="h-3 w-3 rounded-full bg-mf-blue-500" />
-              </div>
-            </span>
-          </motion.div>
+          ></motion.div>
         </motion.div>
 
         {/* Bento Grid */}
-        <div className="py-4">
+        <div>
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -261,8 +210,8 @@ export default function BrowsePage() {
               delay={0.6}
             >
               {/* Coming soon overlay */}
-              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-xl bg-gray-100/40 backdrop-blur-[2px]">
-                <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-xl bg-mf-milk-300/40 backdrop-blur-[2px]">
+                <span className="inline-flex items-center rounded-full bg-mf-milk-300 px-3 py-1 text-sm font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
                   Coming Soon
                 </span>
               </div>

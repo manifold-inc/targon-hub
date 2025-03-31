@@ -69,10 +69,12 @@ export const ModelPerformanceDetail = ({
       {/* Model Title */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="text-lg font-semibold text-mf-ash-700">
             {formatModelName(modelName)}
           </h3>
-          <p className="text-sm text-gray-500">by {modelName.split("/")[0]}</p>
+          <p className="text-sm text-mf-ash-500">
+            by {modelName.split("/")[0]}
+          </p>
         </div>
       </div>
 
@@ -84,7 +86,7 @@ export const ModelPerformanceDetail = ({
           <div className={`text-xs ${getColorTheme(colorIndex).text}`}>
             Total Tokens in Last 7 Days
           </div>
-          <div className="pt-0.5 text-sm font-semibold text-gray-900 sm:pt-1 sm:text-base">
+          <div className="pt-0.5 text-sm font-semibold text-mf-ash-700 sm:pt-1 sm:text-base">
             {formatTokenCount(totalTokens)} tokens
           </div>
         </div>
@@ -94,7 +96,7 @@ export const ModelPerformanceDetail = ({
           <div className={`text-xs ${getColorTheme(colorIndex).text}`}>
             Average TPS (7 days)
           </div>
-          <div className="pt-0.5 text-sm font-semibold text-gray-900 sm:pt-1 sm:text-base">
+          <div className="pt-0.5 text-sm font-semibold text-mf-ash-700 sm:pt-1 sm:text-base">
             {avgTPS === 0 ? "N/A" : `${avgTPS.toFixed(1)} TPS`}
           </div>
         </div>
@@ -104,7 +106,7 @@ export const ModelPerformanceDetail = ({
           <div className={`text-xs ${getColorTheme(colorIndex).text}`}>
             Cost
           </div>
-          <div className="pt-0.5 text-sm font-semibold text-gray-900 sm:pt-1 sm:text-base">
+          <div className="pt-0.5 text-sm font-semibold text-mf-ash-700 sm:pt-1 sm:text-base">
             {modelStats[0]?.cpt
               ? `$${((modelStats[0].cpt * 1_000_000) / CREDIT_PER_DOLLAR).toFixed(2)} / M Tokens`
               : "Free"}
@@ -153,7 +155,7 @@ export const ModelPerformanceDetail = ({
                     <div className="absolute bottom-20 w-full">
                       <div className="relative left-1/2 flex -translate-x-1/2 items-center justify-center">
                         <div
-                          className={`relative flex flex-col gap-1 whitespace-nowrap rounded-md bg-mf-milk-500 px-2.5 py-1.5 text-xs font-medium shadow-lg ring-1 ring-gray-100`}
+                          className={`relative flex flex-col gap-1 whitespace-nowrap rounded-md bg-mf-milk-300 px-2.5 py-1.5 text-xs font-medium shadow-lg ring-1 ring-gray-100`}
                         >
                           <span className={getColorTheme(colorIndex).text}>
                             {formatTokenCount(hoverData.value)} tokens
@@ -170,7 +172,7 @@ export const ModelPerformanceDetail = ({
                   )}
                 </div>
               </div>
-              <div className="pt-2 text-center text-xs text-gray-500">
+              <div className="pt-2 text-center text-xs text-mf-ash-500">
                 {formatDate(stat.createdAt.toISOString())}
               </div>
             </div>

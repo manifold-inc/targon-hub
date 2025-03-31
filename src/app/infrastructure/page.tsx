@@ -6,9 +6,9 @@ import { NetworkArchitectureSection } from "@/app/_components/infrastructure/Net
 
 export default function InfrastructurePage() {
   return (
-    <div className="relative min-h-screen bg-mf-milk-500">
+    <div className="relative min-h-screen bg-mf-milk-100">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(20,41,0,0.1),rgba(255,255,255,0))]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(82,171,255,0.2),rgba(255,255,255,0))]" />
       </div>
 
       <div className="relative">

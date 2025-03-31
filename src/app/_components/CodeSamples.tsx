@@ -262,10 +262,10 @@ void chat();`,
       <div className="h-full overflow-y-auto">
         <div className="mx-auto max-w-4xl space-y-6 p-4 lg:p-6">
           <div className="text-center">
-            <h3 className="text-lg font-semibold text-gray-900 lg:text-xl">
+            <h3 className="text-lg font-semibold text-mf-ash-700 lg:text-xl">
               Select a Model
             </h3>
-            <p className="mt-1 text-sm text-gray-500 lg:text-base">
+            <p className="mt-1 text-sm text-mf-ash-500 lg:text-base">
               Choose a model from the dropdown above to see code examples
             </p>
           </div>
@@ -278,14 +278,16 @@ void chat();`,
     <div className="h-full overflow-y-auto">
       <div className="mx-auto max-w-4xl p-4">
         <div className="pb-6 text-center">
-          <h3 className="text-lg font-semibold text-gray-900">Code Examples</h3>
+          <h3 className="text-lg font-semibold text-mf-ash-700">
+            Code Examples
+          </h3>
           <p className="pt-1 text-sm text-gray-600">
             Get started with code samples in your preferred language
           </p>
         </div>
 
         <div className="mx-auto max-w-lg pb-4">
-          <div className="flex space-x-1 rounded-xl bg-[#142900]/5 p-1">
+          <div className="flex space-x-1 rounded-xl bg-mf-blue-900/5 p-1">
             {languages.map((lang) => (
               <button
                 key={lang.id}
@@ -293,8 +295,8 @@ void chat();`,
                 className={clsx(
                   "w-full rounded-lg py-2 text-sm font-medium leading-5",
                   selectedLang === lang.id
-                    ? "bg-mf-milk-500 text-[#142900] shadow-sm"
-                    : "text-gray-600 hover:bg-mf-milk-500/50 hover:text-[#142900]",
+                    ? "bg-mf-milk-300 text-mf-blue-700 shadow-sm"
+                    : "text-gray-600 hover:bg-mf-milk-100/50 hover:text-mf-blue-700",
                 )}
               >
                 {lang.name}
@@ -306,7 +308,7 @@ void chat();`,
         {typesShown.map((type) => (
           <div key={type} className="pb-4">
             <div className="pb-4 text-center">
-              <h4 className="text-sm font-medium text-gray-900">
+              <h4 className="text-sm font-medium text-mf-ash-700">
                 {type.charAt(0).toUpperCase() + type.slice(1)} Example
               </h4>
               <p className="pt-1 text-sm leading-relaxed text-gray-600">

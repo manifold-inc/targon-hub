@@ -32,7 +32,7 @@ export const ModelPerformanceChart = () => {
       </div>
 
       {/* Model Filter Pills */}
-      <div className="absolute -bottom-4 left-0 right-0 border-t border-gray-100 bg-mf-milk-500 sm:-bottom-6">
+      <div className="absolute -bottom-4 left-0 right-0 bg-mf-milk-300 sm:-bottom-6">
         <div className="p-3 sm:p-4">
           <div className="flex flex-wrap items-center justify-center gap-1.5">
             {models?.map((model, index) => (
@@ -46,13 +46,13 @@ export const ModelPerformanceChart = () => {
                 className={`flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-2 py-1 text-xs font-medium shadow-sm transition-all hover:shadow sm:px-2.5 ${
                   model.modelName === selectedModel
                     ? `${getColorTheme(index).pill} text-mf-milk-300`
-                    : "bg-gray-100/80 text-gray-600 hover:bg-gray-100"
+                    : "bg-mf-milk-500 text-gray-600 hover:bg-mf-milk-100"
                 }`}
               >
                 <span
                   className={`h-1 w-1 rounded-full sm:h-1.5 sm:w-1.5 ${
                     model.modelName === selectedModel
-                      ? "bg-mf-milk-500"
+                      ? "bg-mf-milk-300"
                       : getColorTheme(index).pill
                   }`}
                 />

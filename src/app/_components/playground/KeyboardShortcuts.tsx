@@ -27,16 +27,16 @@ export function KeyboardShortcuts({ isOpen, onClose }: KeyboardShortcutsProps) {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-md space-y-4 rounded-xl bg-mf-milk-500 p-6"
+        className="w-full max-w-md space-y-4 rounded-xl bg-mf-milk-300 p-6"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="text-lg font-semibold text-mf-ash-700">
             Keyboard Shortcuts
           </h3>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-mf-ash-500 hover:text-mf-ash-500"
           >
             <span className="sr-only">Close</span>×
           </button>
@@ -44,7 +44,7 @@ export function KeyboardShortcuts({ isOpen, onClose }: KeyboardShortcutsProps) {
 
         <div className="space-y-4">
           <div className="space-y-3">
-            <h4 className="text-sm font-medium text-gray-700">Navigation</h4>
+            <h4 className="text-sm font-medium text-mf-ash-500">Navigation</h4>
             <div className="space-y-2">
               {shortcuts.map((shortcut, i) => (
                 <div
@@ -56,9 +56,9 @@ export function KeyboardShortcuts({ isOpen, onClose }: KeyboardShortcutsProps) {
                     {shortcut.keys.map((key, j) => (
                       <span key={j}>
                         {key === "+" ? (
-                          <span className="px-1 text-gray-400">{key}</span>
+                          <span className="px-1 text-mf-ash-700">{key}</span>
                         ) : (
-                          <kbd className="inline-flex min-w-[1.5rem] items-center justify-center rounded-md border border-mf-silver-700 bg-gray-100 px-1.5 py-0.5 text-xs font-medium text-gray-400">
+                          <kbd className="inline-flex min-w-[1.5rem] items-center justify-center rounded-md bg-mf-blue-700/20 px-1.5 py-0.5 text-xs font-semibold text-mf-ash-700">
                             {key}
                           </kbd>
                         )}

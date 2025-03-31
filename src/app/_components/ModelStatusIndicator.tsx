@@ -16,12 +16,12 @@ export default function ModelStatusIndicator({
       }${
         enabled
           ? "border-mf-blue-500 text-mf-blue-700"
-          : "border-mf-red text-mf-red"
+          : "border-mf-blue-500 text-mf-blue-700"
       }`}
     >
       <div
         className={`h-1.5 w-1.5 rounded-full ${
-          enabled ? "bg-mf-blue-500" : "bg-mf-red"
+          enabled ? "bg-mf-blue-500" : "bg-mf-blue-500"
         }`}
       />
       <span className="text-center text-xs font-medium leading-tight">

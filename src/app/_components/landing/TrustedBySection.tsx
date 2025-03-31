@@ -28,7 +28,7 @@ const COMPANY_LOGOS: CompanyLogo[] = [
 export function TrustedBySection() {
   return (
     <div className="animate-slide-in-delay">
-      <div className="flex flex-col gap-4 py-8 text-center">
+      <div className="flex flex-col gap-4 py-8 pt-24 text-center">
         <p className="text-center text-2xl text-mf-ash-500 sm:text-4xl">
           Trusted By
         </p>
@@ -60,7 +60,7 @@ function LogoCard({ src, alt, link }: CompanyLogo) {
     <div className="slide flex w-[250px] items-center justify-center px-8">
       <Link
         className="flex h-24 w-full items-center justify-center rounded-lg 
-                 border border-mf-silver-700 bg-mf-milk-500 p-2 shadow-sm transition-all duration-300 
+                 border border-mf-silver-700 bg-mf-milk-300 p-2 shadow-sm transition-all duration-300 
                  hover:shadow-md"
         href={link}
       >

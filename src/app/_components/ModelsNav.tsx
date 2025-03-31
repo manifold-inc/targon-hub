@@ -64,8 +64,8 @@ const ModelsNav = () => {
               href={`#${item.label.toLowerCase().replace(/\s+/g, "-")}`}
               onClick={(e) => scrollToSection(e, item.label)}
               className={`
-                flex items-center border-l-2 px-6
-                py-2 transition-colors hover:bg-gray-50
+                hover:mf-milk-300 flex items-center border-l-2
+                px-6 py-2 transition-colors
                 ${
                   activeSection ===
                   item.label.toLowerCase().replace(/\s+/g, "-")

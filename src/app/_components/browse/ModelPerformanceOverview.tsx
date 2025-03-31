@@ -103,16 +103,16 @@ export const ModelPerformanceOverview = ({
           onClick={() => onModelSelect(model.modelName)}
         >
           <div className="flex items-center justify-between whitespace-nowrap pb-1.5 text-xs sm:text-sm">
-            <span className="inline-block w-1/2 truncate font-medium text-gray-900 group-hover:text-gray-700">
+            <span className="inline-block w-1/2 truncate font-medium text-mf-ash-700 group-hover:text-mf-ash-500">
               {formatModelName(model.modelName)}
             </span>
             <span className={`${getColorTheme(index).text} font-medium`}>
               {`${model.avgTPS.toFixed(1)} TPS`}
             </span>
           </div>
-          <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-gray-100/80">
+          <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-mf-milk-300">
             {model.avgTPS === null || model.avgTPS === 0 ? (
-              <div className="absolute inset-0 flex items-center justify-center bg-gray-50 text-xs text-gray-400">
+              <div className="mf-milk-300 absolute inset-0 flex items-center justify-center text-xs text-gray-400">
                 No data
               </div>
             ) : (
