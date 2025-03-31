@@ -156,7 +156,7 @@ export default {
         "slide-in-6": "slide-in 0.5s ease-out both 0.25s",
         "slide-in-7": "slide-in 0.5s ease-out both 0.3s",
         "scroll-horizontal": "scroll-horizontal 15s linear infinite",
-        "fade-in": "fadeIn 1s ease-in-out",
+        "fade-in": "fade-in 0.5s ease-in",
       },
       keyframes: {
         "slide-in": {
@@ -175,6 +175,10 @@ export default {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        }
       },
     },
   },
