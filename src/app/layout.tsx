@@ -23,7 +23,7 @@ const blinker = Blinker({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tao.xyz"),
+  metadataBase: new URL("https://targon.con"),
   title: "Targon",
   description: "Run inference on AI Models lightning fast at low cost",
   icons: [{ rel: "icon", url: "/TargonLogo.svg" }],
@@ -63,7 +63,7 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="icon" href="/ManifoldMarkTransparentGreenSVG.svg" />
       </head>
-      <body className="flex h-full flex-col">
+      <body className="flex h-[50vh] sm:h-screen flex-col">
         <Suspense>
           <WithGlobalProvider>
             {env.RELEASE_FLAG === "true" ? (
