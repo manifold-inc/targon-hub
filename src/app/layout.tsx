@@ -63,13 +63,13 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="icon" href="/ManifoldMarkTransparentGreenSVG.svg" />
       </head>
-      <body className="flex h-[50vh] flex-col sm:h-screen">
+      <body className="flex flex-col h-screen">
         <Suspense>
           <WithGlobalProvider>
             {env.RELEASE_FLAG === "true" ? (
               <>
                 <FakeHeader />
-                <div className="flex h-screen flex-col items-center justify-center">
+                <div className="flex h-[90vh] sm:h-screen flex-col items-center justify-center">
                   <h1 className="pb-16 text-xl font-bold text-mf-blue-700">
                     THINK BIGGER
                   </h1>
