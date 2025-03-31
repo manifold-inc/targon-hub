@@ -53,7 +53,7 @@ export default function RootLayout({
               <>
                 <FakeHeader />
                 <div className="flex h-[calc(100vh-160px)] flex-col items-center justify-center lg:h-[calc(100vh-160px)]">
-                  <h1 className="pb-16 text-xl font-bold text-mf-blue-700">
+                  <h1 className="py-16 text-xl font-bold text-mf-blue-700">
                     THINK BIGGER
                   </h1>
                   <Countdown />
