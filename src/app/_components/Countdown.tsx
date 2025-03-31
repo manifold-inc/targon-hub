@@ -8,7 +8,7 @@ export default function Countdown() {
   return (
     <div className="origin-center scale-[0.8] sm:scale-100 md:scale-125 lg:scale-150">
       <FlipClockCountdown
-        to={new Date(1743534000 * 1000)}
+        to={new Date(1743710400 * 1000)}
         digitBlockStyle={{
           fontWeight: "bold",
           color: "#22242E",
