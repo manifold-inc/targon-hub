@@ -22,9 +22,27 @@ const blinker = Blinker({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://tao.xyz'),
   title: "Targon",
   description: "Run inference on AI Models lightning fast at low cost",
   icons: [{ rel: "icon", url: "/TargonLogo.svg" }],
+  openGraph: {
+    title: 'Targon',
+    description: 'Run inference on AI Models lightning fast at low cost',
+    images: [{
+      url: '/targon-preview.png',
+      width: 1200,
+      height: 630,
+      alt: 'Targon'
+    }],
+  },
+  // For iMessage/SMS previews
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Targon',
+    description: 'Run inference on AI Models lightning fast at low cost',
+    images: ['/targon-preview.png'],
+  }
 };
 
 export default function RootLayout({
