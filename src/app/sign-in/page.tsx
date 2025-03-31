@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
@@ -37,15 +38,21 @@ export default function Page() {
   };
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-2xl font-light leading-9 tracking-tight text-mf-ash-700">
-            Sign in to your account
+      <div className="flex min-h-full flex-1 flex-col justify-center bg-mf-milk-100 py-12 sm:px-6 lg:px-8">
+        <div className="mt-16 flex flex-col items-center sm:mx-auto sm:w-full sm:max-w-md">
+          <Image
+            src="/TargonLogo.svg"
+            alt="Targon Logo"
+            width={40}
+            height={40}
+          />
+          <h2 className="text-center text-2xl font-semibold leading-9 tracking-tight text-mf-ash-700">
+            Welcome Back
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-          <div className="bg-mf-milk-300 px-6 py-12 sm:rounded-lg sm:px-12 sm:shadow">
+        <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-[480px]">
+          <div className="px-6 py-12 sm:px-12">
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="space-y-6"
@@ -53,12 +60,6 @@ export default function Page() {
               method="POST"
             >
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-mf-ash-700"
-                >
-                  Email address
-                </label>
                 <div className="mt-2">
                   <input
                     id="email"
@@ -66,7 +67,7 @@ export default function Page() {
                     autoComplete="email"
                     required
                     placeholder="Email Address"
-                    className="block w-full rounded-md border-0 bg-mf-milk-300 py-1.5 pl-4 text-mf-ash-700 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-mf-milk-300 py-1.5 pl-4 text-mf-ash-700 shadow-sm ring-1 ring-inset ring-mf-silver-700 placeholder:text-mf-ash-500 focus:ring-2 focus:ring-inset focus:ring-mf-blue-700 sm:text-sm sm:leading-6"
                     disabled={signIn.isLoading}
                     {...register("email", {
                       required: "Email address is required",
@@ -77,18 +78,12 @@ export default function Page() {
               </div>
 
               <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-mf-ash-700"
-                >
-                  Password
-                </label>
-                <div className="relative mt-2">
+                <div className="relative mt-10">
                   <input
                     id="password"
                     autoComplete="current-password"
                     required
-                    className="block w-full rounded-md border-0 bg-mf-milk-300 py-1.5 pl-4 text-mf-ash-700 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-mf-milk-300 py-1.5 pl-4 text-mf-ash-700 shadow-sm ring-1 ring-inset ring-mf-silver-700 placeholder:text-mf-ash-500 focus:ring-2 focus:ring-inset focus:ring-mf-blue-700 sm:text-sm sm:leading-6"
                     disabled={signIn.isLoading}
                     placeholder="Password"
                     type={visable ? "text" : "password"}
@@ -115,9 +110,15 @@ export default function Page() {
                 </div>
               </div>
 
-              <div className="pt-4">
+              <div className="flex gap-4 pt-4">
+                <Link
+                  href="/create-account"
+                  className="flex h-9 w-full  items-center justify-center rounded-md px-3 font-semibold leading-6 text-mf-ash-500 hover:bg-mf-blue-700/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-blue-500"
+                >
+                  Create an account
+                </Link>
                 <button
-                  className="flex h-9 w-full items-center justify-center rounded-md bg-indigo-600 px-3 text-sm font-semibold leading-6 text-mf-milk-300 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="flex h-9 w-full items-center justify-center rounded-md bg-mf-blue-500 px-3 font-semibold leading-6 text-mf-ash-500 shadow-sm hover:bg-mf-blue-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-blue-500"
                   type="submit"
                   disabled={signIn.isLoading}
                 >
@@ -127,30 +128,19 @@ export default function Page() {
                     "Sign in"
                   )}
                 </button>
-                <div className="pt-1 text-center text-sm text-mf-ash-500">
-                  <Link className="underline" href="/create-account">
-                    Create an account
-                  </Link>
-                </div>
               </div>
             </form>
 
             <div>
               <div className="relative mt-10">
-                <div
-                  className="absolute inset-0 flex items-center"
-                  aria-hidden="true"
-                >
-                  <div className="w-full border-t border-mf-silver-700" />
-                </div>
                 <div className="relative flex justify-center text-sm font-medium leading-6">
-                  <span className="bg-mf-milk-300 px-6 text-mf-ash-700">
-                    Or continue with
+                  <span className="px-6 font-semibold text-mf-ash-700">
+                    Or Continue with
                   </span>
                 </div>
               </div>
 
-              <div className="mt-6">
+              <div className="mt-6 flex justify-center">
                 <Link
                   href={`/sign-in/google${
                     searchParams.get("redirect")
@@ -159,7 +149,7 @@ export default function Page() {
                         )}`
                       : ""
                   }`}
-                  className="border-1 flex w-full items-center justify-center gap-3 whitespace-nowrap rounded-md border border-gray-400 py-2"
+                  className="flex h-9 w-32 items-center justify-center gap-3 whitespace-nowrap rounded-md bg-white py-2"
                 >
                   <svg
                     className="h-5 w-5"

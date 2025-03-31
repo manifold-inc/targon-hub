@@ -489,7 +489,7 @@ export default function ModalSidebar() {
               setMinWeeklyPrice(250);
               setMaxWeeklyPrice(2000);
             }}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border border-mf-silver-700 bg-mf-milk-300 px-4 py-2.5 text-sm font-medium text-mf-ash-300 transition-colors hover:bg-mf-milk-300"
+            className="flex w-full items-center justify-center gap-2 rounded-lg border border-mf-silver-700 bg-mf-milk-300 px-4 py-2.5 text-sm font-medium text-mf-ash-300 transition-colors hover:bg-mf-milk-100"
           >
             <X className="h-4 w-4" />
             Clear Filters
