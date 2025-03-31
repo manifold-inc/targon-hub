@@ -69,7 +69,7 @@ export default function RootLayout({
             {env.RELEASE_FLAG === "true" ? (
               <>
                 <FakeHeader />
-                <div className="flex h-[90vh] sm:h-screen flex-col items-center justify-center">
+                <div className="flex my-auto sm:my-auto-0 sm:h-screen flex-col items-center justify-center">
                   <h1 className="pb-16 text-xl font-bold text-mf-blue-700">
                     THINK BIGGER
                   </h1>
