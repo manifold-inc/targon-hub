@@ -40,7 +40,7 @@ export default function BrowsePage() {
   ];
 
   return (
-    <div className="relative bg-mf-milk-300">
+    <div className="relative bg-mf-milk-100">
       {/* Dot pattern container */}
       <div className="absolute -top-20 left-0 right-0 h-[550px] animate-fade-in bg-gradient-to-b from-[#ABD7FF] to-[#84C4FF]">
         <div className="dot-pattern h-full w-full animate-slide-in">
@@ -55,7 +55,7 @@ export default function BrowsePage() {
         <div className="relative w-full animate-slide-in-delay">
           <Link
             href="/playground"
-            className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-500 p-4 shadow-sm transition-all duration-300 hover:shadow-lg 
+            className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-300 p-4 shadow-sm transition-all duration-300 hover:bg-mf-milk-100 hover:shadow-lg 
             sm:p-6 md:p-8 lg:rounded-tl-xl"
           >
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-[1fr,200px] sm:gap-8">
@@ -67,7 +67,7 @@ export default function BrowsePage() {
                 />
               </div>
               <div className="pointer-events-none relative hidden h-full w-full items-center justify-end overflow-visible sm:flex">
-                <div className="absolute -right-2/3 -top-10 aspect-square h-full ">
+                <div className="absolute -right-2/3 -top-10 aspect-square h-full">
                   <GlobeAnimation />
                 </div>
               </div>
@@ -125,17 +125,11 @@ export default function BrowsePage() {
               damping: 20,
             }}
             className="relative flex justify-center"
-          >
-            <span className="bg-mf-milk-300 px-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-mf-blue-500/5">
-                <div className="h-3 w-3 rounded-full bg-mf-blue-500" />
-              </div>
-            </span>
-          </motion.div>
+          ></motion.div>
         </motion.div>
 
         {/* Bento Grid */}
-        <div className="py-4">
+        <div>
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}

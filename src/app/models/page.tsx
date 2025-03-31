@@ -89,12 +89,12 @@ export default function Page() {
             onClick={() => setIsMobileOpen(false)}
           />
           {/* Sidebar */}
-          <div className="absolute bottom-0 right-0 top-0 w-full max-w-sm border-l border-mf-silver-700 bg-mf-milk-500 p-6 shadow-xl">
+          <div className="absolute bottom-0 right-0 top-0 w-full max-w-sm border-l border-mf-silver-700 bg-mf-milk-300 p-6 shadow-xl">
             <div className="flex items-center justify-between pb-4">
               <h2 className="text-lg font-medium text-mf-ash-300">Filters</h2>
               <button
                 onClick={() => setIsMobileOpen(false)}
-                className="rounded-lg p-2 text-mf-ash-300 hover:bg-mf-milk-300"
+                className="rounded-lg p-2 text-mf-ash-300 hover:bg-mf-milk-100"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -107,21 +107,21 @@ export default function Page() {
       <div className="flex">
         {/* Left sidebar - desktop */}
         <div className="hidden w-80 lg:block">
-          <div className="sticky top-14 min-h-screen overflow-y-auto  bg-mf-milk-500">
+          <div className="sticky top-14 min-h-screen overflow-y-auto  bg-mf-milk-300">
             <ModalSidebar />
           </div>
         </div>
 
         {/* Main content area */}
-        <div className="min-w-0 flex-1">
+        <div className="min-w-0 flex-1 bg-mf-milk-100">
           <div className="flex animate-slide-in flex-col">
             {/* Header */}
             <div className="px-4 pt-10 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between">
-                <h1 className="text-xl font-medium text-mf-ash-300 sm:text-2xl">
+                <h1 className="text-xl font-semibold text-mf-ash-500 sm:text-2xl">
                   Models
                 </h1>
-                <div className="hidden whitespace-nowrap text-2xl font-normal text-mf-ash-300 lg:block">
+                <div className="hidden whitespace-nowrap text-2xl font-semibold text-mf-ash-500 lg:block">
                   {models.data?.total ?? 0} Models
                 </div>
               </div>
@@ -135,7 +135,7 @@ export default function Page() {
                   <Search className="h-4 w-4 text-mf-grey" />
                 </div>
                 <input
-                  className="text-md placeholder:text-mf-silver flex h-9 w-full items-center rounded-lg border-mf-milk-700 bg-mf-milk-500 pb-3 pl-8 pr-8 pt-3 text-sm leading-tight ring-0 focus:border-mf-night-300 focus:ring-0"
+                  className="text-md placeholder:text-mf-silver flex h-9 w-full items-center rounded-lg border-mf-milk-700 bg-mf-milk-300 pb-3 pl-8 pr-8 pt-3 text-sm leading-tight ring-0 focus:border-mf-night-300 focus:ring-0"
                   placeholder="Filter models..."
                   onChange={(event) => {
                     setQuery(event.target.value);
@@ -148,7 +148,7 @@ export default function Page() {
               <div className="flex items-center justify-between lg:hidden">
                 <button
                   onClick={() => setIsMobileOpen((s) => !s)}
-                  className="inline-flex items-center gap-2 rounded-lg border border-mf-silver-700 bg-mf-milk-500 px-3 py-2 text-sm font-medium text-mf-ash-300 transition-colors hover:bg-mf-milk-300"
+                  className="inline-flex items-center gap-2 rounded-lg border border-mf-silver-700 bg-mf-milk-300 px-3 py-2 text-sm font-medium text-mf-ash-300 transition-colors hover:bg-mf-milk-100"
                 >
                   <Filter className="h-4 w-4 text-mf-ash-300" />
                   <span>Filters</span>
@@ -180,7 +180,7 @@ export default function Page() {
                 currentPage === totalPages && (
                   <Link
                     href="/models/add"
-                    className="group relative flex items-start overflow-hidden rounded-xl border border-mf-blue-700 bg-mf-milk-500 p-3 backdrop-blur-md transition-all duration-500 hover:from-mf-blue-700 hover:to-mf-blue-500 sm:p-4 md:p-5"
+                    className="group relative flex items-start overflow-hidden rounded-xl border border-mf-blue-700 bg-mf-milk-300 p-3 backdrop-blur-md transition-all duration-500 hover:from-mf-blue-700 hover:to-mf-blue-500 sm:p-4 md:p-5"
                   >
                     <div className="relative flex min-w-0 flex-1 flex-col gap-2">
                       <div className="flex items-start justify-between gap-2">
@@ -216,7 +216,7 @@ export default function Page() {
                         handlePageChange(Math.max(1, currentPage - 1))
                       }
                       disabled={currentPage === 1}
-                      className="hover:mf-milk-300 inline-flex items-center gap-1 rounded-lg border border-mf-silver-700 bg-mf-milk-500 px-3 py-2 text-sm font-medium text-mf-ash-300 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                      className="hover:mf-milk-300 inline-flex items-center gap-1 rounded-lg border border-mf-silver-700 bg-mf-milk-300 px-3 py-2 text-sm font-medium text-mf-ash-300 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <ChevronLeft className="h-4 w-4" />
                     </button>
@@ -230,7 +230,7 @@ export default function Page() {
                           className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors ${
                             currentPage === 1
                               ? "bg-mf-blue-900 text-mf-milk-300"
-                              : "hover:mf-milk-300 border border-mf-silver-700 bg-mf-milk-500 text-mf-ash-300"
+                              : "hover:mf-milk-300 border border-mf-silver-700 bg-mf-milk-300 text-mf-ash-300"
                           }`}
                         >
                           1
@@ -245,7 +245,7 @@ export default function Page() {
                         {currentPage > 2 && (
                           <button
                             onClick={() => handlePageChange(currentPage - 1)}
-                            className="hover:mf-milk-300 inline-flex h-9 w-9 items-center justify-center rounded-lg border border-mf-silver-700 bg-mf-milk-500 text-sm font-medium text-mf-ash-300 transition-colors"
+                            className="hover:mf-milk-300 inline-flex h-9 w-9 items-center justify-center rounded-lg border border-mf-silver-700 bg-mf-milk-300 text-sm font-medium text-mf-ash-300 transition-colors"
                           >
                             {currentPage - 1}
                           </button>
@@ -265,7 +265,7 @@ export default function Page() {
                         {currentPage < totalPages - 1 && (
                           <button
                             onClick={() => handlePageChange(currentPage + 1)}
-                            className="hover:mf-milk-300 inline-flex h-9 w-9 items-center justify-center rounded-lg border border-mf-silver-700 bg-mf-milk-500 text-sm font-medium text-mf-ash-300 transition-colors"
+                            className="hover:mf-milk-300 inline-flex h-9 w-9 items-center justify-center rounded-lg border border-mf-silver-700 bg-mf-milk-300 text-sm font-medium text-mf-ash-300 transition-colors"
                           >
                             {currentPage + 1}
                           </button>
@@ -283,7 +283,7 @@ export default function Page() {
                           className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors ${
                             currentPage === totalPages
                               ? "bg-mf-blue-900 text-mf-milk-300"
-                              : "hover:mf-milk-300 border border-mf-silver-700 bg-mf-milk-500 text-mf-ash-300"
+                              : "hover:mf-milk-300 border border-mf-silver-700 bg-mf-milk-300 text-mf-ash-300"
                           }`}
                         >
                           {totalPages}
@@ -296,7 +296,7 @@ export default function Page() {
                         handlePageChange(Math.min(totalPages, currentPage + 1))
                       }
                       disabled={currentPage === totalPages}
-                      className="hover:mf-milk-300 inline-flex items-center gap-1 rounded-lg border border-mf-silver-700 bg-mf-milk-500 px-3 py-2 text-sm font-medium text-mf-ash-300 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                      className="hover:mf-milk-300 inline-flex items-center gap-1 rounded-lg border border-mf-silver-700 bg-mf-milk-300 px-3 py-2 text-sm font-medium text-mf-ash-300 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <ChevronRight className="h-4 w-4" />
                     </button>

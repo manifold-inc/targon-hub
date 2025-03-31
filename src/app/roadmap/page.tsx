@@ -78,7 +78,7 @@ const roadmapItems: RoadmapItem[] = [
     ],
   },
   {
-    quarter: "Community",
+    quarter: "COMMUNITY",
     title: "Connect with Us",
     description: "Join our community to help shape the future of Targon.",
     status: "completed",
@@ -107,19 +107,11 @@ const animations = {
 };
 
 const StatusBadge = ({ status }: { status: RoadmapItem["status"] }) => (
-  <span
-    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-      status === "completed"
-        ? "bg-mf-blue-500/10 text-mf-blue-700/60 ring-1 ring-inset ring-mf-blue-500/30"
-        : status === "in-progress"
-          ? "bg-yellow-50 text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
-          : "mf-milk-300 text-gray-600 ring-1 ring-inset ring-gray-500/10"
-    }`}
-  >
+  <span className="inline-flex items-center rounded-full bg-mf-blue-500/20 px-2.5 py-0.5 text-xs font-semibold text-mf-blue-700">
     {status === "in-progress" && (
       <span className="relative mr-1 flex h-1 w-1">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-yellow-400 opacity-75" />
-        <span className="relative inline-flex h-1 w-1 rounded-full bg-yellow-400" />
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mf-blue-700 opacity-75" />
+        <span className="relative inline-flex h-1 w-1 rounded-full bg-mf-blue-700" />
       </span>
     )}
     {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -134,32 +126,23 @@ const FeatureIcon = ({
   isCommunitySection: boolean;
 }) => {
   if (isCommunitySection)
-    return <MessagesSquare className="h-4 w-4 text-mf-blue-700/80" />;
+    return <MessagesSquare className="h-4 w-4 text-mf-blue-700" />;
   if (status === "completed")
-    return <Check className="h-4 w-4 text-green-800" />;
+    return <Check className="h-4 w-4 text-mf-blue-700" />;
   if (status === "in-progress")
     return (
       //custom animation speed
-      <CircleDashed className="h-4 w-4 animate-spin text-yellow-500 [animation-duration:3000ms]" />
+      <CircleDashed className="h-4 w-4 animate-spin text-mf-blue-700 [animation-duration:3000ms]" />
     );
-  return <Hourglass className="h-4 w-4 text-gray-500" />;
+  return <Hourglass className="h-4 w-4 text-mf-blue-700" />;
 };
 
 export default function RoadmapPage() {
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50">
-      {/* Background Effects */}
+    <div className="relative min-h-screen bg-mf-milk-100">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]" />
-        <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-mf-blue-500/20 to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(82,171,255,0.2),rgba(255,255,255,0))]" />
       </div>
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[40rem] overflow-hidden">
-        {/* using pixels here, because its a gradient which is hard to do with tailwind */}
-        <div className="absolute -top-48 left-1/2 h-[1000px] w-[1000px] -translate-x-1/2">
-          <div className="absolute inset-0 rounded-full bg-gradient-to-b from-mf-blue-500/20 via-mf-blue-500/5 to-transparent blur-3xl" />
-        </div>
-      </div>
-
       <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-16 lg:px-8">
         {/* Header Section */}
         <motion.div
@@ -169,16 +152,16 @@ export default function RoadmapPage() {
           className="mx-auto max-w-2xl text-center"
         >
           <motion.div variants={animations.fadeInUp}>
-            <span className="inline-block rounded-full bg-mf-blue-900/5 px-3 py-1 text-sm font-medium text-mf-blue-700 sm:px-4 sm:py-1.5">
+            <span className="inline-block rounded-full bg-mf-blue-700/20 px-3 py-1 text-sm font-semibold text-mf-blue-700 sm:px-4 sm:py-1.5">
               Product Roadmap
             </span>
           </motion.div>
           <motion.h1
             variants={animations.fadeInUp}
-            className="font-display pt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-6xl"
+            className="font-display pt-4 text-3xl font-semibold tracking-tight text-mf-ash-700 sm:text-4xl lg:text-6xl"
           >
             Building the future of{" "}
-            <p className="text-mf-blue-700">AI infrastructure</p>
+            <p className="text-mf-blue-700">AI Infrastructure</p>
           </motion.h1>
           <motion.p
             variants={animations.fadeInUp}
@@ -210,12 +193,12 @@ export default function RoadmapPage() {
                 }}
                 className="group relative h-full"
               >
-                <div className="relative flex h-full flex-col rounded-2xl border border-mf-silver-700 bg-mf-milk-500 p-4 shadow-sm transition-all duration-300 hover:shadow-lg sm:p-6 lg:p-8">
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white via-white to-gray-50/50" />
+                <div className="relative flex h-full flex-col rounded-2xl border border-mf-silver-700 bg-mf-milk-300 p-4 shadow-sm transition-all duration-300 hover:shadow-lg sm:p-6 lg:p-8">
+                  <div className="absolute inset-0 rounded-2xl bg-mf-milk-300 group-hover:bg-mf-milk-100" />
 
                   <div className="relative flex h-full flex-col">
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-sm font-medium text-mf-blue-700">
+                      <span className=" text-sm font-semibold text-mf-ash-300">
                         {item.quarter}
                       </span>
                       {item.quarter !== "Community" && (
@@ -224,7 +207,7 @@ export default function RoadmapPage() {
                     </div>
 
                     <div className="pb-6 pt-4">
-                      <h3 className="text-xl font-semibold text-gray-900">
+                      <h3 className="text-xl font-semibold text-mf-ash-700">
                         {item.title}
                       </h3>
                       <p className="pt-2 text-sm leading-6 text-gray-600">
@@ -236,7 +219,7 @@ export default function RoadmapPage() {
                       {item.features.map((feature, featureIdx) => (
                         <div
                           key={featureIdx}
-                          className="mf-milk-300/80 flex h-10 items-center gap-3 rounded-xl px-4 text-sm text-gray-900 ring-1 ring-inset ring-gray-100"
+                          className="mf-milk-300/80 flex h-10 items-center gap-3 rounded-xl bg-mf-milk-300 px-4 text-sm text-mf-ash-700 ring-1 ring-inset ring-mf-silver-700/30"
                         >
                           <div className="flex h-5 w-5 flex-none items-center justify-center">
                             <FeatureIcon

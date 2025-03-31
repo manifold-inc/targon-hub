@@ -198,14 +198,14 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
+                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100 "
                                 }
                                 href="/browse"
                               >
                                 <BrainCircuit className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-sm">Explore</p>
-                                  <p className="text-sm text-gray-500">
+                                  <p className="text-sm text-mf-ash-500">
                                     Explore our platform
                                   </p>
                                 </div>
@@ -214,14 +214,14 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
+                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100 "
                                 }
                                 href="/models"
                               >
                                 <FileBox className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-sm">Models</p>
-                                  <p className="text-sm text-gray-500">
+                                  <p className="text-sm text-mf-ash-500">
                                     Search and deploy models
                                   </p>
                                 </div>
@@ -230,14 +230,14 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
+                                  "group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100 "
                                 }
                                 href="/models/lease"
                               >
                                 <Wallet className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-sm">Lease</p>
-                                  <p className="text-sm text-gray-500">
+                                  <p className="text-sm text-mf-ash-500">
                                     Add any model
                                   </p>
                                 </div>
@@ -246,7 +246,7 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group block px-4 py-4 text-gray-700 hover:bg-mf-milk-500  hover:text-gray-900 2xl:hidden"
+                                  "group block px-4 py-4 text-mf-ash-500 hover:bg-mf-milk-100  hover:text-mf-ash-700 lg:hidden"
                                 }
                                 href="/infrastructure"
                               >
@@ -254,7 +254,7 @@ export const Header = () => {
                                   <Server className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                   <div className="flex flex-col gap-0 pl-2 text-left">
                                     <p className="text-sm">Infrastructure</p>
-                                    <p className="text-sm text-gray-500">
+                                    <p className="text-sm text-mf-ash-500">
                                       Explore our platform
                                     </p>
                                   </div>
@@ -264,7 +264,7 @@ export const Header = () => {
                             <MenuItem>
                               <Link
                                 className={
-                                  "group block px-4 py-4 text-gray-700 hover:bg-mf-milk-500  hover:text-gray-900 2xl:hidden"
+                                  "group block px-4 py-4 text-mf-ash-500 hover:bg-mf-milk-100  hover:text-mf-ash-700 lg:hidden"
                                 }
                                 href="/roadmap"
                               >
@@ -272,7 +272,7 @@ export const Header = () => {
                                   <Map className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                   <div className="flex flex-col gap-0 pl-2 text-left">
                                     <p className="text-sm">Roadmap</p>
-                                    <p className="text-sm text-gray-500">
+                                    <p className="text-sm text-mf-ash-500">
                                       Our vision
                                     </p>
                                   </div>
@@ -281,13 +281,13 @@ export const Header = () => {
                             </MenuItem>
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500  2xl:hidden"
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100  lg:hidden"
                                 href="/models/immunity"
                               >
                                 <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-sm">Timeline</p>
-                                  <p className="text-sm text-gray-500">
+                                  <p className="text-sm text-mf-ash-500">
                                     Model immunity
                                   </p>
                                 </div>
@@ -324,13 +324,13 @@ export const Header = () => {
                           >
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100 "
                                 href="/infrastructure"
                               >
                                 <Server className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-sm">Infrastructure</p>
-                                  <p className="text-sm text-gray-500">
+                                  <p className="text-sm text-mf-ash-500">
                                     Explore our platform
                                   </p>
                                 </div>
@@ -338,13 +338,13 @@ export const Header = () => {
                             </MenuItem>
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100 "
                                 href="/roadmap"
                               >
                                 <Map className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-sm">Roadmap</p>
-                                  <p className="text-sm text-gray-500">
+                                  <p className="text-sm text-mf-ash-500">
                                     Our vision
                                   </p>
                                 </div>
@@ -352,13 +352,13 @@ export const Header = () => {
                             </MenuItem>
                             <MenuItem>
                               <Link
-                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-500 "
+                                className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100 "
                                 href="/models/immunity"
                               >
                                 <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-sm">Timeline</p>
-                                  <p className="text-sm text-gray-500">
+                                  <p className="text-sm text-mf-ash-500">
                                     Model immunity
                                   </p>
                                 </div>
@@ -393,7 +393,7 @@ export const Header = () => {
                   >
                     <Link href="/settings">
                       <MenuButton
-                        className={`hidden h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-mf-milk-500 py-2 font-semibold sm:inline-flex  ${
+                        className={`hidden h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-mf-milk-300 py-2 font-semibold sm:inline-flex  ${
                           isUserMenuOpen
                             ? "rounded-b-none ring-mf-milk-300"
                             : "ring-1 ring-inset ring-mf-silver-700"
@@ -414,7 +414,7 @@ export const Header = () => {
                           aria-hidden="true"
                           className="h-4 w-4 rounded-full bg-black text-mf-milk-300"
                         />
-                        <span className="text-sm font-medium text-gray-900">
+                        <span className="text-sm font-medium text-mf-ash-700">
                           $
                           {formatLargeNumber(
                             (auth.user?.credits ?? 0) / CREDIT_PER_DOLLAR,
@@ -434,15 +434,15 @@ export const Header = () => {
                             y: -10,
                             transition: { duration: 0.15 },
                           }}
-                          className="focus:outline-hidden absolute right-0 top-6 z-20 mt-2 w-28 origin-top rounded-md rounded-t-none bg-mf-milk-500 text-center shadow-lg"
+                          className="focus:outline-hidden absolute right-0 top-6 z-20 mt-2 w-28 origin-top rounded-md rounded-t-none bg-mf-milk-300 text-center shadow-lg"
                         >
                           <div>
                             <MenuItem>
                               <div className="block w-full px-4 py-2 text-center">
-                                <div className="text-sm tracking-wider text-gray-500">
+                                <div className="text-sm tracking-wider text-mf-ash-500">
                                   Balance
                                 </div>
-                                <div className="font-medium text-gray-900">
+                                <div className="font-medium text-mf-ash-700">
                                   $
                                   {Number(
                                     (auth.user?.credits ?? 0) /
@@ -478,7 +478,7 @@ export const Header = () => {
                 ) : (
                   <Link
                     href="/sign-in"
-                    className="inline-flex w-20 cursor-pointer items-center justify-center font-medium text-gray-900"
+                    className="inline-flex w-20 cursor-pointer items-center justify-center font-medium text-mf-ash-700"
                   >
                     SIGN IN
                   </Link>
@@ -488,7 +488,7 @@ export const Header = () => {
               <div className="flex sm:hidden">
                 <button
                   onClick={() => setMobileMenuOpen(true)}
-                  className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+                  className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-mf-ash-500"
                 >
                   <span className="sr-only">Open main menu</span>
                   <MenuIcon
@@ -527,7 +527,7 @@ export const Header = () => {
                 </Link>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="-mr-3.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+                  className="-mr-3.5 inline-flex items-center justify-center rounded-md p-2.5 text-mf-ash-500"
                 >
                   <span className="sr-only">Close menu</span>
                   <XIcon
@@ -544,7 +544,7 @@ export const Header = () => {
                       <Link
                         href={item.slug}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="-mx-3 block px-3 py-2 text-base/7 font-semibold text-gray-900"
+                        className="-mx-3 block px-3 py-2 text-base/7 font-semibold text-mf-ash-700"
                       >
                         {item.title}
                       </Link>
@@ -564,7 +564,7 @@ export const Header = () => {
                     href="/settings"
                     prefetch={false}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-mf-ash-700"
                   >
                     SETTINGS
                   </Link>
@@ -572,7 +572,7 @@ export const Header = () => {
                     <a
                       href="/sign-out"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-mf-ash-700"
                     >
                       SIGN OUT
                     </a>
@@ -580,7 +580,7 @@ export const Header = () => {
                     <Link
                       href="/sign-in"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-mf-ash-700"
                     >
                       SIGN IN
                     </Link>

@@ -56,8 +56,8 @@ export const NetworkAnimation = ({
               transition={{ duration: 0.5, delay: 0.1 + _i * 0.1 }}
               className="z-10"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#e2e4df]">
-                <User className="h-6 w-6 text-mf-green-700" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-mf-milk-300">
+                <User className="h-6 w-6 text-mf-blue-700" />
               </div>
             </motion.div>
           ))}
@@ -70,8 +70,8 @@ export const NetworkAnimation = ({
           transition={{ duration: 0.5, delay: 0.2 }}
           className="z-10"
         >
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#e2e4df]">
-            <ServerCog className="h-8 w-8 text-mf-green-700" />
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-mf-milk-300">
+            <ServerCog className="h-8 w-8 text-mf-blue-700" />
           </div>
         </motion.div>
 
@@ -86,8 +86,8 @@ export const NetworkAnimation = ({
               animate={{ scale: [0, 1.2, 1] }}
               transition={{ duration: 0.5, delay: 0.3 + _i * 0.1 }}
             >
-              <div className="z-10 flex h-12 w-12 items-center justify-center rounded-full  bg-[#e2e4df]">
-                <Cpu className="h-6 w-6 text-mf-green-700" />
+              <div className="z-10 flex h-12 w-12 items-center justify-center rounded-full  bg-mf-milk-300">
+                <Cpu className="h-6 w-6 text-mf-blue-700" />
               </div>
             </motion.div>
           ))}
@@ -107,9 +107,9 @@ export const NetworkAnimation = ({
               y1={userY}
               x2={targonX}
               y2={targonY}
-              stroke="#142900"
+              stroke="#52ABFF"
               strokeWidth="2"
-              strokeOpacity="0.15"
+              strokeOpacity="0.5"
             />
           ))}
 
@@ -121,9 +121,9 @@ export const NetworkAnimation = ({
               y1={targonY}
               x2={minerX}
               y2={minerY}
-              stroke="#142900"
+              stroke="#52ABFF"
               strokeWidth="2"
-              strokeOpacity="0.15"
+              strokeOpacity="0.5"
             />
           ))}
 
@@ -133,7 +133,7 @@ export const NetworkAnimation = ({
               {/* User to Targon API */}
               <motion.circle
                 r="2.5"
-                fill="#142900"
+                fill="#3A3C46"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [userX, targonX],
@@ -152,7 +152,7 @@ export const NetworkAnimation = ({
               {/* Targon API to Miner */}
               <motion.circle
                 r="2.5"
-                fill="#142900"
+                fill="#3A3C46"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [targonX, minerX],
@@ -171,7 +171,7 @@ export const NetworkAnimation = ({
               {/* Miner back to Targon API */}
               <motion.circle
                 r="2.5"
-                fill="#142900"
+                fill="#3A3C46"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [minerX, targonX],
@@ -190,7 +190,7 @@ export const NetworkAnimation = ({
               {/* Targon API back to User */}
               <motion.circle
                 r="2.5"
-                fill="#142900"
+                fill="#3A3C46"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [targonX, userX],

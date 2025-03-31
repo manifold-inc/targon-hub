@@ -12,13 +12,12 @@ interface ChatInputProps {
   onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   onShowShortcuts: () => void;
   hasChat?: boolean;
-  disabled?: boolean;
 }
 
 const buttonBaseClass =
-  "rounded-lg p-2.5 text-gray-500 hover:bg-mf-blue-900/5 hover:text-mf-green-700 lg:p-2";
+  "rounded-lg p-2.5 text-mf-ash-500 hover:bg-mf-blue-900/5 hover:text-mf-green-700 lg:p-2";
 const buttonDisabledClass =
-  "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-gray-500";
+  "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-mf-ash-500";
 
 export function ChatInput({
   text,
@@ -30,7 +29,6 @@ export function ChatInput({
   onKeyDown,
   onShowShortcuts,
   hasChat = false,
-  disabled = false,
 }: ChatInputProps) {
   return (
     <div className="p-3 lg:p-4">
@@ -46,12 +44,12 @@ export function ChatInput({
           placeholder={
             current_model ? "Message..." : "Select a model to start chatting"
           }
-          disabled={!current_model || disabled}
+          disabled={!current_model}
           rows={1}
           className={clsx(
             "w-full resize-none rounded-xl py-3.5 text-base lg:py-3 lg:text-sm",
-            "border border-mf-silver-700 bg-mf-milk-500",
-            "focus:border-mf-green-700/20 focus:outline-none focus:ring-1 focus:ring-mf-green-700/20",
+            "border border-mf-silver-700 bg-mf-milk-100",
+            "focus:border-mf-blue-700/20 focus:outline-none focus:ring-1 focus:ring-mf-blue-700/20",
             "disabled:cursor-not-allowed disabled:opacity-50",
             "pl-12 pr-24",
             "max-h-36 min-h-[3.25rem] overflow-y-auto lg:min-h-12",
@@ -65,7 +63,7 @@ export function ChatInput({
           )}
           <button
             onClick={onSend}
-            disabled={isLoading || !current_model || !text.trim() || disabled}
+            disabled={isLoading || !current_model || !text.trim()}
             className={clsx(buttonBaseClass, buttonDisabledClass)}
           >
             <SendHorizonalIcon className="h-5 w-5" />

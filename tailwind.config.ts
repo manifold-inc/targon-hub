@@ -67,6 +67,7 @@ export default {
             700: "#A3B5D6",
           },
           milk: {
+            100: "#e6f0ff",
             300: "#E0EBFF",
             500: "#D7E5FF",
             700: "#AEC0D6",
@@ -86,6 +87,7 @@ export default {
           red: "#FF5A5A",
           grey: "#8997ad",
           gray: "#98A1B2",
+          white: "#f2f7ff",
           "gray-600": "#475467",
         },
         "dark-tremor": {
@@ -154,7 +156,7 @@ export default {
         "slide-in-6": "slide-in 0.5s ease-out both 0.25s",
         "slide-in-7": "slide-in 0.5s ease-out both 0.3s",
         "scroll-horizontal": "scroll-horizontal 15s linear infinite",
-        "fade-in": "fadeIn 1s ease-in-out",
+        "fade-in": "fade-in 0.5s ease-in",
       },
       keyframes: {
         "slide-in": {
@@ -170,6 +172,10 @@ export default {
           "100%": { transform: "translateX(calc(-250px * 3))" },
         },
         fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        "fade-in": {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },

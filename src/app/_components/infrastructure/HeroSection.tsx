@@ -42,7 +42,7 @@ const Title = ({ children }: { children: React.ReactNode }) => (
     whileInView="visible"
     viewport={{ once: true }}
     transition={{ delay: 0.3, duration: 0.5 }}
-    className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:text-6xl"
+    className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-mf-ash-700 sm:text-4xl md:text-5xl lg:text-6xl"
   >
     {children}
   </motion.h2>

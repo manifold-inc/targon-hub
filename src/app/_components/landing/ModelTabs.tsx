@@ -60,8 +60,8 @@ export function ModelTabs() {
                 key={index}
                 className={`flex h-fit w-32 items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-semibold leading-tight focus:border-mf-milk-500 focus:outline-none focus:ring-2 focus:ring-mf-milk-500 ${
                   selectedIndex === index
-                    ? "bg-mf-milk-500 ring-2 ring-mf-milk-500"
-                    : "hover:bg-mf-milk-500 hover:ring-2 hover:ring-mf-milk-500"
+                    ? "bg-mf-milk-300 ring-2 ring-mf-milk-500"
+                    : "hover:bg-mf-milk-100 hover:ring-2 hover:ring-mf-milk-500"
                 }`}
                 onClick={() => setSelectedIndex(index)}
               >
@@ -82,9 +82,9 @@ export function ModelTabs() {
         </TabList>
       </TabGroup>
 
-      <div className="relative mx-auto w-full overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-500">
+      <div className="relative mx-auto w-full overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-300">
         <div className="absolute inset-0 bg-gradient-to-tr from-mf-green-700/5 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-mf-milk-500" />
+        <div className="absolute inset-0 bg-mf-milk-300" />
 
         <div className="relative h-96 overflow-auto sm:h-auto sm:overflow-visible">
           <div className="sticky top-0 z-10 flex items-center justify-between p-2 backdrop-blur-md sm:p-3">

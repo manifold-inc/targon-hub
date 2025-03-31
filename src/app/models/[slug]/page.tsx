@@ -52,7 +52,7 @@ export default async function Page({ params }: Props) {
           <div className="mx-auto">
             <section id="overview" data-section>
               <header className="flex w-full flex-col gap-4 pb-6 pr-4 sm:flex-row sm:justify-between">
-                <h1 className="text-center text-xl leading-9 text-[#101828] sm:text-left sm:text-2xl md:text-3xl">
+                <h1 className="text-center text-xl leading-9 text-mf-ash-700 sm:text-left sm:text-2xl md:text-3xl">
                   {data.name}
                 </h1>
 
@@ -66,7 +66,7 @@ export default async function Page({ params }: Props) {
                   }
                   className="group relative flex h-9 w-full items-center justify-center self-center sm:w-32 sm:self-auto"
                 >
-                  <span className="inline-flex w-full items-center justify-center gap-1 whitespace-nowrap rounded-full border border-mf-silver-700 bg-mf-milk-500 px-3 py-2 text-mf-ash-300 group-hover:bg-mf-milk-300 sm:w-auto">
+                  <span className="inline-flex w-full items-center justify-center gap-1 whitespace-nowrap rounded-full border border-mf-silver-700 bg-mf-milk-300 px-3 py-2 text-mf-ash-300 group-hover:bg-mf-milk-100 sm:w-auto">
                     <span className="w-full text-center text-sm leading-tight sm:w-24">
                       {user?.id
                         ? data.enabled
@@ -79,18 +79,18 @@ export default async function Page({ params }: Props) {
               </header>
 
               <div className="flex flex-col items-center gap-4 sm:flex-row">
-                <time className="whitespace-nowrap text-xs leading-tight text-[#667085] sm:text-sm">
+                <time className="whitespace-nowrap text-xs leading-tight text-mf-ash-500 sm:text-sm">
                   Created {data?.createdAt?.toLocaleDateString()}
                 </time>
                 <div className="hidden h-5 w-px bg-[#e4e7ec] sm:block" />
                 <div className="flex items-center gap-3">
                   <UserRound width={16} height={16} />
-                  <span className="text-sm leading-tight text-[#667085]">
+                  <span className="text-sm leading-tight text-mf-ash-500">
                     {data.name!.split("/")[0]}
                   </span>
                 </div>
                 <div className="hidden h-5 w-px bg-[#e4e7ec] sm:block" />
-                <div className="text-xs leading-tight text-[#667085] sm:text-sm">
+                <div className="text-xs leading-tight text-mf-ash-500 sm:text-sm">
                   ${((data.cpt * 1_000_000) / CREDIT_PER_DOLLAR).toFixed(2)} / M
                   Tokens
                 </div>
@@ -100,7 +100,7 @@ export default async function Page({ params }: Props) {
                   showBorder={true}
                 />
               </div>
-              <p className="pb-6 pt-8 text-sm leading-tight text-[#101828]">
+              <p className="pb-6 pt-8 text-sm leading-tight text-mf-ash-700">
                 {data?.description}
               </p>
 
@@ -122,7 +122,7 @@ export default async function Page({ params }: Props) {
                 <div className="py-10">
                   <div className="h-px w-full bg-mf-silver-700" />
                 </div>
-                <p className="text-2xl leading-loose text-[#101828]">
+                <p className="text-2xl leading-loose text-mf-ash-700">
                   Model Usage
                 </p>
                 <div className="pt-8">
@@ -134,7 +134,7 @@ export default async function Page({ params }: Props) {
               <div className="py-10">
                 <div className="h-px w-full bg-mf-silver-700" />
               </div>
-              <p className="text-2xl leading-loose text-[#101828]">
+              <p className="text-2xl leading-loose text-mf-ash-700">
                 Apps Using This
               </p>
               <ol className="list-decimal py-6 pl-4">
@@ -169,17 +169,17 @@ export default async function Page({ params }: Props) {
                         />
                       </div>
                       <div className="flex flex-1 flex-col gap-1">
-                        <span className="text-sm font-medium leading-tight text-[#101828]">
+                        <span className="text-sm font-medium leading-tight text-mf-ash-700">
                           {app.name}
                         </span>
-                        <span className="text-[13.02px] leading-tight text-[#667085]">
+                        <span className="text-[13.02px] leading-tight text-mf-ash-500">
                           {app.description}
                         </span>
-                        <span className="text-[13.02px] leading-tight text-[#667085] sm:hidden">
+                        <span className="text-[13.02px] leading-tight text-mf-ash-500 sm:hidden">
                           {app.tokens}
                         </span>
                       </div>
-                      <span className="hidden text-[13.02px] leading-tight text-[#667085] sm:block">
+                      <span className="hidden text-[13.02px] leading-tight text-mf-ash-500 sm:block">
                         {app.tokens}
                       </span>
                     </div>
@@ -188,7 +188,7 @@ export default async function Page({ params }: Props) {
               </ol>
             </section>
             <section id="code-samples" data-section>
-              <div className="mt-10 border-t border-gray-100 py-4">
+              <div className="mt-10 border-t border-mf-silver-700 py-4">
                 <div className="flex flex-1 flex-col overflow-hidden">
                   <CodeSamples
                     model={data.name}
