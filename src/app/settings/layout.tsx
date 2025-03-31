@@ -77,7 +77,7 @@ export default function SettingsLayout({
                     "relative z-10 mb-2 block rounded-lg p-4 transition-all duration-200",
                     isActive
                       ? "border border-mf-silver-700 bg-mf-milk-300"
-                      : "hover:border-mf-green-700/20 hover:bg-mf-milk-300/80",
+                      : "hover:border-mf-green-700/20 hover:bg-mf-milk-100/80",
                   )}
                 >
                   <div className="flex flex-col gap-1">

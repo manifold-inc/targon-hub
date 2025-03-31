@@ -296,7 +296,7 @@ void chat();`,
                   "w-full rounded-lg py-2 text-sm font-medium leading-5",
                   selectedLang === lang.id
                     ? "bg-mf-milk-300 text-mf-blue-700 shadow-sm"
-                    : "text-gray-600 hover:bg-mf-milk-300/50 hover:text-mf-blue-700",
+                    : "text-gray-600 hover:bg-mf-milk-100/50 hover:text-mf-blue-700",
                 )}
               >
                 {lang.name}

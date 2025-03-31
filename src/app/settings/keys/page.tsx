@@ -79,7 +79,7 @@ export default function KeysPage() {
                           {key.name ?? "Default"}
                         </td>
                         <td className="px-2 py-1 text-left leading-tight text-mf-ash-700">
-                          <span className="inline-flex items-center gap-2 font-mono">
+                          <span className="inline-flex items-center gap-2 ">
                             {key.key.slice(0, 9) + "***"}
                             <button
                               className="cursor-pointer"
@@ -129,7 +129,7 @@ export default function KeysPage() {
                 type="text"
                 value={apiKeyName}
                 onChange={(e) => setApiKeyName(e.target.value)}
-                className="block w-48 rounded-md border-0 py-1.5 pl-7 pr-12 text-mf-ash-700 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+                className="block w-48 rounded-md border-0 py-1.5 pl-7 pr-12 text-mf-ash-700 ring-1 ring-inset ring-mf-silver-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
                 placeholder="Enter key name"
               />
             )}
