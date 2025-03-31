@@ -23,6 +23,8 @@ const blinker = Blinker({
 
 export const metadata: Metadata = {
   title: "Targon",
+  description: "Run inference on AI Models lightning fast at low cost",
+  icons: [{ rel: "icon", url: "/TargonLogo.svg" }],
 };
 
 export default function RootLayout({
