@@ -63,7 +63,7 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="icon" href="/ManifoldMarkTransparentGreenSVG.svg" />
       </head>
-      <body className="flex h-[50vh] sm:h-screen flex-col">
+      <body className="flex h-[50vh] flex-col sm:h-screen">
         <Suspense>
           <WithGlobalProvider>
             {env.RELEASE_FLAG === "true" ? (
