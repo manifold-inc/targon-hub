@@ -61,7 +61,6 @@ export default function RootLayout({
     >
       <head>
         <link rel="manifest" href="/site.webmanifest" />
-        <link rel="icon" href="/ManifoldMarkTransparentGreenSVG.svg" />
       </head>
       <body className="flex flex-col h-screen">
         <Suspense>
