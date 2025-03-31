@@ -7,6 +7,9 @@ import { Blinker } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "sonner";
 
+import Countdown from "./_components/Countdown";
+import { FakeFooter } from "./_components/FakeFooter";
+import { FakeHeader } from "./_components/FakeHeader";
 import { Footer } from "./_components/footer";
 import { Header } from "./_components/header";
 import { WithGlobalProvider } from "./_components/providers";
@@ -40,9 +43,25 @@ export default function RootLayout({
       <body className="flex h-full flex-col">
         <Suspense>
           <WithGlobalProvider>
-            <Header />
-            <main className="flex-1 pt-12">{children}</main>
-            <Footer />
+            {process.env.RELEASE_FLAG === "true" ? (
+              <>
+                <Header />
+                <main className="flex-1 pt-12">{children}</main>
+                <Footer />
+              </>
+            ) : (
+              <>
+                <FakeHeader />
+                <div className="flex h-[calc(100vh-160px)] flex-col items-center justify-center lg:h-[calc(100vh-160px)]">
+                  <h1 className="pb-16 text-xl font-bold text-mf-blue-700">
+                    THINK BIGGER
+                  </h1>
+                  <Countdown />
+                  <div className="pb-16" />
+                </div>
+                <FakeFooter />
+              </>
+            )}
           </WithGlobalProvider>
           <Toaster richColors />
           <Analytics />
