@@ -122,6 +122,9 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
                     "prose-li:my-0.5",
                     "prose-code:before:content-none prose-code:after:content-none",
                     "prose-pre:my-2 prose-pre:bg-transparent prose-pre:p-0 lg:prose-pre:my-3",
+                    "prose-hr:border-mf-ash-700/20",
+                    "prose-li:marker:text-mf-ash-700/50",
+                    "prose-ul:marker:text-mf-ash-700/50",
                     message.role === "user" && [
                       "prose-invert",
                       "prose-p:text-mf-ash-700",
