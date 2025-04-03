@@ -101,7 +101,7 @@ export function ProviderCostChart() {
                     bottom: provider.position.bottom,
                   }}
                 >
-                  <div className="absolute flex w-px origin-top rotate-45 flex-col items-center">
+                  <div className="absolute flex w-px origin-top rotate-45 translate-y-2 flex-col items-center">
                     <div className="h-6 w-px bg-mf-blue-500" />
                     <div className="size-2 rounded-full bg-mf-blue-500" />
                   </div>
@@ -113,7 +113,7 @@ export function ProviderCostChart() {
                         alt={provider.name}
                         width={70}
                         height={70}
-                        className="h-full w-full"
+                        className="h-full w-full rounded-xl"
                       />
                     </div>
                     <div className="whitespace-nowrap  text-sm">
@@ -144,6 +144,7 @@ export function ProviderCostChart() {
                       alt="Manifold Labs"
                       width={80}
                       height={80}
+                      className="rounded-xl"
                     />
                   </Link>
                   <div className="flex flex-col text-sm">
@@ -187,6 +188,7 @@ export function ProviderCostChart() {
                 alt="Manifold Labs"
                 width={48}
                 height={48}
+                className="rounded-xl"
               />
             </Link>
             <div className="">
@@ -212,7 +214,7 @@ export function ProviderCostChart() {
                   alt={provider.name}
                   width={50}
                   height={50}
-                  className="h-12 w-12"
+                  className="h-12 w-12 rounded-xl"
                 />
                 <div className="">
                   <div className="font-semibold">{provider.name}</div>

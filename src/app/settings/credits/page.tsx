@@ -87,7 +87,7 @@ export default function CreditsPage() {
                   setShowPurchaseInput(!showPurchaseInput);
                   setShowCryptoInput(false);
                 }}
-                className="rounded-full border border-black bg-mf-milk-300 px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex items-center whitespace-nowrap rounded-full bg-mf-blue-500 px-4 py-2 text-sm font-semibold text-mf-ash-700 hover:bg-mf-blue-500/80 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Add Credits
               </button>
@@ -124,7 +124,7 @@ export default function CreditsPage() {
                             : Number(e.target.value.replace(/[^0-9]/g, "")),
                         )
                       }
-                      className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-mf-ash-700 ring-1 ring-inset ring-mf-silver-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 bg-mf-milk-300 py-1.5 pl-7 pr-12 text-mf-ash-700 ring-1 ring-inset ring-mf-silver-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-mf-blue-500 sm:text-sm sm:leading-6"
                       placeholder="0"
                     />
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
@@ -154,7 +154,7 @@ export default function CreditsPage() {
                       });
                     }}
                     disabled={checkout.isLoading || !purchaseAmount}
-                    className="w-full rounded-full border border-gray-800 bg-[#101828] px-4 py-2.5 text-sm font-semibold text-mf-milk-300 shadow-sm transition-colors hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="w-full rounded-full bg-mf-blue-500 px-4 py-2.5 text-sm font-semibold text-mf-ash-700 shadow-sm transition-colors hover:bg-mf-blue-500/80 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {checkout.isLoading ? (
                       <div className="flex items-center justify-center gap-2">

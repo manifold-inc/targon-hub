@@ -61,7 +61,7 @@ export default function LeaseLayout({
   );
 
   return (
-    <div className="grid h-full grid-cols-1 bg-mf-milk-300 lg:grid-cols-2">
+    <div className="grid h-full grid-cols-1 bg-mf-milk-100 lg:grid-cols-2">
       {/* Left column */}
       <div className="relative px-6 lg:pl-[max(2rem,calc((100vw-80rem)/2+2rem))] lg:pr-8">
         {/* Content */}
@@ -96,7 +96,7 @@ export default function LeaseLayout({
             <div className="pt-10">
               <Link
                 href="/infrastructure"
-                className="inline-flex items-center whitespace-nowrap rounded-full bg-mf-blue-500 px-4 py-2 text-sm font-semibold text-mf-milk-100 hover:bg-mf-blue-500/80"
+                className="inline-flex items-center whitespace-nowrap rounded-full bg-mf-blue-500 px-4 py-2 text-sm font-semibold text-mf-ash-700 hover:bg-mf-blue-500/80"
               >
                 Curious about how it works?
                 <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />

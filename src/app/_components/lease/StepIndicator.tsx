@@ -67,7 +67,7 @@ export function StepIndicator({ steps }: StepIndicatorProps) {
                   className="absolute inset-0 flex items-center"
                   aria-hidden="true"
                 >
-                  <div className="h-0.5 w-full bg-mf-blue-700" />
+                  <div className="h-0.5 w-full bg-mf-ash-300/60" />
                 </div>
                 <div className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-mf-blue-700 bg-mf-milk-300">
                   <span

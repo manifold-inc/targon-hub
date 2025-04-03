@@ -129,12 +129,12 @@ export default function KeysPage() {
                 type="text"
                 value={apiKeyName}
                 onChange={(e) => setApiKeyName(e.target.value)}
-                className="block w-48 rounded-md border-0 py-1.5 pl-7 pr-12 text-mf-ash-700 ring-1 ring-inset ring-mf-silver-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+                className="block w-48 rounded-md border-0 py-1.5 pl-7 pr-12 text-mf-ash-700 ring-1 ring-inset bg-mf-milk-300 ring-mf-silver-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-mf-blue-500 sm:text-sm sm:leading-6"
                 placeholder="Enter key name"
               />
             )}
             <button
-              className="hover:bg-gray-10 rounded-full border border-black bg-mf-milk-300 px-3 py-2 text-sm font-semibold text-mf-ash-500"
+              className="inline-flex items-center whitespace-nowrap rounded-full bg-mf-blue-500 px-4 py-2 text-sm font-semibold text-mf-ash-700 hover:bg-mf-blue-500/80"
               onClick={handleCreate}
               disabled={createApiKey.isLoading}
             >

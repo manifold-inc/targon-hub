@@ -264,7 +264,7 @@ export default function SettingsPage() {
           <h3 className="mb-4 text-lg font-semibold">Account</h3>
           <div className="flex flex-col">
             <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 bg-mf-blue-500">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-mf-blue-500">
                 <User className="w-13 h-13" />
               </div>
               <div className="text-sm text-black">{user.data?.email}</div>
@@ -272,7 +272,7 @@ export default function SettingsPage() {
             <div className="flex flex-wrap gap-2">
               <a
                 href="/sign-out"
-                className="inline-flex h-8 items-center justify-center gap-1 rounded-full bg-mf-white px-3 py-2 text-mf-ash-700"
+                className="inline-flex items-center whitespace-nowrap rounded-full bg-mf-blue-500 px-4 py-2 text-sm font-semibold text-mf-ash-700 hover:bg-mf-blue-500/80"
               >
                 <span className="text-sm font-semibold leading-tight">
                   Sign Out
@@ -305,7 +305,7 @@ export default function SettingsPage() {
             <div className="flex flex-col items-center justify-center gap-2">
               <Link
                 href="/settings/keys"
-                className="flex w-fit items-center gap-1 rounded-full px-2.5 py-1 text-sm font-medium text-mf-blue-700 transition-colors hover:bg-blue-50"
+                className="inline-flex items-center whitespace-nowrap rounded-full bg-mf-blue-500 px-4 py-2 text-sm font-semibold text-mf-ash-700 hover:bg-mf-blue-500/80"
                 prefetch={false}
               >
                 View All Keys
@@ -339,7 +339,7 @@ export default function SettingsPage() {
               {formatLargeNumber((user.data?.credits ?? 0) / CREDIT_PER_DOLLAR)}
             </p>
             <Link
-              className="inline-flex h-8 items-center justify-center gap-1 rounded-full bg-mf-white px-3 py-2 text-sm font-semibold text-mf-ash-700"
+              className="inline-flex items-center whitespace-nowrap rounded-full bg-mf-blue-500 px-4 py-2 text-sm font-semibold text-mf-ash-700 hover:bg-mf-blue-500/80"
               href="/settings/credits"
             >
               Add Credits

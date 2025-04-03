@@ -164,7 +164,7 @@ export default function ModelPage() {
         <button
           onClick={() => addModelMutation.mutate(model)}
           disabled={!model.trim() || addModelMutation.isLoading}
-          className="rounded-full bg-mf-blue-500 px-4 py-2 text-sm font-semibold text-mf-milk-300 shadow-sm hover:bg-opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-full bg-mf-blue-500 px-4 py-2 text-sm font-semibold text-mf-ash-700 hover:bg-opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mf-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {addModelMutation.isLoading ? (
             <div className="flex items-center gap-2">
