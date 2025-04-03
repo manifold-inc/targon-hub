@@ -27,7 +27,7 @@ function PurchaseButton({
   return (
     <button
       onClick={onClick}
-      disabled={isLoading || true}
+      disabled={isLoading}
       className={`w-full rounded-lg bg-[#101828] px-4 py-2.5 text-sm font-semibold text-mf-milk-300 shadow-sm hover:bg-[#101828]/90 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
     >
       {isLoading ? (
@@ -313,8 +313,7 @@ export default function ConfirmPage() {
           disabled={
             leaseModelMutation.isLoading ||
             createSubscriptionMutation.isLoading ||
-            (paymentType === "onetime" && userBalanceUSD < totalCostUSD) ||
-            paymentType === "subscription"
+            (paymentType === "onetime" && userBalanceUSD < totalCostUSD)
           }
           className="rounded-full bg-mf-blue-500 px-4 py-2 text-sm font-semibold text-mf-milk-300 shadow-sm hover:bg-opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
         >

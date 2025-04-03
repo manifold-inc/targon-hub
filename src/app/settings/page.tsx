@@ -481,7 +481,7 @@ export default function SettingsPage() {
             {!showSS58Input && (
               <button
                 onClick={handleManageSubscriptions}
-                disabled={isLoading || true}
+                disabled={isLoading}
                 className="inline-flex h-24 w-full flex-col items-center justify-center gap-3 p-4"
               >
                 {isLoading ? (
