@@ -91,7 +91,7 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
 
   return (
     <div ref={containerRef} className="h-full overflow-y-auto">
-      <div className="space-y-4 p-6 px-4 lg:space-y-6">
+      <div className="space-y-4 p-6 px-80 lg:space-y-6">
         {messages.map((message, i) => (
           <div
             key={i}
@@ -102,10 +102,10 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
           >
             <div
               className={clsx(
-                "relative w-[95%] overflow-hidden rounded-2xl px-4 py-3 lg:w-[85%] lg:px-6 lg:py-4",
+                "relative w-[95%] overflow-hidden px-4 py-3 text-mf-ash-700 lg:px-4 lg:py-0",
                 message.role === "user"
-                  ? "bg-mf-blue-900/80 text-mf-milk-300 shadow-sm backdrop-blur-sm"
-                  : "bg-mf-milk-100 text-mf-ash-700",
+                  ? "max-w-[60%] rounded-full bg-mf-blue-500 shadow-sm backdrop-blur-sm lg:w-fit "
+                  : "lg:w-full",
               )}
             >
               <div>
@@ -124,11 +124,11 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
                     "prose-pre:my-2 prose-pre:bg-transparent prose-pre:p-0 lg:prose-pre:my-3",
                     message.role === "user" && [
                       "prose-invert",
-                      "prose-p:text-mf-milk-300/90",
-                      "prose-headings:text-mf-milk-300",
-                      "prose-strong:text-mf-milk-300",
-                      "prose-a:text-mf-milk-300 hover:prose-a:text-mf-milk-300/90",
-                      "prose-li:text-mf-milk-300/90",
+                      "prose-p:text-mf-ash-700",
+                      "prose-headings:text-mf-ash-700",
+                      "prose-strong:text-mf-ash-700",
+                      "prose-a:text-mf-ash-700 hover:prose-a:text-mf-ash-700/90",
+                      "prose-li:text-mf-ash-700/90",
                     ],
                   )}
                 >

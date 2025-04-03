@@ -62,13 +62,13 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body className="flex flex-col h-screen">
+      <body className="flex h-screen flex-col">
         <Suspense>
           <WithGlobalProvider>
             {env.RELEASE_FLAG === "true" ? (
               <>
                 <FakeHeader />
-                <div className="flex my-auto sm:my-auto-0 sm:h-screen flex-col items-center justify-center">
+                <div className="sm:my-auto-0 my-auto flex flex-col items-center justify-center sm:h-screen">
                   <h1 className="pb-16 text-xl font-bold text-mf-blue-700">
                     THINK BIGGER
                   </h1>
