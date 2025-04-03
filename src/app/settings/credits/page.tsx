@@ -88,7 +88,6 @@ export default function CreditsPage() {
                   setShowCryptoInput(false);
                 }}
                 className="rounded-full border border-black bg-mf-milk-300 px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
-                disabled={true}
               >
                 Add Credits
               </button>
@@ -103,7 +102,6 @@ export default function CreditsPage() {
                   setShowPurchaseInput(false);
                 }}
                 className="rounded-full border border-black bg-mf-milk-300 px-3 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
-                disabled={true}
               >
                 Use Crypto
               </button>
@@ -155,7 +153,7 @@ export default function CreditsPage() {
                         redirectTo: pathName,
                       });
                     }}
-                    disabled={/*checkout.isLoading || !purchaseAmount*/ true}
+                    disabled={checkout.isLoading || !purchaseAmount}
                     className="w-full rounded-full border border-gray-800 bg-[#101828] px-4 py-2.5 text-sm font-semibold text-mf-milk-300 shadow-sm transition-colors hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {checkout.isLoading ? (

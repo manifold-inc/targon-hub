@@ -396,7 +396,7 @@ export const Header = () => {
                         className={`hidden h-9 w-28 items-center justify-center gap-x-2 rounded-md bg-mf-milk-300 py-2 font-semibold sm:inline-flex  ${
                           isUserMenuOpen
                             ? "rounded-b-none ring-mf-milk-300"
-                            : "ring-1 ring-inset ring-mf-silver-700"
+                            : "ring-1 ring-inset ring-mf-milk-700"
                         }`}
                       >
                         {isUserMenuOpen ? (
@@ -478,7 +478,7 @@ export const Header = () => {
                 ) : (
                   <Link
                     href="/sign-in"
-                    className="inline-flex w-20 cursor-pointer items-center justify-center font-medium text-mf-ash-700"
+                    className="inline-flex h-9 w-28 cursor-pointer items-center justify-center rounded-md bg-mf-milk-300 py-2 font-medium text-mf-ash-700 ring-1 ring-inset ring-mf-milk-700 hover:ring-mf-blue-700"
                   >
                     SIGN IN
                   </Link>
