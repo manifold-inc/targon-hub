@@ -85,7 +85,7 @@ export default function KeysPage() {
                               className="cursor-pointer"
                               onClick={() => handleCopyClipboard(key.key)}
                             >
-                              <Copy className="h-4 w-4 text-gray-300 hover:text-mf-ash-500" />
+                              <Copy className="h-4 w-4 text-gray-400 hover:text-mf-gray-600" />
                             </button>
                           </span>
                         </td>
@@ -109,7 +109,7 @@ export default function KeysPage() {
                               className={`h-6 w-6 ${
                                 deleteApiKey.isLoading
                                   ? "text-gray-300"
-                                  : "text-gray-300 group-hover:text-red-500"
+                                  : "text-gray-400 group-hover:text-red-500"
                               } transition-colors`}
                             />
                           </button>

@@ -37,7 +37,7 @@ export const ActionCard = ({
               {label}
             </span>
             {isComingSoon && (
-              <span className="inline-flex animate-pulse items-center rounded-full bg-mf-milk-300 px-3 py-1 text-xs font-medium text-mf-ash-300">
+              <span className="inline-flex items-center rounded-full bg-mf-blue-700/20 px-3 py-1 text-xs font-semibold text-mf-blue-700">
                 Coming Soon
               </span>
             )}
