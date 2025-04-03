@@ -105,7 +105,8 @@ export default function Example() {
         // Remove the user message since the API call failed
         setChats((c) => c.slice(0, -1));
         toast.error("API Error", {
-          description: "The API is currently unavailable. Please try again later.",
+          description:
+            "The API is currently unavailable. Please try again later.",
         });
       } finally {
         setIsloading(false);

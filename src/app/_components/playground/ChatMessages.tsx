@@ -91,7 +91,7 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
 
   return (
     <div ref={containerRef} className="h-full overflow-y-auto">
-      <div className="space-y-4 p-6 lg:px-80 lg:space-y-6">
+      <div className="space-y-4 p-6 lg:space-y-6 lg:px-80">
         {messages.map((message, i) => (
           <div
             key={i}
@@ -104,7 +104,7 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
               className={clsx(
                 "relative w-[95%] overflow-hidden text-mf-ash-700",
                 message.role === "user"
-                  ? "max-w-[60%] rounded-full bg-mf-blue-500 shadow-sm backdrop-blur-sm w-fit px-4"
+                  ? "w-fit max-w-[60%] rounded-full bg-mf-blue-500 px-4 shadow-sm backdrop-blur-sm"
                   : "lg:w-full",
               )}
             >

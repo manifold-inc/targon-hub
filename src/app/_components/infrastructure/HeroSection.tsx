@@ -82,9 +82,7 @@ export const HeroSection = () => {
             className="relative pb-8 pt-16 text-center"
           >
             <Badge>Understand Targon</Badge>
-            <Title>
-              AI Evolved
-            </Title>
+            <Title>AI Evolved</Title>
             <Description>
               Operating on Bittensor&apos;s Subnet 4, Targon provides seamless
               access to a decentralized network of AI models through our

@@ -315,7 +315,7 @@ void chat();`,
                 Basic example of {type} with the selected model
               </p>
             </div>
-            <div className="overflow-hidden rounded-lg bg-mf-milk-500 shadow-sm">
+            <div className="overflow-hidden rounded-lg bg-mf-milk-300 shadow-sm">
               <div className="flex items-center justify-between border-b border-gray-800/40 bg-mf-milk-500 px-4 py-2.5">
                 <div className="flex items-center gap-2">
                   <div className="text-xs font-medium uppercase tracking-wider text-mf-ash-700">

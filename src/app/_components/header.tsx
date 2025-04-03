@@ -202,7 +202,7 @@ export const Header = () => {
                                 }
                                 href="/browse"
                               >
-                                <BrainCircuit className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6] text-mf-blue-700" />
+                                <BrainCircuit className="h-6 w-6 stroke-[1.25] text-mf-blue-700 group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-sm">Explore</p>
                                   <p className="text-sm text-mf-ash-500">
@@ -218,7 +218,7 @@ export const Header = () => {
                                 }
                                 href="/models"
                               >
-                                <FileBox className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6] text-mf-blue-700" />
+                                <FileBox className="h-6 w-6 stroke-[1.25] text-mf-blue-700 group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-sm">Models</p>
                                   <p className="text-sm text-mf-ash-500">
@@ -234,7 +234,7 @@ export const Header = () => {
                                 }
                                 href="/models/lease"
                               >
-                                <Wallet className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6] text-mf-blue-700" />
+                                <Wallet className="h-6 w-6 stroke-[1.25] text-mf-blue-700 group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-sm">Lease</p>
                                   <p className="text-sm text-mf-ash-500">
@@ -251,7 +251,7 @@ export const Header = () => {
                                 href="/infrastructure"
                               >
                                 <div className="flex items-center gap-2">
-                                  <Server className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6] text-mf-blue-700" />
+                                  <Server className="h-6 w-6 stroke-[1.25] text-mf-blue-700 group-hover:stroke-[1.6]" />
                                   <div className="flex flex-col gap-0 pl-2 text-left">
                                     <p className="text-sm">Infrastructure</p>
                                     <p className="text-sm text-mf-ash-500">
@@ -269,7 +269,7 @@ export const Header = () => {
                                 href="/roadmap"
                               >
                                 <div className="flex items-center gap-2">
-                                  <Map className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6] text-mf-blue-700" />
+                                  <Map className="h-6 w-6 stroke-[1.25] text-mf-blue-700 group-hover:stroke-[1.6]" />
                                   <div className="flex flex-col gap-0 pl-2 text-left">
                                     <p className="text-sm">Roadmap</p>
                                     <p className="text-sm text-mf-ash-500">
@@ -284,7 +284,7 @@ export const Header = () => {
                                 className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100  lg:hidden"
                                 href="/models/immunity"
                               >
-                                <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6] text-mf-blue-700" />
+                                <Clock className="h-6 w-6 stroke-[1.25] text-mf-blue-700 group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-sm">Timeline</p>
                                   <p className="text-sm text-mf-ash-500">
@@ -327,7 +327,7 @@ export const Header = () => {
                                 className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100 "
                                 href="/infrastructure"
                               >
-                                <Server className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6] text-mf-blue-700" />
+                                <Server className="h-6 w-6 stroke-[1.25] text-mf-blue-700 group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-sm">Infrastructure</p>
                                   <p className="text-sm text-mf-ash-500">
@@ -341,7 +341,7 @@ export const Header = () => {
                                 className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100 "
                                 href="/roadmap"
                               >
-                                <Map className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6] text-mf-blue-700" />
+                                <Map className="h-6 w-6 stroke-[1.25] text-mf-blue-700 group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-sm">Roadmap</p>
                                   <p className="text-sm text-mf-ash-500">
@@ -355,7 +355,7 @@ export const Header = () => {
                                 className="group flex items-center gap-2 px-4 py-4 text-black hover:bg-mf-milk-100 "
                                 href="/models/immunity"
                               >
-                                <Clock className="h-6 w-6 stroke-[1.25] group-hover:stroke-[1.6] text-mf-blue-700" />
+                                <Clock className="h-6 w-6 stroke-[1.25] text-mf-blue-700 group-hover:stroke-[1.6]" />
                                 <div className="flex flex-col gap-0 pl-2 text-left">
                                   <p className="text-sm">Timeline</p>
                                   <p className="text-sm text-mf-ash-500">

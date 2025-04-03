@@ -160,8 +160,7 @@ export default function RoadmapPage() {
             variants={animations.fadeInUp}
             className="font-display pt-4 text-3xl font-semibold tracking-tight text-mf-ash-700 sm:text-4xl lg:text-6xl"
           >
-            Building the future of{" "}
-            <p>AI Infrastructure</p>
+            Building the future of <p>AI Infrastructure</p>
           </motion.h1>
           <motion.p
             variants={animations.fadeInUp}

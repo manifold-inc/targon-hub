@@ -507,7 +507,7 @@ export default function ModalSidebar() {
             </p>
             <a
               href="/models/lease"
-              className="inline-flex items-center rounded-full bg-mf-blue-500 hover:bg-mf-blue-500/80 text-sm font-semibold text-mf-ash-700 px-4 py-2 whitespace-nowrap"
+              className="inline-flex items-center whitespace-nowrap rounded-full bg-mf-blue-500 px-4 py-2 text-sm font-semibold text-mf-ash-700 hover:bg-mf-blue-500/80"
             >
               <Plus className="h-4 w-4" />
               Add New Model
