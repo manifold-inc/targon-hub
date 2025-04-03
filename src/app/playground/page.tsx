@@ -84,23 +84,33 @@ export default function Example() {
       setText("");
       setIsloading(true);
       setChats((c) => [...c, { role: "user", content: chat }]);
-      const stream = await client.chat.completions.create({
-        stream: true,
-        messages: [...chatlog, { role: "user", content: chat }],
-        model: current_model,
-        ...params,
-      });
-      setChats((c) => [...c, { role: "assistant", content: "" }]);
-      for await (const chunk of stream) {
-        const content = chunk.choices[0]?.delta?.content || "";
-        setChats((c) => {
-          const cc = structuredClone(c);
-          cc[cc.length - 1]!.content =
-            ((cc[cc.length - 1]?.content as string) ?? "") + content;
-          return cc;
+      try {
+        const stream = await client.chat.completions.create({
+          stream: true,
+          messages: [...chatlog, { role: "user", content: chat }],
+          model: current_model,
+          ...params,
         });
+        setChats((c) => [...c, { role: "assistant", content: "" }]);
+        for await (const chunk of stream) {
+          const content = chunk.choices[0]?.delta?.content || "";
+          setChats((c) => {
+            const cc = structuredClone(c);
+            cc[cc.length - 1]!.content =
+              ((cc[cc.length - 1]?.content as string) ?? "") + content;
+            return cc;
+          });
+        }
+      } catch (error) {
+        // Remove the user message since the API call failed
+        setChats((c) => c.slice(0, -1));
+        toast.error("API Error", {
+          description:
+            "The API is currently unavailable. Please try again later.",
+        });
+      } finally {
+        setIsloading(false);
       }
-      setIsloading(false);
     },
     [client, current_model, params],
   );

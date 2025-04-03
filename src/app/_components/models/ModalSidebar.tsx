@@ -405,7 +405,7 @@ export default function ModalSidebar() {
   ];
 
   return (
-    <aside className="flex h-full flex-col overflow-y-auto border-0 pr-0 pt-0 lg:pr-8 lg:pt-10">
+    <aside className="flex h-full flex-col overflow-y-auto border-0 pt-0 lg:pt-10">
       <div className="flex flex-col gap-2.5">
         {sections.map((section, index) => (
           <div
@@ -507,7 +507,7 @@ export default function ModalSidebar() {
             </p>
             <a
               href="/models/lease"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-mf-blue-700 px-5 py-2.5 text-sm font-medium text-mf-milk-300 shadow-sm transition-all hover:-translate-y-[1px] hover:bg-mf-blue-700/90 hover:shadow-md"
+              className="inline-flex items-center whitespace-nowrap rounded-full bg-mf-blue-500 px-4 py-2 text-sm font-semibold text-mf-ash-700 hover:bg-mf-blue-500/80"
             >
               <Plus className="h-4 w-4" />
               Add New Model

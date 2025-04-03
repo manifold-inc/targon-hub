@@ -160,8 +160,7 @@ export default function RoadmapPage() {
             variants={animations.fadeInUp}
             className="font-display pt-4 text-3xl font-semibold tracking-tight text-mf-ash-700 sm:text-4xl lg:text-6xl"
           >
-            Building the future of{" "}
-            <p className="text-mf-blue-700">AI Infrastructure</p>
+            Building the future of <p>AI Infrastructure</p>
           </motion.h1>
           <motion.p
             variants={animations.fadeInUp}
@@ -193,7 +192,7 @@ export default function RoadmapPage() {
                 }}
                 className="group relative h-full"
               >
-                <div className="relative flex h-full flex-col rounded-2xl border border-mf-silver-700 bg-mf-milk-300 p-4 shadow-sm transition-all duration-300 hover:shadow-lg sm:p-6 lg:p-8">
+                <div className="relative flex h-full flex-col rounded-2xl border border-mf-silver-700 bg-mf-milk-300 p-4 shadow-sm transition-all duration-300 sm:p-6 lg:p-8">
                   <div className="absolute inset-0 rounded-2xl bg-mf-milk-300 group-hover:bg-mf-milk-100" />
 
                   <div className="relative flex h-full flex-col">

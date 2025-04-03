@@ -93,7 +93,7 @@ function MetricCard({
   return (
     <div
       className={`group relative overflow-hidden rounded-lg border border-mf-silver-700 bg-mf-ash-300 p-4 shadow-sm 
-      transition-all duration-300 hover:shadow-lg sm:p-6 md:p-8 ${className}`}
+      transition-all duration-300 sm:p-6 md:p-8 ${className}`}
     >
       <div className="absolute inset-0 bg-gradient-to-tr from-mf-green-700/5 via-transparent to-transparent" />
       <div className="absolute inset-0 bg-mf-milk-300" />

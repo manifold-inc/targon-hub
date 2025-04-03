@@ -193,7 +193,7 @@ export default function Page() {
                           </div>
                         </div>
                         <div className="flex items-start">
-                          <div className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-mf-blue-900 px-3 py-1.5 text-sm font-medium text-mf-milk-300 shadow-sm transition-all duration-300 group-hover:bg-mf-blue-700 group-hover:shadow-md sm:px-4">
+                          <div className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-mf-blue-500 px-3 py-1.5 text-sm font-semibold text-mf-ash-700 shadow-sm transition-all duration-300 group-hover:bg-mf-blue-500/80 sm:px-4">
                             Add Model
                             <ArrowUpRight className="h-3.5 w-3.5" />
                           </div>
@@ -227,10 +227,10 @@ export default function Page() {
                         <button
                           onClick={() => handlePageChange(1)}
                           disabled={currentPage === 1}
-                          className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors ${
+                          className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-semibold transition-colors ${
                             currentPage === 1
-                              ? "bg-mf-blue-900 text-mf-milk-300"
-                              : "hover:mf-milk-300 border border-mf-silver-700 bg-mf-milk-300 text-mf-ash-300"
+                              ? "bg-mf-blue-500 text-mf-ash-700"
+                              : "hover:mf-milk-300 border border-mf-silver-700 bg-mf-milk-300 text-mf-ash-700"
                           }`}
                         >
                           1
@@ -255,7 +255,7 @@ export default function Page() {
                         {currentPage !== 1 && currentPage !== totalPages && (
                           <button
                             disabled
-                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-mf-blue-900 text-sm font-medium text-mf-milk-300"
+                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-mf-blue-500 text-sm font-medium text-mf-ash-700"
                           >
                             {currentPage}
                           </button>
@@ -282,7 +282,7 @@ export default function Page() {
                           disabled={currentPage === totalPages}
                           className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors ${
                             currentPage === totalPages
-                              ? "bg-mf-blue-900 text-mf-milk-300"
+                              ? "bg-mf-blue-500 text-mf-ash-700"
                               : "hover:mf-milk-300 border border-mf-silver-700 bg-mf-milk-300 text-mf-ash-300"
                           }`}
                         >

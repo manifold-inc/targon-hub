@@ -55,7 +55,7 @@ export default function BrowsePage() {
         <div className="relative w-full animate-slide-in-delay">
           <Link
             href="/playground"
-            className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-300 p-4 shadow-sm transition-all duration-300 hover:bg-mf-milk-100 hover:shadow-lg 
+            className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-mf-silver-700 bg-mf-milk-300 p-4 transition-all duration-300 hover:bg-mf-milk-100
             sm:p-6 md:p-8 lg:rounded-tl-xl"
           >
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-[1fr,200px] sm:gap-8">
@@ -211,7 +211,7 @@ export default function BrowsePage() {
             >
               {/* Coming soon overlay */}
               <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-xl bg-mf-milk-300/40 backdrop-blur-[2px]">
-                <span className="inline-flex items-center rounded-full bg-mf-milk-300 px-3 py-1 text-sm font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                <span className="inline-flex items-center rounded-full bg-mf-blue-700/20 px-3 py-1 text-sm font-semibold text-mf-blue-700">
                   Coming Soon
                 </span>
               </div>

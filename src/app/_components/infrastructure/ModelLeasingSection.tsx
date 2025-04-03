@@ -86,7 +86,7 @@ export const ModelLeasingSection = () => {
                       <div className="text-sm font-medium text-mf-ash-700">
                         {model.name}
                       </div>
-                      <div className="flex h-6 items-center gap-1 rounded-full py-0.5 pl-1.5 pr-2 text-[#16a34a]">
+                      <div className="flex h-6 items-center gap-1 rounded-full py-0.5 pl-1.5 pr-2 text-mf-green-700">
                         <div className="h-1.5 w-1.5 rounded-full bg-[#16a34a]" />
                         <span className="text-xs font-medium">Live</span>
                       </div>

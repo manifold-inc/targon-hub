@@ -44,8 +44,8 @@ export const AppCard = ({
       <div
         className={`relative h-52 w-full overflow-hidden rounded-xl border bg-mf-milk-300 p-5 transition-all duration-200 hover:bg-mf-milk-100 ${
           isHovered && isHoverSupported
-            ? "border-mf-blue-500 shadow-lg"
-            : "border-mf-silver-700 shadow-sm"
+            ? "border-mf-blue-500"
+            : "border-mf-silver-700"
         }`}
         onMouseEnter={() => isHoverSupported && setIsHovered(true)}
         onMouseLeave={() => isHoverSupported && setIsHovered(false)}

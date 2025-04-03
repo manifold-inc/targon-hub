@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import clsx from "clsx";
 import { Copy, Eye, EyeOff } from "lucide-react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { toast } from "sonner";
 
 import { copyToClipboard } from "@/utils/utils";
@@ -315,17 +315,17 @@ void chat();`,
                 Basic example of {type} with the selected model
               </p>
             </div>
-            <div className="overflow-hidden rounded-lg bg-[#0D1117] shadow-sm">
-              <div className="flex items-center justify-between border-b border-gray-800/40 bg-[#161B22] px-4 py-2.5">
+            <div className="overflow-hidden rounded-lg bg-mf-milk-300 shadow-sm">
+              <div className="flex items-center justify-between border-b border-gray-800/40 bg-mf-milk-500 px-4 py-2.5">
                 <div className="flex items-center gap-2">
-                  <div className="text-xs font-medium uppercase tracking-wider text-gray-400">
+                  <div className="text-xs font-medium uppercase tracking-wider text-mf-ash-700">
                     {selectedLang}
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() => setShowApiKey(!showApiKey)}
-                    className="rounded-md p-1.5 text-gray-400 hover:bg-gray-800/40 hover:text-gray-300"
+                    className="rounded-md p-1.5 text-mf-ash-700 hover:bg-mf-milk-100/50 hover:text-mf-ash-700"
                   >
                     {showApiKey ? (
                       <EyeOff className="h-4 w-4" />
@@ -338,7 +338,7 @@ void chat();`,
                       void copyToClipboard(getCodeExample(type, selectedLang));
                       toast.success("Copied to clipboard");
                     }}
-                    className="rounded-md p-1.5 text-gray-400 hover:bg-gray-800/40 hover:text-gray-300"
+                    className="rounded-md p-1.5 text-mf-ash-700 hover:bg-mf-milk-100/50 hover:text-mf-ash-700"
                   >
                     <Copy className="h-4 w-4" />
                   </button>
@@ -347,7 +347,7 @@ void chat();`,
               <div className="overflow-x-auto">
                 <SyntaxHighlighter
                   language={getPrismLanguage(selectedLang)}
-                  style={oneDark}
+                  style={oneLight}
                   customStyle={{
                     margin: 0,
                     padding: "1.25rem",

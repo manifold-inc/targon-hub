@@ -29,7 +29,7 @@ export const ActionCard = ({
     className="group relative h-1/2"
   >
     <Link href={href} className="block h-full">
-      <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-mf-silver-700 bg-mf-milk-300 p-8 shadow transition-all duration-300 hover:shadow-lg group-hover:bg-mf-milk-100">
+      <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-mf-silver-700 bg-mf-milk-300 p-8 shadow transition-all duration-300 group-hover:bg-mf-milk-100">
         {background}
         <div className="relative z-10 flex h-full flex-col gap-4">
           <div className="flex items-center justify-between">
@@ -37,7 +37,7 @@ export const ActionCard = ({
               {label}
             </span>
             {isComingSoon && (
-              <span className="inline-flex animate-pulse items-center rounded-full bg-mf-milk-300 px-3 py-1 text-xs font-medium text-mf-ash-300">
+              <span className="inline-flex items-center rounded-full bg-mf-blue-700/20 px-3 py-1 text-xs font-semibold text-mf-blue-700">
                 Coming Soon
               </span>
             )}

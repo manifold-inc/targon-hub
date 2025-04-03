@@ -35,11 +35,11 @@ export const GetStartedSection = () => {
             <Link
               key={href}
               href={href}
-              className={`group inline-flex w-full items-center justify-center rounded-full px-6 py-2.5 text-sm font-medium transition sm:w-auto
+              className={`group inline-flex w-full items-center justify-center rounded-full px-6 py-2 text-sm font-semibold transition sm:w-auto
                 ${
                   primary
-                    ? "bg-mf-blue-900 text-mf-milk-300 hover:bg-[#1e3b00]"
-                    : "border border-mf-blue-700 text-mf-blue-700 hover:bg-mf-blue-900/5"
+                    ? "bg-mf-blue-500 text-mf-ash-700 hover:bg-mf-blue-500/80"
+                    : " text-mf-ash-700"
                 }`}
             >
               {text}
