@@ -14,7 +14,7 @@ const COMPANY_LOGOS: CompanyLogo[] = [
     link: "https://www.dippy.ai/",
   },
   {
-    src: "/companies/sybil.svg",
+    src: "/companies/Sybil.svg",
     alt: "Sybil",
     link: "https://sybil.com/",
   },
