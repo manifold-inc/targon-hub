@@ -108,7 +108,7 @@ export const AppCard = ({
                   }`}
                 >
                   <div className="h-5 w-px bg-mf-silver-700" />
-                  <p className="text-mf-blue-700">View More →</p>
+                  <p className="text-mf-blue-700">View More</p>
                 </div>
               </div>
             </div>
