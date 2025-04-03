@@ -69,7 +69,7 @@ function NumberInput({
       step={step}
       value={localValue}
       onChange={handleChange}
-      className="h-9 w-16 rounded-lg border-0 px-3 text-right text-sm font-semibold text-mf-blue-700 [appearance:textfield] hover:bg-mf-blue-900/10 focus:border-2 focus:border-black focus:outline-none focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+      className="h-9 w-16 rounded-lg border-0 px-3 text-right text-sm font-semibold bg-mf-milk-300 text-mf-blue-700 [appearance:textfield] hover:bg-mf-milk-100 focus:border-2 focus:border-mf-milk-500 focus:outline-none focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
     />
   );
 }

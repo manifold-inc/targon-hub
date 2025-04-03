@@ -22,7 +22,7 @@ export const CardContent = ({
           {title}
         </h3>
         {isComingSoon && (
-          <span className="self-start rounded-full border bg-mf-blue-700/20 px-3 py-1 text-xs font-semibold text-mf-blue-700 sm:self-auto">
+          <span className="self-start rounded-full bg-mf-blue-700/20 px-3 py-1 text-xs font-semibold text-mf-blue-700 sm:self-auto">
             Coming Soon
           </span>
         )}
@@ -57,7 +57,7 @@ export function CTACard({
       <Link
         href={href}
         className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-mf-silver-700 p-6 shadow-sm transition-all 
-        duration-300 hover:shadow-lg sm:p-8"
+        duration-300 sm:p-8"
       >
         {variant === "left" ? (
           <>

@@ -58,10 +58,10 @@ export function ModelTabs() {
             {endpoints.map((endpoint, index) => (
               <Tab
                 key={index}
-                className={`flex h-fit w-32 items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-semibold leading-tight focus:border-mf-milk-500 focus:outline-none focus:ring-2 focus:ring-mf-milk-500 ${
+                className={`flex h-fit w-32 items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-semibold leading-tight focus:border-mf-milk-500 focus:outline-none  ${
                   selectedIndex === index
-                    ? "bg-mf-milk-300 ring-2 ring-mf-milk-500"
-                    : "hover:bg-mf-milk-100 hover:ring-2 hover:ring-mf-milk-500"
+                    ? "bg-mf-milk-300"
+                    : "hover:bg-mf-milk-100"
                 }`}
                 onClick={() => setSelectedIndex(index)}
               >

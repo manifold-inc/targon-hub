@@ -43,7 +43,7 @@ export const ModelPerformanceChart = () => {
                     model.modelName === selectedModel ? null : model.modelName,
                   )
                 }
-                className={`flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-2 py-1 text-xs font-medium shadow-sm transition-all hover:shadow sm:px-2.5 ${
+                className={`flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-2 py-1 text-xs font-medium transition-all sm:px-2.5 ${
                   model.modelName === selectedModel
                     ? `${getColorTheme(index).pill} text-mf-milk-300`
                     : "bg-mf-milk-500 text-gray-600 hover:bg-mf-milk-100"

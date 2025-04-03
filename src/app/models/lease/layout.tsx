@@ -96,7 +96,7 @@ export default function LeaseLayout({
             <div className="pt-10">
               <Link
                 href="/infrastructure"
-                className="group inline-flex items-center rounded-full border border-mf-blue-700 px-6 py-2.5 text-sm font-medium text-mf-blue-700 transition hover:bg-mf-blue-900/5"
+                className="inline-flex items-center rounded-full bg-mf-blue-500 hover:bg-mf-blue-500/80 text-sm font-semibold text-mf-milk-100 px-4 py-2 whitespace-nowrap"
               >
                 Curious about how it works?
                 <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
