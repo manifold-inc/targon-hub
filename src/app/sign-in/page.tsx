@@ -149,7 +149,7 @@ export default function Page() {
                         )}`
                       : ""
                   }`}
-                  className="flex h-9 w-32 items-center justify-center gap-3 whitespace-nowrap rounded-md bg-white py-2"
+                  className="flex h-9 w-48 items-center justify-center gap-3 whitespace-nowrap rounded-md bg-white py-2"
                 >
                   <svg
                     className="h-5 w-5"
