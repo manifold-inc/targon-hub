@@ -129,7 +129,7 @@ export default function KeysPage() {
                 type="text"
                 value={apiKeyName}
                 onChange={(e) => setApiKeyName(e.target.value)}
-                className="block w-48 rounded-md border-0 py-1.5 pl-7 pr-12 text-mf-ash-700 ring-1 ring-inset bg-mf-milk-300 ring-mf-silver-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-mf-blue-500 sm:text-sm sm:leading-6"
+                className="block w-48 rounded-md border-0 bg-mf-milk-300 py-1.5 pl-7 pr-12 text-mf-ash-700 ring-1 ring-inset ring-mf-silver-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-mf-blue-500 sm:text-sm sm:leading-6"
                 placeholder="Enter key name"
               />
             )}

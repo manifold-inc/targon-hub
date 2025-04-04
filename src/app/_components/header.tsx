@@ -478,7 +478,7 @@ export const Header = () => {
                 ) : (
                   <Link
                     href="/sign-in"
-                    className="inline-flex h-9 w-28 cursor-pointer items-center justify-center rounded-md bg-mf-milk-300 py-2 font-medium text-mf-ash-700 ring-1 ring-inset ring-mf-milk-700 hover:ring-mf-blue-700"
+                    className="hidden h-9 w-28 cursor-pointer items-center justify-center rounded-md bg-mf-milk-300 py-2 font-medium text-mf-ash-700 ring-1 ring-inset ring-mf-milk-700 hover:ring-mf-blue-700 sm:inline-flex"
                   >
                     SIGN IN
                   </Link>
