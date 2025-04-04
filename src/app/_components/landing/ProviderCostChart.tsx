@@ -101,7 +101,7 @@ export function ProviderCostChart() {
                     bottom: provider.position.bottom,
                   }}
                 >
-                  <div className="absolute flex w-px origin-top rotate-45 translate-y-2 flex-col items-center">
+                  <div className="absolute flex w-px origin-top translate-y-2 rotate-45 flex-col items-center">
                     <div className="h-6 w-px bg-mf-blue-500" />
                     <div className="size-2 rounded-full bg-mf-blue-500" />
                   </div>
