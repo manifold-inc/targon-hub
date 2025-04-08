@@ -295,8 +295,9 @@ export default function SettingsPage() {
             }}
           >
             <div className="flex items-center justify-between gap-3">
-              <p className="truncate  text-sm text-gray-600">
-                {keys.data?.[0]?.key || "No API key"}
+              <p className="text-sm text-gray-600">
+                {keys.data?.[0]?.key.slice(0, 6)}...
+                {keys.data?.[0]?.key.slice(-6) || "No API key"}
               </p>
               <Copy className="h-4 w-4 flex-shrink-0 text-gray-400 transition-colors group-hover:text-gray-600" />
             </div>
