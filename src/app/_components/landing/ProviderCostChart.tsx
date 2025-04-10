@@ -49,7 +49,7 @@ const currentData = {
   name: "Manifold Labs",
   date: "Dec 2024",
   currentTokens: "400+",
-  costPerMillion: (500 * 1_000_000) / CREDIT_PER_DOLLAR,
+  costPerMillion: (18 * 1_000_000) / CREDIT_PER_DOLLAR,
   position: { left: "55%", bottom: "60%" },
   currentPosition: { left: "73%", bottom: "75%" },
 };
