@@ -30,7 +30,7 @@ const roadmapItems: RoadmapItem[] = [
     title: "Infrastructure Scale",
     description:
       "Building robust infrastructure and advanced deployment capabilities to support enterprises.",
-    status: "in-progress",
+    status: "completed",
     features: [
       "High-Performance GPU Infrastructure",
       "Auto-scaling Model Deployments",
@@ -43,7 +43,7 @@ const roadmapItems: RoadmapItem[] = [
     title: "Platform Expansion",
     description:
       "Expanding core capabilities with multi-modal AI support and compute integration features.",
-    status: "upcoming",
+    status: "in-progress",
     features: [
       "Multi-Modal Model Support",
       "Compute Integration API",
