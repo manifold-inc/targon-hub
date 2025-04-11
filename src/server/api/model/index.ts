@@ -387,7 +387,8 @@ export const modelRouter = createTRPCRouter({
             trimmedLine.startsWith("|") ||
             trimmedLine.startsWith("```") ||
             trimmedLine.startsWith("<!--") ||
-            trimmedLine.startsWith("- ")
+            trimmedLine.startsWith("- ") ||
+            line.includes("<")
           ) {
             if (paragraphLines.length > 0) break; // We found a paragraph, stop at next special element
             continue;
