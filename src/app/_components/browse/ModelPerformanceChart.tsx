@@ -13,6 +13,11 @@ export const ModelPerformanceChart = () => {
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
   const { data: models } = reactClient.model.getTopModelsByTPS.useQuery();
 
+  // Filter out models with null or 0 TPS
+  const validModels =
+    models?.filter((model) => model.avgTPS !== null && model.avgTPS !== 0) ??
+    [];
+
   return (
     <div className="relative flex h-96 flex-col">
       {/* Chart Container */}
@@ -24,7 +29,7 @@ export const ModelPerformanceChart = () => {
             <ModelPerformanceDetail
               modelName={selectedModel}
               colorIndex={
-                models?.findIndex((m) => m.modelName === selectedModel) ?? 0
+                validModels.findIndex((m) => m.modelName === selectedModel) ?? 0
               }
             />
           )}
@@ -35,7 +40,7 @@ export const ModelPerformanceChart = () => {
       <div className="absolute -bottom-4 left-0 right-0 bg-mf-milk-300 sm:-bottom-6">
         <div className="p-3 sm:p-4">
           <div className="flex flex-wrap items-center justify-center gap-1.5">
-            {models?.map((model, index) => (
+            {validModels.map((model, index) => (
               <button
                 key={model.modelName}
                 onClick={() =>
@@ -66,8 +71,9 @@ export const ModelPerformanceChart = () => {
                 onClick={() => setSelectedModel(null)}
                 className={`flex items-center justify-center gap-1 rounded-full px-2 py-1 text-xs font-medium shadow-sm transition-all hover:shadow sm:px-2.5 ${
                   getColorTheme(
-                    models?.findIndex((m) => m.modelName === selectedModel) ??
-                      0,
+                    validModels.findIndex(
+                      (m) => m.modelName === selectedModel,
+                    ) ?? 0,
                   ).pill
                 } whitespace-nowrap text-mf-milk-300`}
               >
