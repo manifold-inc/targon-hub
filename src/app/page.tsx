@@ -2,7 +2,6 @@ import { DataFlowAnimation } from "./_components/landing/DataFlowAnimation";
 import { HeroSection } from "./_components/landing/HeroSection";
 import { MetricsSection } from "./_components/landing/MetricsSection";
 import { ModelTabs } from "./_components/landing/ModelTabs";
-import { ProviderCostChart } from "./_components/landing/ProviderCostChart";
 import { TrustedBySection } from "./_components/landing/TrustedBySection";
 
 export default function Page() {
@@ -22,15 +21,6 @@ export default function Page() {
           <ModelTabs />
           <TrustedBySection />
           <MetricsSection />
-        </div>
-
-        <div className="relative px-4 pb-20 sm:px-10">
-          {/* Content without background */}
-
-          <div className="animate-slide-in-delay">
-            {/* provider cost chart */}
-            <ProviderCostChart />
-          </div>
         </div>
       </div>
     </div>
