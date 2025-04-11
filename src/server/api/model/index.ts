@@ -369,7 +369,7 @@ export const modelRouter = createTRPCRouter({
         const readmeContent = await readmeResponse.text();
         // Skip YAML frontmatter if it exists
         const contentWithoutFrontmatter = readmeContent.replace(
-          /^---\n[\s\S]*?\n---\n/,
+          /^---\n[\s\S]*?\n---\n?/m,
           "",
         );
 
@@ -388,7 +388,7 @@ export const modelRouter = createTRPCRouter({
             trimmedLine.startsWith("```") ||
             trimmedLine.startsWith("<!--") ||
             trimmedLine.startsWith("- ") ||
-            line.includes("<")
+            trimmedLine.startsWith("<")
           ) {
             if (paragraphLines.length > 0) break; // We found a paragraph, stop at next special element
             continue;
