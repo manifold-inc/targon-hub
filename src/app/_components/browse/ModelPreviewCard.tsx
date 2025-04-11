@@ -11,12 +11,18 @@ interface ModelPreviewCardProps {
   cpt: number;
 }
 
+const stripHtml = (html: string) => {
+  return html.replace(/<[^>]*>/g, "");
+};
+
 export const ModelPreviewCard = ({
   name,
   modality,
   description,
   cpt,
 }: ModelPreviewCardProps) => {
+  const cleanDescription = stripHtml(description);
+
   return (
     <Link href={`/models/${encodeURIComponent(name)}`}>
       <div className="group relative overflow-hidden p-4 pl-0 transition-all">
@@ -35,7 +41,9 @@ export const ModelPreviewCard = ({
           </div>
 
           {/* Description */}
-          <p className="line-clamp-2 text-sm text-gray-600">{description}</p>
+          <p className="line-clamp-2 text-sm text-gray-600">
+            {cleanDescription}
+          </p>
 
           {/* Footer */}
           <div className="flex items-center justify-between pt-1">
