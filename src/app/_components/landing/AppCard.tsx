@@ -59,13 +59,12 @@ export const AppCard = ({
             </p>
           </div>
 
-          <div className="space-y-3 whitespace-nowrap">
+          <div className="whitespace-nowrap pt-2">
+            <p className="text-xs font-medium leading-4 text-mf-ash-500">
+              {requiredGPUs} GPU{requiredGPUs !== 1 ? "s" : ""}
+            </p>
             <div className="flex gap-1">
-              <p className="text-xs font-medium leading-4 text-mf-ash-500">
-                {requiredGPUs} GPU{requiredGPUs !== 1 ? "s" : ""}
-              </p>
-              <div className="h-5 w-px bg-mf-silver-700" />
-              <p className="line-clamp-1 text-xs leading-4 text-mf-ash-500">
+              <p className="line-clamp-1 pb-2 text-xs leading-4 text-mf-ash-500">
                 {supportedEndpoints
                   .map((endpoint) =>
                     endpoint
@@ -95,12 +94,11 @@ export const AppCard = ({
             </div>
 
             <div className="flex h-5 items-center justify-between whitespace-nowrap text-xs">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center justify-end gap-2">
                 <div className="leading-tight text-mf-ash-500">
                   ${((cpt * 1_000_000) / CREDIT_PER_DOLLAR).toFixed(2)} / M
                   Tokens
                 </div>
-                <div className="h-5 w-px bg-mf-silver-700" />
                 <ModelStatusIndicator enabled={enabled} showBorder={false} />
                 <div
                   className={`flex items-center gap-2 transition-opacity duration-200 ${
