@@ -79,8 +79,8 @@ export const AppCard = ({
                   )
                   .join(", ")}
               </p>
-              <div className="block h-5 w-px bg-mf-silver-700 sm:block md:hidden xl:hidden 2xl:block" />
-              <p className="block text-xs leading-4 text-mf-ash-500 sm:block md:hidden xl:hidden 2xl:block">
+              <div className="block h-5 w-px bg-mf-silver-700 md:hidden xl:hidden 2xl:block" />
+              <p className="block text-xs leading-4 text-mf-ash-500 md:hidden xl:hidden 2xl:block">
                 {modality
                   ? modality
                       .split("-")
