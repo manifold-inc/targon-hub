@@ -48,7 +48,7 @@ export default function BrowsePage() {
         </div>
       </div>
 
-      <div className="relative px-16 py-14">
+      <div className="relative px-4 py-14 sm:px-16">
         <HeroSection />
 
         {/* Main Playground CTA */}

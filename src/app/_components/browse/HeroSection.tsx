@@ -4,7 +4,7 @@ import Link from "next/link";
 export function HeroSection() {
   return (
     <div className="relative animate-slide-in">
-      <div className="relative -top-20 flex flex-col items-start justify-center gap-6 px-10 pb-24 pt-40 lg:flex-row">
+      <div className="relative -top-20 flex flex-col items-start justify-center gap-6 px-0 pb-24 pt-40 sm:px-10 lg:flex-row">
         <div className="flex w-full flex-col gap-6 text-center lg:w-1/2">
           <div className="flex flex-row justify-center gap-2">
             <Image src="/TargonIcon.svg" alt="Targon" width={26} height={26} />
