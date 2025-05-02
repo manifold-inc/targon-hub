@@ -76,6 +76,10 @@ export default function Page() {
 
   const totalPages = models.data?.totalPages ?? 1;
 
+  const filteredModels = models.data?.items.filter(
+    (model) => !model.name?.toLowerCase().includes("drummer")
+  );
+
   return (
     <>
       <WatchForSuccess />
@@ -161,7 +165,7 @@ export default function Page() {
 
             {/* Model Cards */}
             <div className="flex flex-col gap-3 p-4 sm:gap-4 sm:px-6 lg:px-8">
-              {models.data?.items.map((model) => (
+              {filteredModels?.map((model) => (
                 <ModelCard
                   key={model.name}
                   name={model.name ?? ""}
@@ -175,8 +179,8 @@ export default function Page() {
               ))}
 
               {/* Add Model CTA Card - only show on the last page */}
-              {models.data?.items &&
-                models.data.items.length > 0 &&
+              {filteredModels &&
+                filteredModels.length > 0 &&
                 currentPage === totalPages && (
                   <Link
                     href="/models/add"
@@ -208,7 +212,7 @@ export default function Page() {
                 )}
 
               {/* Pagination */}
-              {models.data && models.data.items.length > 0 && (
+              {models.data && filteredModels && filteredModels.length > 0 && (
                 <div className="flex items-center justify-center border-t border-mf-silver-700 pt-8">
                   <div className="flex items-center gap-2">
                     <button

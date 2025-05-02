@@ -8,6 +8,7 @@ import {
   gte,
   inArray,
   like,
+  not,
   or,
   sql,
 } from "drizzle-orm";
@@ -68,7 +69,12 @@ export const modelRouter = createTRPCRouter({
         cpt: Model.cpt,
       })
       .from(Model)
-      .where(and(eq(Model.enabled, true)));
+      .where(
+        and(
+          eq(Model.enabled, true),
+          not(like(Model.name, "%drummer%")),
+        ),
+      );
     return models;
   }),
   getActiveSearchModels: publicAuthlessProcedure
