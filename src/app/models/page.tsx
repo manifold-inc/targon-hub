@@ -77,7 +77,7 @@ export default function Page() {
   const totalPages = models.data?.totalPages ?? 1;
 
   const filteredModels = models.data?.items.filter(
-    (model) => !model.name?.toLowerCase().includes("drummer")
+    (model) => !model.name?.toLowerCase().includes("drummer"),
   );
 
   return (
