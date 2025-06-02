@@ -72,7 +72,13 @@ export const modelRouter = createTRPCRouter({
       .where(
         and(
           eq(Model.enabled, true),
-          not(like(Model.name, "%drummer%")),
+          not(
+            inArray(Model.name, [
+              "Nitral-AI/Captain-Eris_Violet-V0.420-12B",
+              "rica40325/10_14dpo",
+              "TheDrummer/Cydonia-24B-v2",
+            ]),
+          ),
         ),
       );
     return models;
