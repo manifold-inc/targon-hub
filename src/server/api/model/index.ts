@@ -124,7 +124,6 @@ export const modelRouter = createTRPCRouter({
       }
 
       const models = await query.where(and(...filters));
-      console.log(models);
       return models;
     }),
   getModels: publicAuthlessProcedure
